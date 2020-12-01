@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# This is the main entrypoint to Compliant Kubernetes.
+
+set -e -o pipefail
+
+here="$(dirname "$(readlink -f "$0")")"
+
+
+usage() {
+    echo "COMMANDS:" 1>&2
+    echo "  init                                        initialize the config path" 1>&2
+    echo "      args: <prefix> <flavor> <path to ssh key> [<SOPS fingerprint>]" 1>&2
+    echo "  apply                                       runs kubespray to create the cluster" 1>&2
+    echo "      args: <prefix>" 1>&2
+    echo "  run-playbook                                runs any ansible playbook in kubespray" 1>&2
+    echo "      args: <prefix> <playbook>" 1>&2
+    exit 1
+}
+
+if [ $# -lt 2 ]; then
+    usage
+else
+    export prefix="${2}"
+fi
+
+source "${here}/common.bash"
+
+case "${1}" in
+    init)
+        if [ $# -lt 4 ] || [ $# -gt 5 ]; then
+            usage
+        fi
+        shift 2
+        "${here}/init.bash" "${@}"
+        ;;
+    apply)
+        if [ $# -ne 2 ]; then
+            usage
+        fi
+        "${here}/apply.bash"
+        ;;
+    run-playbook)
+        if [ $# -ne 3 ]; then
+            usage
+        fi
+        shift 2
+        "${here}/run-playbook.bash" "${@}"
+        ;;
+    *) usage ;;
+esac

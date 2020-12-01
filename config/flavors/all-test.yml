@@ -1,0 +1,2 @@
+flavor_test_tag: "This is a key that has been added by applying the test flavor"
+etcd_data_dir: "this_key_has_been_changed_by_applying_the_test_flavor"
