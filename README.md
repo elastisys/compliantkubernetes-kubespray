@@ -1,5 +1,7 @@
 # Elastisys Compliant Kubernetes Kubespray
 
+**NOTE: This project is in alpha stage and is actively developed. Therefore the API may change in backwards-incompatible ways.**
+
 Content:
 
 - `bin`: wrapper scripts that helps you run kubespray
