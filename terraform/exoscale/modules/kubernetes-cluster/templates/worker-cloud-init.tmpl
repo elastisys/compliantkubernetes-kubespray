@@ -1,0 +1,26 @@
+#cloud-config
+%{ if ceph_enabled }
+bootcmd:
+- [ cloud-init-per, once, move-second-header, sgdisk, --move-second-header, /dev/vda ]
+- [ cloud-init-per, once, create-ceph-part, parted, --script, /dev/vda, 'mkpart 2 ${ceph_partition_size}GB -1' ]
+%{ endif }
+
+write_files:
+  - path: /etc/netplan/eth1.yaml
+    content: |
+      network:
+        version: 2
+        ethernets:
+          eth1:
+            dhcp4: true
+runcmd:
+  - netplan apply
+  # TODO: When a VM is seen as healthy and is added to the EIP loadbalancer
+  #       pool it no longer can send traffic back to itself via the EIP IP
+  #       address.
+  #       Remove this if it ever gets solved.
+  - /sbin/sysctl net.ipv4.conf.all.forwarding=1
+  - sudo iptables -t nat -A PREROUTING -d ${eip_ip_address} -j DNAT --to 127.0.0.1
+  - if [ ! -f /mnt/elasticsearch.fs ]; then sudo dd if=/dev/zero of=/mnt/elasticsearch.fs bs=1024 count=$((${es_local_storage_capacity}*1024*1024)) && sudo mkfs.ext4 /mnt/elasticsearch.fs; fi
+  - sudo mkdir -p /mnt/disks/elasticsearch-node-local-storage && sudo chown nobody:nogroup /mnt/disks/elasticsearch-node-local-storage
+  - sudo mount /mnt/elasticsearch.fs /mnt/disks/elasticsearch-node-local-storage
