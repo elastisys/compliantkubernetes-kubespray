@@ -29,15 +29,16 @@ Content:
    ```
 4. Run kubespray to set up the kubernetes cluster:
    ```
-   ./bin/ck8s-kubespray apply <prefix>
+   ./bin/ck8s-kubespray apply <prefix> [<options>]
    ```
+   Any `options` added will be forwarded to ansible.
 5. Done. You should now have a working kubernetes cluster. You should also have an encrypted kubeconfig at `<CK8S_CONFIG_PATH>/.state/kube_config_<prefix>.yaml` that you can use to access the cluster.
 
 ## Running other kubespray playbooks
 
 With the following command you can run any ansible playbook available in kubespray:
 ```
-./bin/ck8s-kubespray run-playbook <prefix> <playbook>
+./bin/ck8s-kubespray run-playbook <prefix> <playbook> [<options>]
 ```
 Where `playbook` is the filename of the playbook that you want to run, e.g. `cluster.yml` if you want to create a cluster (making the command functionally the same as our `ck8s-kubespray apply` command) or `scale.yml` if you want to just add more nodes. Remember to check the kubespray documentation before running a playbook.
-This will use the inventory, group-vars, and ssh key in your config path and therefore requires that you first run the init command.
+This will use the inventory, group-vars, and ssh key in your config path and therefore requires that you first run the init command. Any `options` added will be forwarded to ansible.

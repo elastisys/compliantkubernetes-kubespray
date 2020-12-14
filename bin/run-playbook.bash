@@ -7,12 +7,13 @@
 set -eu -o pipefail
 shopt -s globstar nullglob dotglob
 
-if [ $# -ne 1 ]; then
+if [ $# -lt 1 ]; then
     echo "error when running $0: argument mismatch" 1>&2
     exit 1
 fi
 
 playbook=$1
+shift 1
 
 here="$(dirname "$(readlink -f "$0")")"
 source "${here}/common.bash"
@@ -26,7 +27,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 log_info "Running kubespray"
-sops_exec_file_no_fifo "${secrets[ssh_key]}" "ansible-playbook -i ${config[inventory_file]} ${playbook} -b --private-key {}"
+sops_exec_file_no_fifo "${secrets[ssh_key]}" "ansible-playbook -i ${config[inventory_file]} ${playbook} -b --private-key {} ${@}"
 
 popd
 
