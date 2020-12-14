@@ -1,3 +1,4 @@
+---
 # Kubernetes dashboard
 # RBAC required. see docs/getting-started.md for access details.
 dashboard_enabled: false
@@ -25,7 +26,7 @@ local_path_provisioner_enabled: false
 # local_path_provisioner_claim_root: /opt/local-path-provisioner/
 # local_path_provisioner_debug: false
 # local_path_provisioner_image_repo: "rancher/local-path-provisioner"
-# local_path_provisioner_image_tag: "v0.0.2"
+# local_path_provisioner_image_tag: "v0.0.14"
 # local_path_provisioner_helper_image_repo: "busybox"
 # local_path_provisioner_helper_image_tag: "latest"
 
@@ -102,6 +103,11 @@ ingress_publish_status_address: ""
 # ingress_nginx_extra_args:
 #   - --default-ssl-certificate=default/foo-tls
 
+# ambassador ingress controller deployment
+ingress_ambassador_enabled: false
+# ingress_ambassador_namespace: "ambassador"
+# ingress_ambassador_version: "*"
+
 # ALB ingress controller deployment
 ingress_alb_enabled: false
 # alb_ingress_aws_region: "us-east-1"
@@ -113,3 +119,27 @@ ingress_alb_enabled: false
 # Cert manager deployment
 cert_manager_enabled: false
 # cert_manager_namespace: "cert-manager"
+
+# MetalLB deployment
+metallb_enabled: false
+# metallb_ip_range:
+#   - "10.5.0.50-10.5.0.99"
+# metallb_version: v0.9.3
+# metallb_protocol: "layer2"
+# metallb_port: "7472"
+# metallb_limits_cpu: "100m"
+# metallb_limits_mem: "100Mi"
+# metallb_additional_address_pools:
+#   kube_service_pool:
+#     ip_range:
+#       - "10.5.1.50-10.5.1.99"
+#     protocol: "layer2"
+#     auto_assign: false
+# metallb_protocol: "bgp"
+# metallb_peers:
+#   - peer_address: 192.0.2.1
+#     peer_asn: 64512
+#     my_asn: 4200000000
+#   - peer_address: 192.0.2.2
+#     peer_asn: 64513
+#     my_asn: 4200000000

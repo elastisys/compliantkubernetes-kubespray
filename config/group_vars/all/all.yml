@@ -1,3 +1,4 @@
+---
 ## Directory where etcd data stored
 etcd_data_dir: /var/lib/etcd
 
@@ -24,7 +25,7 @@ bin_dir: /usr/local/bin
 ## Internal loadbalancers for apiservers
 # loadbalancer_apiserver_localhost: true
 # valid options are "nginx" or "haproxy"
-# loadbalancer_apiserver_type: nginx # valid values "nginx" or "haproxy"
+# loadbalancer_apiserver_type: nginx  # valid values "nginx" or "haproxy"
 
 ## Local loadbalancer should use this port
 ## And must be set port 6443
@@ -34,11 +35,6 @@ loadbalancer_apiserver_port: 6443
 loadbalancer_apiserver_healthcheck_port: 8081
 
 ### OTHER OPTIONAL VARIABLES
-## For some things, kubelet needs to load kernel modules.  For example, dynamic kernel services are needed
-## for mounting persistent volumes into containers.  These may not be loaded by preinstall kubernetes
-## processes.  For example, ceph and rbd backed volumes.  Set to true to allow kubelet to load kernel
-## modules.
-# kubelet_load_modules: false
 
 ## Upstream dns servers
 # upstream_dns_servers:
@@ -91,3 +87,7 @@ loadbalancer_apiserver_healthcheck_port: 8081
 ## Deploy container engine
 # Set false if you want to deploy container engine manually.
 # deploy_container_engine: true
+
+## Set Pypi repo and cert accordingly
+# pyrepo_index: https://pypi.example.com/simple
+# pyrepo_cert: /etc/ssl/certs/ca-certificates.crt

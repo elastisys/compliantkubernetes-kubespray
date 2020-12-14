@@ -1,3 +1,4 @@
+---
 # private interface, on a l2-network
 macvlan_interface: "eth1"
 
