@@ -12,9 +12,9 @@ usage() {
     echo "  init                                        initialize the config path" 1>&2
     echo "      args: <prefix> <flavor> <path to ssh key> [<SOPS fingerprint>]" 1>&2
     echo "  apply                                       runs kubespray to create the cluster" 1>&2
-    echo "      args: <prefix>" 1>&2
+    echo "      args: <prefix> [<options>]" 1>&2
     echo "  run-playbook                                runs any ansible playbook in kubespray" 1>&2
-    echo "      args: <prefix> <playbook>" 1>&2
+    echo "      args: <prefix> <playbook> [<options>]" 1>&2
     exit 1
 }
 
@@ -35,13 +35,14 @@ case "${1}" in
         "${here}/init.bash" "${@}"
         ;;
     apply)
-        if [ $# -ne 2 ]; then
+        if [ $# -lt 2 ]; then
             usage
         fi
-        "${here}/apply.bash"
+        shift 2
+        "${here}/apply.bash" "${@}"
         ;;
     run-playbook)
-        if [ $# -ne 3 ]; then
+        if [ $# -lt 3 ]; then
             usage
         fi
         shift 2

@@ -19,14 +19,16 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 log_info "Running kubespray"
-sops_exec_file_no_fifo "${secrets[ssh_key]}" "ansible-playbook -i "${config[inventory_file]}" cluster.yml -b --private-key {}"
+sops_exec_file_no_fifo "${secrets[ssh_key]}" "ansible-playbook -i "${config[inventory_file]}" cluster.yml -b --private-key {} ${@}"
 
 popd
 
 log_info "Kubespray done"
 
-mv "${config_path}/artifacts/admin.conf" "${secrets[kube_config]}"
-sops_encrypt "${secrets[kube_config]}"
+if [ -f "${config_path}/artifacts/admin.conf" ]; then
+    mv "${config_path}/artifacts/admin.conf" "${secrets[kube_config]}"
+    sops_encrypt "${secrets[kube_config]}"
+fi
 
 log_info "Cluster created sucessfully!"
 log_info "Kubeconfig located at ${secrets[kube_config]}"
