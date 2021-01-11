@@ -18,7 +18,7 @@ Content:
    ```
    Arguments:
    * `prefix` will be used to differentiate this cluster from others in the same CK8S_CONFIG_PATH. For now you need to set this to `wc` or `sc` if you want to install compliantkubernetes apps on top afterwards, this restriction will be removed later.
-   * `flavor` will determine some default values for a varaiety of config options. Supported options are `test` and `default`.
+   * `flavor` will determine some default values for a variety of config options. Supported options are `default`.
    * `path to ssh key` should point to a ssh key that can access all nodes that will be a part of the cluster. It will be copied into your config path and encrypted with SOPS, the original file left as it were.
    * `SOPS fingerprint` is the gpg fingerprint that will be used for SOPS encryption. You need to set this or the environment variable `CK8S_PGP_FP` the first time SOPS is used in your specified config path.
 2. Edit the IP addresses and nodes in your `inventory.ini` (found in your config path) to match the VMs that should be part of the cluster.

@@ -1,2 +1,0 @@
-flavor_test_key: "This is a key that has been added by applying the test flavor"
-cephfs_provisioner_enabled: "this_key_has_been_changed_by_applying_the_test_flavor"
