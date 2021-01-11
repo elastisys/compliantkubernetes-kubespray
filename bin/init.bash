@@ -29,7 +29,7 @@ if [[ ${CK8S_CLOUD_PROVIDER} != "" ]]; then
 fi
 
 # Validate the flavor
-if [ "${flavor}" != "default" ] && [ "${flavor}" != "test" ]; then
+if [ "${flavor}" != "default" ]; then
     log_error "ERROR: Unsupported flavor: ${flavor}"
     exit 1
 fi
