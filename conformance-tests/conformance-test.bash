@@ -5,18 +5,18 @@ set -eo pipefail
 SUPPORTED_OS=(18.04) # Add more versions here, separated by spaces
 
 log_error() {
-    echo -e "[\e[31mck8s conformance test\e[0m] ${@}" 1>&2
+    echo -e "[\e[31mck8s conformance test\e[0m] ${*}" 1>&2
 }
 
 # Check for Ubuntu 18.04
 
 validate_OS() {
-    IFS='=' read -ra RES <<< $(cat /etc/os-release | grep -w "ID")
+    IFS='=' read -ra RES <<< "$(grep -w 'ID' < /etc/os-release)"
     if [[ "${RES[1]}" != "ubuntu" ]]; then
         log_error "Error: Operating system is not Ubuntu"
     fi
 
-    IFS='=' read -ra RES <<< $(cat /etc/os-release | grep -w "VERSION_ID")
+    IFS='=' read -ra RES <<< "$(grep -w 'VERSION_ID' < /etc/os-release)"
     if [[ " ${SUPPORTED_OS[*]} " != *"${RES[1]//\"}"* ]]; then
         log_error "Error: Ubuntu version is not valid (valid versions: ${SUPPORTED_OS[*]})"
     fi

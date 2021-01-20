@@ -8,18 +8,21 @@ set -eu -o pipefail
 shopt -s globstar nullglob dotglob
 
 here="$(dirname "$(readlink -f "$0")")"
+# shellcheck source=common.bash
 source "${here}/common.bash"
 
 log_info "Creating kubernetes cluster using kubespray"
+# shellcheck disable=SC2154
 pushd "${kubespray_path}"
 
 log_info "Installing requirements for kubespray"
 python3 -m venv venv
+# shellcheck source=../kubespray/venv/bin/activate
 source venv/bin/activate
 pip install -r requirements.txt
 
 log_info "Running kubespray"
-sops_exec_file_no_fifo "${secrets[ssh_key]}" "ansible-playbook -i "${config[inventory_file]}" cluster.yml -b --private-key {} ${@}"
+sops_exec_file_no_fifo "${secrets[ssh_key]}" "ansible-playbook -i \"${config[inventory_file]}\" cluster.yml -b --private-key {} ${*}"
 
 popd
 

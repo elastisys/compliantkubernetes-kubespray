@@ -14,8 +14,11 @@ export CK8S_CONFIG_PATH
 
 here="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 root_path="${here}/.."
+# shellcheck disable=SC2034
 config_defaults_path="${root_path}/config"
+# shellcheck disable=SC2034
 pipeline_path="${root_path}/pipeline"
+# shellcheck disable=SC2034
 kubespray_path="${root_path}/kubespray"
 
 config_path="${CK8S_CONFIG_PATH}/${prefix}-config"
@@ -27,6 +30,7 @@ declare -A config
 declare -A secrets
 
 config["inventory_file"]="${config_path}/inventory.ini"
+# shellcheck disable=SC2034
 config["infrastructure_file"]="${state_path}/infra.json"
 
 secrets["kube_config"]="${state_path}/kube_config_${prefix}.yaml"

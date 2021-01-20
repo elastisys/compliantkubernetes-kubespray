@@ -20,6 +20,7 @@ if [ $# -eq 3 ]; then
 fi
 
 here="$(dirname "$(readlink -f "$0")")"
+# shellcheck source=common.bash
 source "${here}/common.bash"
 
 CK8S_CLOUD_PROVIDER=${CK8S_CLOUD_PROVIDER:-""}

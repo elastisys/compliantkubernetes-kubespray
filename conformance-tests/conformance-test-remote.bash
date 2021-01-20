@@ -8,6 +8,6 @@ fi
 USERNAME=$1
 IP=$2
 
-scp conformance-test.bash ${USERNAME}@${IP}:~
-ssh ${USERNAME}@${IP} sudo bash conformance-test.bash
-ssh ${USERNAME}@${IP} rm conformance-test.bash
+scp conformance-test.bash "${USERNAME}@${IP}:~"
+ssh "${USERNAME}@${IP}" sudo bash conformance-test.bash
+ssh "${USERNAME}@${IP}" rm conformance-test.bash
