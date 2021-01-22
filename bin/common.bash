@@ -17,23 +17,18 @@ root_path="${here}/.."
 # shellcheck disable=SC2034
 config_defaults_path="${root_path}/config"
 # shellcheck disable=SC2034
-pipeline_path="${root_path}/pipeline"
-# shellcheck disable=SC2034
 kubespray_path="${root_path}/kubespray"
 
 config_path="${CK8S_CONFIG_PATH}/${prefix}-config"
 ssh_folder="${config_path}/ssh"
 sops_config="${CK8S_CONFIG_PATH}/.sops.yaml"
-state_path="${CK8S_CONFIG_PATH}/.state"
 
 declare -A config
-declare -A secrets
-
-config["inventory_file"]="${config_path}/inventory.ini"
 # shellcheck disable=SC2034
-config["infrastructure_file"]="${state_path}/infra.json"
+config["inventory_file"]="${config_path}/inventory.ini"
 
-secrets["kube_config"]="${state_path}/kube_config_${prefix}.yaml"
+declare -A secrets
+# shellcheck disable=SC2034
 secrets["ssh_key"]="${ssh_folder}/id_rsa"
 
 log_info() {
@@ -46,14 +41,6 @@ log_warning() {
 
 log_error() {
     echo -e "[\e[31mck8s\e[0m] ${*}" 1>&2
-}
-
-# Check if the cloud provider is supported.
-validate_cloud() {
-    if [ "${1}" != "baremetal" ]; then
-        log_error "ERROR: Unsupported cloud provider: ${1}"
-        exit 1
-    fi
 }
 
 validate_sops_config() {
@@ -106,12 +93,6 @@ append_trap() {
 sops_config_write_fingerprints() {
     yq n 'creation_rules[0].pgp' "${1}" > "${sops_config}" || \
       (log_error "Failed to write fingerprints" && rm "${sops_config}" && exit 1)
-}
-
-# Encrypt stdin to file. If the file already exists it's overwritten.
-sops_encrypt_stdin() {
-    sops --config "${sops_config}" -e --input-type "${1}" \
-         --output-type "${1}" /dev/stdin > "${2}"
 }
 
 # Encrypt a file in place.
@@ -182,30 +163,4 @@ sops_exec_file_no_fifo() {
     sops_decrypt_verify "${1}"
 
     sops --config "${sops_config}" exec-file --no-fifo "${1}" "${2}"
-}
-
-# Temporarily decrypts a file and loads the content as environment variables
-# that will only be available to a command.
-sops_exec_env() {
-    sops_decrypt_verify "${1}"
-
-    sops --config "${sops_config}" exec-env "${1}" "${2}"
-}
-
-# Run a command with the secrets config options available as environment
-# variables.
-with_config_secrets() {
-    sops_decrypt_verify "${secrets[secrets_file]}"
-
-    sops_exec_env "${secrets[secrets_file]}" "${*}"
-}
-
-# Run a command with KUBECONFIG set to a temporarily decrypted file.
-with_kubeconfig() {
-    kubeconfig="${1}"
-    shift
-    # TODO: Can't use a FIFO since we can't know that the kubeconfig is not
-    #       read multiple times. Let's try to eliminate the need for writing
-    #       the kubeconfig to disk in the future.
-    sops_exec_file_no_fifo "${kubeconfig}" 'KUBECONFIG="{}" '"${*}"
 }
