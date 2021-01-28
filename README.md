@@ -28,9 +28,10 @@ Content:
     * `SOPS fingerprint` is the gpg fingerprint that will be used for SOPS encryption.
       You need to set this or the environment variable `CK8S_PGP_FP` the first time SOPS is used in your specified config path.
 
-1. Edit the IP addresses and nodes in your `inventory.ini` (found in your config path) to match the VMs that should be part of the cluster.
+1. Edit the `inventory.ini` (found in your config path) to match the VMs (IP addresses and other settings that might be needed for your setup) that should be part of the cluster.
+   Or if you have one created by a terraform script in `kubespray/contrib/terraform` you should use that one.
 
-1. Init and update the [kubespray](https://github.com/kubernetes-sigs/kubespray) gitsubmodule (currently using `release-2.13`):
+1. Init and update the [kubespray](https://github.com/kubernetes-sigs/kubespray) gitsubmodule:
 
     ```bash
     git submodule init
