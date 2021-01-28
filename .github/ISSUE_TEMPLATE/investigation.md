@@ -1,5 +1,3 @@
-# Investigation
-
 ---
 name: Investigation
 about: Investigate some alternative or new solution
