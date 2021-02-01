@@ -1,0 +1,2 @@
+cloud_provider: openstack
+calico_mtu: 1480

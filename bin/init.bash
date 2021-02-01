@@ -30,7 +30,11 @@ if [[ ${CK8S_CLOUD_PROVIDER} != "" ]]; then
 fi
 
 # Validate the flavor
-if [ "${flavor}" != "default" ] && [ "${flavor}" != "gcp" ] && [ "${flavor}" != "aws" ]; then
+if [ "${flavor}" != "default" ] && \
+   [ "${flavor}" != "gcp" ] && \
+   [ "${flavor}" != "citycloud" ] && \
+   [ "${flavor}" != "openstack" ] && \
+   [ "${flavor}" != "aws" ]; then
     log_error "ERROR: Unsupported flavor: ${flavor}"
     exit 1
 fi
@@ -79,6 +83,10 @@ elif [[ "${flavor}" == "gcp" ]]; then
   cp -r "${config_defaults_path}/gcp/group_vars" "${config_path}/"
 elif [[ "${flavor}" == "aws" ]]; then
   cp -r "${config_defaults_path}/aws/group_vars" "${config_path}/"
+elif [[ "${flavor}" == "openstack" ]]; then
+  cp -r "${config_defaults_path}/openstack/group_vars" "${config_path}/"
+elif [[ "${flavor}" == "citycloud" ]]; then
+  cp -r "${config_defaults_path}/openstack/group_vars" "${config_path}/"
 fi
 
 # Copy inventory.ini
