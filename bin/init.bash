@@ -32,7 +32,6 @@ fi
 # Validate the flavor
 if [ "${flavor}" != "default" ] && \
    [ "${flavor}" != "gcp" ] && \
-   [ "${flavor}" != "citycloud" ] && \
    [ "${flavor}" != "openstack" ] && \
    [ "${flavor}" != "aws" ]; then
     log_error "ERROR: Unsupported flavor: ${flavor}"
@@ -84,8 +83,6 @@ elif [[ "${flavor}" == "gcp" ]]; then
 elif [[ "${flavor}" == "aws" ]]; then
   cp -r "${config_defaults_path}/aws/group_vars" "${config_path}/"
 elif [[ "${flavor}" == "openstack" ]]; then
-  cp -r "${config_defaults_path}/openstack/group_vars" "${config_path}/"
-elif [[ "${flavor}" == "citycloud" ]]; then
   cp -r "${config_defaults_path}/openstack/group_vars" "${config_path}/"
 fi
 

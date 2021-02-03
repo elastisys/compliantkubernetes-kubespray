@@ -14,6 +14,13 @@ PUB_SSH_KEY_FILE="${HOME}/.ssh/id_rsa.pub"
 > Save these into a file `my-new-cluster.env`.
 > The next time you want to use these snippets you can just run `source my-new-cluster.env`
 
+Export your cluster path and PGP fingerprint
+
+```bash
+export CK8S_CONFIG_PATH=~/.ck8s/my-new-cluster
+export CK8S_PGP_FP=<Your PGP fingerprint>
+```
+
 Then you'll need to set up some openstack specific variables for the infrastructure
 
 ```bash
@@ -27,12 +34,16 @@ OS_SUBNET_CIDR="10.10.0.0/24" # (Guessing) CIDR of network
 OS_FLOATINGIP_POOL="" # Name of the pool to get floating ips from
 ```
 
+For terraform to be able to talk to the Openstack API server you need to set the appropriate environment variables.
+For more information see [here](https://docs.openstack.org/newton/user-guide/common/cli-set-environment-variables-using-openstack-rc.html).
+
 Set up the clusters into respective folders
 
 ```bash
 pushd kubespray
 for CLUSTER in "${SERVICE_CLUSTER}" "${WORKLOAD_CLUSTERS[@]}"; do
-  mkdir -p "inventory/${CLUSTER}/group_vars"
+  mkdir -p "${CK8S_CONFIG_PATH}/${CLUSTER}-config/group_vars"
+  ln -s "${CK8S_CONFIG_PATH}/${CLUSTER}-config/" "inventory/$CLUSTER"
   # shellcheck disable=SC2016
   sed -e "s@^cluster_name = .*@cluster_name = \"${CLUSTER}\"@" \
       -e "s@^public_key_path = .*@public_key_path = \"${PUB_SSH_KEY_FILE}\"@" \
@@ -80,18 +91,11 @@ If all went well the infrastructure should now be up and running
 
 To set up kubernetes with compliantkubernetes-kubespray you can follow these steps.
 
-Export your cluster path and PGP fingerprint
-
-```bash
-export CK8S_CONFIG_PATH=~/.ck8s/my-new-cluster
-export CK8S_PGP_FP=<Your PGP fingerprint>
-```
-
 Initialize the configuration with.
 
 ```bash
 for CLUSTER in "${SERVICE_CLUSTER}" "${WORKLOAD_CLUSTERS[@]}"; do
-  ./bin/ck8s-kubespray init "${CLUSTER}" citycloud ~/.ssh/id_rsa
+  ./bin/ck8s-kubespray init "${CLUSTER}" openstack ~/.ssh/id_rsa
   ln -s "$(pwd)/kubespray/inventory/${CLUSTER}/tfstate-${CLUSTER}.tfstate" "${CK8S_CONFIG_PATH}/${CLUSTER}-config/" || true
   cp "kubespray/contrib/terraform/openstack/hosts" "${CK8S_CONFIG_PATH}/${CLUSTER}-config/inventory.ini"
   chmod +x "${CK8S_CONFIG_PATH}/${CLUSTER}-config/inventory.ini"
@@ -114,7 +118,9 @@ Done!
 
 Later when you want to destroy the infrastructure.
 
-Make sure all cloud resources are destroyed (persistent volumes, load balancers).
+**Note:** Make sure all cloud resources are destroyed first (persistent volumes, load balancers).
+Otherwise they will be left dangling!
+
 Then run the following:
 
 ```bash
