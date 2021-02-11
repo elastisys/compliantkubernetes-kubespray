@@ -16,7 +16,7 @@ pushd "${kubespray_path}"
 log_info "Installing requirements for kubespray"
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 
 log_info "Running kubespray"
 sops_exec_file_no_fifo "${secrets[ssh_key]}" "ansible-playbook -i "${config[inventory_file]}" cluster.yml -b --private-key {} ${@}"
