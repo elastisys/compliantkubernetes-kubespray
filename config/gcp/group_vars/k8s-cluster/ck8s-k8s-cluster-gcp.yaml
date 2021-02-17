@@ -1,1 +1,2 @@
 etcd_kubeadm_enabled: true
+persistent_volumes_enabled: true
