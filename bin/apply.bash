@@ -29,6 +29,7 @@ popd
 log_info "Kubespray done"
 
 if [ -f "${config_path}/artifacts/admin.conf" ]; then
+    mkdir -p "${state_path}"
     mv "${config_path}/artifacts/admin.conf" "${secrets[kube_config]}"
     sops_encrypt "${secrets[kube_config]}"
 fi
