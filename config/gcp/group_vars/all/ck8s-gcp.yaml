@@ -1,2 +1,5 @@
 cloud_provider: gcp
 gcp_pd_csi_enabled: true
+gcp_pd_csi_sa_cred_file: "set-me"
+gcp_pd_csi_controller_replicas: 1
+gcp_pd_csi_driver_image_tag: "v0.7.0-gke.0"
