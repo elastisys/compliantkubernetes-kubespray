@@ -14,9 +14,8 @@ if [ $# -lt 2 ] || [ $# -gt 3 ]; then
 fi
 
 flavor=$1
-ssh_key_file=$2
-if [ $# -eq 3 ]; then
-    fingerprint=$3
+if [ $# -eq 2 ]; then
+    fingerprint=$2
 fi
 
 here="$(dirname "$(readlink -f "$0")")"
@@ -51,24 +50,12 @@ generate_sops_config() {
     sops_config_write_fingerprints "${fingerprint}"
 }
 
-copy_ssh_file() {
-    if [ -f "${secrets[ssh_key]}" ]; then
-        log_info "SSH key already exists: ${secrets[ssh_key]}"
-    else
-        mkdir -p "${ssh_folder}"
-        cp "${ssh_key_file}" "${secrets[ssh_key]}"
-        sops_encrypt "${secrets[ssh_key]}"
-    fi
-}
-
 if [ -f "${sops_config}" ]; then
     log_info "SOPS config already exists: ${sops_config}"
     validate_sops_config
 else
     generate_sops_config
 fi
-
-copy_ssh_file
 
 log_info "Initializing CK8S configuration with flavor: ${flavor}"
 mkdir -p "${config_path}"

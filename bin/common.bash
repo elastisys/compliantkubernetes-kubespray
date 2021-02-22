@@ -20,7 +20,6 @@ config_defaults_path="${root_path}/config"
 kubespray_path="${root_path}/kubespray"
 
 config_path="${CK8S_CONFIG_PATH}/${prefix}-config"
-ssh_folder="${config_path}/ssh"
 sops_config="${CK8S_CONFIG_PATH}/.sops.yaml"
 state_path="${CK8S_CONFIG_PATH}/.state"
 
@@ -29,8 +28,6 @@ declare -A config
 config["inventory_file"]="${config_path}/inventory.ini"
 
 declare -A secrets
-# shellcheck disable=SC2034
-secrets["ssh_key"]="${ssh_folder}/id_rsa"
 # shellcheck disable=SC2034
 secrets["kube_config"]="${state_path}/kube_config_${prefix}.yaml"
 
