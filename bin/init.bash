@@ -8,7 +8,7 @@
 set -eu -o pipefail
 shopt -s globstar nullglob dotglob
 
-if [ $# -lt 2 ] || [ $# -gt 3 ]; then
+if [ $# -lt 1 ] || [ $# -gt 2 ]; then
     echo "error when running $0: argument mismatch" 1>&2
     exit 1
 fi
