@@ -15,7 +15,7 @@ Content:
 
     ```bash
     export CK8S_CONFIG_PATH=~/.ck8s/my-environment
-    ./bin/ck8s-kubespray init <prefix> <flavor> <path to ssh key> [<SOPS fingerprint>]
+    ./bin/ck8s-kubespray init <prefix> <flavor> [<SOPS fingerprint>]
     ```
 
     Arguments:
@@ -47,6 +47,21 @@ Content:
 1. Done.
    You should now have a working kubernetes cluster.
    You should also have an encrypted kubeconfig at `<CK8S_CONFIG_PATH>/.state/kube_config_<prefix>.yaml` that you can use to access the cluster.
+
+## Changing authorized SSH keys for a cluster
+
+Authorized SSH keys can be changed for a cluster using:
+
+```bash
+./bin/ck8s-kubespray apply-ssh <prefix> [<options>]
+```
+
+It will set the public SSH key(s) found in`<CK8S_CONFIG_PATH>/<prefix>-config/group_vars/all/ck8s-ssh-keys.yaml` as authorized keys in your cluster (just add the keys you want to be authorized as elements in `ck8s_ssh_pub_keys_list`).
+Note that the authorized SSH keys for the cluster will be set to these keys _exclusively_, removing any keys that may already be authorized, so make sure the list includes **every SSH key** that should be authorized.
+
+When running this command, the SSH keys are applied to each node in the cluster sequentially, in reverse inventory order (first the workers and then the masters).
+A connection test is performed after each node which has to succeed in order for the playbook to continue.
+If the connection test fails, you may have lost your SSH access to the node; to recover from this, you can set up an SSH connection before running the command and keep it active so that you can change the authorized keys manually.
 
 ## Running other kubespray playbooks
 

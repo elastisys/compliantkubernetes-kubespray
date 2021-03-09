@@ -1,0 +1,22 @@
+- hosts: all
+  serial: 1
+  order: reverse_inventory
+  tasks:
+    - name: Check that the SSH key list file exists
+      assert:
+        that: ck8s_ssh_pub_keys_list is defined
+        fail_msg: "ck8s_ssh_pub_keys_list is undefined (the group_vars file is likely missing). Did you run ck8s-kubespray init?"
+    - name: Check that SSH key list is valid
+      assert:
+        that: ck8s_ssh_pub_keys_list and None not in ck8s_ssh_pub_keys_list
+        fail_msg: "Public SSH key list invalid - add SSH keys to ck8s_ssh_pub_keys_list"
+    - name: Add authorized keys from config folder
+      ansible.posix.authorized_key:
+        user: "{{ ansible_user }}"
+        state: present
+        exclusive: true
+        key: "{{ ck8s_ssh_pub_keys_list | join('\n') }}"
+    - name: Test connection
+      wait_for_connection:
+        delay: 1
+        timeout: 30

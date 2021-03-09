@@ -15,6 +15,8 @@ usage() {
     echo "      args: <prefix> [<options>]" 1>&2
     echo "  run-playbook                                runs any ansible playbook in kubespray" 1>&2
     echo "      args: <prefix> <playbook> [<options>]" 1>&2
+    echo "  apply-ssh                                   applies SSH keys from a file to a cluster" 1>&2
+    echo "      args: <prefix> [<options>]" 1>&2
     exit 1
 }
 
@@ -48,6 +50,13 @@ case "${1}" in
         fi
         shift 2
         "${here}/run-playbook.bash" "${@}"
+        ;;
+    apply-ssh)
+        if [ $# -lt 2 ]; then
+            usage
+        fi
+        shift 2
+        "${here}/apply-ssh.bash" "${@}"
         ;;
     *) usage ;;
 esac
