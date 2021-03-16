@@ -1,2 +1,4 @@
+etcd_kubeadm_enabled: true
+
 cloud_provider: openstack
 calico_mtu: 1480
