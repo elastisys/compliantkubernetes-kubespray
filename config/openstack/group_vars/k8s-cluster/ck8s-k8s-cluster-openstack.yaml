@@ -2,3 +2,26 @@ etcd_kubeadm_enabled: true
 
 cloud_provider: openstack
 calico_mtu: 1480
+
+## The following variables are used to enable loadbalancer services in kubernetes.
+## All of them might not be needed in your case.
+# openstack_lbaas_enabled: true
+# ## Subnet of the kubernetes nodes
+# openstack_lbaas_subnet_id: <subnet-id>
+# ## To enable automatic floating ip provisioning, specify a subnet. Often the external network.
+# openstack_lbaas_floating_network_id: <network-id>
+# ## Set use_octavia to true for citycloud
+# openstack_lbaas_use_octavia: false
+# openstack_lbaas_method: "ROUND_ROBIN"
+# openstack_lbaas_provider: "haproxy"
+# ## The following are default values in kubespray
+# openstack_lbaas_create_monitor: "yes"
+# openstack_lbaas_monitor_delay: "1m"
+# openstack_lbaas_monitor_timeout: "30s"
+# openstack_lbaas_monitor_max_retries: "3"
+# openstack_cacert: "{{ lookup('env','OS_CACERT') }}"
+
+## Here you can add additional IP addresses that will be added to the kubernetes certs.
+## They can then be used in kubeconfigs.
+## Use this to add public IPs of control-plane nodes or control-plane loadbalancers.
+# supplementary_addresses_in_ssl_keys: [<master-1-public-ip>, <master-2-public-ip>, ...]
