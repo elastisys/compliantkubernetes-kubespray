@@ -22,7 +22,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 log_info "Running kubespray"
-ansible-playbook -i "${config[inventory_file]}" cluster.yml -b ${*}
+ansible-playbook -i "${config[inventory_file]}" cluster.yml -b "${@}"
 
 popd
 

@@ -29,7 +29,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 log_info "Running kubespray"
-ansible-playbook -i ${config[inventory_file]} ${playbook} -b ${*}
+ansible-playbook -i "${config[inventory_file]}" "${playbook}" "${@}"
 
 popd
 
