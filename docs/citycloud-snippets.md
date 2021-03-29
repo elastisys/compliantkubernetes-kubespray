@@ -108,7 +108,7 @@ Apply the configuration and set up kubernetes.
 
 ```bash
 for CLUSTER in "${SERVICE_CLUSTER}" "${WORKLOAD_CLUSTERS[@]}"; do
-  TERRAFORM_STATE_ROOT=${CK8S_CONFIG_PATH}/${CLUSTER}-config/ bin/ck8s-kubespray apply "${CLUSTER}"
+  bin/ck8s-kubespray apply "${CLUSTER}"
 done
 ```
 
