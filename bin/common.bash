@@ -16,7 +16,7 @@ if [[ "${CK8S_CONFIG_PATH:0:2}" == "~/" ]]; then
 fi
 
 # Create CK8S_CONFIG_PATH if it does not exist and make it absolute
-CK8S_CONFIG_PATH=$(readlink -f "${CK8S_CONFIG_PATH}")
+CK8S_CONFIG_PATH=$(readlink -m "${CK8S_CONFIG_PATH}")
 mkdir -p "${CK8S_CONFIG_PATH}"
 export CK8S_CONFIG_PATH
 
