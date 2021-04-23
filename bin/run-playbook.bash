@@ -22,11 +22,13 @@ source "${here}/common.bash"
 log_info "Running kubespray playbook ${playbook}"
 pushd "${kubespray_path}"
 
-log_info "Installing requirements for kubespray"
-python3 -m venv venv
-# shellcheck source=../kubespray/venv/bin/activate
-source venv/bin/activate
-pip install -r requirements.txt
+if [ -z "${CK8S_KUBESPRAY_NO_VENV+x}" ]; then
+    log_info "Installing requirements for kubespray"
+    python3 -m venv venv
+    # shellcheck source=../kubespray/venv/bin/activate
+    source venv/bin/activate
+    pip install -r requirements.txt
+fi
 
 log_info "Running kubespray"
 ansible-playbook -i "${config[inventory_file]}" "${playbook}" "${@}"
