@@ -19,3 +19,5 @@ kubectl --namespace $namespace apply -f cluster.yaml
 
 # Create storageclass
 kubectl --namespace $namespace apply -f storageclass.yaml
+
+kubectl --namespace $namespace apply -f toolbox-deploy.yaml

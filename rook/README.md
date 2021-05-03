@@ -44,3 +44,35 @@ See [deploy-rook.sh](./deploy-rook.sh) for an example.
 If the operator seems to be unable to remove configmaps or deployments, make sure that the Kubernetes API server is able to process requests.
 For example, if cert-manager custom resources are created before cert-manager is installed, we experienced cases where the Kubernetes API server did not process requests from the Rook operator.
 This was resolved once cert-manager was installed.
+
+## Troubleshoot
+
+Deploying with the script includes a toolbox container that can be used for troubleshooting, see [this](https://www.rook.io/docs/rook/v1.6/ceph-toolbox.html) for more info.
+This site includes a lot more info on how to manage a ceph cluster and includes useful snippets.
+
+But to get started with the troubleshooting you can start by running:
+
+```console
+$ kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash
+[root@rook-ceph-tools /]# ceph status
+  cluster:
+    id:     ab2a424f-b246-4c52-c0a5-d285f6502ca0
+    health: HEALTH_WARN
+            2 backfillfull osd(s)
+            1 nearfull osd(s)
+            2 pool(s) backfillfull
+
+  services:
+    mon: 3 daemons, quorum a,b,c (age 4d)
+    mgr: a(active, since 4d)
+    osd: 4 osds: 4 up (since 4d), 4 in (since 3M)
+
+  data:
+    pools:   2 pools, 129 pgs
+    objects: 77.58k objects, 299 GiB
+    usage:   601 GiB used, 79 GiB / 680 GiB avail
+    pgs:     129 active+clean
+
+  io:
+    client:   23 KiB/s rd, 6.5 MiB/s wr, 3 op/s rd, 111 op/s wr
+```
