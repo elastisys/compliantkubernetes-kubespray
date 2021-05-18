@@ -76,3 +76,41 @@ $ kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash
   io:
     client:   23 KiB/s rd, 6.5 MiB/s wr, 3 op/s rd, 111 op/s wr
 ```
+
+### Clock skew
+
+If rook has `HEALTH_WARN` because it has detected clock skew.
+This can be caused by system clock synchronization not being enabled.
+
+To check this run on the worker nodes:
+
+```console
+$ timedatectl status
+               Local time: tis 2021-05-18 14:04:05 CEST
+           Universal time: tis 2021-05-18 12:04:05 UTC
+                 RTC time: tis 2021-05-18 12:04:05
+                Time zone: Europe/Stockholm (CEST, +0200)
+System clock synchronized: no
+              NTP service: inactive
+          RTC in local TZ: no
+```
+
+Simply install ntp on the worker nodes and reboot:
+
+```bash
+sudo apt install ntp
+sudo reboot
+```
+
+System clock synchronization should now be enabled
+
+```console
+$ timedatectl status
+               Local time: tis 2021-05-18 14:04:05 CEST
+           Universal time: tis 2021-05-18 12:04:05 UTC
+                 RTC time: tis 2021-05-18 12:04:05
+                Time zone: Europe/Stockholm (CEST, +0200)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
+```
