@@ -32,6 +32,7 @@ fi
 if [ "${flavor}" != "default" ] && \
    [ "${flavor}" != "gcp" ] && \
    [ "${flavor}" != "openstack" ] && \
+   [ "${flavor}" != "vsphere" ] && \
    [ "${flavor}" != "aws" ]; then
     log_error "ERROR: Unsupported flavor: ${flavor}"
     exit 1
@@ -71,6 +72,8 @@ elif [[ "${flavor}" == "aws" ]]; then
   cp -r "${config_defaults_path}/aws/group_vars" "${config_path}/"
 elif [[ "${flavor}" == "openstack" ]]; then
   cp -r "${config_defaults_path}/openstack/group_vars" "${config_path}/"
+elif [[ "${flavor}" == "vsphere" ]]; then
+  cp -r "${config_defaults_path}/vsphere/group_vars" "${config_path}/"
 fi
 
 # Copy inventory.ini

@@ -22,7 +22,7 @@ Content:
     * `prefix` will be used to differentiate this cluster from others in the same CK8S_CONFIG_PATH.
       For now you need to set this to `wc` or `sc` if you want to install compliantkubernetes apps on top afterwards, this restriction will be removed later.
     * `flavor` will determine some default values for a variety of config options.
-      Supported options are `default`, `gcp`, `aws`, and `openstack`.
+      Supported options are `default`, `gcp`, `aws`, `vsphere`, and `openstack`.
     * `SOPS fingerprint` is the gpg fingerprint that will be used for SOPS encryption.
       You need to set this or the environment variable `CK8S_PGP_FP` the first time SOPS is used in your specified config path.
 
