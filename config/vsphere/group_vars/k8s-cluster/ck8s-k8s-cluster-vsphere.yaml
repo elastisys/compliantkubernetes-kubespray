@@ -14,4 +14,3 @@ external_vsphere_user: ""
 external_vsphere_datacenter: ""
 external_vsphere_kubernetes_cluster_id: ""
 vsphere_csi_enabled: true
-vsphere_csi_controller_replicas: 3
