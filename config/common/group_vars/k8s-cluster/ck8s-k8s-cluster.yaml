@@ -2,6 +2,7 @@ kube_oidc_auth: true
 kube_oidc_url: "https://dex.BASE-DOMAIN"
 kube_oidc_client_id: "kubelogin"
 kube_oidc_username_claim: "email"
+kube_oidc_groups_claim: "groups"
 
 kube_apiserver_enable_admission_plugins:
   - "PodSecurityPolicy"
