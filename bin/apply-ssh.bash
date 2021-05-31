@@ -6,7 +6,7 @@
 set -eu -o pipefail
 
 here="$(dirname "$(readlink -f "$0")")"
-# shellcheck source=common.bash
+# shellcheck source=bin/common.bash
 source "${here}/common.bash"
 
 log_info "Running playbook authorized_key"

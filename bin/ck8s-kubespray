@@ -26,7 +26,7 @@ else
     export prefix="${2}"
 fi
 
-# shellcheck source=common.bash
+# shellcheck source=bin/common.bash
 source "${here}/common.bash"
 
 case "${1}" in

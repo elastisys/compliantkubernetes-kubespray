@@ -19,7 +19,7 @@ if [ $# -eq 2 ]; then
 fi
 
 here="$(dirname "$(readlink -f "$0")")"
-# shellcheck source=common.bash
+# shellcheck source=bin/common.bash
 source "${here}/common.bash"
 
 CK8S_CLOUD_PROVIDER=${CK8S_CLOUD_PROVIDER:-""}
