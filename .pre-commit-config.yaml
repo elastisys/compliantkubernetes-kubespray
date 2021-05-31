@@ -23,6 +23,7 @@ repos:
   rev: 2.1.4
   hooks:
   - id: shellcheck
+    additional_dependencies: []
     args:
     - "--exclude=SC1091,SC2154"
   - id: markdownlint
