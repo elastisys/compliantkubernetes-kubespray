@@ -8,17 +8,16 @@ set -eu -o pipefail
 shopt -s globstar nullglob dotglob
 
 here="$(dirname "$(readlink -f "$0")")"
-# shellcheck source=common.bash
+# shellcheck source=bin/common.bash
 source "${here}/common.bash"
 
 log_info "Creating kubernetes cluster using kubespray"
-# shellcheck disable=SC2154
 pushd "${kubespray_path}"
 
 if [ -z "${CK8S_KUBESPRAY_NO_VENV+x}" ]; then
     log_info "Installing requirements for kubespray"
     python3 -m venv venv
-    # shellcheck source=../kubespray/venv/bin/activate
+    # shellcheck disable=SC1091
     source venv/bin/activate
     pip install -r requirements.txt
 fi

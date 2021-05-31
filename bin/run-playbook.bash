@@ -16,7 +16,7 @@ playbook=$1
 shift 1
 
 here="$(dirname "$(readlink -f "$0")")"
-# shellcheck source=common.bash
+# shellcheck source=bin/common.bash
 source "${here}/common.bash"
 
 log_info "Running kubespray playbook ${playbook}"
@@ -25,7 +25,7 @@ pushd "${kubespray_path}"
 if [ -z "${CK8S_KUBESPRAY_NO_VENV+x}" ]; then
     log_info "Installing requirements for kubespray"
     python3 -m venv venv
-    # shellcheck source=../kubespray/venv/bin/activate
+    # shellcheck disable=SC1091
     source venv/bin/activate
     pip install -r requirements.txt
 fi

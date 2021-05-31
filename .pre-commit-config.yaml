@@ -25,5 +25,5 @@ repos:
   - id: shellcheck
     additional_dependencies: []
     args:
-    - "--exclude=SC1091,SC2154"
+    - "--external-sources"
   - id: markdownlint
