@@ -8,44 +8,52 @@
 set -eu -o pipefail
 shopt -s globstar nullglob dotglob
 
-if [ $# -lt 1 ] || [ $# -gt 2 ]; then
-    echo "error when running $0: argument mismatch" 1>&2
-    exit 1
-fi
-
-flavor=$1
-if [ $# -eq 2 ]; then
-    fingerprint=$2
-fi
-
 here="$(dirname "$(readlink -f "$0")")"
 # shellcheck source=bin/common.bash
 source "${here}/common.bash"
 
-CK8S_CLOUD_PROVIDER=${CK8S_CLOUD_PROVIDER:-""}
-if [[ ${CK8S_CLOUD_PROVIDER} != "" ]]; then
-    log_error "ERROR: CK8S_CLOUD_PROVIDER is not supported"
+cloud_provider="${CK8S_CLOUD_PROVIDER:-}"
+fingerprint="${CK8S_PGP_FP:-}"
+
+while [ "${#}" -gt 1 ]; do
+    case "${1}" in
+    "--cloud-provider") cloud_provider="${2}" ;;
+    "--sops-fingerprint") fingerprint="${2}" ;;
+    *)
+        log_error "ERROR: unknown flag ${1}"
+        exit 1
+        ;;
+    esac
+    shift 2
+done
+
+if [ -z "${cloud_provider}" ]; then
+    log_error "ERROR: either --cloud-provider or the environment variable CK8S_CLOUD_PROVIDER must be set."
     exit 1
 fi
 
-# Validate the flavor
-if [ "${flavor}" != "default" ] && \
-   [ "${flavor}" != "gcp" ] && \
-   [ "${flavor}" != "openstack" ] && \
-   [ "${flavor}" != "vsphere" ] && \
-   [ "${flavor}" != "aws" ]; then
-    log_error "ERROR: Unsupported flavor: ${flavor}"
-    exit 1
+config_type="default"
+if [ -n "${cloud_provider:-}" ]; then
+    case "${cloud_provider:-}" in
+        aws|gcp|vsphere)
+            config_type="${cloud_provider}"
+            ;;
+
+        citycloud|safespring)
+            config_type="openstack"
+            ;;
+
+        *)
+            log_error "ERROR: Unsupported cloud provider: ${cloud_provider}"
+            exit 1
+            ;;
+    esac
 fi
 
 generate_sops_config() {
-    if [ -z ${fingerprint+x} ]; then
-        if [ -z ${CK8S_PGP_FP+x} ]; then
-            log_error "ERROR: either the <SOPS fingerprint> argument or the env variable CK8S_PGP_FP must be set."
-            exit 1
-        else
-            fingerprint="${CK8S_PGP_FP}"
-        fi
+    if [ -z "${fingerprint}" ]; then
+        log_error "ERROR: either --sops-fingerprint or the environment variable CK8S_PGP_FP must be set."
+        exit 1
     fi
     log_info "Initializing SOPS config with PGP fingerprint: ${fingerprint}"
     sops_config_write_fingerprints "${fingerprint}"
@@ -58,23 +66,15 @@ else
     generate_sops_config
 fi
 
-log_info "Initializing CK8S configuration with flavor: ${flavor}"
+log_info "Initializing CK8S configuration with configuration type: ${config_type}"
+
 mkdir -p "${config_path}"
 
-# Copy default group_vars
+# Copy common group_vars
 cp -r "${config_defaults_path}/common/group_vars" "${config_path}/"
 
-if [[ "${flavor}" == "default" ]]; then
-  cp -r "${config_defaults_path}/default/group_vars" "${config_path}/"
-elif [[ "${flavor}" == "gcp" ]]; then
-  cp -r "${config_defaults_path}/gcp/group_vars" "${config_path}/"
-elif [[ "${flavor}" == "aws" ]]; then
-  cp -r "${config_defaults_path}/aws/group_vars" "${config_path}/"
-elif [[ "${flavor}" == "openstack" ]]; then
-  cp -r "${config_defaults_path}/openstack/group_vars" "${config_path}/"
-elif [[ "${flavor}" == "vsphere" ]]; then
-  cp -r "${config_defaults_path}/vsphere/group_vars" "${config_path}/"
-fi
+# Copy config type specific group_vars
+cp -r "${config_defaults_path}/${config_type}/group_vars" "${config_path}/"
 
 # Copy inventory.ini
 if [[ ! -f "${config[inventory_file]}" ]]; then
