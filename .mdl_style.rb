@@ -14,6 +14,9 @@ all
 #===============================================================================
 # Exclude the rules
 
+# Allow first header to be a non-top level header.
+exclude_rule 'MD002'
+
 # We strive to not restrict line lengths
 # https://github.com/elastisys/ck8s-apps/blob/master/DEVELOPMENT.md#markdown
 exclude_rule 'MD013'
