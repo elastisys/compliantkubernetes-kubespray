@@ -13,7 +13,7 @@ if [ $# -lt 1 ] || [ $# -gt 2 ]; then
     exit 1
 fi
 
-flavor=$1
+cloud_provider=$1
 if [ $# -eq 2 ]; then
     fingerprint=$2
 fi
@@ -22,20 +22,22 @@ here="$(dirname "$(readlink -f "$0")")"
 # shellcheck source=bin/common.bash
 source "${here}/common.bash"
 
-CK8S_CLOUD_PROVIDER=${CK8S_CLOUD_PROVIDER:-""}
-if [[ ${CK8S_CLOUD_PROVIDER} != "" ]]; then
-    log_error "ERROR: CK8S_CLOUD_PROVIDER is not supported"
-    exit 1
-fi
+config_type="default"
+if [ -n "${cloud_provider:-}" ]; then
+    case "${cloud_provider:-}" in
+        aws|gcp|vsphere)
+            config_type="${cloud_provider}"
+            ;;
 
-# Validate the flavor
-if [ "${flavor}" != "default" ] && \
-   [ "${flavor}" != "gcp" ] && \
-   [ "${flavor}" != "openstack" ] && \
-   [ "${flavor}" != "vsphere" ] && \
-   [ "${flavor}" != "aws" ]; then
-    log_error "ERROR: Unsupported flavor: ${flavor}"
-    exit 1
+        citycloud|safespring)
+            config_type="openstack"
+            ;;
+
+        *)
+            log_error "ERROR: Unsupported cloud provider: ${cloud_provider}"
+            exit 1
+            ;;
+    esac
 fi
 
 generate_sops_config() {
@@ -58,23 +60,15 @@ else
     generate_sops_config
 fi
 
-log_info "Initializing CK8S configuration with flavor: ${flavor}"
+log_info "Initializing CK8S configuration with configuration type: ${config_type}"
+
 mkdir -p "${config_path}"
 
-# Copy default group_vars
+# Copy common group_vars
 cp -r "${config_defaults_path}/common/group_vars" "${config_path}/"
 
-if [[ "${flavor}" == "default" ]]; then
-  cp -r "${config_defaults_path}/default/group_vars" "${config_path}/"
-elif [[ "${flavor}" == "gcp" ]]; then
-  cp -r "${config_defaults_path}/gcp/group_vars" "${config_path}/"
-elif [[ "${flavor}" == "aws" ]]; then
-  cp -r "${config_defaults_path}/aws/group_vars" "${config_path}/"
-elif [[ "${flavor}" == "openstack" ]]; then
-  cp -r "${config_defaults_path}/openstack/group_vars" "${config_path}/"
-elif [[ "${flavor}" == "vsphere" ]]; then
-  cp -r "${config_defaults_path}/vsphere/group_vars" "${config_path}/"
-fi
+# Copy config type specific group_vars
+cp -r "${config_defaults_path}/${config_type}/group_vars" "${config_path}/"
 
 # Copy inventory.ini
 if [[ ! -f "${config[inventory_file]}" ]]; then
