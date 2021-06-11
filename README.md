@@ -15,16 +15,18 @@ Content:
 
     ```bash
     export CK8S_CONFIG_PATH=~/.ck8s/my-environment
-    ./bin/ck8s-kubespray init <prefix> <cloud_provider> [<SOPS fingerprint>]
+    ./bin/ck8s-kubespray init <prefix> [--cloud-provider cloud_provider] [--sops-fingerprint fingerprint]
     ```
 
     Arguments:
     * `prefix` will be used to differentiate this cluster from others in the same CK8S_CONFIG_PATH.
       For now you need to set this to `wc` or `sc` if you want to install compliantkubernetes apps on top afterwards, this restriction will be removed later.
-    * `cloud_provider` will determine some default values for a variety of config options.
+
+    Flags:
+    * `--cloud_provider` will determine some default values for a variety of config options, the environment variable `CK8S_CLOUD_PROVIDER` is used if unset.
       Supported options are `default`, `gcp`, `aws`, `vsphere`, and `openstack`.
-    * `SOPS fingerprint` is the gpg fingerprint that will be used for SOPS encryption.
-      You need to set this or the environment variable `CK8S_PGP_FP` the first time SOPS is used in your specified config path.
+    * `--sops-fingerprint` is the PGP fingerprint that will be used for SOPS encryption, the environment variable `CK8S_PGP_FP` is used if unset.
+      This flag is only required first time you configure SOPS in your specified config path.
 
 1. Edit the `inventory.ini` (found in your config path) to match the VMs (IP addresses and other settings that might be needed for your setup) that should be part of the cluster.
    Or if you have one created by a terraform script in `kubespray/contrib/terraform` you should use that one.

@@ -1,6 +1,8 @@
 ### Changed
 
-- Renamed init argument flavor to cloud_provider.
+- Changed init arguments into flags:
+  - flavor -> --cloud-provider
+  - sops_fingerprint -> --sops-fingerprint
 
 ### Fixed
 

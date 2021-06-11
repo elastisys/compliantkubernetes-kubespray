@@ -10,7 +10,7 @@ here="$(dirname "$(readlink -f "$0")")"
 usage() {
     echo "COMMANDS:" 1>&2
     echo "  init                                        initialize the config path" 1>&2
-    echo "      args: <prefix> <cloud_provider> [<SOPS fingerprint>]" 1>&2
+    echo "      args: <prefix> [--cloud-provider cloud_provider] [--sops-fingerprint fingerprint]" 1>&2
     echo "  apply                                       runs kubespray to create the cluster" 1>&2
     echo "      args: <prefix> [<options>]" 1>&2
     echo "  run-playbook                                runs any ansible playbook in kubespray" 1>&2
@@ -31,7 +31,7 @@ source "${here}/common.bash"
 
 case "${1}" in
     init)
-        if [ $# -lt 3 ] || [ $# -gt 4 ]; then
+        if [ $# -lt 2 ]; then
             usage
         fi
         shift 2

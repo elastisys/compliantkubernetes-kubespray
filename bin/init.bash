@@ -8,19 +8,29 @@
 set -eu -o pipefail
 shopt -s globstar nullglob dotglob
 
-if [ $# -lt 1 ] || [ $# -gt 2 ]; then
-    echo "error when running $0: argument mismatch" 1>&2
-    exit 1
-fi
-
-cloud_provider=$1
-if [ $# -eq 2 ]; then
-    fingerprint=$2
-fi
-
 here="$(dirname "$(readlink -f "$0")")"
 # shellcheck source=bin/common.bash
 source "${here}/common.bash"
+
+cloud_provider="${CK8S_CLOUD_PROVIDER:-}"
+fingerprint="${CK8S_PGP_FP:-}"
+
+while [ "${#}" -gt 1 ]; do
+    case "${1}" in
+    "--cloud-provider") cloud_provider="${2}" ;;
+    "--sops-fingerprint") fingerprint="${2}" ;;
+    *)
+        log_error "ERROR: unknown flag ${1}"
+        exit 1
+        ;;
+    esac
+    shift 2
+done
+
+if [ -z "${cloud_provider}" ]; then
+    log_error "ERROR: either --cloud-provider or the environment variable CK8S_CLOUD_PROVIDER must be set."
+    exit 1
+fi
 
 config_type="default"
 if [ -n "${cloud_provider:-}" ]; then
@@ -41,13 +51,9 @@ if [ -n "${cloud_provider:-}" ]; then
 fi
 
 generate_sops_config() {
-    if [ -z ${fingerprint+x} ]; then
-        if [ -z ${CK8S_PGP_FP+x} ]; then
-            log_error "ERROR: either the <SOPS fingerprint> argument or the env variable CK8S_PGP_FP must be set."
-            exit 1
-        else
-            fingerprint="${CK8S_PGP_FP}"
-        fi
+    if [ -z "${fingerprint}" ]; then
+        log_error "ERROR: either --sops-fingerprint or the environment variable CK8S_PGP_FP must be set."
+        exit 1
     fi
     log_info "Initializing SOPS config with PGP fingerprint: ${fingerprint}"
     sops_config_write_fingerprints "${fingerprint}"
