@@ -27,3 +27,4 @@ repos:
     args:
     - "--external-sources"
   - id: markdownlint
+    exclude: CHANGELOG.md
