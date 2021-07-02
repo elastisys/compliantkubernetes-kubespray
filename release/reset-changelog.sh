@@ -58,7 +58,7 @@ echo -e "<!-- END TOC -->" >> temp-toc2.md
 echo -e "<!-- BEGIN TOC -->" | cat - temp-toc2.md > temp-toc.md
 echo -e "\n-------------------------------------------------" >> temp-toc.md
 # Creating new changelog
-echo -e "# Compliant Kubernetes changelog" > "${changelog}"
+echo -e "# Compliant Kubernetes Kubespray changelog" > "${changelog}"
 cat temp-toc.md temp-cl2.md >> "${changelog}"
 rm temp-toc.md temp-toc2.md temp-cl.md temp-cl2.md
 # Clearing WIP-CHANGELOG.md
