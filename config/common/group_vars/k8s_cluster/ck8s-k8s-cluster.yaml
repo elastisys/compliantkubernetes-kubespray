@@ -93,3 +93,4 @@ audit_policy_custom_rules: |-
       - "RequestReceived"
 podsecuritypolicy_enabled: true
 kubeconfig_localhost: true
+calico_felix_prometheusmetricsenabled: true
