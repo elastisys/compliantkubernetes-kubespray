@@ -17,6 +17,8 @@ usage() {
     echo "      args: <prefix> <playbook> [<options>]" 1>&2
     echo "  apply-ssh                                   applies SSH keys from a file to a cluster" 1>&2
     echo "      args: <prefix> [<options>]" 1>&2
+    echo "  reboot-nodes                                reboots all nodes in a cluster if needed" 1>&2
+    echo "      args: <prefix> [--extra-vars manual_prompt=true] [<options>]" 1>&2
     exit 1
 }
 
@@ -57,6 +59,13 @@ case "${1}" in
         fi
         shift 2
         "${here}/apply-ssh.bash" "${@}"
+        ;;
+    reboot-nodes)
+        if [ $# -lt 2 ]; then
+            usage
+        fi
+        shift 2
+        "${here}/reboot-nodes.bash" "${@}"
         ;;
     *) usage ;;
 esac
