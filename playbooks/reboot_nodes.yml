@@ -1,0 +1,94 @@
+- hosts: k8s_cluster
+  serial: 1
+  order: reverse_inventory
+  tasks:
+
+    - name: Check if reboot is required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+
+    # In a normal play, the pause action is only executed once, not once-per-host.
+    # In this case, we really want to force the once-per-host thing.
+    - name: Prompt for rebooting
+      pause:
+        prompt: "Press ENTER to reboot {{ item }} now, or Ctrl+C to abort."
+      # We need to check for the existence of 'reboot_required_file' first because play_hosts also
+      # include hosts that have failed. When a host has failed, it stops executing and thus doesn't
+      # have 'reboot_required_file'. And if we try to access 'stat', boom! failure. We don't want that.
+      when: "manual_prompt | default(false) | bool and 'reboot_required_file' in hostvars[item] and hostvars[item]['reboot_required_file'].stat.exists"
+      with_items: "{{ play_hosts }}"
+
+    - name: hostname
+      shell: echo $HOSTNAME
+      args:
+        executable: /bin/bash
+      register: hostname
+      when: reboot_required_file.stat.exists
+
+    - name: Rebooting machine
+      shell: sleep 2 && shutdown -r now "Ansible updates triggered"
+      async: 1
+      poll: 0
+      ignore_errors: true
+      when: reboot_required_file.stat.exists
+
+    # Either ansible_host or ansible_ssh_host should be set to the target IP,
+    # but the other is probably set to localhost when running a local_action.
+    # So we need to pick the correct one.
+    # If both are set then a redundant wait is run.
+
+    - name: Waiting for the machine to come back (ansible_host)
+      local_action: wait_for host={{ ansible_host }} state=started port=22 delay=30
+      become: no
+      register: machine_up
+      ignore_errors: yes
+      when:
+      - ansible_host != "localhost"
+      - reboot_required_file.stat.exists
+
+    - name: Waiting for the machine to come back (ansible_ssh_host)
+      local_action: wait_for host={{ ansible_ssh_host }} state=started port=22 delay=30
+      become: no
+      register: machine_up
+      ignore_errors: yes
+      when:
+      - ansible_ssh_host != "localhost"
+      - reboot_required_file.stat.exists
+
+    - name: wait for kubectl access
+      command: kubectl get nodes --kubeconfig /etc/kubernetes/admin.conf
+      delegate_to: "{{groups['kube_control_plane'][0]}}"
+      register: kubectl_up
+      until: kubectl_up.rc == 0
+      retries: 30
+      delay: 3
+      when: reboot_required_file.stat.exists
+
+    - name: get time
+      debug:
+        var=ansible_date_time.iso8601
+      register: time
+      when: reboot_required_file.stat.exists
+
+    - name: Wait for node to start posting heartbeats
+      ansible.builtin.shell: $([[ {{time['ansible_date_time.iso8601']}} < $(kubectl get node {{hostname.stdout}} -o jsonpath='{.status.conditions[?(@.type=="Ready")].lastHeartbeatTime}' --kubeconfig /etc/kubernetes/admin.conf) ]])
+      delegate_to: "{{groups['kube_control_plane'][0]}}"
+      args:
+        executable: /bin/bash
+      register: kubelet_heartbeat
+      until: kubelet_heartbeat.rc == 0
+      retries: 30
+      delay: 3
+      when: reboot_required_file.stat.exists
+
+    - name: Wait for node to be ready
+      ansible.builtin.shell: $([[ $(kubectl get node {{hostname.stdout}} -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' --kubeconfig /etc/kubernetes/admin.conf) == "True" ]])
+      delegate_to: "{{groups['kube_control_plane'][0]}}"
+      args:
+        executable: /bin/bash
+      register: kubelet_ready
+      until: kubelet_ready.rc == 0
+      retries: 30
+      delay: 3
+      when: reboot_required_file.stat.exists
