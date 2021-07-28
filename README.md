@@ -63,6 +63,16 @@ When running this command, the SSH keys are applied to each node in the cluster 
 A connection test is performed after each node which has to succeed in order for the playbook to continue.
 If the connection test fails, you may have lost your SSH access to the node; to recover from this, you can set up an SSH connection before running the command and keep it active so that you can change the authorized keys manually.
 
+## Rebooting nodes
+
+You can reboot all nodes that wants to restart (usually to finish installing new packages) by running:
+
+```bash
+./bin/ck8s-kubespray reboot-nodes <prefix> [--extra-vars manual_prompt=true] [<options>]
+```
+
+If you set `--extra-vars manual_prompt=true` then you get a manual prompt before each reboot so you can stop the playbook if you want.
+
 ## Running other kubespray playbooks
 
 With the following command you can run any ansible playbook available in kubespray:
