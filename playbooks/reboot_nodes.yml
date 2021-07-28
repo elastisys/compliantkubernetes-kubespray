@@ -39,19 +39,17 @@
     # If both are set then a redundant wait is run.
 
     - name: Waiting for the machine to come back (ansible_host)
-      local_action: wait_for host={{ ansible_host }} state=started port=22 delay=30
+      local_action: wait_for host={{ ansible_host }} state=started port=22 delay=30 timeout=600
       become: no
       register: machine_up
-      ignore_errors: yes
       when:
       - ansible_host != "localhost"
       - reboot_required_file.stat.exists
 
     - name: Waiting for the machine to come back (ansible_ssh_host)
-      local_action: wait_for host={{ ansible_ssh_host }} state=started port=22 delay=30
+      local_action: wait_for host={{ ansible_ssh_host }} state=started port=22 delay=30 timeout=600
       become: no
       register: machine_up
-      ignore_errors: yes
       when:
       - ansible_ssh_host != "localhost"
       - reboot_required_file.stat.exists
