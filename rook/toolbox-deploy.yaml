@@ -37,6 +37,10 @@ spec:
               name: ceph-config
             - name: mon-endpoint-volume
               mountPath: /etc/rook
+          resources:
+            requests:
+             cpu: "5m"
+             memory: "10Mi"
       volumes:
         - name: mon-endpoint-volume
           configMap:
