@@ -1,2 +1,49 @@
 csi:
   enableCephfsDriver: false
+  csiRBDProvisionerResource: |
+   - name : csi-provisioner
+     resource:
+       requests:
+         memory: 20Mi
+         cpu: 5m
+   - name : csi-resizer
+     resource:
+       requests:
+         memory: 20Mi
+         cpu: 5m
+   - name : csi-attacher
+     resource:
+       requests:
+         memory: 20Mi
+         cpu: 5m
+   - name : csi-snapshotter
+     resource:
+       requests:
+         memory: 50Mi
+         cpu: 5m
+   - name : csi-rbdplugin
+     resource:
+       requests:
+         memory: 20Mi
+         cpu: 5m
+   - name : liveness-prometheus
+     resource:
+       requests:
+         memory: 10Mi
+         cpu: 5m
+  csiRBDPluginResource: |
+   - name : driver-registrar
+     resource:
+       requests:
+         memory: 5Mi
+         cpu: 5m
+   - name : csi-rbdplugin
+     resource:
+       requests:
+         memory: 20Mi
+         cpu: 5m
+   - name : liveness-prometheus
+     resource:
+       requests:
+         memory: 10Mi
+         cpu: 5m

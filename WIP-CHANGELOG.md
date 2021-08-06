@@ -8,5 +8,6 @@
 ### Added
 
 - Added new command to reboot nodes in a cluster if necessary
+- resource requests for rook containers [#105](https://github.com/elastisys/compliantkubernetes-kubespray/pull/105)
 
 ### Removed
