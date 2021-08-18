@@ -64,17 +64,7 @@ mkdir -p "${config_path}"
 # Copy default group_vars
 cp -r "${config_defaults_path}/common/group_vars" "${config_path}/"
 
-if [[ "${flavor}" == "default" ]]; then
-  cp -r "${config_defaults_path}/default/group_vars" "${config_path}/"
-elif [[ "${flavor}" == "gcp" ]]; then
-  cp -r "${config_defaults_path}/gcp/group_vars" "${config_path}/"
-elif [[ "${flavor}" == "aws" ]]; then
-  cp -r "${config_defaults_path}/aws/group_vars" "${config_path}/"
-elif [[ "${flavor}" == "openstack" ]]; then
-  cp -r "${config_defaults_path}/openstack/group_vars" "${config_path}/"
-elif [[ "${flavor}" == "vsphere" ]]; then
-  cp -r "${config_defaults_path}/vsphere/group_vars" "${config_path}/"
-fi
+cp -r --dereference "${config_defaults_path}/${flavor}/group_vars" "${config_path}/"
 
 # Copy inventory.ini
 if [[ ! -f "${config[inventory_file]}" ]]; then
