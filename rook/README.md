@@ -76,3 +76,87 @@ $ kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash
   io:
     client:   23 KiB/s rd, 6.5 MiB/s wr, 3 op/s rd, 111 op/s wr
 ```
+
+## Uninstall Rook and Zap of disks
+
+First check which disks Rook is using on the nodes and note them down. As they will be used later to zap the disks after rook is removed. If the cloud-init is used to allocate a disks you can skip this part and use them later on.
+
+This is done by for each node with the following command:
+
+```console
+./bin/ck8s ops kubectl sc logs -n rook-ceph rook-ceph-osd-prepare-<cluster name>-k8s-node-nf-<node number>
+./bin/ck8s ops kubectl wc logs -n rook-ceph rook-ceph-osd-prepare-<cluster name>-k8s-node-nf-<node number>
+```
+
+Note down `/dev/sdb`
+
+```console
+"devices": [
+                "/dev/sdb1"
+            ],
+```
+
+from
+
+```console
+cephosd: {
+    "1": [
+        {
+            "devices": [
+                "/dev/sdb1"
+            ],
+            "lv_name": "osd-data-fd645a6e-ba55-4579-829b-2dfb5229691f",
+            "lv_path": "/dev/ceph-15b06b88-5027-419c-a04e-e6e4c616b109/osd-data-fd645a6e-ba55-4579-829b-2dfb5229691f",
+            "lv_size": "<170.00g",
+            "lv_tags": "ceph.block_device=/dev/ceph-15b06b88-5027-419c-a04e-e6e4c616b109/osd-data-fd645a6e-ba55-4579-829b-2dfb5229691f,ceph.block_uuid=i4StEb-p3KV-jbYK-ng22-0c97-JkBt-20wJ4l,ceph.cephx_lockbox_secret=,ceph.cluster_fsid=3a9596ad-a597-4d00-9bdf-92a26421a092,ceph.cluster_name=ceph,ceph.crush_device_class=None,ceph.encrypted=0,ceph.osd_fsid=ba2b18fd-e129-42b1-9f50-2eb90bf4034b,ceph.osd_id=1,ceph.osdspec_affinity=,ceph.type=block,ceph.
+            ...
+        }
+}
+```
+
+### Remove Rook
+
+Then to remove Rook use the following snippet:
+
+```console
+./remove-rook.sh
+```
+
+### Ensure that Rook is removed
+
+Ensure that Rook is fully removed by looking at resources, some examples are the following:
+
+```console
+./bin/ck8s ops kubectl sc get pods -n rook-ceph
+./bin/ck8s ops kubectl wc get pods -n rook-ceph
+```
+
+```console
+./bin/ck8s ops kubectl sc get storageclass
+./bin/ck8s ops kubectl wc get storageclass
+```
+
+### Zap Rook disks
+
+For each node it is a good idea to zap the disks used by Rook. This needs to be done for each node used as storage in the cluster.
+
+Zap the disks using:
+
+```bash
+export IPADDRESSES=( "IP-node-1" "IP-node-2" "..." )
+```
+
+```bash
+for IP in "${IPADDRESSES[@]}"; do
+  ./zap-disk.sh ${IP} "<disk parameter if all the nodes use the same: sXX>"
+done
+```
+
+### Clean up rook folder
+
+Finally on all the nodes the `/var/lib/rook` needs to be cleaned up.
+
+```console
+ansible all -i ${CK8S_CONFIG_PATH}/sc-config/inventory.ini --become -m shell -a 'rm -rf /var/lib/rook'
+ansible all -i ${CK8S_CONFIG_PATH}/wc-config/inventory.ini --become -m shell -a 'rm -rf /var/lib/rook'
+```
