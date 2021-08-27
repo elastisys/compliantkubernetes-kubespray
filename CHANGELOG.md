@@ -21,6 +21,8 @@
 
 ### Added
 
+- Added scripts and instructions for removing Rook.
+
 ### Removed
 
 -------------------------------------------------

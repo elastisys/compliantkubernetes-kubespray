@@ -1,0 +1,32 @@
+# This script should run on the working nodes of the cluster.
+# DO NOT RUN THIS JUST AS IT IS.
+# https://github.com/rook/rook/blob/master/Documentation/ceph-teardown.md#zapping-devices
+
+# Zap the disk to a fresh, usable state (zap-all is important, b/c MBR has to be clean)
+: "${DISK:?Missing DISK}"
+
+# You will have to run this step for all disks.
+sudo sgdisk --zap-all $DISK
+
+# Clean hdds with dd
+sudo dd if=/dev/zero of="$DISK" bs=1M count=100 oflag=direct,dsync
+
+# Clean disks such as ssd with blkdiscard instead of dd
+#sudo blkdiscard $DISK
+
+# These steps only have to be run once on each node
+# If rook sets up osds using ceph-volume, teardown leaves some devices mapped that lock the disks.
+ls /dev/mapper/ceph-* | sudo xargs -I% -- dmsetup remove %
+
+# ceph-volume setup can leave ceph-<UUID> directories in /dev and /dev/mapper (unnecessary clutter)
+sudo rm -rf /dev/ceph-*
+sudo rm -rf /dev/mapper/ceph--*
+
+# Inform the OS of partition table changes
+sudo partprobe $DISK
+
+sudo rm -rf /var/lib/rook/
+
+# Ensure that everything is wiped
+lsblk
+ls /var/lib/rook
