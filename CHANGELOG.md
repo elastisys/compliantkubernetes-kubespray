@@ -1,8 +1,26 @@
 # Compliant Kubernetes Kubespray changelog
 <!-- BEGIN TOC -->
+- [v2.17.0-ck8s1](#v2170-ck8s1---2021-09-16)
 - [v2.16.0-ck8s1](#v2160-ck8s1---2021-07-02)
 - [v2.15.0-ck8s1](#v2150-ck8s1---2021-05-27)
 <!-- END TOC -->
+
+-------------------------------------------------
+## v2.17.0-ck8s1 - 2021-09-16
+
+### Changed
+
+- enabled calico metrics reporting
+- init script uses $flavor automatically to choose the group folder to copy to the config folder
+
+### Fixed
+
+### Added
+
+- Added new command to reboot nodes in a cluster if necessary
+- resource requests for rook containers [#105](https://github.com/elastisys/compliantkubernetes-kubespray/pull/105)
+
+### Removed
 
 -------------------------------------------------
 ## v2.16.0-ck8s1 - 2021-07-02
