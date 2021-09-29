@@ -8,9 +8,17 @@ external_openstack_cloud_controller_extra_args:
   # Must be different for every cluster in the same openstack project
   cluster-name: "set-me"
 
-# cinder_csi_enabled: true
-# persistent_volumes_enabled: true
-# openstack_blockstorage_ignore_volume_az: true
+cinder_csi_enabled: true
+persistent_volumes_enabled: true
+expand_persistent_volumes: true
+openstack_blockstorage_ignore_volume_az: true
+
+storage_classes:
+  - name: cinder-csi
+    is_default: true
+    parameters:
+      allowVolumeExpansion: true
+      availability: nova
 
 # external_openstack_lbaas_network_id: "Neutron network ID to create LBaaS VIP"
 # external_openstack_lbaas_subnet_id: "Neutron subnet ID to get IP from"
