@@ -10,5 +10,6 @@
 
 - Added new command to reboot nodes in a cluster if necessary
 - resource requests for rook containers [#105](https://github.com/elastisys/compliantkubernetes-kubespray/pull/105)
+- Added configuration for Openstack to use Cinder CSI by default with volume expansion enabled.
 
 ### Removed
