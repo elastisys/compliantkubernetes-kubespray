@@ -76,7 +76,7 @@
         executable: /bin/bash
       register: kubelet_heartbeat
       until: kubelet_heartbeat.rc == 0
-      retries: 30
+      retries: 60
       delay: 3
       when: reboot_required_file.stat.exists
 
