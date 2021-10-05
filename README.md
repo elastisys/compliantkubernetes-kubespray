@@ -73,6 +73,11 @@ You can reboot all nodes that wants to restart (usually to finish installing new
 
 If you set `--extra-vars manual_prompt=true` then you get a manual prompt before each reboot so you can stop the playbook if you want.
 
+### Known issues
+
+- The script may fail with the message `error while evaluating conditional (kubelet_heartbeat.rc == 0): 'dict object' has no attribute 'rc'`
+  - In such situations just rerun the script. It will skip the check for that node, so check that it is up and running manually afterwards.
+
 ## Running other kubespray playbooks
 
 With the following command you can run any ansible playbook available in kubespray:
