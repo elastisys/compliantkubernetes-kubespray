@@ -1,8 +1,14 @@
+### Release notes
+
+- Check out the [upgrade guide](migration/v2.16.0-ck8s1-v2.17.0-ck8s1/upgrade-cluster.md) for a complete set of instructions needed to upgrade.
+
 ### Changed
 
 - enabled calico metrics reporting
 - init script uses $flavor automatically to choose the group folder to copy to the config folder
 - Changed default openstack config to use the external cloud controller
+- Upgraded kubespray from v2.16.0 to 2.17.0.
+    Includes upgrade to Kubernetes v1.21.5.
 
 ### Fixed
 
