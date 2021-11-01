@@ -73,6 +73,8 @@ You can reboot all nodes that wants to restart (usually to finish installing new
 
 If you set `--extra-vars manual_prompt=true` then you get a manual prompt before each reboot so you can stop the playbook if you want.
 
+Note that this playbook requires you to use ansible version >= 2.10.
+
 ### Known issues
 
 - The script may fail with the message `error while evaluating conditional (kubelet_heartbeat.rc == 0): 'dict object' has no attribute 'rc'`

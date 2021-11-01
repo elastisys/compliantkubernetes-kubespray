@@ -3,6 +3,12 @@
   order: reverse_inventory
   tasks:
 
+    - name: Check that ansible version is >= 2.10.0
+      assert:
+        that:
+        - ansible_version.full is version('2.10.0', '>=')
+        fail_msg: "You need to have an ansible version >= 2.10.0"
+
     - name: Check if reboot is required
       stat:
         path: /var/run/reboot-required
@@ -24,6 +30,11 @@
       args:
         executable: /bin/bash
       register: hostname
+      when: reboot_required_file.stat.exists
+
+    - name: drain node
+      command: kubectl drain {{hostname.stdout}} --ignore-daemonsets=true --delete-emptydir-data=true --force=true --kubeconfig /etc/kubernetes/admin.conf
+      delegate_to: "{{groups['kube_control_plane'][0]}}"
       when: reboot_required_file.stat.exists
 
     - name: Rebooting machine
@@ -89,4 +100,9 @@
       until: kubelet_ready.rc == 0
       retries: 30
       delay: 3
+      when: reboot_required_file.stat.exists
+
+    - name: uncordon node
+      command: kubectl uncordon {{hostname.stdout}} --kubeconfig /etc/kubernetes/admin.conf
+      delegate_to: "{{groups['kube_control_plane'][0]}}"
       when: reboot_required_file.stat.exists
