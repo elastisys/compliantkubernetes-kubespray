@@ -1,5 +1,13 @@
 csi:
   enableCephfsDriver: false
+  #provisionerTolerations:
+  #  - key: "nodeType"
+  #    operator: Exists
+  #    effect: NoSchedule
+  #pluginTolerations:
+  #  - key: "nodeType"
+  #    operator: Exists
+  #    effect: NoSchedule
   csiRBDProvisionerResource: |
    - name : csi-provisioner
      resource:
