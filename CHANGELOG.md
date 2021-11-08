@@ -1,9 +1,19 @@
 # Compliant Kubernetes Kubespray changelog
 <!-- BEGIN TOC -->
+- [v2.17.1-ck8s1](#v2171-ck8s1---2021-11-08)
 - [v2.17.0-ck8s1](#v2170-ck8s1---2021-10-21)
 - [v2.16.0-ck8s1](#v2160-ck8s1---2021-07-02)
 - [v2.15.0-ck8s1](#v2150-ck8s1---2021-05-27)
 <!-- END TOC -->
+
+-------------------------------------------------
+## v2.17.1-ck8s1 - 2021-11-08
+
+### Changed
+
+- The reboot playbook now also drains the nodes before restarting them.
+- Upgraded kubespray from v2.17.0 to v2.17.1.
+    Includes upgrade to Kubernetes v1.21.6.
 
 -------------------------------------------------
 ## v2.17.0-ck8s1 - 2021-10-21
