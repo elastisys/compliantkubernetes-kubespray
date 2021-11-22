@@ -13,6 +13,7 @@ chart_version="v1.5.3"
 
 # Install rook operator
 kubectl create namespace "${namespace}" --dry-run -o yaml | kubectl apply -f -
+kubectl label namespace "${namespace}" owner=operator
 helm upgrade --install --namespace "${namespace}" "${release_name}" "${chart}" \
   --version "${chart_version}" --values "${here}/operator-values.yaml" --wait
 
