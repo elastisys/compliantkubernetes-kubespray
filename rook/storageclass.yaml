@@ -17,6 +17,8 @@ metadata:
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
 provisioner: rook-ceph.rbd.csi.ceph.com
+mountOptions:
+  - discard
 parameters:
   clusterID: rook-ceph
   pool: replicapool
