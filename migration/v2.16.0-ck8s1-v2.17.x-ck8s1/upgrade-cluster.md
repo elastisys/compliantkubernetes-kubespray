@@ -4,6 +4,8 @@
 
 1. Update the kubespray submodule: `git submodule update --init --recursive`
 
+1. add `calico_felix_prometheusmetricsenabled: true` at the end of both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
+
 1. Upgrade your cluster by running `./bin/ck8s-kubespray run-playbook sc upgrade-cluster.yml -b`.
 
 1. Upgrade your cluster by running `./bin/ck8s-kubespray run-playbook wc upgrade-cluster.yml -b`.
