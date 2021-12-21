@@ -11,6 +11,8 @@ here="$(dirname "$(readlink -f "$0")")"
 # shellcheck source=bin/common.bash
 source "${here}/common.bash"
 
+check_openstack_credentials
+
 log_info "Creating kubernetes cluster using kubespray"
 pushd "${kubespray_path}"
 
