@@ -11,15 +11,15 @@ The releases will have the following version string: `<kubespray-version>-<ck8s-
 1. To release a version with an updated kubespray version create a release branch `release-<kubespray-version>` from the main branch.
 
     ```bash
-    git checkout main
-    git checkout -b release-<kubespray-version>
+    git switch main
+    git switch -c release-<kubespray-version>
     git push -u origin release-<kubespray-version>
     ```
 
 1. Reset changelog
 
     ```bash
-    git checkout -b reset-changelog-<kubespray-version>
+    git switch -c reset-changelog-<kubespray-version>
     release/reset-changelog.sh <kubespray-version>-<ck8s-patch>
     ```
 
@@ -43,8 +43,8 @@ The releases will have the following version string: `<kubespray-version>-<ck8s-
 1. Create a `QA-<kubespray-version>` branch and run QA checks on this branch.
 
     ```bash
-    git checkout release-<kubespray-version>
-    git checkout -b QA-<kubespray-version>
+    git switch release-<kubespray-version>
+    git switch -c QA-<kubespray-version>
     git push -u origin QA-<kubespray-version>
     ```
 
@@ -73,7 +73,7 @@ The releases will have the following version string: `<kubespray-version>-<ck8s-
     Merge the release PR locally and push it instead.*
 
     ```bash
-    git checkout release-<kubespray-version>
+    git switch release-<kubespray-version>
     git merge --ff-only QA-<kubespray-version>
     git push
     ```
@@ -83,8 +83,8 @@ The releases will have the following version string: `<kubespray-version>-<ck8s-
 1. Merge any fixes from the release branch back to the `main` branch `git cherry-pick` can be used, e.g.
 
     ```bash
-    git checkout main
-    git checkout -b release-<kubespray-version>-fixes
+    git switch main
+    git switch -c release-<kubespray-version>-fixes
     git cherry-pick <fix 1 hash> [<fix 2 hash>..]
     git push -u origin release-<kubespray-version>-fixes
     ```
@@ -101,19 +101,58 @@ The releases will have the following version string: `<kubespray-version>-<ck8s-
 
 ## Patch releases
 
-1. Create a new branch based on a release branch and commit the patch commits to it.
+1. Create a new branch `patch-<kubespray-version>-<patch-name>` from the release branch to patch and commit the patch to it.
 
     ```bash
-    git checkout release-<kubespray-version>
+    git switch release-<kubespray-version>
     git pull
-    git checkout -b branch_name
-    git cherry-pick [some fix in main]
-    git add -p file-with-some-new-fixes
+    git switch -c patch-<kubespray-version>-<patch-name>
+    git cherry-pick [fixed commits from main]
+    git add -p [fixed files]
     git commit
+    git push -u origin patch-<kubespray-version>-<patch-name>
     ```
 
-1. Continue from step 2 in the regular release flow.
-    With the exception that `<ck8s-patch>` number should be incremented and that `branch_name` will be used instead of the QA branch.
+1. Reset changelog, increment `<ck8s-patch>` from the previous version.
+
+    ```bash
+    release/reset-changelog.sh <kubespray-version>-<ck8s-patch>
+    ```
+
+    Make sure that `CHANGELOG.md` is updated correctly.
+
+1. Run QA checks on this branch related to the introduced changes.
+
+    **NOTE**: All changes made in QA should be added to `CHANGELOG.md` and **NOT** `WIP-CHANGELOG.md`.
+    Also, make sure to not merge any fixes into `release-<kubespray-version>` on this step.
+
+1. When the QA is finished, create the release tag and push it.
+
+    ```bash
+    git tag v<kubespray-version>-<ck8s-patch>
+    git push --tags
+    ```
+
+1. Create a PR against the release branch and request review.
+
+1. Fast-forward merge the PR to finalize the release.
+
+    This is to keep the commit hash and tag with it after the merge.
+
+    *Since GitHub currently does not support fast-forward merge of PRs this has to be done manually.*
+
+    ```bash
+    git switch release-<kubespray-version>
+    git merge --ff-only patch-<kubespray-version>-<patch-name>
+    git push
+    ```
+
+    A [GitHub actions workflow pipeline](/.github/workflows/release.yml) will create a GitHub release from the tag.
+
+    The release action will fail if the patch branch is merged in a way that does not preserve the commit hash and tag.
+    To fix this remove the previously created tag, recreate it on the release branch, and rerun the release action workflow.
+
+1. Follow the regular release from step 8 to merge eventual fixes into main and to update the public release notes.
 
 ## While developing
 
