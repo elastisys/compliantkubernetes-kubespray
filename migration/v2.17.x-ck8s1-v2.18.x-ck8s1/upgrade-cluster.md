@@ -19,11 +19,11 @@
 
 1. Add `cinder_tolerations` to clusters that needs it.
 
-1. If you want to upgrade and start using containerd, follow [this guide](https://kubespray.io/#/docs/upgrades/migrate_docker2containerd) to migrate.
-    NOTE: If you are running Compliant Kubernetes. Make sure you're running a version that has support for conatinerd.
-
-    Else you can add `container_manager: docker` to end of both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
+1. Add `container_manager: docker` to `${CK8S_CONFIG_PATH}/{wc,sc}-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
 
 1. Upgrade your service cluster by running `./bin/ck8s-kubespray run-playbook sc upgrade-cluster.yml -b`.
 
 1. Upgrade your workload cluster by running `./bin/ck8s-kubespray run-playbook wc upgrade-cluster.yml -b`.
+
+1. After the upgrade, if you want to start using containerd follow [this guide](https://kubespray.io/#/docs/upgrades/migrate_docker2containerd) to migrate.
+    NOTE: If you are running Compliant Kubernetes. Make sure you're running a version that has support for conatinerd.
