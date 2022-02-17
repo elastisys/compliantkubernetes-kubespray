@@ -22,6 +22,8 @@ kube_kubeadm_apiserver_extra_args:
 kube_proxy_mode: iptables
 kube_proxy_metrics_bind_address: "0.0.0.0:10249"
 
+container_manager: containerd
+
 enable_nodelocaldns: false
 
 kubernetes_audit: true
