@@ -14,6 +14,7 @@
 
 - Upgraded kubespray to 2.18.0
     Includes upgrade to Kubernetes v1.22.5.
+- Changed container manager to containerd
 
 -------------------------------------------------
 ## v2.17.1-ck8s1 - 2021-11-08

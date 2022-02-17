@@ -1,4 +1,6 @@
-# Upgrade v2.16.0-ck8s1 to v2.17.x-ck8s1
+# Upgrade v2.17.0-ck8s1 to v2.18.x-ck8s1
+
+**NOTE**: This release will upgrade Kubernetes to v1.22 which has removed a lot of APIs. See [this](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#whats-new-major-themes) for more information.
 
 1. Checkout the new release: `git switch v2.18.0-ck8s1`
 
@@ -26,4 +28,5 @@
 1. Upgrade your workload cluster by running `./bin/ck8s-kubespray run-playbook wc upgrade-cluster.yml -b`.
 
 1. After the upgrade, if you want to start using containerd follow [this guide](https://kubespray.io/#/docs/upgrades/migrate_docker2containerd) to migrate.
-    NOTE: If you are running Compliant Kubernetes. Make sure you're running a version that has support for conatinerd.
+
+**NOTE**: If you are running [Compliant Kubernetes Apps](https://github.com/elastisys/compliantkubernetes-apps). Make sure you're running a version that has support for conatinerd.
