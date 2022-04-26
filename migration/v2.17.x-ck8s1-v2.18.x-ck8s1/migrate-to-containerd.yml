@@ -1,0 +1,122 @@
+- hosts: k8s_cluster
+  serial: 1
+  tasks:
+    - name: checking service status
+      service_facts:
+
+    - name: Migrate to containerd
+      block:
+        - name: Check that ansible version is >= 2.10.0
+          assert:
+            that:
+            - ansible_version.full is version('2.10.0', '>=')
+            fail_msg: "You need to have an ansible version >= 2.10.0"
+
+        - name: hostname
+          shell: echo $HOSTNAME
+          args:
+            executable: /bin/bash
+          register: hostname
+
+        - name: drain node
+          shell: kubectl drain {{hostname.stdout}} --ignore-daemonsets=true --delete-emptydir-data=true --force=true --kubeconfig /etc/kubernetes/admin.conf
+          delegate_to: "{{groups['kube_control_plane'][0]}}"
+
+        - name: Stop docker and kubelet services
+          systemd:
+            name: "{{ item }}"
+            state: stopped
+          with_items:
+            - 'docker'
+            - 'kubelet'
+
+        - name: remove docker and its dependencies
+          apt:
+            pkg:
+            - docker-ce
+            - docker-ce-cli
+            - docker-ce-rootless-extras
+            - containerd.io
+            state: absent
+            force: yes
+
+
+        - name: install pigz
+          apt:
+            name: pigz
+            state: present
+
+        - name: run kubespray on and limit to just one node.
+          become: no
+          command: ansible-playbook -i {{inventory_file}} ../../kubespray/cluster.yml --limit={{hostname.stdout}} -b
+          delegate_to: localhost
+
+        - name: annotate nodes with cri sock #The annotation is required by kubeadm to follow through future cluster upgrades.
+          command: kubectl annotate node {{hostname.stdout}} --overwrite kubeadm.alpha.kubernetes.io/cri-socket=/var/run/containerd/containerd.sock
+          delegate_to: "{{groups['kube_control_plane'][0]}}"
+
+        - name: Rebooting machine
+          shell: sleep 2 && shutdown -r now "Ansible updates triggered"
+          async: 1
+          poll: 0
+          ignore_errors: true
+
+        # Either ansible_host or ansible_ssh_host should be set to the target IP,
+        # but the other is probably set to localhost when running a local_action.
+        # So we need to pick the correct one.
+        # If both are set then a redundant wait is run.
+
+        - name: Waiting for the machine to come back (ansible_host)
+          local_action: wait_for host={{ ansible_host }} state=started port=22 delay=30 timeout=600
+          become: false
+          register: machine_up
+          when:
+          - ansible_host != "localhost"
+
+        - name: Waiting for the machine to come back (ansible_ssh_host)
+          local_action: wait_for host={{ ansible_ssh_host }} state=started port=22 delay=30 timeout=600
+          become: false
+          register: machine_up
+          when:
+          - ansible_ssh_host != "localhost"
+
+        - name: wait for kubectl access
+          command: kubectl get nodes --kubeconfig /etc/kubernetes/admin.conf
+          delegate_to: "{{groups['kube_control_plane'][0]}}"
+          register: kubectl_up
+          until: kubectl_up.rc == 0
+          retries: 30
+          delay: 3
+
+        - name: get time
+          debug:
+            var=ansible_date_time.iso8601
+          register: time
+
+        - name: Wait for node to start posting heartbeats
+          ansible.builtin.shell: $([[ {{time['ansible_date_time.iso8601']}} < $(kubectl get node {{hostname.stdout}} -o jsonpath='{.status.conditions[?(@.type=="Ready")].lastHeartbeatTime}' --kubeconfig /etc/kubernetes/admin.conf) ]])
+          delegate_to: "{{groups['kube_control_plane'][0]}}"
+          args:
+            executable: /bin/bash
+          register: kubelet_heartbeat
+          until: kubelet_heartbeat.rc == 0
+          retries: 60
+          delay: 3
+
+        - name: Wait for node to be ready
+          ansible.builtin.shell: $([[ $(kubectl get node {{hostname.stdout}} -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' --kubeconfig /etc/kubernetes/admin.conf) == "True" ]])
+          delegate_to: "{{groups['kube_control_plane'][0]}}"
+          args:
+            executable: /bin/bash
+          register: kubelet_ready
+          until: kubelet_ready.rc == 0
+          retries: 30
+          delay: 3
+
+        - name: uncordon node
+          command: kubectl uncordon {{hostname.stdout}} --kubeconfig /etc/kubernetes/admin.conf
+          delegate_to: "{{groups['kube_control_plane'][0]}}"
+      when:
+       - container_manager is defined
+       - container_manager == 'containerd'
+       - ansible_facts.services['containerd.service'] is not defined or (ansible_facts.services['containerd.service'] is defined and not ansible_facts.services['containerd.service'].state == 'running')
