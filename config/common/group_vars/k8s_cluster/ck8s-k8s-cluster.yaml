@@ -4,6 +4,10 @@ kube_oidc_client_id: "kubelogin"
 kube_oidc_username_claim: "email"
 kube_oidc_groups_claim: "groups"
 
+etcd_version: v3.5.3
+etcd_binary_checksums:
+  amd64: e13e119ff9b28234561738cd261c2a031eb1c8688079dcf96d8035b3ad19ca58
+
 kube_apiserver_enable_admission_plugins:
   - "PodSecurityPolicy"
   - "NamespaceLifecycle"

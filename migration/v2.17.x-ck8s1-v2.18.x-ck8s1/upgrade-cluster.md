@@ -2,7 +2,7 @@
 
 **NOTE**: This release will upgrade Kubernetes to v1.22 which has removed a lot of APIs. See [this](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#whats-new-major-themes) for more information.
 
-1. Checkout the new release: `git switch v2.18.0-ck8s1`
+1. Checkout the new release: `git switch v2.18.1-ck8s1`
 
 1. Update the kubespray submodule: `git submodule update --init --recursive`
 
@@ -18,6 +18,14 @@
     If nodes are recreated, make sure to check previous step.
 
 1. Run terraform `terraform apply -var-file cluster.tfvars ${CK8S_KUBESPRAY_REPO}/kubespray/contrib/terraform/<cloudprovider>`
+
+1. Add the following to `${CK8S_CONFIG_PATH}/{wc,sc}-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
+
+    ```yaml
+    etcd_version: v3.5.3
+    etcd_binary_checksums:
+      amd64: e13e119ff9b28234561738cd261c2a031eb1c8688079dcf96d8035b3ad19ca58
+    ```
 
 1. Add `cinder_tolerations` to clusters that needs it.
 

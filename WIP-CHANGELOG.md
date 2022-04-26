@@ -1,5 +1,7 @@
 ### Changed
 
+- Changed default etcd version to 3.5.3
+
 ### Fixed
 
 ### Added
