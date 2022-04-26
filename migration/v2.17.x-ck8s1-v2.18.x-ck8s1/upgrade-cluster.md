@@ -6,6 +6,8 @@
 
 1. Update the kubespray submodule: `git submodule update --init --recursive`
 
+1. Update git remote for kubespray submodule: `git submodule sync`
+
 1. Find `use_server_groups` in cluster.tfvars:
     1. If set to `true`:
         1. Add `master_server_group_policy` and `node_server_group_policy` and set both to `anti-affinity` otherwise the worker nodes will be recreated.

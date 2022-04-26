@@ -4,6 +4,8 @@
 
 1. Update the kubespray submodule: `git submodule update --init --recursive`
 
+1. Update git remote for kubespray submodule: `git submodule sync`
+
 1. Add the following to `${CK8S_CONFIG_PATH}/{wc,sc}-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
 
     ```yaml
