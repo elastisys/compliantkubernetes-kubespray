@@ -1,11 +1,30 @@
 # Compliant Kubernetes Kubespray changelog
 <!-- BEGIN TOC -->
+- [v2.18.1-ck8s1](#v2181-ck8s1---2022-04-26)
 - [v2.18.0-ck8s1](#v2180-ck8s1---2022-02-08)
 - [v2.17.1-ck8s1](#v2171-ck8s1---2021-11-08)
 - [v2.17.0-ck8s1](#v2170-ck8s1---2021-10-21)
 - [v2.16.0-ck8s1](#v2160-ck8s1---2021-07-02)
 - [v2.15.0-ck8s1](#v2150-ck8s1---2021-05-27)
 <!-- END TOC -->
+
+-------------------------------------------------
+## v2.18.1-ck8s1 - 2022-04-26
+
+### Changed
+
+- Changed default etcd version to 3.5.3
+- Switched to fork of kubespray. https://github.com/elastisys/kubespray
+
+### Fixed
+
+- Fixed issue related to `kubeadm join` fail. Because there are no etcd pods mirrored by the kubelet, because of no psp were installed yet.
+
+### Added
+
+- Added ansible config
+- Playbook to remove unused docker resources (images, ...)
+- Lowered the threshold for garbage collection of unused images.
 
 -------------------------------------------------
 ## v2.18.0-ck8s1 - 2022-02-08
