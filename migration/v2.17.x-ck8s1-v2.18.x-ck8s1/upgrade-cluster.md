@@ -33,6 +33,14 @@
 
 1. Add `container_manager: docker` to `${CK8S_CONFIG_PATH}/{wc,sc}-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
 
+1. Add the following snippet at the end of both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
+
+    ```yaml
+    kubelet_config_extra_args:
+    imageGCHighThresholdPercent: 75
+    imageGCLowThresholdPercent: 70
+    ```
+
 1. Upgrade your service cluster by running `./bin/ck8s-kubespray run-playbook sc upgrade-cluster.yml -b`.
 
 1. Upgrade your workload cluster by running `./bin/ck8s-kubespray run-playbook wc upgrade-cluster.yml -b`.
