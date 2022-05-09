@@ -16,11 +16,13 @@ check_openstack_credentials
 log_info "Creating kubernetes cluster using kubespray"
 pushd "${kubespray_path}"
 
+VENV_NAME="$(pwgen 5 1)"
+
 if [ -z "${CK8S_KUBESPRAY_NO_VENV+x}" ]; then
     log_info "Installing requirements for kubespray"
-    python3 -m venv venv
+    python3 -m venv "venv-${VENV_NAME}"
     # shellcheck disable=SC1091
-    source venv/bin/activate
+    source "venv-${VENV_NAME}/bin/activate"
     pip install -r requirements.txt
 fi
 
@@ -36,6 +38,8 @@ if [ -f "${config_path}/artifacts/admin.conf" ]; then
     mv "${config_path}/artifacts/admin.conf" "${secrets[kube_config]}"
     sops_encrypt "${secrets[kube_config]}"
 fi
+
+rm -r "${kubespray_path}/venv-${VENV_NAME}"
 
 log_info "Cluster created sucessfully!"
 log_info "Kubeconfig located at ${secrets[kube_config]}"
