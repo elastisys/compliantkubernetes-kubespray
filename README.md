@@ -75,6 +75,14 @@ If you set `--extra-vars manual_prompt=true` then you get a manual prompt before
 
 Note that this playbook requires you to use ansible version >= 2.10.
 
+## Removing nodes
+
+You can remove a node from a ck8s cluster by running:
+
+```bash
+./bin/ck8s-kubespray remove-node <prefix> <node-name>[,<node-name-2>,...] [<options>]
+```
+
 ### Known issues
 
 - The script may fail with the message `error while evaluating conditional (kubelet_heartbeat.rc == 0): 'dict object' has no attribute 'rc'`
