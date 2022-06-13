@@ -2,6 +2,8 @@
 
 1. Checkout the new release: `git checkout v2.19.x-ck8s1`
 
+1. Switch to the correct remote: `git submodule sync`
+
 1. Update the kubespray submodule: `git submodule update --init --recursive`
 
 1. add the following snippet at the end of both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
