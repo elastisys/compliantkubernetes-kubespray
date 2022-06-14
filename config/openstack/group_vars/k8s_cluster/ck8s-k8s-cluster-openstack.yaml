@@ -1,4 +1,4 @@
-etcd_kubeadm_enabled: true
+etcd_deployment_type: kubeadm
 
 cloud_provider: external
 external_cloud_provider: openstack
@@ -40,3 +40,5 @@ storage_classes:
 #   - "ext-net"
 # external_openstack_metadata_search_order: "configDrive,metadataService"
 # supplementary_addresses_in_ssl_keys: []
+
+# kubeconfig_localhost_ansible_host: true
