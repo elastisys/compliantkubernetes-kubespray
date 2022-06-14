@@ -1,5 +1,6 @@
 # Compliant Kubernetes Kubespray changelog
 <!-- BEGIN TOC -->
+- [v2.19.0-ck8s1](#v2190-ck8s1---2022-06-14)
 - [v2.18.1-ck8s1](#v2181-ck8s1---2022-04-26)
 - [v2.18.0-ck8s1](#v2180-ck8s1---2022-02-08)
 - [v2.17.1-ck8s1](#v2171-ck8s1---2021-11-08)
@@ -7,6 +8,17 @@
 - [v2.16.0-ck8s1](#v2160-ck8s1---2021-07-02)
 - [v2.15.0-ck8s1](#v2150-ck8s1---2021-05-27)
 <!-- END TOC -->
+
+-------------------------------------------------
+## v2.19.0-ck8s1 - 2022-06-14
+
+### Changed
+
+- Use kubespray repository
+- Upgraded kubespray from v2.18.0 to v2.19.0.
+
+### Added
+- Added `remove-node` command
 
 -------------------------------------------------
 ## v2.18.1-ck8s1 - 2022-04-26
