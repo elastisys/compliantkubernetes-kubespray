@@ -17,10 +17,6 @@ cluster_admin_groups:
 - admin-group
 kubeconfig_localhost: false
 
-etcd_version: v3.5.3
-etcd_binary_checksums:
-  amd64: e13e119ff9b28234561738cd261c2a031eb1c8688079dcf96d8035b3ad19ca58
-
 kube_apiserver_enable_admission_plugins:
   - "PodSecurityPolicy"
   - "NamespaceLifecycle"
@@ -116,3 +112,7 @@ calico_felix_prometheusmetricsenabled: true
 kubelet_config_extra_args:
   imageGCHighThresholdPercent: 75
   imageGCLowThresholdPercent: 70
+
+calico_ipip_mode: 'Always'
+calico_vxlan_mode: 'Never'
+calico_network_backend: 'bird'
