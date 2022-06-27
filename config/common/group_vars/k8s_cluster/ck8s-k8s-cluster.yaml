@@ -1,8 +1,21 @@
 kube_oidc_auth: true
-kube_oidc_url: "https://dex.BASE-DOMAIN"
-kube_oidc_client_id: "kubelogin"
+kube_oidc_url: <IDP-URL|https://dex.BASE-DOMAIN>
+kube_oidc_client_id: <id-from-IDP|kubelogin>
+kube_oidc_client_secret: <secret-from-IDP|secret-from-dex>
 kube_oidc_username_claim: "email"
-kube_oidc_groups_claim: "groups"
+## don't add "groups" when connecting directly to google
+# kube_oidc_groups_claim: "groups"
+kube_oidc_extra_scopes: []
+kube_oidc_apiserver_endpoint: <Public-IP/DNS-to-apiserver-or-loadbalancer>
+kube_oidc_apiserver_port: "6443"
+kubeconfig_file_name: <kube_config_sc.yaml|kube_config_wc.yaml>
+artifacts_dir: "{{ inventory_dir }}/../.state"
+create_oidc_kubeconfig: true
+cluster_admin_users:
+- test@example.com
+cluster_admin_groups:
+- admin-group
+kubeconfig_localhost: false
 
 etcd_version: v3.5.3
 etcd_binary_checksums:
@@ -98,7 +111,6 @@ audit_policy_custom_rules: |-
     omitStages:
       - "RequestReceived"
 podsecuritypolicy_enabled: true
-kubeconfig_localhost: true
 calico_felix_prometheusmetricsenabled: true
 
 kubelet_config_extra_args:

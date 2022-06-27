@@ -98,3 +98,18 @@ With the following command you can run any ansible playbook available in kubespr
 
 Where `playbook` is the filename of the playbook that you want to run, e.g. `cluster.yml` if you want to create a cluster (making the command functionally the same as our `ck8s-kubespray apply` command) or `scale.yml` if you want to just add more nodes. Remember to check the kubespray documentation before running a playbook.
 This will use the inventory, group-vars, and ssh key in your config path and therefore requires that you first run the init command. Any `options` added will be forwarded to ansible.
+
+## Kubeconfig
+
+We recommend that you use OIDC kubeconfigs instead of regular cluster-admin kubeconfigs. The default settings will create OIDC kubeconfigs for you when you run `./bin/ck8s-kubespray apply <prefix>`, but there are some variables you need to set. See the variables in: `<prefix>-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` in your config path.
+
+But if you need to use a regular cluster-admin kubeconfig in a break-glass situation, then you can ssh to one of the controleplane nodes and use the kubeconfig at `/etc/kubernetes/admin.conf`. We recommend that you do not copy that kubeconfig to your local host, when dealing with production clusters.
+
+For development you can skip OIDC and instead get a regular cluster admin kubeconfig locally by setting `kubeconfig_localhost: true`. Note that you then must set `create_oidc_kubeconfig: false`.
+
+The kubeconfig and OIDC cluster admin RBAC are managed with the playbooks `playbooks/kubeconfig.yml` and `playbooks/cluster_admin_rbac.yml`. You can run them manually with:
+
+```bash
+./bin/ck8s-kubespray run-playbook <prefix> ../playbooks/kubeconfig.yml -b
+./bin/ck8s-kubespray run-playbook <prefix> ../playbooks/cluster_admin_rbac.yml -b
+```

@@ -39,10 +39,4 @@ popd
 
 log_info "Kubespray done"
 
-if [ -f "${config_path}/artifacts/admin.conf" ]; then
-    mv "${config_path}/artifacts/admin.conf" "${secrets[kube_config]}"
-    sops_encrypt "${secrets[kube_config]}"
-fi
-
 log_info "Playbook ${playbook} ran sucessfully!"
-log_info "Kubeconfig located at ${secrets[kube_config]}"
