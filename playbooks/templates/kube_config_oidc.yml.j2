@@ -1,0 +1,38 @@
+apiVersion: v1
+clusters:
+-   cluster:
+        certificate-authority-data: {{ ca_cert.stdout }}
+        server: https://{{ kube_oidc_apiserver_endpoint | default(kube_apiserver_access_address) }}:{{ kube_oidc_apiserver_port | default(kube_apiserver_port) }}
+    name: {{ cluster_name }}
+contexts:
+-   context:
+        cluster: {{ cluster_name }}
+        namespace: default
+        user: admin@{{ cluster_name }}
+    name: {{ cluster_name }}
+current-context: {{ cluster_name }}
+kind: Config
+preferences: {}
+users:
+-   name: admin@{{ cluster_name }}
+    user:
+        exec:
+            apiVersion: client.authentication.k8s.io/v1beta1
+            args:
+            - oidc-login
+            - get-token
+            - --oidc-issuer-url={{ kube_oidc_url }}
+            - --oidc-client-id={{ kube_oidc_client_id }}
+            - --oidc-client-secret={{ kube_oidc_client_secret }}
+{%   if kube_oidc_username_claim is defined %}
+            - --oidc-extra-scope={{ kube_oidc_username_claim }}
+{%   endif %}
+{%   if kube_oidc_groups_claim is defined %}
+            - --oidc-extra-scope={{ kube_oidc_groups_claim }}
+{%   endif %}
+{% for scope in kube_oidc_extra_scopes %}
+            - --oidc-extra-scope={{ scope }}
+{% endfor %}
+            command: kubectl
+            env: null
+            provideClusterInfo: false

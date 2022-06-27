@@ -29,7 +29,6 @@ kubespray_path="${root_path}/kubespray"
 
 config_path="${CK8S_CONFIG_PATH}/${prefix}-config"
 sops_config="${CK8S_CONFIG_PATH}/.sops.yaml"
-state_path="${CK8S_CONFIG_PATH}/.state"
 
 # Set the path to search for dynamic inventories
 export TERRAFORM_STATE_ROOT="${config_path}"
@@ -37,10 +36,6 @@ export TERRAFORM_STATE_ROOT="${config_path}"
 declare -A config
 # shellcheck disable=SC2034
 config["inventory_file"]="${config_path}/inventory.ini"
-
-declare -A secrets
-# shellcheck disable=SC2034
-secrets["kube_config"]="${state_path}/kube_config_${prefix}.yaml"
 
 log_info() {
     echo -e "[\e[34mck8s\e[0m] ${*}" 1>&2
