@@ -27,15 +27,13 @@ fi
 log_info "Running kubespray"
 ansible-playbook -i "${config[inventory_file]}" cluster.yml -b "${@}"
 
-popd
-
 log_info "Kubespray done"
 
-if [ -f "${config_path}/artifacts/admin.conf" ]; then
-    mkdir -p "${state_path}"
-    mv "${config_path}/artifacts/admin.conf" "${secrets[kube_config]}"
-    sops_encrypt "${secrets[kube_config]}"
-fi
+log_info "Get kubeconfig"
+ansible-playbook -i "${config[inventory_file]}" ../playbooks/kubeconfig.yml -b
+log_info "Adding cluster-admin ClusterRoleBinding"
+ansible-playbook -i "${config[inventory_file]}" ../playbooks/cluster_admin_rbac.yml -b
+
+popd
 
 log_info "Cluster created sucessfully!"
-log_info "Kubeconfig located at ${secrets[kube_config]}"
