@@ -18,7 +18,7 @@ shift 1
 here="$(dirname "$(readlink -f "$0")")"
 # shellcheck source=bin/common.bash
 source "${here}/common.bash"
-
+kubespray_version_check
 check_openstack_credentials
 
 log_info "Running kubespray playbook ${playbook}"

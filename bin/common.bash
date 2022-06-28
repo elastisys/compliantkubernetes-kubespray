@@ -228,3 +228,29 @@ check_openstack_credentials() {
         exit 1
     fi
 }
+
+# Compares the expected and actual git state of the kubespray submodule.
+# If they don't match the user will be asked if they want to continue anyway.
+kubespray_version_check(){
+   pushd "${here}/../" || exit
+
+   git_diff=$(git diff kubespray/)
+
+   popd || exit
+
+   if [[ $git_diff ]]; then
+
+        expected_commit=$(echo "${git_diff}" | grep -m1 commit | grep -o '[^ ]*$')
+        current_commit=$(echo "${git_diff}" | tail -n 1 | grep -o '[^ ]*$')
+
+        log_info "The status of the kubespray git submodule differs from the expected status, either it is on another commit or there are file changes. This can cause unexpected versions to be installed or cause other errors. We recommend that you stop and check what has changed."
+        log_info "Expected" "${expected_commit}", "got" "${current_commit}".
+        log_info_no_newline "Do you want to abort? (Y/n): "
+
+        read -r reply
+
+        if [[ "${reply}" != "n" ]]; then
+            exit 1
+        fi
+   fi
+}

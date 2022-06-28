@@ -10,7 +10,7 @@ shopt -s globstar nullglob dotglob
 here="$(dirname "$(readlink -f "$0")")"
 # shellcheck source=bin/common.bash
 source "${here}/common.bash"
-
+kubespray_version_check
 check_openstack_credentials
 
 log_info "Creating kubernetes cluster using kubespray"
