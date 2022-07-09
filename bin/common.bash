@@ -64,13 +64,13 @@ validate_sops_config() {
         exit 1
     fi
 
-    rule_count=$(yq r - --length creation_rules < "${sops_config}")
+    rule_count=$(yq 'length' < "${sops_config}")
     if [ "${rule_count:-0}" -gt 1 ]; then
         log_error "ERROR: SOPS config has more than one creation rule."
         exit 1
     fi
 
-    fingerprints=$(yq r - 'creation_rules[0].pgp' < "${sops_config}")
+    fingerprints=$(yq '."creation_rules[0].pgp"' < "${sops_config}")
     if ! [[ "${fingerprints}" =~ ^[A-Z0-9,' ']+$ ]]; then
         log_error "ERROR: SOPS config contains no or invalid PGP keys."
         log_error "fingerprints=${fingerprints}"
@@ -106,7 +106,7 @@ append_trap() {
 
 # Write PGP fingerprints to SOPS config
 sops_config_write_fingerprints() {
-    yq n 'creation_rules[0].pgp' "${1}" > "${sops_config}" || \
+    yq e -n '{"creation_rules[0].pgp" : "'${1}'"}' > "${sops_config}" || \
       (log_error "Failed to write fingerprints" && rm "${sops_config}" && exit 1)
 }
 
