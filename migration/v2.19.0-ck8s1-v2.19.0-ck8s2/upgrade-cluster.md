@@ -56,3 +56,7 @@
     kubeconfig_file_name: <kube_config_sc.yaml|kube_config_wc.yaml>
     artifacts_dir: "{{ inventory_dir }}/../.state"
     ```
+
+## Update terraform state for Openstack environments
+
+1. If you're running on an openstack cloud provider, you will have to update the terraform state. This can be done by exporting `CK8S_CONFIG_PATH`, `OS_USERNAME` and `OS_PASSWORD`, and then running `migrate-terraform-openstack.sh` and following the instructions that are shown after the script finishes.
