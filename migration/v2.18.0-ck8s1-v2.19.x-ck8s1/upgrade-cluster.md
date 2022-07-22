@@ -70,3 +70,5 @@
 ```
 
 **NOTE**: If you are running [Compliant Kubernetes Apps](https://github.com/elastisys/compliantkubernetes-apps). Make sure you're running a version that has support for conatinerd.
+
+**NOTE**: Don't forget to do migration steps in [../v2.19.0-ck8s1-v2.19.0-ck8s2](https://github.com/elastisys/compliantkubernetes-kubespray/tree/main/migration/v2.19.0-ck8s1-v2.19.0-ck8s2) folder if you are upgrading from `v2.18.0-ck8s1` to `v2.19.0-ck8s2`.
