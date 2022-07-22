@@ -1,5 +1,6 @@
 # Compliant Kubernetes Kubespray changelog
 <!-- BEGIN TOC -->
+- [v2.19.0-ck8s2](#v2190-ck8s2---2022-07-22)
 - [v2.19.0-ck8s1](#v2190-ck8s1---2022-06-14)
 - [v2.18.1-ck8s1](#v2181-ck8s1---2022-04-26)
 - [v2.18.0-ck8s1](#v2180-ck8s1---2022-02-08)
@@ -8,6 +9,19 @@
 - [v2.16.0-ck8s1](#v2160-ck8s1---2021-07-02)
 - [v2.15.0-ck8s1](#v2150-ck8s1---2021-05-27)
 <!-- END TOC -->
+
+-------------------------------------------------
+## v2.19.0-ck8s2 - 2022-07-22
+
+### Added
+
+- Added a check to see if the status of the kubespray git submodule differs from the expected status to hinder that people apply a different kubespray version than they want by mistake.
+- New playbook `playbooks/kubeconfig.yml` to manage kubeconfigs. It can either move the cluster admin kubeconfig that kubespray produces or create an OIDC kubeconfig. This comes with several new group vars.
+- New playbook `playbooks/cluster_admin_rbac.yml` to add cluster admin RBAC for OIDC users. This comes with several new group vars.
+
+### Changed
+
+- Apply command uses the new ansible playbooks to manage kubeconfigs and OIDC clusteradmin RBAC.
 
 -------------------------------------------------
 ## v2.19.0-ck8s1 - 2022-06-14
