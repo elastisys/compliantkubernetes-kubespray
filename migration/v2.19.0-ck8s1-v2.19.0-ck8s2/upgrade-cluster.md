@@ -59,4 +59,18 @@
 
 ## Update terraform state for Openstack environments
 
-1. If you're running on an openstack cloud provider, you will have to update the terraform state. This can be done by exporting `CK8S_CONFIG_PATH`, `OS_USERNAME` and `OS_PASSWORD`, and then running `migrate-terraform-openstack.sh` and following the instructions that are shown after the script finishes.
+If you're running on an Openstack cloud provider, you will have to update the terraform state. *This only applies to Openstack environments that have been upgraded from kubespray v2.18. For environments that were initially set up on v2.19, you do not need to perform the steps below.*
+
+1. For Safespring environments only, add the following to your `sc-config/cluster.tfvars` and `wc-config/cluster.tfvars`:
+
+    ```yaml
+    use_existing_network = true
+    port_security_enabled = true
+    force_null_port_security = true
+    ```
+
+1. Export `CK8S_CONFIG_PATH`, `OS_USERNAME` and `OS_PASSWORD`, and then run `migrate-terraform-openstack.sh`. The script will create a new terraform state called `terraform-temp.tfstate` in both the `sc-config` and `wc-config` folders.
+
+1. Run `terraform plan` with `-state terraform-temp.tfstate` on both clusters and confirm that terraform does not try to destroy any infrastructure.
+
+1. After confirming, run `mv terraform-temp.tfstate terraform.tfstate` in both the `sc-config` and `wc-config` folders, and then run `terraform apply` with the new state to finish making the changes. There may be temporary network interruptions while performing this step.
