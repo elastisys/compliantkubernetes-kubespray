@@ -12,8 +12,8 @@
 
     ```yaml
     kubelet_config_extra_args:
-    imageGCHighThresholdPercent: 75
-    imageGCLowThresholdPercent: 70
+        imageGCHighThresholdPercent: 75
+        imageGCLowThresholdPercent: 70
     ```
 
 1. remove any snippet specifying etc version in  `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` or in any other place
