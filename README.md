@@ -1,8 +1,12 @@
 # Elastisys Compliant Kubernetes Kubespray
 
-**NOTE: This project is in alpha stage and is actively developed. Therefore the API may change in backwards-incompatible ways.**
+## On API Stability
 
-Content:
+⚠️  Please note that the Elastisys Compliant Kubernetes Kubespray project frequently changes admin-facing API, i.e., configuration, in a backwards-incompatible way. Make sure to read the [change log](CHANGELOG.md) and the [migration steps](/migration). These migration steps are subject to quality assurance and are used in production environments. Hence, if properly executed, they shouldn't cause any downtime.
+
+The user-facing API changes more rarely, usually as a result of a Kubernetes version upgrade. For details, read the [user-facing release notes](https://elastisys.io/compliantkubernetes/release-notes/#compliant-kubernetes-kubespray).
+
+## Content
 
 - `bin`: wrapper scripts that helps you run kubespray
 - `config`: default config values
