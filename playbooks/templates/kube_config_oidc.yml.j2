@@ -3,18 +3,18 @@ clusters:
 -   cluster:
         certificate-authority-data: {{ ca_cert.stdout }}
         server: https://{{ kube_oidc_apiserver_endpoint | default(kube_apiserver_access_address) }}:{{ kube_oidc_apiserver_port | default(kube_apiserver_port) }}
-    name: {{ cluster_name }}
+    name: {{ kubeconfig_cluster_name }}
 contexts:
 -   context:
-        cluster: {{ cluster_name }}
+        cluster: {{ kubeconfig_cluster_name }}
         namespace: default
-        user: admin@{{ cluster_name }}
-    name: {{ cluster_name }}
-current-context: {{ cluster_name }}
+        user: admin@{{ kubeconfig_cluster_name }}
+    name: {{ kubeconfig_cluster_name }}
+current-context: {{ kubeconfig_cluster_name }}
 kind: Config
 preferences: {}
 users:
--   name: admin@{{ cluster_name }}
+-   name: admin@{{ kubeconfig_cluster_name }}
     user:
         exec:
             apiVersion: client.authentication.k8s.io/v1beta1
