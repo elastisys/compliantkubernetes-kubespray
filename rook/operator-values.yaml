@@ -1,13 +1,13 @@
 csi:
   enableCephfsDriver: false
-  #provisionerTolerations:
-  #  - key: "nodeType"
-  #    operator: Exists
-  #    effect: NoSchedule
-  #pluginTolerations:
-  #  - key: "nodeType"
-  #    operator: Exists
-  #    effect: NoSchedule
+  provisionerTolerations:
+    - key: elastisys.io/node-type
+      operator: Exists
+      effect: NoSchedule
+  pluginTolerations:
+    - key: elastisys.io/node-type
+      operator: Exists
+      effect: NoSchedule
   csiRBDProvisionerResource: |
    - name : csi-provisioner
      resource:

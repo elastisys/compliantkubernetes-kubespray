@@ -21,6 +21,17 @@ spec:
       enabled: true
   dashboard:
     enabled: false
+  placement:
+    all:
+      tolerations:
+      - effect: NoSchedule
+        key: elastisys.io/node-type
+        operator: Exists
+    mon:
+      tolerations:
+      - effect: NoSchedule
+        key: elastisys.io/node-type
+        operator: Exists
   monitoring:
     # requires Prometheus operator CRDs to be pre-installed
     enabled: false
