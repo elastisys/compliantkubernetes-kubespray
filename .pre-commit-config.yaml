@@ -21,7 +21,7 @@ repos:
     args: [--allow-multiple-documents]
   - id: no-commit-to-branch
 - repo: https://github.com/robonaut/pre-commit-hooks
-  rev: 2.1.6
+  rev: 2.2.0-rc.1
   hooks:
   - id: shellcheck
     additional_dependencies: []
