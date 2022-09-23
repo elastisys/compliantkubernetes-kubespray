@@ -13,6 +13,51 @@
     kubeconfig_cluster_name: <CHANGE-ME-ENVIRONMENT-NAME-wc>
     ```
 
+1. upcloud environments remove or update storage class specification
+    The new default in the config is the following
+
+    ```
+    storage_classes:
+       - name: standard
+         is_default: true
+         expand_persistent_volumes: true
+         parameters:
+           tier: maxiops
+       - name: hdd
+         is_default: false
+         expand_persistent_volumes: true
+         parameters:
+           tier: hdd
+    ```
+
+    Remove or update the `storage_classes` in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster-upcloud.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster-upcloud.yaml` to work with the new format
+
+    Update example:
+    Old format:
+
+    ```
+     expand_persistent_volumes: true
+     parameters:
+         tier: maxiops
+      storage_classes:
+            - name: standard
+              is_default: true
+    ```
+
+    To new format
+
+    ```diff
+    - expand_persistent_volumes: true
+    - parameters:
+    -     tier: maxiops
+      storage_classes:
+            - name: standard
+              is_default: true
+    +         expand_persistent_volumes: true
+    +         parameters:
+    +             tier: maxiops
+    ```
+
 1. Upgrade the cluster to a new kubernetes version:
 
     ```bash
