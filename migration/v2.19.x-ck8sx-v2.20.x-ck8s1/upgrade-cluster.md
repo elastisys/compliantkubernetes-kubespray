@@ -1,10 +1,32 @@
 # Upgrade v2.19.x-ck8sx to v2.20.x-ck8s1
 
+## Preparations
+
+These steps will not disrupt the environment and can be done ahead of a maintenance window.
+
 1. Checkout the new release: `git checkout v2.20.x-ck8s1`
 
 1. Switch to the correct remote: `git submodule sync`
 
 1. Update the kubespray submodule: `git submodule update --init --recursive`
+
+1. Add the following snippet at the end of both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
+
+    ```diff
+    +kube_profiling: false
+
+    +kube_scheduler_bind_address: 127.0.0.1
+    +kube_kubeadm_scheduler_extra_args:
+    +    profiling: false
+
+    +kube_controller_manager_bind_address: 127.0.0.1
+    ```
+
+1. Add the following snippet at the end of both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
+
+    ```diff
+    +calico_pool_blocksize: 24
+    ```
 
 1. set the values for `kubeconfig_cluster_name` in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` to the corresponding name like below:
 
@@ -13,8 +35,8 @@
     kubeconfig_cluster_name: <CHANGE-ME-ENVIRONMENT-NAME-wc>
     ```
 
-1. upcloud environments remove or update storage class specification
-    The new default in the config is the following
+1. For upcloud environments, remove or update storage class specification.
+    The new default in the config is the following:
 
     ```
     storage_classes:
@@ -57,6 +79,10 @@
     +         parameters:
     +             tier: maxiops
     ```
+
+## Disruptive steps
+
+These steps will cause disruptions in the environment.
 
 1. Upgrade the cluster to a new kubernetes version:
 
