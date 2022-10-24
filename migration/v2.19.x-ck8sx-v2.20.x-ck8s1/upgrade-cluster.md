@@ -20,12 +20,13 @@ These steps will not disrupt the environment and can be done ahead of a maintena
     +    profiling: false
 
     +kube_controller_manager_bind_address: 127.0.0.1
-    ```
 
-1. Add the following snippet at the end of both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
-
-    ```diff
     +calico_pool_blocksize: 24
+
+    +kubelet_secure_addresses: >-
+    +  {%- for host in groups['kube_control_plane'] -%}
+    +    {{ hostvars[host]['ip'] | default(fallback_ips[host]) }}{{ ' ' if not loop.last else '' }}
+    +  {%- endfor -%}
     ```
 
 1. set the values for `kubeconfig_cluster_name` in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` to the corresponding name like below:
