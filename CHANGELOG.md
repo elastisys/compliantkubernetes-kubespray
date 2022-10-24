@@ -1,5 +1,6 @@
 # Compliant Kubernetes Kubespray changelog
 <!-- BEGIN TOC -->
+- [v2.20.0-ck8s2](#v2200-ck8s2---2022-10-24)
 - [v2.20.0-ck8s1](#v2200-ck8s1---2022-10-10)
 - [v2.19.0-ck8s2](#v2190-ck8s2---2022-07-22)
 - [v2.19.0-ck8s1](#v2190-ck8s1---2022-06-14)
@@ -10,6 +11,13 @@
 - [v2.16.0-ck8s1](#v2160-ck8s1---2021-07-02)
 - [v2.15.0-ck8s1](#v2150-ck8s1---2021-05-27)
 <!-- END TOC -->
+
+-------------------------------------------------
+## v2.20.0-ck8s2 - 2022-10-24
+
+### Fixed
+
+- Changed a Kubespray variable which is required for upgrading clusters on cloud providers that don't have external IPs on their control plane nodes.
 
 -------------------------------------------------
 ## v2.20.0-ck8s1 - 2022-10-10
