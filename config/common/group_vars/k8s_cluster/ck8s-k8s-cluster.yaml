@@ -125,3 +125,8 @@ kube_kubeadm_scheduler_extra_args:
     profiling: false
 
 kube_controller_manager_bind_address: 127.0.0.1
+
+kubelet_secure_addresses: >-
+  {%- for host in groups['kube_control_plane'] -%}
+    {{ hostvars[host]['ip'] | default(fallback_ips[host]) }}{{ ' ' if not loop.last else '' }}
+  {%- endfor -%}
