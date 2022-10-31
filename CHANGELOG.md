@@ -1,5 +1,6 @@
 # Compliant Kubernetes Kubespray changelog
 <!-- BEGIN TOC -->
+- [v2.20.0-ck8s3](#v2200-ck8s3---2022-10-31)
 - [v2.20.0-ck8s2](#v2200-ck8s2---2022-10-24)
 - [v2.20.0-ck8s1](#v2200-ck8s1---2022-10-10)
 - [v2.19.0-ck8s2](#v2190-ck8s2---2022-07-22)
@@ -11,6 +12,17 @@
 - [v2.16.0-ck8s1](#v2160-ck8s1---2021-07-02)
 - [v2.15.0-ck8s1](#v2150-ck8s1---2021-05-27)
 <!-- END TOC -->
+
+-------------------------------------------------
+## v2.20.0-ck8s3 - 2022-10-31
+
+### Release notes
+
+- This requires at least terraform 0.14.0
+
+### Changed
+
+- Changed terraform scripts for openstack to be able to setup additional server groups and override variables per instance.
 
 -------------------------------------------------
 ## v2.20.0-ck8s2 - 2022-10-24
