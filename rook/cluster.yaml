@@ -20,7 +20,7 @@ spec:
     - name: pg_autoscaler
       enabled: true
   dashboard:
-    enabled: false
+    enabled: true
   monitoring:
     # requires Prometheus operator CRDs to be pre-installed
     enabled: false

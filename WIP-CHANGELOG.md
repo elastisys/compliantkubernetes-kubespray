@@ -9,3 +9,4 @@
 ### Changed
 
 - Changed terraform scripts for openstack to be able to setup additional server groups and override variables per instance.
+- Enabled the `ceph` dashboard for better visibility and troubleshooting of `rook-ceph`
