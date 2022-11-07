@@ -40,7 +40,6 @@
             state: absent
             force: yes
 
-
         - name: install pigz
           apt:
             name: pigz
@@ -48,8 +47,13 @@
 
         - name: run kubespray on and limit to just one node.
           become: no
-          command: ansible-playbook -i {{inventory_file}} ../../kubespray/cluster.yml --limit={{hostname.stdout}} -b
+          command: ansible-playbook -i {{inventory_file}} ../../kubespray/cluster.yml --skip-tags=download --limit={{hostname.stdout}} -b
           delegate_to: localhost
+          register: clusterymloutput
+
+        - name: Print return information from the previous task
+          ansible.builtin.debug:
+            var: clusterymloutput
 
         - name: annotate nodes with cri sock #The annotation is required by kubeadm to follow through future cluster upgrades.
           command: kubectl annotate node {{hostname.stdout}} --overwrite kubeadm.alpha.kubernetes.io/cri-socket=/var/run/containerd/containerd.sock
@@ -119,4 +123,3 @@
       when:
        - container_manager is defined
        - container_manager == 'containerd'
-       - ansible_facts.services['containerd.service'] is not defined or (ansible_facts.services['containerd.service'] is defined and not ansible_facts.services['containerd.service'].state == 'running')
