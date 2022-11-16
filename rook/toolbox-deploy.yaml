@@ -1,8 +1,8 @@
 # This file was originally downloaded from https://github.com/rook/rook/blob/c890710b635e2cd2ae64c08bac0621d89e79c0fc/deploy/examples/toolbox.yaml
 #
-# The following changes were performed:
-# - use stable container image, i.e., 'v1.8.6' instead of master
-# - add resource limits
+# The following changes have been performed:
+# - use stable container image
+# - add resource requests and limits
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,7 +23,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: rook-ceph-tools
-          image: rook/ceph:v1.8.6
+          image: rook/ceph:v1.10.5
           command: ["/bin/bash"]
           args: ["-m", "-c", "/usr/local/bin/toolbox.sh"]
           imagePullPolicy: IfNotPresent
@@ -50,8 +50,11 @@ spec:
               mountPath: /etc/rook
           resources:
             requests:
-             cpu: "5m"
-             memory: "10Mi"
+             cpu: 5m
+             memory: 10Mi
+            limits:
+             cpu: 100m
+             memory: 100Mi
       volumes:
         - name: mon-endpoint-volume
           configMap:

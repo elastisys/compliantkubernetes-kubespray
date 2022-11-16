@@ -1,3 +1,5 @@
+# For a full list of values see
+# https://github.com/rook/rook/blob/v1.10.5/deploy/charts/rook-ceph/values.yaml
 csi:
   enableCephfsDriver: false
   #provisionerTolerations:
