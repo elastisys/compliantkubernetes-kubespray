@@ -9,7 +9,7 @@ helm repo add rook-release https://charts.rook.io/release
 namespace="rook-ceph"
 release_name="rook-ceph"
 chart="rook-release/rook-ceph"
-chart_version="v1.5.3"
+chart_version="v1.10.5"
 
 # Install rook operator
 kubectl create namespace "${namespace}" --dry-run -o yaml | kubectl apply -f -
