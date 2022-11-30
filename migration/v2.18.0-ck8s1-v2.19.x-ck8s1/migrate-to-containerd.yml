@@ -55,6 +55,18 @@
           ansible.builtin.debug:
             var: clusterymloutput
 
+        - name: Delete remaining docker files
+          file:
+            state: absent
+            path: "{{ item }}"
+          with_items:
+            - '/var/lib/docker'
+            - '/var/lib/dockershim'
+            - '/etc/systemd/system/docker.service.d'
+            - '/etc/systemd/system/docker.service'
+            - '/etc/systemd/system/docker.socket'
+            - '/etc/init.d/docker'
+
         - name: annotate nodes with cri sock #The annotation is required by kubeadm to follow through future cluster upgrades.
           command: kubectl annotate node {{hostname.stdout}} --overwrite kubeadm.alpha.kubernetes.io/cri-socket=/var/run/containerd/containerd.sock
           delegate_to: "{{groups['kube_control_plane'][0]}}"
