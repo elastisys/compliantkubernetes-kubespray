@@ -55,12 +55,11 @@
           ansible.builtin.debug:
             var: clusterymloutput
 
-        - name: Delete remaining docker files
+        - name: Delete docker service files
           file:
             state: absent
             path: "{{ item }}"
           with_items:
-            - '/var/lib/docker'
             - '/var/lib/dockershim'
             - '/etc/systemd/system/docker.service.d'
             - '/etc/systemd/system/docker.service'
@@ -128,6 +127,15 @@
           until: kubelet_ready.rc == 0
           retries: 30
           delay: 3
+
+        - name: Delete remaining docker files
+          file:
+            state: absent
+            path: "{{ item }}"
+          with_items:
+            - '/var/lib/docker/image'
+            - '/var/lib/docker/overlay2'
+            - '/var/lib/docker/volumes'
 
         - name: uncordon node
           command: kubectl uncordon {{hostname.stdout}} --kubeconfig /etc/kubernetes/admin.conf
