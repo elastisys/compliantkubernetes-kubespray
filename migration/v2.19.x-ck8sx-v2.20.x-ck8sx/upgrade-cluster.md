@@ -27,6 +27,11 @@ These steps will not disrupt the environment and can be done ahead of a maintena
     +  {%- for host in groups['kube_control_plane'] -%}
     +    {{ hostvars[host]['ip'] | default(fallback_ips[host]) }}{{ ' ' if not loop.last else '' }}
     +  {%- endfor -%}
+
+    +containerd_version: 1.6.12
+    +containerd_archive_checksums:
+    +  amd64:
+    +    1.6.12: a56c39795fd0d0ee356b4099a4dfa34689779f61afc858ef84c765c63e983a7d
     ```
 
 1. set the values for `kubeconfig_cluster_name` in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` to the corresponding name like below:
