@@ -13,6 +13,18 @@ The user-facing API changes more rarely, usually as a result of a Kubernetes ver
 - `conformance-tests`: ck8s conformance tests for bare metal machines
 - `kubespray`: git submodule of the kubespray repository
 
+## Setup
+
+### Requirements
+
+[terraform](https://github.com/hashicorp/terraform/releases) (tested with 1.2.9)
+
+Installs requirements using the ansible playbook `get-requirements.yaml`
+
+```bash
+ansible-playbook -e 'ansible_python_interpreter=/usr/bin/python3' --ask-become-pass --connection local --inventory 127.0.0.1, get-requirements.yaml
+```
+
 ## Quick start
 
 1. Init the kubespray config in your config path

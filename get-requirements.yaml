@@ -1,0 +1,16 @@
+  - name: Download compliantkubernetes-kubespray requirements
+    hosts: localhost
+    vars:
+      install_path: /usr/local/bin
+      install_user: "{{ lookup('env','USER') }}"
+      terraform_version: 1.2.9
+    connection: local
+    become: yes
+    become_user: root
+    tasks:
+    - name: Get terraform
+      unarchive:
+        src: "https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip"
+        dest: "{{ install_path }}"
+        mode: 0775
+        remote_src: yes
