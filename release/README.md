@@ -51,6 +51,8 @@ The releases will have the following version string: `<kubespray-version>-<ck8s-
     **NOTE**: All changes made in QA should be added to `CHANGELOG.md` and **NOT** `WIP-CHANGELOG.md`.
     Also, make sure to not merge any fixes into `release-<kubespray-version>` on this step.
 
+    If there is no migration document, create one as describe [here](../migration/README.md).
+
 1. When the QA is finished, create the release tag.
 
     ```bash
@@ -125,6 +127,8 @@ The releases will have the following version string: `<kubespray-version>-<ck8s-
 
     **NOTE**: All changes made in QA should be added to `CHANGELOG.md` and **NOT** `WIP-CHANGELOG.md`.
     Also, make sure to not merge any fixes into `release-<kubespray-version>` on this step.
+
+    If any migration steps are required for the patch, create a migration document as describe [here](../migration/README.md).
 
 1. When the QA is finished, create the release tag and push it.
 
