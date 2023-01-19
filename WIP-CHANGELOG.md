@@ -17,3 +17,4 @@
 
 - Added a get-requirements file to standardize which terraform version to use, `1.2.9`.
 - Add ntp.se as ntp server as standard
+- Added a script that creates a migration document from a template.
