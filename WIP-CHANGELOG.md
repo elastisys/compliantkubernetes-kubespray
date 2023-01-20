@@ -15,4 +15,5 @@
 
 ### Added
 
-Added a get-requirements file to standardize which terraform version to use, `1.2.9`.
+- Added a get-requirements file to standardize which terraform version to use, `1.2.9`.
+- Add ntp.se as ntp server as standard
