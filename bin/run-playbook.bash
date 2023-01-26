@@ -39,4 +39,4 @@ popd
 
 log_info "Kubespray done"
 
-log_info "Playbook ${playbook} ran sucessfully!"
+log_info "Playbook ${playbook} ran successfully!"
