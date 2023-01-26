@@ -32,7 +32,7 @@ if [ -z "${CK8S_KUBESPRAY_NO_VENV+x}" ]; then
     pip install -r requirements.txt
 fi
 
-log_info "Remvoing node: $node_name"
+log_info "Removing node: $node_name"
 
 # shellcheck disable=SC2145
 log_info Executing \"ansible-playbook -i "${config[inventory_file]}" "${playbook}" -b --extra-vars="node=${node_name}" "${@}"\"
@@ -41,4 +41,4 @@ ansible-playbook -i "${config[inventory_file]}" "${playbook}" -b --extra-vars="n
 
 popd
 
-log_info "Kubespray done - playbook ${playbook} ran sucessfully!"
+log_info "Kubespray done - playbook ${playbook} ran successfully!"

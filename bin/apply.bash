@@ -36,4 +36,4 @@ ansible-playbook -i "${config[inventory_file]}" ../playbooks/cluster_admin_rbac.
 
 popd
 
-log_info "Cluster created sucessfully!"
+log_info "Cluster created successfully!"
