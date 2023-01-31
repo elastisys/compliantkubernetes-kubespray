@@ -51,7 +51,7 @@ The releases will have the following version string: `<kubespray-version>-<ck8s-
     **NOTE**: All changes made in QA should be added to `CHANGELOG.md` and **NOT** `WIP-CHANGELOG.md`.
     Also, make sure to not merge any fixes into `release-<kubespray-version>` on this step.
 
-    If there is no migration document, create one as describe [here](../migration/README.md).
+    If there is no migration document, create one as described [here](../migration/README.md). If a migration document already exists, make sure that it follows [this template](../migration/template/upgrade-cluster.md).
 
 1. When the QA is finished, create the release tag.
 
@@ -128,7 +128,7 @@ The releases will have the following version string: `<kubespray-version>-<ck8s-
     **NOTE**: All changes made in QA should be added to `CHANGELOG.md` and **NOT** `WIP-CHANGELOG.md`.
     Also, make sure to not merge any fixes into `release-<kubespray-version>` on this step.
 
-    If any migration steps are required for the patch, create a migration document as describe [here](../migration/README.md).
+    If any migration steps are required for the patch, create a migration document as described [here](../migration/README.md). If a migration document already exists, make sure that it follows [this template](../migration/template/upgrade-cluster.md).
 
 1. When the QA is finished, create the release tag and push it.
 
