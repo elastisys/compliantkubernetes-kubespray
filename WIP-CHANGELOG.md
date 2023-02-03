@@ -12,6 +12,7 @@
 - Changed terraform scripts for openstack to be able to setup additional server groups and override variables per instance.
 - Enabled the `ceph` dashboard for better visibility and troubleshooting of `rook-ceph`
 - Upgraded rook-ceph operator to `v1.10.5` and ceph to `v17.2.5`
+- Now defaulting to serial execution when running the upgrade playbook.
 
 ### Added
 
