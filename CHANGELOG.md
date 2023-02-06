@@ -1,5 +1,6 @@
 # Compliant Kubernetes Kubespray changelog
 <!-- BEGIN TOC -->
+- [v2.21.0-ck8s1](#v2210-ck8s1---2023-02-06)
 - [v2.20.0-ck8s1](#v2200-ck8s1---2022-10-10)
 - [v2.19.0-ck8s2](#v2190-ck8s2---2022-07-22)
 - [v2.19.0-ck8s1](#v2190-ck8s1---2022-06-14)
@@ -10,6 +11,31 @@
 - [v2.16.0-ck8s1](#v2160-ck8s1---2021-07-02)
 - [v2.15.0-ck8s1](#v2150-ck8s1---2021-05-27)
 <!-- END TOC -->
+
+-------------------------------------------------
+## v2.21.0-ck8s1 - 2023-02-06
+
+### Release notes
+
+- This version requires at least terraform 0.14.0 in order to provision infrastructure using the kubespray provided terraform modules.
+- If you are using the rook-ceph operator you can read the [migration docs](rook/migration/rook-1.5.x-rook-1.10.5/upgrade.md) on how to upgrade these components.
+
+### Fixed
+
+- Changed a Kubespray variable which is required for upgrading clusters on cloud providers that don't have external IPs on their control plane nodes.
+
+### Changed
+
+- Changed terraform scripts for openstack to be able to setup additional server groups and override variables per instance.
+- Enabled the `ceph` dashboard for better visibility and troubleshooting of `rook-ceph`
+- Upgraded rook-ceph operator to `v1.10.5` and ceph to `v17.2.5`
+- Now defaulting to serial execution when running the upgrade playbook.
+
+### Added
+
+- Added a get-requirements file to standardize which terraform version to use, `1.2.9`.
+- Add ntp.se as ntp server as standard
+- Added a script that creates a migration document from a template.
 
 -------------------------------------------------
 ## v2.20.0-ck8s1 - 2022-10-10
