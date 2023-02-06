@@ -17,7 +17,8 @@
 
 ### Release notes
 
-- This version requires at least terraform 0.14.0 in order to provision infrastructure using the kubespray provided terraform modules.
+- This version upgrades Kubernetes to `v1.25` in which Pod Security Policies (PSPs) are removed. You should not upgrade to this version if you are using PSPs. To deploy [Compliant Kubernetes Apps](https://github.com/elastisys/compliantkubernetes-apps) on this version it needs to be on a compatible version which depends on [this issue](https://github.com/elastisys/compliantkubernetes-apps/issues/1218).
+- This version requires at least terraform `0.14.0` in order to provision infrastructure using the kubespray provided terraform modules.
 - If you are using the rook-ceph operator you can read the [migration docs](rook/migration/rook-1.5.x-rook-1.10.5/upgrade.md) on how to upgrade these components.
 
 ### Fixed
