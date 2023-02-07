@@ -19,7 +19,6 @@ cluster_admin_groups:
 kubeconfig_localhost: false
 
 kube_apiserver_enable_admission_plugins:
-  - "PodSecurityPolicy"
   - "NamespaceLifecycle"
   - "LimitRanger"
   - "ServiceAccount"
@@ -107,7 +106,7 @@ audit_policy_custom_rules: |-
     # generate an audit event in RequestReceived.
     omitStages:
       - "RequestReceived"
-podsecuritypolicy_enabled: true
+podsecuritypolicy_enabled: false
 calico_felix_prometheusmetricsenabled: true
 
 kubelet_config_extra_args:
