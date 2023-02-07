@@ -50,6 +50,23 @@
     ntp_timezone: "Etc/UTC"
     ```
 
+1. Disable Pod Security Policies
+
+    1. Change the following variable in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
+
+        ```diff
+        -podsecuritypolicy_enabled: true
+        +podsecuritypolicy_enabled: false
+        ```
+
+    1. Remove `PodSecurityPolicy` from the `kube_apiserver_enable_admission_plugins` list in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
+
+        ```diff
+         kube_apiserver_enable_admission_plugins:
+        -  - "PodSecurityPolicy"
+           - "NamespaceLifecycle"
+        ```
+
 1. Download the required files on the nodes
 
     ```bash
