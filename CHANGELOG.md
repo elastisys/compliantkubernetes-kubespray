@@ -31,6 +31,7 @@
 - Enabled the `ceph` dashboard for better visibility and troubleshooting of `rook-ceph`
 - Upgraded rook-ceph operator to `v1.10.5` and ceph to `v17.2.5`
 - Now defaulting to serial execution when running the upgrade playbook.
+- Switched from using upstream kubespray repo to the elastisys fork.
 
 ### Added
 
