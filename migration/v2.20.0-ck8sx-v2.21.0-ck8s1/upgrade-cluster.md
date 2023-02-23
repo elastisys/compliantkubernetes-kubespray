@@ -85,6 +85,29 @@ These steps will cause disruptions in the environment.
     ./bin/ck8s-kubespray run-playbook wc upgrade-cluster.yml -b --skip-tags=download
     ```
 
+1. Migrate terraform state.
+
+    ```bash
+    ./migration/v2.20.0-ck8sx-v2.21.0-ck8s1/migrate-terraform-openstack-user-data.sh
+    ```
+
+    The script generated a `terraform-temp.tfstate` file with some updated values and then ran "terraform plan" with this temporary state file.
+    If terraform did not show any unexpected changes, you can run the following snippet to update the original state file for WC & SC:
+
+    ```bash
+    for CLUSTER in wc sc; do
+        pushd ${CK8S_CONFIG_PATH}/${CLUSTER}-config > /dev/null
+        mv terraform-temp.tfstate terraform.tfstate
+        popd > /dev/null
+    done
+    ```
+
+1. Lastly apply the new state to update the modules (there should be no diff in the terraform output here)
+
+    ```bash
+    ./migration/v2.20.0-ck8sx-v2.21.0-ck8s1/apply-new-state.sh
+    ```
+
 ## Postrequisite
 
 - [ ] Check the state of the environment, pods and nodes:
