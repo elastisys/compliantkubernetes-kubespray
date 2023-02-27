@@ -25,15 +25,8 @@
       when: "manual_prompt | default(false) | bool and 'reboot_required_file' in hostvars[item] and hostvars[item]['reboot_required_file'].stat.exists"
       with_items: "{{ play_hosts }}"
 
-    - name: hostname
-      shell: echo $HOSTNAME
-      args:
-        executable: /bin/bash
-      register: hostname
-      when: reboot_required_file.stat.exists
-
     - name: drain node
-      command: kubectl drain {{hostname.stdout}} --ignore-daemonsets=true --delete-emptydir-data=true --force=true --kubeconfig /etc/kubernetes/admin.conf
+      command: kubectl drain {{ inventory_hostname }} --ignore-daemonsets=true --delete-emptydir-data=true --force=true --kubeconfig /etc/kubernetes/admin.conf
       delegate_to: "{{groups['kube_control_plane'][0]}}"
       when: reboot_required_file.stat.exists
 
@@ -81,7 +74,7 @@
       when: reboot_required_file.stat.exists
 
     - name: Wait for node to start posting heartbeats
-      ansible.builtin.shell: $([[ {{time['ansible_date_time.iso8601']}} < $(kubectl get node {{hostname.stdout}} -o jsonpath='{.status.conditions[?(@.type=="Ready")].lastHeartbeatTime}' --kubeconfig /etc/kubernetes/admin.conf) ]])
+      ansible.builtin.shell: $([[ {{time['ansible_date_time.iso8601']}} < $(kubectl get node {{ inventory_hostname }} -o jsonpath='{.status.conditions[?(@.type=="Ready")].lastHeartbeatTime}' --kubeconfig /etc/kubernetes/admin.conf) ]])
       delegate_to: "{{groups['kube_control_plane'][0]}}"
       args:
         executable: /bin/bash
@@ -92,7 +85,7 @@
       when: reboot_required_file.stat.exists
 
     - name: Wait for node to be ready
-      ansible.builtin.shell: $([[ $(kubectl get node {{hostname.stdout}} -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' --kubeconfig /etc/kubernetes/admin.conf) == "True" ]])
+      ansible.builtin.shell: $([[ $(kubectl get node {{ inventory_hostname }} -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' --kubeconfig /etc/kubernetes/admin.conf) == "True" ]])
       delegate_to: "{{groups['kube_control_plane'][0]}}"
       args:
         executable: /bin/bash
@@ -103,6 +96,6 @@
       when: reboot_required_file.stat.exists
 
     - name: uncordon node
-      command: kubectl uncordon {{hostname.stdout}} --kubeconfig /etc/kubernetes/admin.conf
+      command: kubectl uncordon {{ inventory_hostname }} --kubeconfig /etc/kubernetes/admin.conf
       delegate_to: "{{groups['kube_control_plane'][0]}}"
       when: reboot_required_file.stat.exists
