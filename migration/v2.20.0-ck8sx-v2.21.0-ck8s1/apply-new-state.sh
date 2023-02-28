@@ -11,7 +11,7 @@ openstack_terraform_dir="${here}/../../kubespray/contrib/terraform/openstack"
 # shellcheck disable=SC1090
 source "${CK8S_CONFIG_PATH}/openrc.sh"
 
-for CLUSTER in wc sc; do
+for CLUSTER in sc wc; do
     ck8s_kubespray_config_path="${CK8S_CONFIG_PATH}/${CLUSTER}-config"
     pushd "${ck8s_kubespray_config_path}" || return
     terraform -chdir="${openstack_terraform_dir}" init
