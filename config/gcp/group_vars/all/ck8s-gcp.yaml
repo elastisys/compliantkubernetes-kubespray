@@ -1,4 +1,4 @@
-cloud_provider: gcp
+cloud_provider: gce
 gcp_pd_csi_enabled: true
 gcp_pd_csi_sa_cred_file: "set-me"
 gcp_pd_csi_controller_replicas: 1
