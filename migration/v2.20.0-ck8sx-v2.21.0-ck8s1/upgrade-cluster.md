@@ -67,6 +67,13 @@
            - "NamespaceLifecycle"
         ```
 
+1. Set shutdown manager to valid values for Ubuntu, in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
+
+    ```bash
+    kubelet_shutdown_grace_period: 30s
+    kubelet_shutdown_grace_period_critical_pods: 10s
+    ```
+
 1. Download the required files on the nodes
 
     ```bash
