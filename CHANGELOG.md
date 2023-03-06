@@ -1,5 +1,6 @@
 # Compliant Kubernetes Kubespray changelog
 <!-- BEGIN TOC -->
+- [v2.20.0-ck8s4](#v2200-ck8s4---2023-03-06)
 - [v2.20.0-ck8s3](#v2200-ck8s3---2022-10-31)
 - [v2.20.0-ck8s2](#v2200-ck8s2---2022-10-24)
 - [v2.20.0-ck8s1](#v2200-ck8s1---2022-10-10)
@@ -12,6 +13,13 @@
 - [v2.16.0-ck8s1](#v2160-ck8s1---2021-07-02)
 - [v2.15.0-ck8s1](#v2150-ck8s1---2021-05-27)
 <!-- END TOC -->
+
+-------------------------------------------------
+## v2.20.0-ck8s4 - 2023-03-06
+
+### Changed
+
+- Updated kubespray to include support for network id for individual nodes.
 
 -------------------------------------------------
 ## v2.20.0-ck8s3 - 2022-10-31
