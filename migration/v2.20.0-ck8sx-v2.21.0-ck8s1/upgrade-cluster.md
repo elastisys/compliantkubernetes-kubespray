@@ -50,6 +50,10 @@
     ntp_timezone: "Etc/UTC"
     ```
 
+1. **If the environment is running `rook-ceph`**
+
+    Set `pspEnable` to `false` in `rook/operator-values.yaml`
+
 1. Disable Pod Security Policies
 
     1. Change the following variable in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
@@ -85,6 +89,16 @@
 
 These steps will cause disruptions in the environment.
 
+1. **If the environment is running `rook-ceph`**
+
+    For both `sc` and `wc`, apply PSA labels to the namespace:
+
+    ```bash
+    kubectl label namespace rook-ceph pod-security.kubernetes.io/audit=privileged
+    kubectl label namespace rook-ceph pod-security.kubernetes.io/enforce=privileged
+    kubectl label namespace rook-ceph pod-security.kubernetes.io/warn=privileged
+    ```
+
 1. Upgrade the cluster to a new kubernetes version:
 
     ```bash
@@ -116,6 +130,20 @@ These steps will cause disruptions in the environment.
         ```bash
         ./migration/v2.20.0-ck8sx-v2.21.0-ck8s1/apply-new-state.sh
         ```
+
+1. **If the environment is running `rook-ceph`**
+
+    For both `sc` and `wc`, upgrade the operator to remove PSP and associated RBAC:
+
+    ```bash
+    namespace="rook-ceph"
+    release_name="rook-ceph"
+    chart="rook-release/rook-ceph"
+    chart_version="<set chart version>" # Can be fetched by running `helm list -n rook-ceph`
+    helm repo add rook-release https://charts.rook.io/release
+    helm diff upgrade --namespace "${namespace}" "${release_name}" "${chart}" --version "${chart_version}" --values "./rook/operator-values.yaml"
+    helm upgrade --namespace "${namespace}" "${release_name}" "${chart}" --version "${chart_version}" --values "./rook/operator-values.yaml" --wait
+    ```
 
 ## Postrequisite
 

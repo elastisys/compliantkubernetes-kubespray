@@ -14,6 +14,9 @@ chart_version="v1.10.5"
 # Install rook operator
 kubectl create namespace "${namespace}" --dry-run -o yaml | kubectl apply -f -
 kubectl label namespace "${namespace}" owner=operator --overwrite
+kubectl label namespace "${namespace}" pod-security.kubernetes.io/audit=privileged
+kubectl label namespace "${namespace}" pod-security.kubernetes.io/enforce=privileged
+kubectl label namespace "${namespace}" pod-security.kubernetes.io/warn=privileged
 helm upgrade --install --namespace "${namespace}" "${release_name}" "${chart}" \
   --version "${chart_version}" --values "${here}/operator-values.yaml" --wait
 
