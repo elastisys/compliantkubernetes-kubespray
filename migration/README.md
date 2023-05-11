@@ -4,11 +4,11 @@
 
 There is a script that can help you create the initial migration folder and `upgrade-cluster.md` document.
 
-This script must have ck8s-kubespray old and new versions as arguments including patch versions.
-If patch version does not matter for this migration then replace it with x. The second argument should include the full new version.
+This script must have ck8s-kubespray old and new versions as arguments.
+These arguments should include as much of the versions as is necessary; for new minor versions include major/minor version, for new patch versions include major/minor/patch version, etc.
 
 You can use the following command to run it from the root of compliantkubernetes-kubespray directory:
 
 ```bash
-./migration/create-migration-document.sh v2.30.x-ck8sx v2.31.0-ck8s1
+./migration/create-migration-document.sh v2.30 v2.31
 ```

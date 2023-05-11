@@ -250,3 +250,21 @@ kubespray_version_check(){
         fi
     fi
 }
+
+# Compares the checked out version and the config version of ck8s-kubespray.
+# Exits if they do not match.
+ck8s_kubespray_version_check(){
+    version=$(git describe --exact-match --tags 2> /dev/null || git rev-parse HEAD)
+    version_in_config=$(yq4 .ck8sKubesprayVersion "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
+
+    if [[ -z "${version_in_config}" || "${version_in_config}" == "null" ]]; then
+        log_error "ERROR: No version set. Ensure that ${config_path}/group_vars/all/ck8s-kubespray-general.yaml exists and has ck8sKubesprayVersion set."
+        exit 1
+    elif [[ "${version_in_config}" != "any" ]] \
+        && [[ "${version}" != "${version_in_config}" ]]; then
+        log_error ERROR: Version mismatch. Switch to the correct version or update your config version by starting the upgrade process.
+        log_error "Config version: ${version_in_config}"
+        log_error "CK8S-Kubespray version: ${version}"
+        exit 1
+    fi
+}
