@@ -23,6 +23,8 @@ usage() {
     echo "      args: <prefix> [--extra-vars manual_prompt=true] [<options>]" 1>&2
     echo "  prune-docker                                removes unused docker resources on all nodes" 1>&2
     echo "      args: <prefix> [<options>]" 1>&2
+    echo "  upgrade                                     prepares config for upgrade" 1>&2
+    echo "      args: <version> prepare" 1>&2
     exit 1
 }
 
@@ -84,6 +86,13 @@ case "${1}" in
         fi
         shift 2
         "${here}/prune-docker.bash" "${@}"
+        ;;
+    upgrade)
+        if [ $# -lt 3 ]; then
+            usage
+        fi
+        shift 1
+        "${here}/upgrade.bash" "${@}"
         ;;
     *) usage ;;
 esac
