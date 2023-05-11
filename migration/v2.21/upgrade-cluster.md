@@ -26,57 +26,21 @@
 
 1. Update the kubespray submodule: `git submodule update --init --recursive`
 
-1. Add the following snippet at the end of both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
+1. Run the following to create the new config file for both sc and wc.
 
-    This enables NTP service and with multiple NTP servers, specificity in sweden.
-    You can visit [www.ntppool.org](https://www.ntppool.org/zone/@) to find other ntp pools if you are in other parts of the world.
+    ```console
+    export CK8S_KUBESPRAY_PATH=/path/to/compliantkubernetes-kubespray
 
-    ```yaml
-    ntp_enabled: true
-    ntp_manage_config: true
-    ntp_servers:
-    - "gbg1.ntp.netnod.se iburst"
-    - "gbg2.ntp.netnod.se iburst"
-    - "lul1.ntp.netnod.se iburst"
-    - "lul2.ntp.netnod.se iburst"
-    - "mmo1.ntp.netnod.se iburst"
-    - "mmo2.ntp.netnod.se iburst"
-    - "sth1.ntp.netnod.se iburst"
-    - "sth2.ntp.netnod.se iburst"
-    - "sth3.ntp.netnod.se iburst"
-    - "sth4.ntp.netnod.se iburst"
-    - "svl1.ntp.netnod.se iburst"
-    - "svl2.ntp.netnod.se iburst"
-    ntp_timezone: "Etc/UTC"
+    for cluster in "sc" "wc"; do
+        cp "${CK8S_KUBESPRAY_PATH}"/config/common/group_vars/all/ck8s-kubespray-general.yaml \
+        "${CK8S_CONFIG_PATH}"/"${cluster}"-config/group_vars/all/ck8s-kubespray-general.yaml
+    done
     ```
 
-1. **If the environment is running `rook-ceph`**
+1. Run `bin/ck8s-kubespray upgrade v2.21 prepare` to update your config.
 
-    Set `pspEnable` to `false` in `rook/operator-values.yaml`
-
-1. Disable Pod Security Policies
-
-    1. Change the following variable in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
-
-        ```diff
-        -podsecuritypolicy_enabled: true
-        +podsecuritypolicy_enabled: false
-        ```
-
-    1. Remove `PodSecurityPolicy` from the `kube_apiserver_enable_admission_plugins` list in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
-
-        ```diff
-          kube_apiserver_enable_admission_plugins:
-        -   - "PodSecurityPolicy"
-            - "NamespaceLifecycle"
-        ```
-
-1. Set shutdown manager to valid values for Ubuntu, in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
-
-    ```bash
-    kubelet_shutdown_grace_period: 30s
-    kubelet_shutdown_grace_period_critical_pods: 10s
-    ```
+    Note: This enables NTP service and with multiple NTP servers, specifically in Sweden.
+    You can visit [www.ntppool.org](https://www.ntppool.org/zone/@) to find other ntp pools if you are in other parts of the world, and edit `ntp_servers` in `group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` manually.
 
 1. Download the required files on the nodes
 
@@ -104,7 +68,7 @@ These steps will cause disruptions in the environment.
     1. Apply bypass Kubernetes PSP:
 
         ```bash
-        ./migration/v2.20.0-ck8sx-v2.21.0-ck8s1/bypass-k8s-psp.sh execute
+        ./migration/v2.21/apply/bypass-k8s-psp.sh execute
         ```
 
     1. Upgrade the operator to remove PSP and associated RBAC
@@ -131,7 +95,7 @@ These steps will cause disruptions in the environment.
     1. Migrate terraform state.
 
         ```bash
-        ./migration/v2.20.0-ck8sx-v2.21.0-ck8s1/migrate-terraform-openstack-user-data.sh
+        ./migration/v2.21/apply/migrate-terraform-openstack-user-data.sh
         ```
 
         The script generated a `terraform-temp.tfstate` file with some updated values and then ran "terraform plan" with this temporary state file.
@@ -148,7 +112,7 @@ These steps will cause disruptions in the environment.
     1. Lastly apply the new state to update the modules (there should be no diff in the terraform output here)
 
         ```bash
-        ./migration/v2.20.0-ck8sx-v2.21.0-ck8s1/apply-new-state.sh
+        ./migration/v2.21/apply/apply-new-state.sh
         ```
 
 1. **If the environment is running `rook-ceph`**
@@ -156,7 +120,7 @@ These steps will cause disruptions in the environment.
     For both `sc` and `wc`, clean up bypass Kubernetes PSP:
 
     ```bash
-    ./migration/v2.20.0-ck8sx-v2.21.0-ck8s1/bypass-k8s-psp.sh clean
+    ./migration/v2.21/apply/bypass-k8s-psp.sh clean
     ```
 
 ## Postrequisite

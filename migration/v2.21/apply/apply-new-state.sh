@@ -6,7 +6,7 @@
 : "${OS_PASSWORD:?Missing OS_PASSWORD}"
 
 here="$(dirname "$(readlink -f "$0")")"
-openstack_terraform_dir="${here}/../../kubespray/contrib/terraform/openstack"
+openstack_terraform_dir="${here}/../../../kubespray/contrib/terraform/openstack"
 
 # shellcheck disable=SC1090
 # shellcheck disable=SC1091
