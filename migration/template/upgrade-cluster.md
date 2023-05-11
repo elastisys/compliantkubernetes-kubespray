@@ -18,11 +18,13 @@
 
 ## Steps that can be done before the upgrade - non-disruptive
 
-1. Checkout the new release: `git switch -d ${new_version}`
+1. Checkout the new release: `git switch -d ${full_version}`
 
 1. Switch to the correct remote: `git submodule sync`
 
 1. Update the kubespray submodule: `git submodule update --init --recursive`
+
+1. Run `bin/ck8s-kubespray upgrade ${new_version} prepare` to update your config.
 
 1. Download the required files on the nodes
 
