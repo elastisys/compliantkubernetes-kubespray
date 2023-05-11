@@ -1,4 +1,4 @@
-# Upgrade v2.21.x-ck8sx to v2.22.x-ck8s1
+# Upgrade v2.21 to v2.22
 
 ## Prerequisites
 
@@ -18,11 +18,13 @@
 
 ## Steps that can be done before the upgrade - non-disruptive
 
-1. Checkout the new release: `git switch -d v2.22.x-ck8s1`
+1. Checkout the new release: `git switch -d v2.22.x-ck8sx`
 
 1. Switch to the correct remote: `git submodule sync`
 
 1. Update the kubespray submodule: `git submodule update --init --recursive`
+
+1. Run `bin/ck8s-kubespray upgrade v2.22 prepare` to update your config.
 
 1. Download the required files on the nodes
 
