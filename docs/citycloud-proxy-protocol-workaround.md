@@ -1,4 +1,4 @@
-# Perserving source IP on CityCloud (proxy protocol)
+# Preserving source IP on CityCloud (proxy protocol)
 
 > NOTE: This workaround is not needed after [this PR](https://github.com/kubernetes-sigs/kubespray/pull/8629) is part of the release (probably at v1.23.0).
 

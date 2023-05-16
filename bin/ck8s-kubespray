@@ -21,7 +21,7 @@ usage() {
     echo "      args: <prefix> [<options>]" 1>&2
     echo "  reboot-nodes                                reboots all nodes in a cluster if needed" 1>&2
     echo "      args: <prefix> [--extra-vars manual_prompt=true] [<options>]" 1>&2
-    echo "  prune-docker                                removes unsued docker resoruces on all nodes" 1>&2
+    echo "  prune-docker                                removes unused docker resources on all nodes" 1>&2
     echo "      args: <prefix> [<options>]" 1>&2
     exit 1
 }

@@ -9,6 +9,7 @@ here="$(dirname "$(readlink -f "$0")")"
 openstack_terraform_dir="${here}/../../kubespray/contrib/terraform/openstack"
 
 # shellcheck disable=SC1090
+# shellcheck disable=SC1091
 source "${CK8S_CONFIG_PATH}/openrc.sh"
 
 for CLUSTER in sc wc; do

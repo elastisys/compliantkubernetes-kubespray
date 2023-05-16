@@ -8,7 +8,7 @@
 here="$(dirname "$(readlink -f "$0")")"
 openstack_terraform_dir="${here}/../../kubespray/contrib/terraform/openstack"
 
-# shellcheck disable=SC1090,SC2181
+# shellcheck disable=SC1090,SC1091,SC2181
 source "${CK8S_CONFIG_PATH}/openrc.sh"
 
 OLD_USER_DATA=a59f82a5a0ceedbc94016fb22248ba033dfcb315

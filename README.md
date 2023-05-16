@@ -43,7 +43,7 @@ ansible-playbook -e 'ansible_python_interpreter=/usr/bin/python3' --ask-become-p
       You need to set this or the environment variable `CK8S_PGP_FP` the first time SOPS is used in your specified config path.
 
 1. Edit the `inventory.ini` (found in your config path) to match the VMs (IP addresses and other settings that might be needed for your setup) that should be part of the cluster.
-   Or if you have one created by a terraform script in `kubespray/contrib/terraform` you should use that one.
+    Or if you have one created by a terraform script in `kubespray/contrib/terraform` you should use that one.
 
 1. Init and update the [kubespray](https://github.com/kubernetes-sigs/kubespray) gitsubmodule:
 
@@ -54,15 +54,15 @@ ansible-playbook -e 'ansible_python_interpreter=/usr/bin/python3' --ask-become-p
 
 1. Run kubespray to set up the kubernetes cluster:
 
-   ```bash
-   ./bin/ck8s-kubespray apply <prefix> [<options>]
-   ```
+    ```bash
+    ./bin/ck8s-kubespray apply <prefix> [<options>]
+    ```
 
-   Any `options` added will be forwarded to ansible.
+    Any `options` added will be forwarded to ansible.
 
 1. Done.
-   You should now have a working kubernetes cluster.
-   You should also have an encrypted kubeconfig at `<CK8S_CONFIG_PATH>/.state/kube_config_<prefix>.yaml` that you can use to access the cluster.
+    You should now have a working kubernetes cluster.
+    You should also have an encrypted kubeconfig at `<CK8S_CONFIG_PATH>/.state/kube_config_<prefix>.yaml` that you can use to access the cluster.
 
 ## Changing authorized SSH keys for a cluster
 

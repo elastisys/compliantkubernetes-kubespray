@@ -66,9 +66,9 @@
     1. Remove `PodSecurityPolicy` from the `kube_apiserver_enable_admission_plugins` list in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
 
         ```diff
-         kube_apiserver_enable_admission_plugins:
-        -  - "PodSecurityPolicy"
-           - "NamespaceLifecycle"
+          kube_apiserver_enable_admission_plugins:
+        -   - "PodSecurityPolicy"
+            - "NamespaceLifecycle"
         ```
 
 1. Set shutdown manager to valid values for Ubuntu, in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`

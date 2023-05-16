@@ -88,6 +88,7 @@ append_trap() {
         return
     fi
 
+    # shellcheck disable=SC2317
     previous_trap_cmd() { printf '%s\n' "$3"; }
 
     new_trap() {
@@ -130,9 +131,9 @@ sops_decrypt_verify() {
 
     # https://github.com/mozilla/sops/issues/460
     if ! grep -F -q 'sops:' "${1}" && \
-       ! grep -F -q '"sops":' "${1}" && \
-       ! grep -F -q '[sops]' "${1}" && \
-       ! grep -F -q 'sops_version=' "${1}"; then
+        ! grep -F -q '"sops":' "${1}" && \
+        ! grep -F -q '[sops]' "${1}" && \
+        ! grep -F -q 'sops_version=' "${1}"; then
         log_error "NOT ENCRYPTED: ${1}"
         exit 1
     fi
@@ -227,13 +228,13 @@ check_openstack_credentials() {
 # Compares the expected and actual git state of the kubespray submodule.
 # If they don't match the user will be asked if they want to continue anyway.
 kubespray_version_check(){
-   pushd "${here}/../" || exit
+    pushd "${here}/../" || exit
 
-   git_diff=$(git diff kubespray/)
+    git_diff=$(git diff kubespray/)
 
-   popd || exit
+    popd || exit
 
-   if [[ $git_diff ]]; then
+    if [[ $git_diff ]]; then
 
         expected_commit=$(echo "${git_diff}" | grep -m1 commit | grep -o '[^ ]*$')
         current_commit=$(echo "${git_diff}" | tail -n 1 | grep -o '[^ ]*$')
@@ -247,5 +248,5 @@ kubespray_version_check(){
         if [[ "${reply}" != "n" ]]; then
             exit 1
         fi
-   fi
+    fi
 }

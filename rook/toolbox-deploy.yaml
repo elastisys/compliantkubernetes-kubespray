@@ -50,11 +50,11 @@ spec:
               mountPath: /etc/rook
           resources:
             requests:
-             cpu: 5m
-             memory: 10Mi
+              cpu: 5m
+              memory: 10Mi
             limits:
-             cpu: 100m
-             memory: 100Mi
+              cpu: 100m
+              memory: 100Mi
       volumes:
         - name: mon-endpoint-volume
           configMap:

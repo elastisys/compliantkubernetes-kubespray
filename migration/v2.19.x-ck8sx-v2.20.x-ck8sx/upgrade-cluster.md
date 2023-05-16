@@ -46,16 +46,16 @@ These steps will not disrupt the environment and can be done ahead of a maintena
 
     ```
     storage_classes:
-       - name: standard
-         is_default: true
-         expand_persistent_volumes: true
-         parameters:
-           tier: maxiops
-       - name: hdd
-         is_default: false
-         expand_persistent_volumes: true
-         parameters:
-           tier: hdd
+      - name: standard
+        is_default: true
+        expand_persistent_volumes: true
+        parameters:
+          tier: maxiops
+      - name: hdd
+        is_default: false
+        expand_persistent_volumes: true
+        parameters:
+          tier: hdd
     ```
 
     Remove or update the `storage_classes` in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster-upcloud.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster-upcloud.yaml` to work with the new format
@@ -64,12 +64,12 @@ These steps will not disrupt the environment and can be done ahead of a maintena
     Old format:
 
     ```
-     expand_persistent_volumes: true
-     parameters:
-         tier: maxiops
-      storage_classes:
-            - name: standard
-              is_default: true
+    expand_persistent_volumes: true
+    parameters:
+      tier: maxiops
+    storage_classes:
+      - name: standard
+        is_default: true
     ```
 
     To new format

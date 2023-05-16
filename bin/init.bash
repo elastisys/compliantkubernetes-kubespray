@@ -30,10 +30,10 @@ fi
 
 # Validate the flavor
 if [ "${flavor}" != "default" ] && \
-   [ "${flavor}" != "gcp" ] && \
-   [ "${flavor}" != "openstack" ] && \
-   [ "${flavor}" != "vsphere" ] && \
-   [ "${flavor}" != "aws" ]; then
+    [ "${flavor}" != "gcp" ] && \
+    [ "${flavor}" != "openstack" ] && \
+    [ "${flavor}" != "vsphere" ] && \
+    [ "${flavor}" != "aws" ]; then
     log_error "ERROR: Unsupported flavor: ${flavor}"
     exit 1
 fi

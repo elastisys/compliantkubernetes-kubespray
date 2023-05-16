@@ -60,8 +60,8 @@ The releases will have the following version string: `<kubespray-version>-<ck8s-
     ```
 
 1. Push the tagged commit, create a PR against the release branch and request a review.
-   If there are no changes, create the release manually instead by going to [releases](https://github.com/elastisys/compliantkubernetes-kubespray/releases) and clicking "Draft a new release".
-   Check older releases for how to word it.
+    If there are no changes, create the release manually instead by going to [releases](https://github.com/elastisys/compliantkubernetes-kubespray/releases) and clicking "Draft a new release".
+    Check older releases for how to word it.
 
     ```bash
     git push --tags
@@ -170,7 +170,7 @@ The structure follow the guidelines of [keepachangelog](https://keepachangelog.c
 
 Changelogs are for humans, not machines. Keep messages in human readable form rather
 than commits or code. Commits or pull requests can off course be linked. Add messages
-as bullet points under one of theese categories:
+as bullet points under one of these categories:
 
 - Breaking changes
 - Release notes

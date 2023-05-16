@@ -1,3 +1,6 @@
+### Added
+- Add additional pre-commit checks
+
 ### Changed
 
 - Updated the Kubernetes audit log policy file

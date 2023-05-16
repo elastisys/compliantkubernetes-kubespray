@@ -161,7 +161,7 @@ This has only been tested on CityCloud and might not look the same for other clo
 
 1. Add temporary security role between the old and the new machines
 
-    Manually create new rules bewteen the security groups `${ENVIRONMENT_NAME}-cluster` and `${ENVIRONMENT_NAME}-k8s` to allow all traffic
+    Manually create new rules between the security groups `${ENVIRONMENT_NAME}-cluster` and `${ENVIRONMENT_NAME}-k8s` to allow all traffic
 
 1. Add new workers to kubernetes
 
@@ -242,7 +242,7 @@ This has only been tested on CityCloud and might not look the same for other clo
 
 1. Remove temporary security role between the old and the new machines
 
-    Remove the rules bewteen the security groups `${ENVIRONMENT_NAME}-cluster` and `${ENVIRONMENT_NAME}-k8s` since it isn't needed anymore.
+    Remove the rules between the security groups `${ENVIRONMENT_NAME}-cluster` and `${ENVIRONMENT_NAME}-k8s` since it isn't needed anymore.
 
 1. Destroy the old resources
 

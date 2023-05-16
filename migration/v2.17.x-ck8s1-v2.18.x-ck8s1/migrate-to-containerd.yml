@@ -117,6 +117,6 @@
           command: kubectl uncordon {{hostname.stdout}} --kubeconfig /etc/kubernetes/admin.conf
           delegate_to: "{{groups['kube_control_plane'][0]}}"
       when:
-       - container_manager is defined
-       - container_manager == 'containerd'
-       - ansible_facts.services['containerd.service'] is not defined or (ansible_facts.services['containerd.service'] is defined and not ansible_facts.services['containerd.service'].state == 'running')
+        - container_manager is defined
+        - container_manager == 'containerd'
+        - ansible_facts.services['containerd.service'] is not defined or (ansible_facts.services['containerd.service'] is defined and not ansible_facts.services['containerd.service'].state == 'running')
