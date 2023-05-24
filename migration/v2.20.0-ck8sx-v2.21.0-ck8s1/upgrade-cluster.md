@@ -91,13 +91,33 @@ These steps will cause disruptions in the environment.
 
 1. **If the environment is running `rook-ceph`**
 
-    For both `sc` and `wc`, apply PSA labels to the namespace:
+    For both `sc` and `wc`:
 
-    ```bash
-    kubectl label namespace rook-ceph pod-security.kubernetes.io/audit=privileged
-    kubectl label namespace rook-ceph pod-security.kubernetes.io/enforce=privileged
-    kubectl label namespace rook-ceph pod-security.kubernetes.io/warn=privileged
-    ```
+    1. Apply PSA labels to the namespace:
+
+        ```bash
+        kubectl label namespace rook-ceph pod-security.kubernetes.io/audit=privileged
+        kubectl label namespace rook-ceph pod-security.kubernetes.io/enforce=privileged
+        kubectl label namespace rook-ceph pod-security.kubernetes.io/warn=privileged
+        ```
+
+    1. Apply bypass Kubernetes PSP:
+
+        ```bash
+        ./migration/v2.20.0-ck8sx-v2.21.0-ck8s1/bypass-k8s-psp.sh execute
+        ```
+
+    1. Upgrade the operator to remove PSP and associated RBAC
+
+        ```bash
+        namespace="rook-ceph"
+        release_name="rook-ceph"
+        chart="rook-release/rook-ceph"
+        chart_version="<set chart version>" # Can be fetched by running `helm list -n rook-ceph`
+        helm repo add rook-release https://charts.rook.io/release
+        helm diff upgrade --namespace "${namespace}" "${release_name}" "${chart}" --version "${chart_version}" --values "./rook/operator-values.yaml"
+        helm upgrade --namespace "${namespace}" "${release_name}" "${chart}" --version "${chart_version}" --values "./rook/operator-values.yaml" --wait
+        ```
 
 1. Upgrade the cluster to a new kubernetes version:
 
@@ -133,16 +153,10 @@ These steps will cause disruptions in the environment.
 
 1. **If the environment is running `rook-ceph`**
 
-    For both `sc` and `wc`, upgrade the operator to remove PSP and associated RBAC:
+    For both `sc` and `wc`, clean up bypass Kubernetes PSP:
 
     ```bash
-    namespace="rook-ceph"
-    release_name="rook-ceph"
-    chart="rook-release/rook-ceph"
-    chart_version="<set chart version>" # Can be fetched by running `helm list -n rook-ceph`
-    helm repo add rook-release https://charts.rook.io/release
-    helm diff upgrade --namespace "${namespace}" "${release_name}" "${chart}" --version "${chart_version}" --values "./rook/operator-values.yaml"
-    helm upgrade --namespace "${namespace}" "${release_name}" "${chart}" --version "${chart_version}" --values "./rook/operator-values.yaml" --wait
+    ./migration/v2.20.0-ck8sx-v2.21.0-ck8s1/bypass-k8s-psp.sh clean
     ```
 
 ## Postrequisite
