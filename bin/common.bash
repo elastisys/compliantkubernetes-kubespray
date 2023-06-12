@@ -41,6 +41,17 @@ export TERRAFORM_STATE_ROOT="${config_path}"
 declare -A config
 # shellcheck disable=SC2034
 config["inventory_file"]="${config_path}/inventory.ini"
+# shellcheck disable=SC2034
+config["groups_inventory_file"]="${config_path}/groups-inventory.ini"
+
+declare -A KUBE
+KUBE[sc]="${CK8S_CONFIG_PATH}/.state/kube_config_sc.yaml"
+KUBE[wc]="${CK8S_CONFIG_PATH}/.state/kube_config_wc.yaml"
+
+# shellcheck disable=SC2317
+log_info() {
+    echo -e "[\e[34mck8s\e[0m] ${*}" 1>&2
+}
 
 log_info_no_newline() {
     echo -e -n "[\e[34mck8s\e[0m] ${*}" 1>&2
@@ -332,4 +343,104 @@ ck8s_kubespray_version_check(){
         log_error "CK8S-Kubespray version: ${version}"
         exit 1
     fi
+}
+with_kubeconfig() {
+    kubeconfig="${1}"
+    shift
+
+    if [ ! -f "${kubeconfig}" ]; then
+      log_error "ERROR: Kubeconfig not found: ${kubeconfig}"
+      exit 1
+    fi
+
+    if grep -F -q 'sops:' "${kubeconfig}" || \
+        grep -F -q '"sops":' "${kubeconfig}" || \
+        grep -F -q '[sops]' "${kubeconfig}" || \
+        grep -F -q 'sops_version=' "${kubeconfig}"; then
+        log_info "Using encrypted kubeconfig ${kubeconfig}"
+
+        # TODO: Can't use a FIFO since we can't know that the kubeconfig is not
+        #       read multiple times. Let's try to eliminate the need for writing
+        #       the kubeconfig to disk in the future.
+        local -a args
+        for arg in "${@}"; do args+=("'${arg}'"); done
+        sops_exec_file_no_fifo "${kubeconfig}" "KUBECONFIG=\"{}\" ${args[*]}"
+    else
+        log_info "Using unencrypted kubeconfig ${kubeconfig}"
+        KUBECONFIG=${kubeconfig} "${@}"
+    fi
+}
+
+ops_kubectl() { # <prefix> <args...>
+    case "${1}" in
+        sc) kubeconfig="${KUBE[sc]}" ;;
+        wc) kubeconfig="${KUBE[wc]}" ;;
+    esac
+
+    shift
+    with_kubeconfig "$kubeconfig" kubectl "${@}"
+}
+
+assign_host() {
+    local node=$1
+    # Check for control plane nodes
+    control_plane_label=$(yq4 .control_plane_label "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
+    # Check for AMS
+    primary_group_label=$(yq4 .group_label_primary "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
+    secondary_group_label=$(yq4 .group_label_secondary "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
+    if [[ $(ops_kubectl "$prefix" get node "$node" -ojson | jq ".metadata.labels | has(\"${control_plane_label}\")") == "true" ]]; then
+        target_group="kube_control_plane"
+        if [[ "$(group_exists "${config[groups_inventory_file]}" "$target_group")" != "true" ]]; then
+            log_info "Adding $target_group group to ${config[groups_inventory_file]} .."
+            add_group "${config[groups_inventory_file]}" "$target_group"
+        fi
+        add_host_to_group "${config[groups_inventory_file]}" "$node" "$target_group"
+    elif [[ $(ops_kubectl "$prefix" get node "$node" -ojson | jq ".metadata.labels | has(\"${primary_group_label}\")") == "true" ]]; then
+        node_type=$(ops_kubectl "$prefix" get node "$node" -ojson | jq -r ".metadata.labels[\"${primary_group_label}\"]")
+        if [[ $(ops_kubectl "$prefix" get node "$node" -ojson | jq ".metadata.labels | has(\"${secondary_group_label}\")") == "true" ]]; then
+            cluster_name=$(ops_kubectl "$prefix" get node "$node" -ojson | jq -r ".metadata.labels[\"${secondary_group_label}\"]")
+            target_group="${node_type}_${cluster_name//-/_}"
+        else
+            target_group="${node_type}"
+        fi
+        if [[ "$(group_exists "${config[groups_inventory_file]}" "$target_group")" != "true" ]]; then
+            log_info "Adding $target_group group to ${config[groups_inventory_file]} .."
+            add_group "${config[groups_inventory_file]}" "$target_group"
+        fi
+
+        if [[ "$node_type" == "postgres" ]]; then
+            if [[ $(ops_kubectl "$prefix" get pods -A -l application=spilo,cluster-name="$cluster_name" -ojson | jq -r '.items[] | select( .metadata.labels["spilo-role"] == "master" ).spec.nodeName') == "$node" ]]; then
+                add_host_to_group_as_last "${config[groups_inventory_file]}" "$node" "$target_group"
+            else
+                add_host_to_group "${config[groups_inventory_file]}" "$node" "$target_group"
+            fi
+        elif [[ "$node_type" == "redis" ]]; then
+            if [[ $(ops_kubectl "$prefix" get pods -A -l redisfailovers.databases.spotahome.com/name="$cluster_name" -ojson | jq -r '.items[] | select( .metadata.labels["redisfailovers-role"] == "master" ).spec.nodeName') == "$node" ]]; then
+                add_host_to_group_as_last "${config[groups_inventory_file]}" "$node" "$target_group"
+            else
+                add_host_to_group "${config[groups_inventory_file]}" "$node" "$target_group"
+            fi
+        else
+            add_host_to_group "${config[groups_inventory_file]}" "$node" "$target_group"
+        fi
+
+
+    # Check for regular nodes
+    else
+        target_group="regular_worker"
+        if [[ "$(group_exists "${config[groups_inventory_file]}" "$target_group")" != "true" ]]; then
+            log_info "Adding $target_group group to ${config[groups_inventory_file]} .."
+            add_group "${config[groups_inventory_file]}" "$target_group"
+        fi
+        add_host_to_group "${config[groups_inventory_file]}" "$node" "$target_group"
+    fi
+}
+
+contains_element () {
+  local e match="$1"
+  shift
+  for e in "$@"; do
+    [[ "${e}" == "${match}" ]] && return 0;
+  done
+  return 1
 }

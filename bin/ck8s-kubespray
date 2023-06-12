@@ -25,6 +25,12 @@ usage() {
     echo "      args: <wc|sc> [<options>]" 1>&2
     echo "  upgrade                                     prepares config for upgrade" 1>&2
     echo "      args: <wc|sc|both> <version> prepare" 1>&2
+    echo "  upgrade-groups                              upgrade groups in parallel" 1>&2
+    echo "      args: <wc|sc> <list-groups|apply>" 1>&2
+    echo "  generate-groups-inventory                   generate groups static inventory" 1>&2
+    echo "      args: <wc|sc>" 1>&2
+    echo "  sync-groups-inventory                       sync groups static inventory" 1>&2
+    echo "      args: <wc|sc>" 1>&2
     exit 1
 }
 
@@ -94,6 +100,27 @@ case "${1}" in
         fi
         shift 1
         "${here}/upgrade.bash" "${@}"
+        ;;
+    upgrade-groups)
+        if [ $# -lt 3 ]; then
+            usage
+        fi
+        shift 2
+        "${here}/upgrade-groups.bash" "${@}"
+        ;;
+    generate-groups-inventory)
+        if [ $# -lt 2 ]; then
+            usage
+        fi
+        shift 2
+        "${here}/generate-groups-inventory.bash" "${@}"
+        ;;
+    sync-groups-inventory)
+        if [ $# -lt 2 ]; then
+            usage
+        fi
+        shift 2
+        "${here}/sync-groups-inventory.bash" "${@}"
         ;;
     *) usage ;;
 esac
