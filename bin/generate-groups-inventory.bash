@@ -59,6 +59,7 @@ for node in $nodes; do
             addGroup "${config[groups_inventory_file]}" "$target_group"
         fi
         addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
+    # Check for AMS
     elif [[ $(ops_kubectl $prefix get node "$node" -ojson | jq '.metadata.labels | has("elastisys.io/node-type")') == "true" ]]; then
         node_type=$(ops_kubectl $prefix get node "$node" -ojson | jq -r '.metadata.labels["elastisys.io/node-type"]')
         cluster_name=$(ops_kubectl $prefix get node "$node" -ojson | jq -r '.metadata.labels["elastisys.io/ams-cluster-name"]')
@@ -68,6 +69,7 @@ for node in $nodes; do
             addGroup "${config[groups_inventory_file]}" "$target_group"
         fi
         addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
+    # Check for regular nodes
     else
         target_group="regular_worker"
         if [[ "$(groupExists ${config[groups_inventory_file]} $target_group)" != "true" ]]; then
