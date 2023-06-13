@@ -17,6 +17,8 @@ containsElement () {
   return 1
 }
 
+log_info "Inventories sync in process .."
+
 for host in $(getGroupHosts ${config[groups_inventory_file]} all); do 
     if $(! containsElement $host $(getGroupHosts ${config[inventory_file]} all)); then
         log_info "Removing $host from groups inventory.."
@@ -29,10 +31,20 @@ for host in $(getGroupHosts ${config[inventory_file]} all); do
         log_info "Adding $host to groups inventory.."
         addHostToGroup "${config[groups_inventory_file]}" $host "all"
         hostvars=$(getHostVars ${config[inventory_file]} $host)
+        log_info "Syncing hostvars for new host: $host .."
         for hostvar in $hostvars; do 
             value=$(getHostVar ${config[inventory_file]} $host $hostvar)
             setHostVar ${config[groups_inventory_file]} $host $hostvar $value
         done
         assignHost $host
     fi
+done
+
+for host in $(getGroupHosts ${config[groups_inventory_file]} all); do 
+    hostvars=$(getHostVars ${config[inventory_file]} $host)
+    log_info "Syncing hostvars for existing host: $host"
+    for hostvar in $hostvars; do 
+        value=$(getHostVar ${config[inventory_file]} $host $hostvar)
+        updateHostVar ${config[groups_inventory_file]} $host $hostvar $value
+    done
 done
