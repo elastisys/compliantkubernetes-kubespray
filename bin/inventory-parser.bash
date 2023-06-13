@@ -8,7 +8,7 @@ source "${here}/common.bash"
 
 readInventoryGroups(){
   local filename="$1"
-  gawk '{ if ($1 ~ /^\[[a-zA-Z_]{1,}\]/) section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1)); configuration[section]=1 } END {for (key in configuration) { print key} }' "${filename}"
+  gawk '{ if ($1 ~ /^\[[a-zA-Z0-9_]{1,}\]/) section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1)); configuration[section]=1 } END {for (key in configuration) { print key} }' "${filename}"
 }
 
 getGroupHosts() {
@@ -17,7 +17,7 @@ getGroupHosts() {
 
   awk -v target_group="$section" \
              -F' ' '{ 
-                      if ($1 ~ /^\[[a-zA-Z_]{1,}\]/)
+                      if ($1 ~ /^\[[a-zA-Z0-9_]{1,}\]/)
                         section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1)) 
                       else if ($1 !~ /^$/ && $1 !~ /^;/) {
                         gsub(/^[ \t]+|[ \t]+$/, "", $1); 
@@ -36,6 +36,24 @@ getGroupHosts() {
                     }' "${filename}"
 }
 
+getSection() {
+  local filename="$1"
+  local section="$2"
+
+  awk -v target_group="$section" \
+            -F' ' '{ 
+                    if ($1 ~ /^\[[a-zA-Z0-9_]{1,}\]/) {
+                      section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1))
+                      if (section == target_group) print $0
+                    }
+                    else if ($1 !~ /^$/ && $1 !~ /^;/) {
+                      if (section == target_group) {
+                        print $0
+                      }
+                    } 
+                  }' "${filename}"
+}
+
 getHostVar() {
   local filename="$1"
   local host="$2"
@@ -43,7 +61,7 @@ getHostVar() {
 
   awk -v target_host="$host"  -v hostvar="$hostvar" \
              -F' ' '{ 
-                      if ($1 ~ /^\[[a-zA-Z_]{1,}\]/)
+                      if ($1 ~ /^\[[a-zA-Z0-9_]{1,}\]/)
                         section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1)) 
                       else if ($1 !~ /^$/ && $1 !~ /^;/) {
                         gsub(/^[ \t]+|[ \t]+$/, "", $1); 
@@ -71,7 +89,7 @@ getHostVars() {
   if [[ "$(isHostInGroup "$filename" "$host" "all")" == "true" ]]; then
     awk -v target_host="$host" \
               -F' ' '{ 
-                        if ($1 ~ /^\[[a-zA-Z_]{1,}\]/)
+                        if ($1 ~ /^\[[a-zA-Z0-9_]{1,}\]/)
                           section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1)) 
                         else if ($1 !~ /^$/ && $1 !~ /^;/) {
                           gsub(/^[ \t]+|[ \t]+$/, "", $1); 
@@ -185,7 +203,7 @@ updateHostVar() {
   local hostvar="$3"
   local value="$4"
 
-  if [[ "$(isHostInGroup "$filename" "$host" "all")" ]]; then
+  if [[ "$(isHostInGroup $filename $host all)" ]]; then
     awk -v target_host="$host"  -v hostvar="$hostvar"  -v val="$value" \
             -F' ' '{ 
                     if ($1 ~ /^\[/) {
@@ -222,7 +240,7 @@ isHostInGroup() {
   local host="$2"
   local group="$3"
 
-  hosts="$(getGroupHosts "$filename" "$group")"
+  hosts="$(getGroupHosts $filename $group)"
   for h in $hosts; do 
     if [[ "$host" ==  "$h" ]]; then echo "true"; break; fi 
   done
@@ -232,11 +250,10 @@ groupExists() {
   local filename="$1"
   local group="$2"
 
-  groups="$(readInventoryGroups "$filename")"
-
+  groups="$(readInventoryGroups $filename)"
   for g in $groups; do
     if [[ "$group" == "$g" ]]; then  echo "true"; break; fi
-  done
+  done  
   
 }
 
@@ -245,8 +262,8 @@ addHostToGroup() {
   local host="$2"
   local group="$3"
 
-  hostDefined="$(isHostInGroup "$filename" "$host" "all")"
-  hostExists="$(isHostInGroup "$filename" "$host" "$group")"
+  hostDefined="$(isHostInGroup $filename $host all)"
+  hostExists="$(isHostInGroup $filename $host $group)"
 
   if [[ "$hostDefined" == "true" ]]; then
     if [[ "$hostExists" == "true" ]]; then
@@ -265,7 +282,7 @@ removeHostFromGroup() {
   local host="$2"
   local group="$3" 
 
-  if [[ "$(isHostInGroup "$filename" "$host" "all")" == "true" ]]; then
+  if [[ "$(isHostInGroup $filename $host all)" == "true" ]]; then
     awk -v target_host="$host" -v target_group="$group" \
         -F' ' '{ 
                 global_removal=1
@@ -299,7 +316,7 @@ addGroup() {
   local filename="$1"
   local group="$2"
 
-  if [[ "$(groupExists "$filename" "$group")" == "true" ]]; then 
+  if [[ "$(groupExists $filename $group)" == "true" ]]; then 
     log_warning "Group $group already exists"
   else
     echo -e "\n\n[$group]" >> "$filename"
