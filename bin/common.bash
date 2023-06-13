@@ -36,6 +36,8 @@ export TERRAFORM_STATE_ROOT="${config_path}"
 declare -A config
 # shellcheck disable=SC2034
 config["inventory_file"]="${config_path}/inventory.ini"
+# shellcheck disable=SC2034
+config["groups_inventory_file"]="${config_path}/groups-inventory.ini"
 
 log_info() {
     echo -e "[\e[34mck8s\e[0m] ${*}" 1>&2
@@ -268,3 +270,30 @@ ck8s_kubespray_version_check(){
         exit 1
     fi
 }
+with_kubeconfig() {
+    kubeconfig="${1}"
+    shift
+
+    if [ ! -f "${kubeconfig}" ]; then
+      log_error "ERROR: Kubeconfig not found: ${kubeconfig}"
+      exit 1
+    fi
+
+    if grep -F -q 'sops:' "${kubeconfig}" || \
+        grep -F -q '"sops":' "${kubeconfig}" || \
+        grep -F -q '[sops]' "${kubeconfig}" || \
+        grep -F -q 'sops_version=' "${kubeconfig}"; then
+        log_info "Using encrypted kubeconfig ${kubeconfig}"
+
+        # TODO: Can't use a FIFO since we can't know that the kubeconfig is not
+        #       read multiple times. Let's try to eliminate the need for writing
+        #       the kubeconfig to disk in the future.
+        local -a args
+        for arg in "${@}"; do args+=("'${arg}'"); done
+        sops_exec_file_no_fifo "${kubeconfig}" "KUBECONFIG=\"{}\" ${args[*]}"
+    else
+        log_info "Using unencrypted kubeconfig ${kubeconfig}"
+        KUBECONFIG=${kubeconfig} "${@}"
+    fi
+}
+
