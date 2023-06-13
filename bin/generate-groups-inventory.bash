@@ -48,102 +48,32 @@ else
 fi
 
 
-# Control Plane Nodes 
-target_group="kube_control_plane"
-control_plane_nodes=$(ops_kubectl $prefix get nodes -l node-role.kubernetes.io/control-plane -o=jsonpath='{.items[*].metadata.name}')
-if [[ ${control_plane_nodes} ]]; then
-    if [[ "$(groupExists ${config[groups_inventory_file]} $target_group)" != "true" ]]; then
-        log_info "Adding $target_group group to ${config[groups_inventory_file]} .."
-        addGroup "${config[groups_inventory_file]}" "$target_group"
-    fi
-    for node in $control_plane_nodes; do
-        addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
-    done
-fi
+nodes=$(ops_kubectl $prefix get nodes -o=jsonpath='{.items[*].metadata.name}')
 
-# Worker Nodes
-target_group="kube_node"
-worker_nodes=$(ops_kubectl $prefix get nodes -l '!node-role.kubernetes.io/control-plane' -o=jsonpath='{.items[*].metadata.name}')
-if [[ ${worker_nodes} ]]; then
-    if [[ "$(groupExists ${config[groups_inventory_file]} $target_group)" != "true" ]]; then
-        log_info "Adding $target_group group to ${config[groups_inventory_file]} .."
-        addGroup "${config[groups_inventory_file]}" "$target_group"
-    fi
-    for node in $worker_nodes; do
-        addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
-    done
-fi
-
-# Elastisys Nodes
-target_group="elastisys_node"
-elastisys_nodes=$(ops_kubectl $prefix get nodes -l elastisys.io/node-type=elastisys -o=jsonpath='{.items[*].metadata.name}')
-
-if [[ ${elastisys_nodes} ]]; then
-    if [[ "$(groupExists ${config[groups_inventory_file]} $target_group)" != "true" ]]; then
-        log_info "Adding $target_group group to ${config[groups_inventory_file]} .."
-        addGroup "${config[groups_inventory_file]}" "$target_group"
-    fi
-    for node in $elastisys_nodes; do
-        addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
-    done
-fi
-
-# Redis Clusters
-redis_nodes=$(ops_kubectl $prefix get nodes -l elastisys.io/node-type=redis -o=jsonpath='{.items[*].metadata.name}')
-redis_clusters=$(ops_kubectl $prefix get nodes -l elastisys.io/node-type=redis  -ojson | jq  '.items[].metadata.labels["elastisys.io/ams-cluster-name"]' | jq -r -s '. | unique | .[]')
-
-if [[ ${redis_nodes} ]]; then
-
-    for cluster in $redis_clusters; do 
-        target_group="redis_node_$cluster"
+for node in $nodes; do
+    # Check for control plane nodes
+    if [[ $(ops_kubectl $prefix get node "$node" -ojson | jq '.metadata.labels | has("node-role.kubernetes.io/control-plane")') == "true" ]]; then
+        target_group="kube_control_plane"
         if [[ "$(groupExists ${config[groups_inventory_file]} $target_group)" != "true" ]]; then
             log_info "Adding $target_group group to ${config[groups_inventory_file]} .."
             addGroup "${config[groups_inventory_file]}" "$target_group"
         fi
-        cluster_nodes=$(ops_kubectl $prefix get nodes -l elastisys.io/node-type=redis  -ojson | jq -r ".items[] | select(.metadata.labels[\"elastisys.io/ams-cluster-name\"] == \"$cluster\") | .metadata.name")
-        for node in $cluster_nodes; do 
-            addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
-        done
-    done
-
-fi
-
-# Postgres Clusters
-postgres_nodes=$(ops_kubectl $prefix get nodes -l elastisys.io/node-type=postgres -o=jsonpath='{.items[*].metadata.name}')
-postgres_clusters=$(ops_kubectl $prefix get nodes -l elastisys.io/node-type=postgres  -ojson | jq  '.items[].metadata.labels["elastisys.io/ams-cluster-name"]' | jq -r -s '. | unique | .[]')
-
-if [[ ${postgres_nodes} ]]; then
-
-    for cluster in $postgres_clusters; do 
-        target_group="postgres_node_$cluster"
+        addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
+    elif [[ $(ops_kubectl $prefix get node "$node" -ojson | jq '.metadata.labels | has("elastisys.io/node-type")') == "true" ]]; then
+        node_type=$(ops_kubectl $prefix get node "$node" -ojson | jq -r '.metadata.labels["elastisys.io/node-type"]')
+        cluster_name=$(ops_kubectl $prefix get node "$node" -ojson | jq -r '.metadata.labels["elastisys.io/ams-cluster-name"]')
+        target_group="${node_type}_${cluster_name}"
         if [[ "$(groupExists ${config[groups_inventory_file]} $target_group)" != "true" ]]; then
             log_info "Adding $target_group group to ${config[groups_inventory_file]} .."
             addGroup "${config[groups_inventory_file]}" "$target_group"
         fi
-        cluster_nodes=$(ops_kubectl $prefix get nodes -l elastisys.io/node-type=postgres  -ojson | jq -r ".items[] | select(.metadata.labels[\"elastisys.io/ams-cluster-name\"] == \"$cluster\") | .metadata.name")
-        for node in $cluster_nodes; do 
-            addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
-        done
-    done
-
-fi
-
-# Jaeger Clusters
-jaeger_nodes=$(ops_kubectl $prefix get nodes -l elastisys.io/node-type=jaeger -o=jsonpath='{.items[*].metadata.name}')
-jaeger_clusters=$(ops_kubectl $prefix get nodes -l elastisys.io/node-type=jaeger  -ojson | jq  '.items[].metadata.labels["elastisys.io/ams-cluster-name"]' | jq -r -s '. | unique | .[]')
-
-if [[ ${jaeger_nodes} ]]; then
-
-    for cluster in $jaeger_clusters; do 
-        target_group="jaeger_node_$cluster"
-        if [[ "$(groupExists "${config[groups_inventory_file]}" "$target_group")" != "true" ]]; then
+        addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
+    else
+        target_group="regular_worker"
+        if [[ "$(groupExists ${config[groups_inventory_file]} $target_group)" != "true" ]]; then
             log_info "Adding $target_group group to ${config[groups_inventory_file]} .."
             addGroup "${config[groups_inventory_file]}" "$target_group"
         fi
-        cluster_nodes=$(ops_kubectl $prefix get nodes -l elastisys.io/node-type=jaeger  -ojson | jq -r ".items[] | select(.metadata.labels[\"elastisys.io/ams-cluster-name\"] == \"$cluster\") | .metadata.name")
-        for node in $cluster_nodes; do 
-            addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
-        done
-    done
-
-fi
+        addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
+    fi
+done
