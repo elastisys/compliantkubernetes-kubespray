@@ -265,7 +265,7 @@ addHostToGroup() {
   hostDefined="$(isHostInGroup $filename $host all)"
   hostExists="$(isHostInGroup $filename $host $group)"
 
-  if [[ "$hostDefined" == "true" ]]; then
+  if [[ "$hostDefined" == "true" || "$group" == "all" ]]; then
     if [[ "$hostExists" == "true" ]]; then
       log_warning "Host $host is already part of group $group"
     else

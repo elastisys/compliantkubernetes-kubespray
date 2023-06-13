@@ -102,5 +102,12 @@ case "${1}" in
         shift 2
         "${here}/generate-groups-inventory.bash" "${@}"
         ;;
+    sync-groups-inventory)
+        if [ $# -lt 2 ]; then
+            usage
+        fi
+        shift 2
+        "${here}/sync-groups-inventory.bash" "${@}"
+        ;;
     *) usage ;;
 esac
