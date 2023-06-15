@@ -1,4 +1,4 @@
-# Upgrade v2.20.0-ck8s3 to v2.20.0-ck8s4
+# Upgrade v2.20.0-ck8s3 to v2.20.0-ck8s5
 
 ## Prerequisites
 
@@ -6,7 +6,7 @@ As this patch version only includes config changes that are not applied to the c
 
 ## Steps that can be done before the upgrade - non-disruptive
 
-1. Checkout the new release: `git switch -d v2.20.0-ck8s4`
+1. Checkout the new release: `git switch -d v2.20.0-ck8s5`
 
 1. Switch to the correct remote: `git submodule sync`
 
@@ -23,7 +23,7 @@ As this patch version only includes config changes that are not applied to the c
     done
     ```
 
-1. Run `bin/ck8s-kubespray upgrade v2.20.0-ck8s4 prepare` to update your config.
+1. Run `bin/ck8s-kubespray upgrade v2.20.0-ck8s5 prepare` to update your config.
 
 ## Upgrade steps
 
