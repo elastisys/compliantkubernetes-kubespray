@@ -1,5 +1,6 @@
 ### Added
 - Add additional pre-commit checks
+- Add new configuration file with compliantkubernetes-kubespray version
 
 ### Changed
 
