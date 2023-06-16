@@ -8,8 +8,7 @@ CK8S_STACK="$(basename "$0")"
 export CK8S_STACK
 
 # shellcheck source=scripts/migration/lib.sh
-CK8S_ROOT_SCRIPT="true"
-source "${ROOT}/scripts/migration/lib.sh"
+CK8S_ROOT_SCRIPT="true" source "${ROOT}/scripts/migration/lib.sh"
 
 snippets_list() {
   if [[ ! "${1}" =~ ^prepare$ ]]; then
