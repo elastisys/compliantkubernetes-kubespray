@@ -5,26 +5,31 @@ repos:
       - id: no-commit-to-branch
       - id: check-merge-conflict
       - id: check-yaml
+        exclude: ^helmfile.d/upstream/
         args:
           - --allow-multiple-documents
       - id: check-json
+        exclude: ^helmfile.d/upstream/
       - id: detect-private-key
+        exclude: ^helmfile.d/upstream/
       - id: end-of-file-fixer
+        exclude: ^helmfile.d/upstream/
       - id: trailing-whitespace
+        exclude: ^helmfile.d/upstream/
 
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
     rev: 2.7.1
     hooks:
       - id: editorconfig-checker
         name: check indentation
-        exclude: ^.gitmodules$|^LICENSE$
+        exclude: ^.gitmodules$|^LICENSE$|^helmfile.d/upstream/
 
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
     rev: 3.0.0
     hooks:
       - id: markdownlint
         name: check markdown
-        exclude: ^CHANGELOG.md$|^WIP-CHANGELOG.md$
+        exclude: ^CHANGELOG.md$|^WIP-CHANGELOG.md$|^helmfile.d/upstream/
         args:
           - -r
           - ~MD013,~MD024,~MD026,~MD028,~MD034
@@ -34,12 +39,17 @@ repos:
     hooks:
       - id: codespell
         name: check spelling
+        exclude: ^helmfile.d/upstream/|^helmfile.d/charts/rook-ceph-crds/templates/cephclusters.yaml$
+        args:
+          - -L
+          - fpr
 
   - repo: https://github.com/koalaman/shellcheck-precommit
     rev: v0.9.0
     hooks:
       - id: shellcheck
         name: check scripts
+        exclude: ^helmfile.d/upstream/
         args:
         - --color=always
         - --external-sources
