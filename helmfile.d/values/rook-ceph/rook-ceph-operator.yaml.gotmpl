@@ -1,0 +1,60 @@
+# For a full list of values see
+# https://github.com/rook/rook/blob/v1.10.5/deploy/charts/rook-ceph/values.yaml
+pspEnable: false
+csi:
+  enableCephfsDriver: false
+  # provisionerTolerations:
+  #   - key: "nodeType"
+  #     operator: Exists
+  #     effect: NoSchedule
+  # pluginTolerations:
+  #   - key: "nodeType"
+  #     operator: Exists
+  #     effect: NoSchedule
+  csiRBDProvisionerResource: |
+    - name : csi-provisioner
+      resource:
+        requests:
+          memory: 20Mi
+          cpu: 5m
+    - name : csi-resizer
+      resource:
+        requests:
+          memory: 20Mi
+          cpu: 5m
+    - name : csi-attacher
+      resource:
+        requests:
+          memory: 20Mi
+          cpu: 5m
+    - name : csi-snapshotter
+      resource:
+        requests:
+          memory: 50Mi
+          cpu: 5m
+    - name : csi-rbdplugin
+      resource:
+        requests:
+          memory: 20Mi
+          cpu: 5m
+    - name : liveness-prometheus
+      resource:
+        requests:
+          memory: 10Mi
+          cpu: 5m
+  csiRBDPluginResource: |
+    - name : driver-registrar
+      resource:
+        requests:
+          memory: 5Mi
+          cpu: 5m
+    - name : csi-rbdplugin
+      resource:
+        requests:
+          memory: 20Mi
+          cpu: 5m
+    - name : liveness-prometheus
+      resource:
+        requests:
+          memory: 10Mi
+          cpu: 5m

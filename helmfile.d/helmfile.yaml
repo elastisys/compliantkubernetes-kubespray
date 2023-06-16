@@ -36,6 +36,8 @@ releases:
   needs:
   - rook-ceph/rook-ceph-crds
   missingFileHandler: Error
+  values:
+  - values/rook-ceph/rook-ceph-operator.yaml.gotmpl
 
 - name: rook-ceph-cluster
   namespace: rook-ceph
@@ -48,5 +50,5 @@ releases:
   - rook-ceph/rook-ceph-operator
   missingFileHandler: Error
   values:
-  - values/jaeger/rook-ceph-cluster.yaml.gotmpl
+  - values/rook-ceph/rook-ceph-cluster.yaml.gotmpl
   - values/cluster-presets/{{ .Values.clusterPreset }}.yaml
