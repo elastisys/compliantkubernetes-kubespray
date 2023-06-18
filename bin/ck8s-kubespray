@@ -95,6 +95,7 @@ case "${1}" in
         fi
         shift 1
         "${here}/upgrade.bash" "${@}"
+        ;;
     generate-groups-inventory)
         if [ $# -lt 2 ]; then
             usage
