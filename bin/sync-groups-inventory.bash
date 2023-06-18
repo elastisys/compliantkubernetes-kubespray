@@ -10,12 +10,6 @@ source "${here}/common.bash"
 # shellcheck source=bin/common.bash
 source "${here}/inventory-parser.bash"
 
-containsElement () {
-  local e match="$1"
-  shift
-  for e; do [[ "$e" == "$match" ]] && return 0; done
-  return 1
-}
 
 log_info "Inventories sync in process .."
 

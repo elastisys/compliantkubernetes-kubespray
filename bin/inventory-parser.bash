@@ -8,7 +8,7 @@ source "${here}/common.bash"
 
 readInventoryGroups(){
   local filename="$1"
-  gawk '{ if ($1 ~ /^\[[a-zA-Z0-9_]{1,}\]/) section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1)); configuration[section]=1 } END {for (key in configuration) { print key} }' "${filename}"
+  gawk '{ if ($1 ~ /^\[[a-zA-Z0-9_:]{1,}\]/) section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1)); configuration[section]=1 } END {for (key in configuration) { print key} }' "${filename}"
 }
 
 getGroupHosts() {
@@ -17,7 +17,7 @@ getGroupHosts() {
 
   awk -v target_group="$section" \
              -F' ' '{ 
-                      if ($1 ~ /^\[[a-zA-Z0-9_]{1,}\]/)
+                      if ($1 ~ /^\[[a-zA-Z0-9_:]{1,}\]/)
                         section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1)) 
                       else if ($1 !~ /^$/ && $1 !~ /^;/) {
                         gsub(/^[ \t]+|[ \t]+$/, "", $1); 
@@ -42,7 +42,7 @@ getSection() {
 
   awk -v target_group="$section" \
             -F' ' '{ 
-                    if ($1 ~ /^\[[a-zA-Z0-9_]{1,}\]/) {
+                    if ($1 ~ /^\[[a-zA-Z0-9_:]{1,}\]/) {
                       section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1))
                       if (section == target_group) print $0
                     }
@@ -89,7 +89,7 @@ getHostVars() {
   if [[ "$(isHostInGroup "$filename" "$host" "all")" == "true" ]]; then
     awk -v target_host="$host" \
               -F' ' '{ 
-                        if ($1 ~ /^\[[a-zA-Z0-9_]{1,}\]/)
+                        if ($1 ~ /^\[[a-zA-Z0-9_:]{1,}\]/)
                           section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1)) 
                         else if ($1 !~ /^$/ && $1 !~ /^;/) {
                           gsub(/^[ \t]+|[ \t]+$/, "", $1); 

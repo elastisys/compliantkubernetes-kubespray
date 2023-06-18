@@ -22,14 +22,28 @@ if [[ "$(groupExists ${config[inventory_file]} all)" == "true" ]]; then
     all_section="$(getSection ${config[inventory_file]} all)"
     echo -e "$all_section\n" > ${config[groups_inventory_file]}
 else 
-    log_error "Error: [all] group in defined in ${config[inventory_file]}"
+    log_error "Error: [all] group is defined in ${config[inventory_file]}"
 fi
 
 if [[ "$(groupExists ${config[inventory_file]} etcd)" == "true" ]]; then
     etcd_section="$(getSection ${config[inventory_file]} etcd)"
-    echo -e "$etcd_section" >> ${config[groups_inventory_file]}
+    echo -e "$etcd_section\n" >> ${config[groups_inventory_file]}
 else 
-    log_error "Error: [etcd] group in defined in ${config[inventory_file]}"
+    log_error "Error: [etcd] group is defined in ${config[inventory_file]}"
+fi
+
+if [[ "$(groupExists ${config[inventory_file]} kube_node)" == "true" ]]; then
+    kube_node_section="$(getSection ${config[inventory_file]} kube_node)"
+    echo -e "$kube_node_section\n" >> ${config[groups_inventory_file]}
+else 
+    log_error "Error: [kube_node] group is defined in ${config[inventory_file]}"
+fi
+
+if [[ "$(groupExists ${config[inventory_file]} k8s_cluster:children)" == "true" ]]; then
+    k8s_children_section="$(getSection ${config[inventory_file]} k8s_cluster:children)"
+    echo -e "$k8s_children_section" >> ${config[groups_inventory_file]}
+else 
+    log_error "Error: [k8s_cluster:children] group is defined in ${config[inventory_file]}"
 fi
 
 

@@ -311,6 +311,13 @@ ops_kubectl() { # <prefix> <args...>
     with_kubeconfig "$kubeconfig" kubectl "${@}"
 }
 
+containsElement () {
+  local e match="$1"
+  shift
+  for e; do [[ "$e" == "$match" ]] && return 0; done
+  return 1
+}
+
 assignHost() {
     local node=$1
     # Check for control plane nodes
