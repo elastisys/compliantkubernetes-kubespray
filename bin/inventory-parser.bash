@@ -277,6 +277,27 @@ addHostToGroup() {
   fi 
 }
 
+addHostToGroupAsLast() {
+  local filename="$1"
+  local host="$2"
+  local group="$3"
+
+  hostDefined="$(isHostInGroup $filename $host all)"
+  hostExists="$(isHostInGroup $filename $host $group)"
+
+  if [[ "$hostDefined" == "true" || "$group" == "all" ]]; then
+    if [[ "$hostExists" == "true" ]]; then
+      log_warning "Host $host is already part of group $group"
+    else
+      awk -v sec="[$group]" -v host="$host" 'p && $1~/\[[^]]*\]/{p=0; print host"\n"}  $1==sec{p=1} END{if (p) print host} 1' "${filename}" > /tmp/secondary-inventory.ini
+      cp /tmp/secondary-inventory.ini "$filename"
+    fi
+  else 
+    log_error "Host $host is not defined in [all] group"
+    exit 1
+  fi 
+}
+
 removeHostFromGroup() {
   local filename="$1"
   local host="$2"
