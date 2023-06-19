@@ -314,7 +314,8 @@ ops_kubectl() { # <prefix> <args...>
 assignHost() {
     local node=$1
     # Check for control plane nodes
-    if [[ $(ops_kubectl $prefix get node "$node" -ojson | jq '.metadata.labels | has("node-role.kubernetes.io/control-plane")') == "true" ]]; then
+    control_plane_label=$(yq4 .control_plane_label "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
+    if [[ $(ops_kubectl $prefix get node "$node" -ojson | jq ".metadata.labels | has(\"${control_plane_label}\")") == "true" ]]; then
         target_group="kube_control_plane"
         if [[ "$(groupExists ${config[groups_inventory_file]} $target_group)" != "true" ]]; then
             log_info "Adding $target_group group to ${config[groups_inventory_file]} .."
@@ -322,15 +323,22 @@ assignHost() {
         fi
         addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
     # Check for AMS
-    elif [[ $(ops_kubectl $prefix get node "$node" -ojson | jq '.metadata.labels | has("elastisys.io/node-type")') == "true" ]]; then
-        node_type=$(ops_kubectl $prefix get node "$node" -ojson | jq -r '.metadata.labels["elastisys.io/node-type"]')
-        cluster_name=$(ops_kubectl $prefix get node "$node" -ojson | jq -r '.metadata.labels["elastisys.io/ams-cluster-name"]')
-        target_group="${node_type}_${cluster_name}"
+    primary_group_label=$(yq4 .group_label_primary "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
+    secondary_group_label=$(yq4 .group_label_secondary "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
+    elif [[ $(ops_kubectl $prefix get node "$node" -ojson | jq ".metadata.labels | has(\"${primary_group_label}\")") == "true" ]]; then
+        node_type=$(ops_kubectl $prefix get node "$node" -ojson | jq -r ".metadata.labels[\"${primary_group_label}\"]")
+        if [[ $(ops_kubectl $prefix get node "$node" -ojson | jq ".metadata.labels | has(\"${secondary_group_label}\")") == "true" ]]; then
+            cluster_name=$(ops_kubectl $prefix get node "$node" -ojson | jq -r ".metadata.labels[\"${secondary_group_label}\"]")
+            target_group="${node_type}_${cluster_name}"
+        else
+            target_group="${node_type}"
+        fi
         if [[ "$(groupExists ${config[groups_inventory_file]} $target_group)" != "true" ]]; then
             log_info "Adding $target_group group to ${config[groups_inventory_file]} .."
             addGroup "${config[groups_inventory_file]}" "$target_group"
         fi
         addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
+
     # Check for regular nodes
     else
         target_group="regular_worker"
