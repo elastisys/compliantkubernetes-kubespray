@@ -39,12 +39,16 @@ upgrade_groups() {
     groups=$(readInventoryGroups ${config[groups_inventory_file]})
     excluded_groups=(all kube_node kube_control_plane k8s_cluster:children etcd)
     log_info "Getting facts"
-    ansible-playbook playbooks/facts.yml -uroot -b -i "${config[groups_inventory_file]}"
+    ansible-playbook ${$kubespray_path}/playbooks/facts.yml -uroot -b -i "${config[groups_inventory_file]}"
     log_info "Upgrading first controle plane"
-    ansible-playbook upgrade-cluster.yml -uroot -b -i "${config[groups_inventory_file]}" --skip-tags=multus -e kube_version=${kube_version} --limit "kube_control_plane[0]:etcd[0]"
+    ansible-playbook ${kubespray_path}/upgrade-cluster.yml -uroot -b -i "${config[groups_inventory_file]}" --skip-tags=multus -e kube_version=${kube_version} --limit "kube_control_plane[0]:etcd[0]"
 
-    ansible-playbook upgrade-cluster.yml -uroot -b -i "${config[groups_inventory_file]}" --skip-tags=multus -e kube_version=${kube_version} -e serial=1 --limit "kube_control_plane[1:]:etcd[1:]" > /tmp/kube_controle_plane.logs &
+    kube_control_plane_hosts=$(getGroupHosts ${config[groups_inventory_file]} kube_control_plane)
+    kube_control_plane_hosts=($kube_control_plane_hosts)
 
+    if [[ ${#kube_control_plane_hosts[@]} -gt 1 ]]; then 
+        ansible-playbook ${kubespray_path}/upgrade-cluster.yml -uroot -b -i "${config[groups_inventory_file]}" --skip-tags=multus -e kube_version=${kube_version} -e serial=1 --limit "kube_control_plane[1:]:etcd[1:]" > /tmp/kube_controle_plane.logs &
+    fi 
     for group in $groups; do 
         if $(! containsElement $group ${excluded_groups[@]}) ; then
             ansible-playbook upgrade-cluster.yml -uroot -b -i "${config[groups_inventory_file]}" --skip-tags=multus -e kube_version=${kube_version} -e serial=1 --limit "$group" > /tmp/$group.logs &
