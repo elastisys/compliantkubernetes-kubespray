@@ -1,5 +1,6 @@
 # Compliant Kubernetes Kubespray changelog
 <!-- BEGIN TOC -->
+- [v2.21.0-ck8s2](#v2210-ck8s2---2023-06-19)
 - [v2.21.0-ck8s1](#v2210-ck8s1---2023-02-06)
 - [v2.20.0-ck8s1](#v2200-ck8s1---2022-10-10)
 - [v2.19.0-ck8s2](#v2190-ck8s2---2022-07-22)
@@ -11,6 +12,15 @@
 - [v2.16.0-ck8s1](#v2160-ck8s1---2021-07-02)
 - [v2.15.0-ck8s1](#v2150-ck8s1---2021-05-27)
 <!-- END TOC -->
+
+-------------------------------------------------
+## v2.21.0-ck8s2 - 2023-06-19
+
+### Changed
+
+- Added PSA labels for rook-ceph
+- Disabled Kubernetes PSPs for rook-ceph
+- Add new configuration file with compliantkubernetes-kubespray version
 
 -------------------------------------------------
 ## v2.21.0-ck8s1 - 2023-02-06
