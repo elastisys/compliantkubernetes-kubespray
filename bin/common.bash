@@ -329,7 +329,7 @@ assignHost() {
         node_type=$(ops_kubectl $prefix get node "$node" -ojson | jq -r ".metadata.labels[\"${primary_group_label}\"]")
         if [[ $(ops_kubectl $prefix get node "$node" -ojson | jq ".metadata.labels | has(\"${secondary_group_label}\")") == "true" ]]; then
             cluster_name=$(ops_kubectl $prefix get node "$node" -ojson | jq -r ".metadata.labels[\"${secondary_group_label}\"]")
-            target_group="${node_type}_${cluster_name}"
+            target_group="${node_type}_${cluster_name//-/_}"
         else
             target_group="${node_type}"
         fi
@@ -337,7 +337,17 @@ assignHost() {
             log_info "Adding $target_group group to ${config[groups_inventory_file]} .."
             addGroup "${config[groups_inventory_file]}" "$target_group"
         fi
-        addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
+
+        if [[ "$node_type" == "postgres" ]]; then
+            if [[ $(ops_kubectl $prefix get pods -A -l application=spilo,cluster-name=$cluster_name -ojson | jq -r '.items[] | select( .metadata.labels["spilo-role"] == "master" ).spec.nodeName') == "$node" ]]; then
+                addHostToGroupAsLast "${config[groups_inventory_file]}" "$node" "$target_group"
+            else 
+                addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
+            fi
+        else 
+            addHostToGroup "${config[groups_inventory_file]}" "$node" "$target_group"
+        fi
+
 
     # Check for regular nodes
     else
