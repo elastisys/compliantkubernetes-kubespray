@@ -53,6 +53,58 @@ log_error() {
     echo -e "[\e[31mck8s\e[0m] ${*}" 1>&2
 }
 
+# Checks that all dependencies are available and critical ones for matching minor version.
+check_tools() {
+  set -x
+
+  local req
+
+  req="${root_path}/get-requirements.yaml"
+
+  local warn
+  local err
+
+  warn=0
+  err=0
+
+  for executable in jq yq4 sops kubectl helm helmfile terraform; do
+    if ! command -v "${executable}" > /dev/null; then
+      log_error "Required dependency ${executable} missing"
+      err=1
+    fi
+  done
+
+  if [[ "${err}" != 0 ]]; then
+    log_error "Install required dependencies before running this command!"
+    exit 1
+  fi
+
+  check_minor() {
+    local v1
+    local v2
+
+    v1="$(sed -r -e 's/^v//' -e 's/\.[0-9]$/\.\*/' -e 's/\./\\\./g' -e 's/\*/\.*/g' <<< "${1}")"
+    v2="$(sed -nr 's/.*([0-9]+\.[0-9]+\.[0-9]+).*/\1/p' <<< "${2}")"
+
+    if ! [[ "${v2}" =~ ${v1} ]]; then
+      log_warning "Required dependency ${3} not using recommended version: (expected ${1##v} - actual ${v2})"
+      warn=1
+    fi
+  }
+
+  check_minor "$(yq4 '.[0].vars.terraform_version' "${req}")" "$(terraform --version --json | yq4 '.terraform_version')" "terraform"
+
+  if [[ "${warn}" != 0 ]]; then
+    if [[ -t 1 ]]; then
+      log_warning_no_newline "Do you want to abort? (y/N): "
+      read -r reply
+      if [[ "${reply}" == "y" ]]; then
+        exit 1
+      fi
+    fi
+  fi
+}
+
 validate_sops_config() {
     if [ ! -f "${sops_config}" ]; then
         log_error "ERROR: SOPS config not found: ${sops_config}"

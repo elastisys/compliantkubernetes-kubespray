@@ -36,6 +36,7 @@ fi
 
 # shellcheck source=bin/common.bash
 source "${here}/common.bash"
+check_tools
 
 case "${1}" in
     init)
