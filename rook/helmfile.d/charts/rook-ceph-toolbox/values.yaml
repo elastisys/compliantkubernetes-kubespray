@@ -1,0 +1,44 @@
+fullnameOverride: ""
+nameOverride: ""
+
+imagePullSecrets: []
+image:
+  pullPolicy: IfNotPresent
+  ceph: quay.io/ceph/ceph
+
+replicaCount: 1
+
+podAnnotations: {}
+
+podSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault
+  runAsNonRoot: true
+  runAsGroup: 2016
+  runAsUser: 2016
+  fsGroup: 2016
+
+securityContext:
+  allowPrivilegeEscalation: false
+  privileged: false
+  capabilities:
+    drop:
+      - ALL
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 16Mi
+  limits:
+    cpu: 100m
+    memory: 128Mi
+
+tolerations:
+  - key: node.kubernetes.io/unreachable
+    operator: Exists
+    effect: NoExecute
+    tolerationsSeconds: 5
+
+nodeSelector: {}
+
+affinity: {}

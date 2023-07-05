@@ -1,0 +1,68 @@
+{{- $namespaceSelectorLabels := .Values.mutations.namespaceSelectorLabels }}
+{{- $namespaces := keys .Values.constraints | sortAlpha }}
+{{- $exceptions := .Values.mutations.exceptions }}
+
+{{- range $namespace, $services := .Values.constraints }}
+{{- range $name, $value := $services }}
+{{- if get (default dict $value.allow.runAsUser) "rule" | eq "RunAsAny" }}
+{{- $exceptions = append $exceptions $value.podSelectorLabels }}
+{{- end }}
+{{- end }}
+{{- end }}
+---
+apiVersion: mutations.gatekeeper.sh/v1
+kind: Assign
+metadata:
+  name: {{ printf "run-as-non-root-%s-restricted-container" .Release.Namespace | trunc 63 }}
+spec:
+  applyTo:
+    - groups: [""]
+      kinds: ["Pod"]
+      versions: ["v1"]
+  match:
+    {{- dict "namespaceSelectorLabels" $namespaceSelectorLabels "namespaces" $namespaces "exceptions" $exceptions | include "podsecuritypolicies.renderMatchExceptions" | nindent 4 }}
+  location: "spec.containers[name: *].securityContext.runAsNonRoot"
+  parameters:
+    assign:
+      value: true
+    pathTests:
+      - subPath: "spec.containers[name: *].securityContext.runAsNonRoot"
+        condition: MustNotExist
+---
+apiVersion: mutations.gatekeeper.sh/v1
+kind: Assign
+metadata:
+  name: {{ printf "run-as-non-root-%s-restricted-ephemeral" .Release.Namespace | trunc 63 }}
+spec:
+  applyTo:
+    - groups: [""]
+      kinds: ["Pod"]
+      versions: ["v1"]
+  match:
+    {{- dict "namespaceSelectorLabels" $namespaceSelectorLabels "namespaces" $namespaces "exceptions" $exceptions | include "podsecuritypolicies.renderMatchExceptions" | nindent 4 }}
+  location: "spec.ephemeralContainers[name: *].securityContext.runAsNonRoot"
+  parameters:
+    assign:
+      value: true
+    pathTests:
+      - subPath: "spec.ephemeralContainers[name: *].securityContext.runAsNonRoot"
+        condition: MustNotExist
+---
+apiVersion: mutations.gatekeeper.sh/v1
+kind: Assign
+metadata:
+  name: {{ printf "run-as-non-root-%s-restricted-init" .Release.Namespace | trunc 63 }}
+spec:
+  applyTo:
+    - groups: [""]
+      kinds: ["Pod"]
+      versions: ["v1"]
+  match:
+    {{- dict "namespaceSelectorLabels" $namespaceSelectorLabels "namespaces" $namespaces "exceptions" $exceptions | include "podsecuritypolicies.renderMatchExceptions" | nindent 4 }}
+  location: "spec.initContainers[name: *].securityContext.runAsNonRoot"
+  parameters:
+    assign:
+      value: true
+    pathTests:
+      - subPath: "spec.initContainers[name: *].securityContext.runAsNonRoot"
+        condition: MustNotExist

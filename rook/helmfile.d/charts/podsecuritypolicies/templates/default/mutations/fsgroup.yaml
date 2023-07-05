@@ -1,0 +1,30 @@
+{{- $namespaceSelectorLabels := .Values.mutations.namespaceSelectorLabels }}
+{{- $namespaces := keys .Values.constraints | sortAlpha }}
+{{- $exceptions := .Values.mutations.exceptions }}
+
+{{- range $namespace, $services := .Values.constraints }}
+{{- range $name, $value := $services }}
+{{- if get (default dict $value.mutation) "fsGroup" }}
+{{- $exceptions = append $exceptions $value.podSelectorLabels }}
+{{- end }}
+{{- end }}
+{{- end }}
+---
+apiVersion: mutations.gatekeeper.sh/v1
+kind: Assign
+metadata:
+  name: {{ printf "fsgroup-%s-restricted" .Release.Namespace | trunc 63 }}
+spec:
+  applyTo:
+    - groups: [""]
+      kinds: ["Pod"]
+      versions: ["v1"]
+  match:
+    {{- dict "namespaceSelectorLabels" $namespaceSelectorLabels "namespaces" $namespaces "exceptions" $exceptions | include "podsecuritypolicies.renderMatchExceptions" | nindent 4 }}
+  location: "spec.securityContext.fsGroup"
+  parameters:
+    assign:
+      value: 1
+    pathTests:
+      - subPath: "spec.securityContext.fsGroup"
+        condition: MustNotExist

@@ -1,0 +1,23 @@
+{{- $namespaces := keys .Values.constraints | sortAlpha }}
+{{- $exceptions := list }}
+{{- range $namespace, $services := .Values.constraints }}
+{{- range $services }}
+{{- if or ( hasKey .allow "allowedCapabilities" ) ( get .allow "privileged" ) ( . | dig "mutation" "dropAllCapabilities" true | not ) }}
+{{- $exceptions = append $exceptions .podSelectorLabels }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{- if $namespaces }}
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sPSPCapabilities
+metadata:
+  name: {{ printf "capabilities-%s-restricted" .Release.Namespace | trunc 63 }}
+spec:
+  match:
+    {{- dict "namespaces" $namespaces "exceptions" $exceptions | include "podsecuritypolicies.renderMatchExceptions" | nindent 4 }}
+  parameters:
+    requiredDropCapabilities:
+      - ALL
+{{- end }}

@@ -1,0 +1,15 @@
+image:
+  ceph: {{ .Values.cluster.cephVersion.image }}
+
+affinity:
+  {{- with pluck "nodeAffinity" (.Values.cluster | get "toolbox" dict) (.Values.cluster | get "all" dict) | first }}
+  nodeAffinity: {{ toYaml . | nindent 4 }}
+  {{- end }}
+
+{{- with pluck "tolerations" (.Values.cluster | get "toolbox" dict) (.Values.cluster | get "all" dict) | first }}
+tolerations: {{ toYaml . | nindent 2 }}
+{{- end }}
+
+{{- with .Values.cluster | get "toolbox.resources" dict }}
+resources: {{ toYaml . | nindent 2 }}
+{{- end }}

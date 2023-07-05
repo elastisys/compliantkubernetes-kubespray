@@ -1,0 +1,202 @@
+constraints:
+  rook-ceph:
+    detect-version:
+      podSelectorLabels:
+        app: rook-ceph-detect-version
+      allow:
+        volumes:
+          - emptyDir
+          - projected
+      mutation:
+        runAsGroup: 2016
+        runAsUser: 2016
+        fsGroup: 2016
+
+    csi-detect-version:
+      podSelectorLabels:
+        app: rook-ceph-csi-detect-version
+      allow:
+        volumes:
+          - emptyDir
+          - projected
+      mutation:
+        runAsGroup: 2016
+        runAsUser: 2016
+        fsGroup: 2016
+
+    csi-rbdplugin-provisioner:
+      podSelectorLabels:
+        app: csi-rbdplugin-provisioner
+      allow:
+        volumes:
+          - configMap
+          - emptyDir
+          - hostPath
+          - projected
+        allowedHostPaths:
+          - pathPrefix: /dev
+          - pathPrefix: /lib/modules
+          - pathPrefix: /sys
+        runAsUser:
+          rule: RunAsAny
+        runAsGroup:
+          rule: RunAsAny
+        supplementalGroups:
+          rule: RunAsAny
+        fsGroup:
+          rule: RunAsAny
+      mutation:
+        dropAllCapabilities: false
+
+    csi-rbdplugin:
+      podSelectorLabels:
+        app: csi-rbdplugin
+      allow:
+        allowPrivilegeEscalation: true
+        hostNetworkPorts: true
+        hostNamespace: true
+        privileged: true
+        volumes:
+          - configMap
+          - emptyDir
+          - hostPath
+          - projected
+        allowedHostPaths:
+          - pathPrefix: /dev
+          - pathPrefix: /lib/modules
+          - pathPrefix: /run/mount
+          - pathPrefix: /run/udev
+          - pathPrefix: /sys
+          - pathPrefix: /var/lib/rook
+          - pathPrefix: /var/lib/kubelet/plugins_registry
+          - pathPrefix: /var/lib/kubelet/plugins
+          - pathPrefix: /var/lib/kubelet/pods
+        runAsUser:
+          rule: RunAsAny
+        runAsGroup:
+          rule: RunAsAny
+        supplementalGroups:
+          rule: RunAsAny
+        fsGroup:
+          rule: RunAsAny
+      mutation:
+        dropAllCapabilities: false
+
+    crashcollector:
+      podSelectorLabels:
+        app: rook-ceph-crashcollector
+      allow:
+        volumes:
+          - hostPath
+          - projected
+          - secret
+        allowedHostPaths:
+          - pathPrefix: /var/lib/rook
+      mutation:
+        runAsGroup: 167
+        runAsUser: 167
+        fsGroup: 167
+
+    mgr:
+      podSelectorLabels:
+        app: rook-ceph-mgr
+      allow:
+        volumes:
+          - emptyDir
+          - hostPath
+          - projected
+          - secret
+        allowedHostPaths:
+          - pathPrefix: /var/lib/rook
+        runAsUser:
+          rule: RunAsAny
+        runAsGroup:
+          rule: RunAsAny
+        supplementalGroups:
+          rule: RunAsAny
+        fsGroup:
+          rule: RunAsAny
+      mutation:
+        dropAllCapabilities: false
+
+    mon:
+      podSelectorLabels:
+        app: rook-ceph-mon
+      allow:
+        volumes:
+          - hostPath
+          {{- with .Values.cluster | get "mon.volumeClaimTemplate" dict }}
+          - persistentVolumeClaim
+          {{- end }}
+          - projected
+          - secret
+        allowedHostPaths:
+          - pathPrefix: /var/lib/rook
+        runAsUser:
+          rule: RunAsAny
+        runAsGroup:
+          rule: RunAsAny
+        fsGroup:
+          rule: RunAsAny
+        supplementalGroups:
+          rule: RunAsAny
+      mutation:
+        dropAllCapabilities: false
+
+    osd:
+      podSelectorLabels:
+        app: rook-ceph-osd
+      allow:
+        allowPrivilegeEscalation: true
+        privileged: true
+        volumes:
+          - emptyDir
+          - hostPath
+          {{- with .Values.cluster | get "mon.volumeClaimTemplate" dict }}
+          # used since both mons and osds will run pvcs if enabled
+          - persistentVolumeClaim
+          {{- end }}
+          - projected
+          - secret
+        allowedHostPaths:
+          - pathPrefix: /dev
+          - pathPrefix: /run/udev
+          - pathPrefix: /var/lib/rook
+        runAsUser:
+          rule: RunAsAny
+        runAsGroup:
+          rule: RunAsAny
+        supplementalGroups:
+          rule: RunAsAny
+        fsGroup:
+          rule: RunAsAny
+      mutation:
+        dropAllCapabilities: false
+
+    osd-prepare:
+      podSelectorLabels:
+        app: rook-ceph-osd-prepare
+      allow:
+        allowPrivilegeEscalation: true
+        privileged: true
+        volumes:
+          - emptyDir
+          - hostPath
+          {{- with .Values.cluster | get "mon.volumeClaimTemplate" dict }}
+          # used since both mons and osds will run pvcs if enabled
+          - persistentVolumeClaim
+          {{- end }}
+          - projected
+          - secret
+        allowedHostPaths:
+          - pathPrefix: "/"
+        runAsUser:
+          rule: RunAsAny
+        runAsGroup:
+          rule: RunAsAny
+        supplementalGroups:
+          rule: RunAsAny
+        fsGroup:
+          rule: RunAsAny
+      mutation:
+        dropAllCapabilities: false

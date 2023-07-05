@@ -1,0 +1,106 @@
+{{- $cluster := .Values.cluster -}}
+
+configOverride: |
+  [global]
+  osd pool default size = 2
+
+cephClusterSpec:
+  cephVersion:
+    allowUnsupported: {{ $cluster.cephVersion | get "allowUnsupported" false }}
+    imagePullPolicy: {{ $cluster.cephVersion | get "imagePullPolicy" "IfNotPresent" }}
+    image: {{ $cluster.cephVersion.image }}
+
+  cleanupPolicy:
+    allowUninstallWithVolumes: {{ $cluster | get "cleanup.allowUninstallWithVolumes" false }}
+    confirmation: {{ $cluster | get "cleanup.confirmation" "" }}
+    sanitizeDisks:
+      dataSource: {{ $cluster | get "cleanup.sanitize.source" "zero" }}
+      iteration: {{ $cluster | get "cleanup.sanitize.iterations" 1 }}
+      method: {{ $cluster | get "cleanup.sanitize.method" "quick" }}
+
+  crashCollector:
+    disable: {{ $cluster | get "crashCollector.enabled" true | not }}
+
+  logCollector:
+    enabled: {{ $cluster | get "logCollector.enabled" false }}
+
+  dashboard:
+    enabled: {{ $cluster | get "dashboard.enabled" false }}
+    ssl: false
+
+  monitoring:
+    enabled: {{ .Values | get "monitoring.installServiceMonitors" false }}
+
+  mgr:
+    count: {{ $cluster | get "mgr.count" 1 }}
+
+  mon:
+    count: {{ $cluster | get "mon.count" 3 }}
+
+    {{- with $cluster | get "mon.volumeClaimTemplate" dict }}
+    volumeClaimTemplate: {{- toYaml . | nindent 6 }}
+    {{- end }}
+
+  {{- $placement := pick $cluster "all" "mgr" "mon" "osd" }}
+  {{- with $placement }}
+  placement:
+    {{- range $name, $spec := . }}
+    {{- $rules := pick $spec "nodeAffinity" "tolerations" "topologySpreadConstraints" }}
+    {{- with $rules }}
+    {{ $name }}: {{- toYaml $spec | nindent 6 }}
+    {{- end }}
+    {{- end }}
+  {{- end }}
+
+  {{ $resources := pick $cluster "crashCollector" "logCollector" "mgr" "mon" "osd" "prepareosd" "cleanup" "exporter" }}
+  {{- range $resources }}{{ if hasKey . "resources" }}
+  resources: {{- break }}
+  {{- end }}{{ end }}
+    {{- range $name, $spec := pick $cluster "crashCollector" "logCollector" "mgr" "mon" "osd" "prepareosd" "cleanup" "exporter" }}
+    {{- with $spec | get "resources" dict }}
+    {{ $name | lower }}: {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- end }}
+
+  {{- with $cluster | get "storage" dict }}
+  storage: {{ toYaml . | nindent 4 }}
+  {{- end }}
+
+cephBlockPools:
+  - {{ with $cluster.cephBlockPool -}}
+    name: {{ .name }}
+    spec:
+      failureDomain: {{ . | get "failureDomain" "host" }}
+      replicated:
+        requireSafeReplicaSize: {{ . | get "replicated.requireSafeReplicaSize" true }}
+        size: {{ . | get "replicated.size" 2 }}
+        {{- if . | get "replicated.failureDomain" "host" | eq "zone" }}
+        subFailureDomain: host
+        {{- end }}
+    {{- end }}
+
+    {{- with $cluster.storageClass }}
+    storageClass:
+      enabled: true
+      name: {{ .name }}
+      isDefault: {{ . | get "default" true }}
+      allowVolumeExpansion: {{ . | get "allowVolumeExpansion" true }}
+      volumeBindingMode: {{ . | get "volumeBindingMode" "Immediate" }}
+      reclaimPolicy: {{ . | get "reclaimPolicy" "Delete" }}
+      mountOptions:
+        - discard
+      parameters:
+        csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+        csi.storage.k8s.io/controller-expand-secret-namespace: {{ $.Release.Namespace }}
+        csi.storage.k8s.io/fstype: ext4
+        csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+        csi.storage.k8s.io/node-stage-secret-namespace: {{ $.Release.Namespace }}
+        csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+        csi.storage.k8s.io/provisioner-secret-namespace: {{ $.Release.Namespace }}
+        imageFeatures: layering
+        imageFormat: "2"
+    {{- end }}
+
+cephFileSystems: []
+
+cephObjectStores: []

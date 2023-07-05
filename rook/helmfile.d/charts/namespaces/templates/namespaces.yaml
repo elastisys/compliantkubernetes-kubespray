@@ -1,0 +1,13 @@
+{{- range .Values.namespaces }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  {{- with get . "annotations" | default dict | merge dict $.Values.commonAnnotations }}
+  annotations: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with get . "labels" | default dict |  merge dict $.Values.commonLabels }}
+  labels: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  name: {{ .name }}
+{{- end }}

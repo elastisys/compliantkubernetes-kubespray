@@ -1,162 +1,160 @@
-# Rook installation
+# rook-ceph
 
-Also see the official documentation at <https://rook.io/docs/rook/v1.5/> and the repository at <https://github.com/rook/rook>.
+> **Note**: These instructions assumes that you are standing in this directory and have set `$CK8S_CONFIG_PATH` pointing to your environment.
 
-## Quickstart
+## Install
 
-```bash
-# Make sure your KUBECONFIG and Kubernetes context are set correctly
-./deploy-rook.sh
-```
+### Configure
 
-## Requirements
+The configuration is divided into an all cluster `commons` section and per cluster `clusters.<cluster>` section.
+Any configuration defined within the per cluster section will override anything set in the all cluster section.
+The name of the cluster will become the helmfile environment name.
 
-### Ceph partition or disk
+Many options use default within the helmfile state values.
 
-An empty disk or partition needs to be available.
-Ceph will create an [OSD](https://docs.ceph.com/en/latest/man/8/ceph-osd/) for each partition or disk to provide access to it.
+- Copy template
 
-To create an empty partition `/dev/vda2` on the `/dev/vda` disk, leaving 50 GB to other partitions, use the following cloud-init config:
+  ```bash
+  mkdir -p "${CK8S_CONFIG_PATH}/rook"
+  cp template/values.yaml "${CK8S_CONFIG_PATH}/rook"
+  ```
 
-```yaml
-#cloud-config
-bootcmd:
-- [ cloud-init-per, once, move-second-header, sgdisk, --move-second-header, /dev/vda ]
-- [ cloud-init-per, once, create-ceph-part, parted, --script, /dev/vda, 'mkpart 2 50GB -1' ]
-```
+- Set [preset](values/cluster-presets)
 
-### Nodes for Ceph mons
+  ```diff
+    cluster:
+      # see rook/helmfile.d/values/cluster-presets
+  -   preset: ""
+  +   preset: ceph-750
+  ```
 
-The Ceph [`mon`s](https://docs.ceph.com/en/latest/man/8/ceph-mon/) should not run on the same node.
-Make sure that there are at least as many worker nodes as there are replicas of `mon`s.
-See `spec.mon.count` in [cluster.yaml](./cluster.yaml).
+- Customising
 
-### Monitoring with Prometheus
+  Placement rules can be defined for all or per component, and resources can be overridden per component.
 
-Prometheus Operator CRDs should be installed before applying the Ceph cluster manifest if `spec.monitoring.enabled=true`.
+  Storage rules can be defined, the default is to use all devices on all nodes, and optionally it is possible to create a Block PVC based cluster for development.
+  (This requires special config for storage and mon.)
 
-## Installation
+### Deploy
 
-See [deploy-rook.sh](./deploy-rook.sh) for an example.
+The deployment is divided into two steps the bootstrap and the finalising.
+Since parts of the deployment relies on services in apps, such as Gatekeeper constraints and Prometheus operator, and apps relies on rook-ceph for block storage.
 
-## Issues
+- Bootstrap
 
-If the operator seems to be unable to remove configmaps or deployments, make sure that the Kubernetes API server is able to process requests.
-For example, if cert-manager custom resources are created before cert-manager is installed, we experienced cases where the Kubernetes API server did not process requests from the Rook operator.
-This was resolved once cert-manager was installed.
+  > *Before Apps install*
 
-## Troubleshoot
+  For both service and workload clusters:
 
-Deploying with the script includes a toolbox container that can be used for troubleshooting, see [this](https://www.rook.io/docs/rook/v1.6/ceph-toolbox.html) for more info.
-This site includes a lot more info on how to manage a ceph cluster and includes useful snippets.
+  ```bash
+  # with kubeconfig pointing to the correct cluster
+  helmfile -e <cluster> -l stage=bootstrap diff
+  helmfile -e <cluster> -l stage=bootstrap apply
 
-But to get started with the troubleshooting you can start by running:
+  # check that the pods starts
+  kubectl -n rook-ceph get pods
+  # check that the cluster is healthy
+  kubectl -n rook-ceph get cephclusters
+  ```
 
-```console
-$ kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash
-[root@rook-ceph-tools /]# ceph status
-  cluster:
-    id:     ab2a424f-b246-4c52-c0a5-d285f6502ca0
-    health: HEALTH_WARN
-            2 backfillfull osd(s)
-            1 nearfull osd(s)
-            2 pool(s) backfillfull
+  > **Note**: If rook cannot automatically find your disks and create osds for them then [zap the disks](#zap-ceph-disks) and restart the operator for it to rescan.
 
-  services:
-    mon: 3 daemons, quorum a,b,c (age 4d)
-    mgr: a(active, since 4d)
-    osd: 4 osds: 4 up (since 4d), 4 in (since 3M)
+- Finalise
 
-  data:
-    pools:   2 pools, 129 pgs
-    objects: 77.58k objects, 299 GiB
-    usage:   601 GiB used, 79 GiB / 680 GiB avail
-    pgs:     129 active+clean
+  > *After Apps install*
 
-  io:
-    client:   23 KiB/s rd, 6.5 MiB/s wr, 3 op/s rd, 111 op/s wr
-```
+  For both service and workload clusters:
 
-## Uninstall Rook and Zap of disks
+  ```bash
+  # with kubeconfig pointing to the correct cluster
 
-First check which disks Rook is using on the nodes and note them down. As they will be used later to zap the disks after rook is removed. If the cloud-init is used to allocate a disks you can skip this part and use them later on.
+  ./scripts/autoconfig.sh <cluster>
 
-This is done by for each node with the following command:
+  helmfile -e <cluster> diff
+  helmfile -e <cluster> apply
+  ```
 
-```console
-./bin/ck8s ops kubectl sc logs -n rook-ceph rook-ceph-osd-prepare-<cluster name>-k8s-node-nf-<node number>
-./bin/ck8s ops kubectl wc logs -n rook-ceph rook-ceph-osd-prepare-<cluster name>-k8s-node-nf-<node number>
-```
+  This autoconfig script can be later used to keep networkpolicies up to date.
 
-Note down `/dev/sdb`
+## Upgrade
 
-```console
-"devices": [
-                "/dev/sdb1"
-            ],
-```
+Check the [migration guides](migration) between each version.
 
-from
+## Uninstall
 
-```console
-cephosd: {
-    "1": [
-        {
-            "devices": [
-                "/dev/sdb1"
-            ],
-            "lv_name": "osd-data-fd645a6e-ba55-4579-829b-2dfb5229691f",
-            "lv_path": "/dev/ceph-15b06b88-5027-419c-a04e-e6e4c616b109/osd-data-fd645a6e-ba55-4579-829b-2dfb5229691f",
-            "lv_size": "<170.00g",
-            "lv_tags": "ceph.block_device=/dev/ceph-15b06b88-5027-419c-a04e-e6e4c616b109/osd-data-fd645a6e-ba55-4579-829b-2dfb5229691f,ceph.block_uuid=i4StEb-p3KV-jbYK-ng22-0c97-JkBt-20wJ4l,ceph.cephx_lockbox_secret=,ceph.cluster_fsid=3a9596ad-a597-4d00-9bdf-92a26421a092,ceph.cluster_name=ceph,ceph.crush_device_class=None,ceph.encrypted=0,ceph.osd_fsid=ba2b18fd-e129-42b1-9f50-2eb90bf4034b,ceph.osd_id=1,ceph.osdspec_affinity=,ceph.type=block,ceph.
-            ...
-        }
-}
-```
+- Terminate
 
-### Remove Rook
+  Terminate all Pods using PVCs backed by rook-ceph.
 
-Then to remove Rook use the following snippet:
+  Terminate all PVCs backed by rook-ceph.
 
-```console
-./remove-rook.sh
-```
+- Destroy
 
-### Ensure that Rook is removed
+  Destroy the Ceph cluster:
 
-Ensure that Rook is fully removed by looking at resources, some examples are the following:
+  ```bash
+  # with kubeconfig pointing to the correct cluster
 
-```console
-./bin/ck8s ops kubectl sc get pods -n rook-ceph
-./bin/ck8s ops kubectl wc get pods -n rook-ceph
-```
+  helmfile -e <cluster> -l app=cluster destroy
+  ```
 
-```console
-./bin/ck8s ops kubectl sc get storageclass
-./bin/ck8s ops kubectl wc get storageclass
-```
+  Wait until all resources have been deleted and check that the logs of the operator in case something cannot be deleted.
 
-### Zap Rook disks
+  Destroy the rest:
 
-For each node it is a good idea to zap the disks used by Rook. This needs to be done for each node used as storage in the cluster.
+  ```bash
+  # with kubeconfig pointing to the correct cluster
 
-Zap the disks using:
+  helmfile -e <cluster> destroy
+  ```
 
-```bash
-export IPADDRESSES=( "IP-node-1" "IP-node-2" "..." )
-```
+- Finalise
+
+  Delete CRDs:
+
+  ```bash
+  # with kubeconfig pointing to the correct cluster
+
+  kubectl delete crds \
+    cephblockpoolradosnamespaces.ceph.rook.io \
+    cephblockpools.ceph.rook.io \
+    cephbucketnotifications.ceph.rook.io \
+    cephbuckettopics.ceph.rook.io \
+    cephclients.ceph.rook.io \
+    cephclusters.ceph.rook.io \
+    cephfilesystemmirrors.ceph.rook.io \
+    cephfilesystems.ceph.rook.io \
+    cephfilesystemsubvolumegroups.ceph.rook.io \
+    cephnfses.ceph.rook.io \
+    cephobjectrealms.ceph.rook.io \
+    cephobjectstores.ceph.rook.io \
+    cephobjectstoreusers.ceph.rook.io \
+    cephobjectzonegroups.ceph.rook.io \
+    cephobjectzones.ceph.rook.io \
+    cephrbdmirrors.ceph.rook.io \
+    objectbucketclaims.objectbucket.io \
+    objectbuckets.objectbucket.io
+  ```
+
+### Zap ceph disks
+
+It is good practice to zap all disks used as storage for rook-ceph.
+This is required if rook-ceph will be reinstalled on the same cluster to allow it to auto detect disks.
 
 ```bash
+export IPADDRESSES=( "ip-node-1" "ip-node-2" "..." )
+
 for IP in "${IPADDRESSES[@]}"; do
-  ./zap-disk.sh ${IP} "<disk parameter if all the nodes use the same: sXX>"
+  ./scripts/zap-disk.sh "${IP}" "<disk parameter if all the nodes use the same: eg. sdX(x) or vdX(x)>"
 done
 ```
 
-### Clean up rook folder
+### Purge rook data
 
-Finally on all the nodes the `/var/lib/rook` needs to be cleaned up.
+It is good practice to purge all data stored by rook-ceph.
+This is required if rook-ceph will be reinstalled on the same cluster.
 
 ```console
-ansible all -i ${CK8S_CONFIG_PATH}/sc-config/inventory.ini --become -m shell -a 'rm -rf /var/lib/rook'
-ansible all -i ${CK8S_CONFIG_PATH}/wc-config/inventory.ini --become -m shell -a 'rm -rf /var/lib/rook'
+ansible all -i "${CK8S_CONFIG_PATH}/sc-config/inventory.ini" --become -m shell -a 'rm -rf /var/lib/rook'
+ansible all -i "${CK8S_CONFIG_PATH}/wc-config/inventory.ini" --become -m shell -a 'rm -rf /var/lib/rook'
 ```

@@ -1,0 +1,184 @@
+{{- $netpol := .Values.networkPolicies }}
+
+rules:
+  egress-rule-dns:
+    peers: {{- toYaml $netpol.dnsPeers | nindent 6 }}
+    ports:
+      - tcp: 53
+      - udp: 53
+
+  egress-rule-apiserver:
+    peers: {{- toYaml $netpol.apiserverPeers | nindent 6 }}
+    ports:
+      - tcp: 6443
+
+  egress-rule-mgr:
+    peers:
+      - podSelectorLabels:
+          app: rook-ceph-mgr
+    ports:
+      - tcp: 6800
+
+  egress-rule-mon:
+    peers:
+      - podSelectorLabels:
+          app: rook-ceph-mon
+    ports:
+      - tcp: 3300
+      - tcp: 6789
+
+  egress-rule-osd:
+    peers:
+      - podSelectorLabels:
+          app: rook-ceph-osd
+    ports:
+      - tcp: 6800
+        end: 7300
+
+  peers-rule-nodes:
+    peers: {{- toYaml $netpol.nodePeers | nindent 6 }}
+
+policies:
+  rook-ceph:
+    all-deny:
+      podSelectorLabels: {}
+      egress: {}
+      ingress: {}
+
+    operator:
+      podSelectorLabels:
+        app: rook-ceph-operator
+      egress:
+        - rule: egress-rule-apiserver
+        - rule: egress-rule-mgr
+        - rule: egress-rule-mon
+        - rule: egress-rule-osd
+
+    csi-detect-version:
+      podSelectorLabels:
+        app: rook-ceph-csi-detect-version
+      egress:
+        - rule: egress-rule-apiserver
+
+    csi-rbdplugin-provisioner:
+      podSelectorLabels:
+        app: csi-rbdplugin-provisioner
+      egress:
+        - rule: egress-rule-apiserver
+        - rule: egress-rule-mgr
+        - rule: egress-rule-mon
+        - rule: egress-rule-osd
+
+    detect-version:
+      podSelectorLabels:
+        app: rook-ceph-detect-version
+      egress:
+        - rule: egress-rule-apiserver
+
+    mgr:
+      podSelectorLabels:
+        app: rook-ceph-mgr
+      egress:
+        - rule: egress-rule-apiserver
+        - rule: egress-rule-mon
+        - rule: egress-rule-osd
+      ingress:
+        - name: ingress-rule-prometheus
+          peers:
+            - namespaceSelectorLabels:
+                kubernetes.io/metadata.name: monitoring
+              podSelectorLabels:
+                app.kubernetes.io/name: prometheus
+        - rule: peers-rule-nodes
+          ports:
+            - tcp: 6800
+        - peers:
+            - podSelectorLabels:
+                app: csi-rbdplugin-provisioner
+            - podSelectorLabels:
+                app: rook-ceph-operator
+            - podSelectorLabels:
+                app: rook-ceph-toolbox
+            - podSelectorLabels:
+                app: rook-ceph-mon
+            - podSelectorLabels:
+                app: rook-ceph-osd
+          ports:
+            - tcp: 6800
+
+    mon:
+      podSelectorLabels:
+        app: rook-ceph-mon
+      egress:
+        - rule: egress-rule-apiserver
+        - rule: egress-rule-mgr
+        - rule: egress-rule-mon
+        - rule: egress-rule-osd
+      ingress:
+        - rule: peers-rule-nodes
+          ports:
+            - tcp: 3300
+            - tcp: 6789
+        - peers:
+            - podSelectorLabels:
+                app: csi-rbdplugin-provisioner
+            - podSelectorLabels:
+                app: rook-ceph-operator
+            - podSelectorLabels:
+                app: rook-ceph-toolbox
+            - podSelectorLabels:
+                app: rook-ceph-mgr
+            - podSelectorLabels:
+                app: rook-ceph-mon
+            - podSelectorLabels:
+                app: rook-ceph-osd
+          ports:
+            - tcp: 3300
+            - tcp: 6789
+
+    osd:
+      podSelectorLabels:
+        app: rook-ceph-osd
+      egress:
+        - rule: egress-rule-apiserver
+        - rule: egress-rule-mgr
+        - rule: egress-rule-mon
+        - rule: egress-rule-osd
+        - rule: peers-rule-nodes
+          ports:
+            - tcp: 6800
+              end: 7300
+      ingress:
+        - rule: peers-rule-nodes
+          ports:
+            - tcp: 6800
+              end: 7300
+        - peers:
+            - podSelectorLabels:
+                app: csi-rbdplugin-provisioner
+            - podSelectorLabels:
+                app: rook-ceph-operator
+            - podSelectorLabels:
+                app: rook-ceph-toolbox
+            - podSelectorLabels:
+                app: rook-ceph-mgr
+            - podSelectorLabels:
+                app: rook-ceph-osd
+          ports:
+            - tcp: 6800
+              end: 7300
+
+    osd-prepare:
+      podSelectorLabels:
+        app: rook-ceph-osd-prepare
+      egress:
+        - rule: egress-rule-apiserver
+        - rule: egress-rule-mon
+        - rule: egress-rule-osd
+
+    toolbox:
+      podSelectorLabels:
+        app.kubernetes.io/name: rook-ceph-toolbox
+      egress:
+        - rule: egress-rule-mgr
+        - rule: egress-rule-mon

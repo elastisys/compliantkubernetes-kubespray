@@ -1,0 +1,8 @@
+commonAnnotations: {}
+commonLabels: {}
+namespaces: []
+# - name: rook-ceph
+#   annotations:
+#     key: value
+#   labels:
+#     key: value

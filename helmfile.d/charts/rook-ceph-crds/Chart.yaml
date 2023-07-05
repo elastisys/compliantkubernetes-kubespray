@@ -1,4 +1,0 @@
-apiVersion: v2
-description: A Helm chart for Kubernetes
-name: rook-ceph-crds
-version: 0.0.1
