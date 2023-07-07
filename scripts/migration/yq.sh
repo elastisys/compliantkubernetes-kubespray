@@ -13,7 +13,7 @@ yq_check() {
     log_fatal "usage: yq_check <sc|wc> <file> <target> <value>"
   fi
 
-  test "$(yq4 "${3}" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml")" = "$3"
+  test "$(yq4 "${3}" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml")" = "$4"
 }
 
 yq_copy() {
