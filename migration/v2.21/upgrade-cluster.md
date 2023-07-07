@@ -39,8 +39,9 @@
 
 1. Run `bin/ck8s-kubespray upgrade v2.21 prepare` to update your config.
 
-    Note: This enables NTP service and with multiple NTP servers, specifically in Sweden.
-    You can visit [www.ntppool.org](https://www.ntppool.org/zone/@) to find other ntp pools if you are in other parts of the world, and edit `ntp_servers` in `group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` manually.
+    > **Notes:**
+    > 1. This enables NTP service and with multiple NTP servers, specifically in Sweden. You can visit [www.ntppool.org](https://www.ntppool.org/zone/@) to find other ntp pools if you are in other parts of the world, and edit `ntp_servers` in `group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` manually.
+    > 2. The `containerd_version` and `containerd_archive_checksums` will be removed from `"${CK8S_CONFIG_PATH}"/sc|wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`, if the version is set to `1.6.12`
 
 1. Download the required files on the nodes
 
@@ -88,6 +89,13 @@ These steps will cause disruptions in the environment.
     ```bash
     ./bin/ck8s-kubespray run-playbook sc upgrade-cluster.yml -b --skip-tags=download
     ./bin/ck8s-kubespray run-playbook wc upgrade-cluster.yml -b --skip-tags=download
+    ```
+
+    > **Optional:** if you use `--limit` or the upgrade fails at the multus task (e.g `[kubernetes-apps/network_plugin/multus : Multus | Start resources]` you can skip this tag. More information [here](https://github.com/kubernetes-sigs/kubespray/issues/9703#issuecomment-1414328697):
+
+    ```bash
+    ./bin/ck8s-kubespray run-playbook sc upgrade-cluster.yml -b --skip-tags=download,multus
+    ./bin/ck8s-kubespray run-playbook wc upgrade-cluster.yml -b --skip-tags=download,multus
     ```
 
 1. **For Openstack environments only**
