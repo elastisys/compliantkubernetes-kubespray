@@ -253,7 +253,9 @@ kubespray_version_check(){
 # Compares the checked out version and the config version of ck8s-kubespray.
 # Exits if they do not match.
 ck8s_kubespray_version_check(){
+    pushd "${root_path}" || exit
     version=$(git describe --exact-match --tags 2> /dev/null || git rev-parse HEAD)
+    popd || exit
     version_in_config=$(yq4 .ck8sKubesprayVersion "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
 
     if [[ -z "${version_in_config}" || "${version_in_config}" == "null" ]]; then
