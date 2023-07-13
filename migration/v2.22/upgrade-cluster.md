@@ -26,6 +26,22 @@
 
 1. Run `bin/ck8s-kubespray upgrade v2.22 prepare` to update your config.
 
+1. *If UpCloud* Add `target_port` to each loadbalancer config (typically same as `port`) in `sc-config/cluster.tfvars` and `wc-config/cluster.tfvars`
+
+    Example:
+
+    ```diff
+     loadbalancers = {
+       "http" : {
+         "port" : 80,
+    +    "target_port" : 80,
+         "backend_servers" : [
+            ...
+         ]
+       }
+     }
+    ```
+
 1. Download the required files on the nodes
 
     ```bash
@@ -36,9 +52,12 @@
 1. Optional. Update audit log policy
 
     ```bash
-    for cluster in sc wc; do
-        yq4 -i '.audit_policy_custom_rules |= (load("config/common/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml") | .audit_policy_custom_rules)' ${CK8S_CONFIG_PATH}/${cluster}-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml
-    done
+    (
+      : "${CK8S_CONFIG_PATH:?Missing CK8S_CONFIG_PATH}"
+      for cluster in sc wc; do
+          yq4 -i '.audit_policy_custom_rules |= (load("config/common/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml") | .audit_policy_custom_rules)' ${CK8S_CONFIG_PATH}/${cluster}-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml
+      done
+    )
     ```
 
 ## Upgrade steps
@@ -55,12 +74,13 @@ These steps will cause disruptions in the environment.
 1. Optional. Restart Kubernetes API servers to load new audit log policy
 
     ```bash
-    if [ -n "${CK8S_CONFIG_PATH}" ]; then
-        for cluster in sc wc; do
-            export TERRAFORM_STATE_ROOT=${CK8S_CONFIG_PATH}/${cluster}-config/
-            ansible -i ${cluster}-config/inventory.ini kube_control_plane -b -m shell -a 'nerdctl container restart $(nerdctl container list | grep kube-apiserver:v1.24.6 | sed "s/ .*//")'
-        done
-    fi
+    (
+      : "${CK8S_CONFIG_PATH:?Missing CK8S_CONFIG_PATH}"
+      for cluster in sc wc; do
+        export TERRAFORM_STATE_ROOT=${CK8S_CONFIG_PATH}/${cluster}-config/
+        ansible -i ${cluster}-config/inventory.ini kube_control_plane -b -m shell -a 'nerdctl container stop $(nerdctl container list | grep kube-apiserver:v1.26.5 | awk "{print \$1}")'
+      done
+    )
     ```
 
 ## Postrequisite
