@@ -34,6 +34,7 @@
 
 ### Fixed
 - Reboot scripts uses inventory hostnames instead of machine hostnames
+- Upgraded Terraform to version 1.3.0
 
 -------------------------------------------------
 ## v2.21.0-ck8s1 - 2023-02-06
