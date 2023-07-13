@@ -3,7 +3,7 @@
     vars:
       install_path: /usr/local/bin
       install_user: "{{ lookup('env','USER') }}"
-      terraform_version: 1.2.9
+      terraform_version: 1.3.9
     connection: local
     become: yes
     become_user: root

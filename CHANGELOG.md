@@ -21,9 +21,11 @@
 - This version upgrades Kubernetes to `v1.26`
 
 ### Added
+
 - Add additional pre-commit checks
 - Add new configuration file with compliantkubernetes-kubespray version
 - Dependency check to main bin scripts
+- Added missing logging functions
 
 ### Changed
 
@@ -33,7 +35,12 @@
 - Upgraded kubespray to v2.22.1
 
 ### Fixed
+
 - Reboot scripts uses inventory hostnames instead of machine hostnames
+- Upgraded Terraform to version 1.3.9
+- Removed debug logs
+- Updated comments in migration script to reflect the actual functions
+- Fixed migration script to 2.22
 
 -------------------------------------------------
 ## v2.21.0-ck8s1 - 2023-02-06

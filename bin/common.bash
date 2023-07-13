@@ -37,26 +37,32 @@ declare -A config
 # shellcheck disable=SC2034
 config["inventory_file"]="${config_path}/inventory.ini"
 
-log_info() {
-    echo -e "[\e[34mck8s\e[0m] ${*}" 1>&2
-}
-
 log_info_no_newline() {
     echo -e -n "[\e[34mck8s\e[0m] ${*}" 1>&2
 }
 
+log_info() {
+    log_info_no_newline "${*}\n"
+}
+
+log_warning_no_newline() {
+    echo -e -n "[\e[33mck8s\e[0m] ${*}" 1>&2
+}
+
 log_warning() {
-    echo -e "[\e[33mck8s\e[0m] ${*}" 1>&2
+    log_warning_no_newline "${*}\n"
+}
+
+log_error_no_newline() {
+    echo -e -n "[\e[31mck8s\e[0m] ${*}" 1>&2
 }
 
 log_error() {
-    echo -e "[\e[31mck8s\e[0m] ${*}" 1>&2
+    log_error_no_newline "${*}\n"
 }
 
 # Checks that all dependencies are available and critical ones for matching minor version.
 check_tools() {
-  set -x
-
   local req
 
   req="${root_path}/get-requirements.yaml"
