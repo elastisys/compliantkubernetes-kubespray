@@ -65,3 +65,12 @@ yq_merge() {
 yq_paths() {
   yq4 "[.. | select(tag != \"!!map\" and . == \"${1}\") | path | with(.[]; . = (\"\\\"\" + .) + \"\\\"\") | \".\" + join \".\" | sub(\"\\.\\\"[0-9]\\\"+.*\"; \"\")] | sort | unique | .[]"
 }
+
+# Returns the length of the target object.
+yq_length() {
+  if [[ "${#}" -lt 3 ]] || [[ ! "${1}" =~ ^(sc|wc)$ ]]; then
+    log_fatal "usage: yq_length <sc|wc> <file> <target>"
+  fi
+
+  yq4 "${3} | length()" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml"
+}

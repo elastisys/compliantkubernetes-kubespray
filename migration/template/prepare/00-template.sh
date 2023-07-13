@@ -14,10 +14,11 @@ source "${ROOT}/scripts/migration/lib.sh"
 #     - log_fatal <message> # this will call "exit 1"
 #
 #  - yq:
-#     - yq_null <common|sc|wc> <target>
-#     - yq_copy <common|sc|wc> <source> <destination>
-#     - yq_move <common|sc|wc> <source> <destination>
-#     - yq_remove <common|sc|wc> <target>
+#     - yq_null <sc|wc> <file> <target>
+#     - yq_copy <sc|wc> <file> <source> <destination>
+#     - yq_move <sc|wc> <file> <source> <destination>
+#     - yq_remove <sc|wc> <file> <target>
+#     - yq_length <sc|wc> <file> <target>
 
 # Note: 00-template.sh will be skipped by the upgrade command
 log_info "no operation: this is a template"
