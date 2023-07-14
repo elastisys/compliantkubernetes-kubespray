@@ -1,5 +1,6 @@
 # Compliant Kubernetes Kubespray changelog
 <!-- BEGIN TOC -->
+- [v2.21.0-ck8s4](#v2210-ck8s4---2023-07-14)
 - [v2.22.1-ck8s1](#v2221-ck8s1---2023-07-12)
 - [v2.21.0-ck8s1](#v2210-ck8s1---2023-02-06)
 - [v2.20.0-ck8s1](#v2200-ck8s1---2022-10-10)
@@ -14,6 +15,13 @@
 <!-- END TOC -->
 
 -------------------------------------------------
+## v2.21.0-ck8s4 - 2023-07-14
+
+### Fixed
+
+- missing `s` from `containerd_enable_unprivileged_ports`
+
+-------------------------------------------------
 ## v2.22.1-ck8s1 - 2023-07-12
 
 ### Release notes
@@ -21,6 +29,7 @@
 - This version upgrades Kubernetes to `v1.26`
 
 ### Added
+
 - Add additional pre-commit checks
 - Add new configuration file with compliantkubernetes-kubespray version
 - Dependency check to main bin scripts
@@ -33,6 +42,7 @@
 - Upgraded kubespray to v2.22.1
 
 ### Fixed
+
 - Reboot scripts uses inventory hostnames instead of machine hostnames
 
 -------------------------------------------------
