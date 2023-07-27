@@ -35,27 +35,45 @@ list_groups() {
 }
 
 upgrade_groups() {
-    kube_version=$1
-    groups=$(readInventoryGroups ${config[groups_inventory_file]})
-    excluded_groups=(all kube_node kube_control_plane k8s_cluster:children etcd)
-    log_info "Getting facts"
-    ansible-playbook ${$kubespray_path}/playbooks/facts.yml -uroot -b -i "${config[groups_inventory_file]}"
-    log_info "Upgrading first controle plane"
-    ansible-playbook ${kubespray_path}/upgrade-cluster.yml -uroot -b -i "${config[groups_inventory_file]}" --skip-tags=multus -e kube_version=${kube_version} --limit "kube_control_plane[0]:etcd[0]"
-
-    kube_control_plane_hosts=$(getGroupHosts ${config[groups_inventory_file]} kube_control_plane)
-    kube_control_plane_hosts=($kube_control_plane_hosts)
-
-    if [[ ${#kube_control_plane_hosts[@]} -gt 1 ]]; then 
-        ansible-playbook ${kubespray_path}/upgrade-cluster.yml -uroot -b -i "${config[groups_inventory_file]}" --skip-tags=multus -e kube_version=${kube_version} -e serial=1 --limit "kube_control_plane[1:]:etcd[1:]" > /tmp/kube_controle_plane.logs &
-    fi 
-    for group in $groups; do 
-        if $(! containsElement $group ${excluded_groups[@]}) ; then
-            ansible-playbook upgrade-cluster.yml -uroot -b -i "${config[groups_inventory_file]}" --skip-tags=multus -e kube_version=${kube_version} -e serial=1 --limit "$group" > /tmp/$group.logs &
-        fi
+    local -a groups
+    for group in $(readInventoryGroups "${config[groups_inventory_file]}" | sort); do
+      if ! [[ "${group}" =~ ^(all|etcd|kube_node|.*:.*)$ ]]; then
+        groups+=("${group}")
+      fi
     done
+
+    local -A group_lengths
+    group_lengths["kube_control_plane"]="$(getGroupHosts "${config[groups_inventory_file]}" "kube_control_plane" | wc -w)"
+    for group in "${groups[@]}"; do
+      group_lengths["${group}"]="$(getGroupHosts "${config[groups_inventory_file]}" "${group}" | wc -w)"
+    done
+
+    pushd "${kubespray_path}"
+
+    ansible-playbook upgrade-cluster.yml -uroot -b -i "${config[groups_inventory_file]}" --skip-tags=download,multus --limit "kube_control_plane[0]"
+
+    for index in $(seq 0 100); do
+      local -a limit
+      limit=()
+      for group in "${groups[@]}"; do
+        if [[ "${group}" == "kube_control_plane" ]]; then
+          if [[ "$((index+1))" -lt "${group_lengths["${group}"]}" ]]; then
+            limit+=("${group}[$((index+1))]")
+          fi
+        elif [[ "${index}" -lt "${group_lengths["${group}"]}" ]]; then
+          limit+=("${group}[${index}]")
+        fi
+      done
+      if [[ -z "${limit[*]}" ]]; then
+        break
+      fi
+      ansible-playbook upgrade-cluster.yml -uroot -b -i "${config[groups_inventory_file]}" --skip-tags=download,multus --limit "$(tr ' ' ',' <<< "${limit[*]}")" -e serial=100%
+    done
+
+    popd
 }
 
+# TO DELETE
 get_group_logs() {
     group=$1
     shift
