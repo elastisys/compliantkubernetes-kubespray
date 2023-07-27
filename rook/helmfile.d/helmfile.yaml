@@ -80,6 +80,14 @@ releases:
       - values/cluster-presets/{{ .Values.cluster.preset }}.yaml
       - values/cluster.yaml.gotmpl
 
+  - name: rook-ceph-servicemonitor
+    namespace: rook-ceph
+    labels:
+      app: servicemonitor
+    installed: {{ .Values | get "monitoring.installServiceMonitor" false }}
+    chart: ./charts/rook-ceph-servicemonitor
+    version: 0.1.0
+
   - name: rook-ceph-dashboards
     namespace: monitoring
     labels:

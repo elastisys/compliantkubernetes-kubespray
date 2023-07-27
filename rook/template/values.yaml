@@ -181,12 +181,18 @@ clusters:
       # Requires Prometheus operator from apps!
       # Enable after apps is installed!
       installPrometheusRules: false
+      installServiceMonitor: false
 
     networkPolicies:
       apiserverPeers: []
       nodePeers: []
 
   workload:
+    monitoring:
+      # Requires Prometheus operator from apps!
+      # Enable after apps is installed!
+      installPrometheusRules: false
+      installServiceMonitor: false
     networkPolicies:
       apiserverPeers: []
       nodePeers: []

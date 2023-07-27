@@ -106,6 +106,25 @@ else
   echo "- podsecuritypolicies enabled"
 fi
 
+echo "checking servicemonitor..."
+if [[ "$(yq4 ".commons * .clusters.${cluster} | .monitoring.installServiceMonitor" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
+  if kubectl get crd prometheuses.monitoring.coreos.com &> /dev/null; then
+    if [[ -n "$(kubectl get po -A -l app.kubernetes.io/name=prometheus 2> /dev/null)" ]]; then
+      echo -n "- install Prometheus serviceMonitor? [Y/n]: "
+      read -r reply
+      if [[ "${reply}" =~ ^(Y|y|)$ ]]; then
+        yq4 -i ".clusters.${cluster}.monitoring.installServiceMonitor = true" "${CK8S_CONFIG_PATH}/rook/values.yaml"
+      fi
+    else
+      echo "- note: Prometheus not available"
+    fi
+  else
+    echo "- note: Prometheus operator not available"
+  fi
+else
+  echo "- rules installed"
+fi
+
 echo "checking dashboards..."
 if [[ "$(yq4 ".commons * .clusters.${cluster} | .monitoring.installGrafanaDashboards" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
   if [[ -n "$(kubectl get po -A -l app.kubernetes.io/name=grafana 2> /dev/null)" ]]; then

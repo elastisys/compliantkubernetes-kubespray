@@ -127,15 +127,17 @@
     helmfile -e service -l app=operator diff
     helmfile -e service -l app=operator apply
 
+    kubectl get po -n rook-ceph -w
     kubectl -n rook-ceph get cephclusters -w
-    # wait for condition PHASE = Ready and HEALTH = HEALTH_OK
+    # wait for condition PHASE = Ready and HEALTH = HEALTH_OK, the pods will restart quite slow
 
     # with kubeconfig pointing to workload cluster
     helmfile -e workload -l app=operator diff
     helmfile -e workload -l app=operator apply
 
+    kubectl get po -n rook-ceph -w
     kubectl -n rook-ceph get cephclusters -w
-    # wait for condition PHASE = Ready and HEALTH = HEALTH_OK
+    # wait for condition PHASE = Ready and HEALTH = HEALTH_OK, the pods will restart quite slow
     ```
 
 1. Upgrade cluster:
@@ -144,19 +146,20 @@
 
     ```bash
     # with kubeconfig pointing to service cluster
-    ./migration/prepare/diff.sh service
     helmfile -e service -l app=cluster apply
     helmfile -e service -l app=cluster sync --args --force
 
+    kubectl get po -n rook-ceph -w
     kubectl -n rook-ceph get cephclusters -w
-    # wait for condition PHASE = Ready and HEALTH = HEALTH_OK
+    # wait for condition PHASE = Ready and HEALTH = HEALTH_OK, the pods will restart quite slow
 
     # with kubeconfig pointing to workload cluster
     helmfile -e workload -l app=cluster apply
     helmfile -e workload -l app=cluster sync --args --force
 
+    kubectl get po -n rook-ceph -w
     kubectl -n rook-ceph get cephclusters -w
-    # wait for condition PHASE = Ready and HEALTH = HEALTH_OK
+    # wait for condition PHASE = Ready and HEALTH = HEALTH_OK, the pods will restart quite slow
     ```
 
 1. Final apply:

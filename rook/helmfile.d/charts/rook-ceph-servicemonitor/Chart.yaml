@@ -1,0 +1,5 @@
+apiVersion: v2
+name: rook-ceph-servicemonitor
+description: A Helm chart to install rook-ceph serviceMonitor
+type: application
+version: 0.1.0

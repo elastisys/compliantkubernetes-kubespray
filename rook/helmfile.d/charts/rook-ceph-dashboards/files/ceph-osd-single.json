@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -14,15 +17,18 @@
   },
   "description": "CEPH OSD Status.",
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": 5336,
   "graphTooltip": 0,
-  "id": 73,
-  "iteration": 1620194404621,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -31,39 +37,59 @@
       },
       "id": 11,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "OSD Status / Total OSDs",
       "type": "row"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "null",
-              "id": 0,
-              "text": "N/A",
-              "to": "null",
-              "type": 2
+              "options": {
+                "from": 0,
+                "result": {
+                  "index": 0,
+                  "text": "DOWN"
+                },
+                "to": 0.99
+              },
+              "type": "range"
             },
             {
-              "from": "0",
-              "id": 1,
-              "text": "DOWN",
-              "to": "0.99",
-              "type": 2
+              "options": {
+                "from": 0.99,
+                "result": {
+                  "index": 1,
+                  "text": "UP"
+                },
+                "to": 1
+              },
+              "type": "range"
             },
             {
-              "from": "0.99",
-              "id": 2,
-              "text": "UP",
-              "to": "1",
-              "type": 2
+              "options": {
+                "match": "null+nan",
+                "result": {
+                  "index": 2,
+                  "text": "NA"
+                }
+              },
+              "type": "special"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -92,7 +118,6 @@
         "y": 1
       },
       "id": 6,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -109,52 +134,68 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "9.5.5",
       "targets": [
         {
-          "expr": "sum without (instance) (ceph_osd_up{ceph_daemon=\"$osd\"})",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum without (instance) (ceph_osd_up{ceph_daemon=\"$osd\",cluster=\"$cluster\"})",
           "format": "time_series",
+          "hide": false,
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "",
+          "range": true,
           "refId": "A",
           "step": 60
         }
       ],
-      "timeFrom": null,
       "title": "Status",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "null",
-              "id": 0,
-              "text": "N/A",
-              "to": "null",
-              "type": 2
+              "options": {
+                "from": 0,
+                "result": {
+                  "index": 0,
+                  "text": "OUT"
+                },
+                "to": 0.99
+              },
+              "type": "range"
             },
             {
-              "from": "0",
-              "id": 1,
-              "text": "OUT",
-              "to": "0.99",
-              "type": 2
+              "options": {
+                "from": 0.99,
+                "result": {
+                  "index": 1,
+                  "text": "IN"
+                },
+                "to": 1
+              },
+              "type": "range"
             },
             {
-              "from": "0.99",
-              "id": 2,
-              "text": "IN",
-              "to": "1",
-              "type": 2
+              "options": {
+                "match": "null+nan",
+                "result": {
+                  "index": 2,
+                  "text": "NA"
+                }
+              },
+              "type": "special"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -183,7 +224,6 @@
         "y": 1
       },
       "id": 8,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -200,38 +240,45 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "9.5.5",
       "targets": [
         {
-          "expr": "sum without (instance) (ceph_osd_in{ceph_daemon=\"$osd\"})",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum without (instance) (ceph_osd_in{ceph_daemon=\"$osd\",cluster=\"$cluster\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "",
+          "range": true,
           "refId": "A",
           "step": 60
         }
       ],
-      "timeFrom": null,
       "title": "Available",
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "null",
-              "id": 0,
-              "text": "N/A",
-              "to": "null",
-              "type": 2
+              "options": {
+                "match": "null+nan",
+                "result": {
+                  "index": 0,
+                  "text": "NA"
+                }
+              },
+              "type": "special"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -252,7 +299,6 @@
         "y": 1
       },
       "id": 10,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -269,25 +315,32 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "9.5.5",
       "targets": [
         {
-          "expr": "count without (instance, ceph_daemon) (ceph_osd_up)",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "count without (instance, ceph_daemon) (ceph_osd_up{cluster=\"$cluster\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "",
+          "range": true,
           "refId": "A",
           "step": 60
         }
       ],
-      "timeFrom": null,
       "title": "Total OSDs",
       "type": "stat"
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -296,6 +349,15 @@
       },
       "id": 12,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "OSD: $osd",
       "type": "row"
     },
@@ -304,13 +366,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "decimals": 2,
       "editable": true,
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "links": []
         },
         "overrides": []
       },
@@ -342,11 +407,10 @@
       "links": [],
       "nullPointMode": "connected",
       "options": {
-        "alertThreshold": true,
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "9.5.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -362,20 +426,30 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum without (instance, ceph_daemon) (ceph_osd_numpg{ceph_daemon=~\"$osd\"})",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum without (instance, ceph_daemon) (ceph_osd_numpg{ceph_daemon=~\"$osd\",cluster=\"$cluster\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "Number of PGs",
+          "range": true,
           "refId": "A",
           "step": 60
         },
         {
-          "expr": "avg without (instance, ceph_daemon) (ceph_osd_numpg)",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "avg without (instance, ceph_daemon) (ceph_osd_numpg{cluster=\"$cluster\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "Average Number of PGs in the Cluster",
+          "range": true,
           "refId": "B",
           "step": 60
         }
@@ -396,9 +470,7 @@
           "value": 300
         }
       ],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "PGs",
       "tooltip": {
         "msResolution": false,
@@ -408,33 +480,26 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -442,13 +507,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "decimals": 2,
       "editable": true,
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "links": []
         },
         "overrides": []
       },
@@ -480,11 +548,10 @@
       "links": [],
       "nullPointMode": "connected",
       "options": {
-        "alertThreshold": true,
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "9.5.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -494,31 +561,39 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum without (instance, ceph_daemon) (ceph_osd_stat_bytes{ceph_daemon=\"osd.0\"}-ceph_osd_stat_bytes_used{ceph_daemon=\"osd.0\"})",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum without (instance, ceph_daemon) (ceph_osd_stat_bytes{ceph_daemon=\"osd.0\",cluster=\"$cluster\"}-ceph_osd_stat_bytes_used{ceph_daemon=\"osd.0\",cluster=\"$cluster\"})",
           "format": "time_series",
           "hide": false,
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "Available",
           "metric": "ceph_osd_avail_bytes",
+          "range": true,
           "refId": "A",
           "step": 60
         },
         {
-          "expr": "sum without (instance, ceph_daemon) (ceph_osd_stat_bytes_used{ceph_daemon=~\"$osd\"})",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum without (instance, ceph_daemon) (ceph_osd_stat_bytes_used{ceph_daemon=~\"$osd\",cluster=\"$cluster\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "Used",
           "metric": "ceph_osd_avail_bytes",
+          "range": true,
           "refId": "B",
           "step": 60
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "OSD Storage",
       "tooltip": {
         "msResolution": false,
@@ -528,60 +603,72 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "$datasource",
-      "editable": true,
-      "error": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "index": 0,
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 60
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
         },
         "overrides": []
-      },
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 7,
@@ -590,69 +677,46 @@
         "y": 5
       },
       "id": 7,
-      "interval": null,
-      "isNew": true,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
-      "tableColumn": "{cluster=\"service_cluster\", container=\"mgr\", endpoint=\"http-metrics\", job=\"rook-ceph-mgr\", namespace=\"rook-ceph\", pod=\"rook-ceph-mgr-a-695f859d9f-k2qdg\", service=\"rook-ceph-mgr\"}",
+      "pluginVersion": "9.5.5",
       "targets": [
         {
-          "expr": "sum without (instance, ceph_daemon) (ceph_osd_stat_bytes_used{ceph_daemon=\"osd.0\"}/ceph_osd_stat_bytes{ceph_daemon=\"osd.0\"})",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum without (instance, ceph_daemon) (ceph_osd_stat_bytes_used{ceph_daemon=\"osd.0\",cluster=\"$cluster\"}/ceph_osd_stat_bytes{ceph_daemon=\"osd.0\",cluster=\"$cluster\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "",
+          "range": true,
           "refId": "A",
           "step": 60
         }
       ],
-      "thresholds": "60,80",
-      "timeFrom": null,
       "title": "Utilization",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "gauge"
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -661,14 +725,20 @@
       },
       "id": 13,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Latency, Storage, Utilization Variance",
       "type": "row"
     },
     {
-      "cards": {
-        "cardPadding": null,
-        "cardRound": null
-      },
+      "cards": {},
       "color": {
         "cardColor": "#b4ff00",
         "colorScale": "sqrt",
@@ -677,10 +747,22 @@
         "mode": "opacity"
       },
       "dataFormat": "timeseries",
-      "datasource": "$datasource",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          }
         },
         "overrides": []
       },
@@ -698,10 +780,62 @@
         "show": true
       },
       "links": [],
+      "options": {
+        "calculate": true,
+        "calculation": {
+          "yBuckets": {
+            "mode": "count",
+            "scale": {
+              "log": 2,
+              "type": "log"
+            },
+            "value": "1"
+          }
+        },
+        "cellGap": 2,
+        "cellValues": {},
+        "color": {
+          "exponent": 0.5,
+          "fill": "#b4ff00",
+          "mode": "opacity",
+          "reverse": false,
+          "scale": "exponential",
+          "scheme": "Oranges",
+          "steps": 128
+        },
+        "exemplars": {
+          "color": "rgba(255,0,255,0.7)"
+        },
+        "filterValues": {
+          "le": 1e-9
+        },
+        "legend": {
+          "show": true
+        },
+        "rowsFrame": {
+          "layout": "auto"
+        },
+        "showValue": "never",
+        "tooltip": {
+          "show": true,
+          "yHistogram": false
+        },
+        "yAxis": {
+          "axisPlacement": "left",
+          "min": "0",
+          "reverse": false,
+          "unit": "ms"
+        }
+      },
+      "pluginVersion": "9.5.5",
       "reverseYBuckets": false,
       "targets": [
         {
-          "expr": "sum without (instance) (ceph_osd_apply_latency_ms{ceph_daemon='$osd'})",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum without (instance) (ceph_osd_apply_latency_ms{ceph_daemon='$osd',cluster=\"$cluster\"})",
           "format": "time_series",
           "instant": false,
           "interval": "$interval",
@@ -719,26 +853,19 @@
       "xAxis": {
         "show": true
       },
-      "xBucketNumber": null,
       "xBucketSize": "",
       "yAxis": {
-        "decimals": null,
         "format": "ms",
         "logBase": 2,
-        "max": null,
         "min": "0",
         "show": true,
         "splitFactor": 1
       },
       "yBucketBound": "auto",
-      "yBucketNumber": null,
       "yBucketSize": 10
     },
     {
-      "cards": {
-        "cardPadding": null,
-        "cardRound": null
-      },
+      "cards": {},
       "color": {
         "cardColor": "#65c5db",
         "colorScale": "sqrt",
@@ -747,10 +874,22 @@
         "mode": "opacity"
       },
       "dataFormat": "timeseries",
-      "datasource": "$datasource",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          }
         },
         "overrides": []
       },
@@ -768,10 +907,61 @@
         "show": true
       },
       "links": [],
+      "options": {
+        "calculate": true,
+        "calculation": {
+          "yBuckets": {
+            "mode": "count",
+            "scale": {
+              "log": 2,
+              "type": "log"
+            }
+          }
+        },
+        "cellGap": 2,
+        "cellValues": {},
+        "color": {
+          "exponent": 0.5,
+          "fill": "#65c5db",
+          "mode": "opacity",
+          "reverse": false,
+          "scale": "exponential",
+          "scheme": "Oranges",
+          "steps": 128
+        },
+        "exemplars": {
+          "color": "rgba(255,0,255,0.7)"
+        },
+        "filterValues": {
+          "le": 1e-9
+        },
+        "legend": {
+          "show": true
+        },
+        "rowsFrame": {
+          "layout": "auto"
+        },
+        "showValue": "never",
+        "tooltip": {
+          "show": true,
+          "yHistogram": false
+        },
+        "yAxis": {
+          "axisPlacement": "left",
+          "min": "0",
+          "reverse": false,
+          "unit": "ms"
+        }
+      },
+      "pluginVersion": "9.5.5",
       "reverseYBuckets": false,
       "targets": [
         {
-          "expr": "sum without (instance) (ceph_osd_commit_latency_ms{ceph_daemon='$osd'})",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum without (instance) (ceph_osd_commit_latency_ms{ceph_daemon='$osd',cluster=\"$cluster\"})",
           "format": "time_series",
           "instant": false,
           "interval": "$interval",
@@ -789,26 +979,17 @@
       "xAxis": {
         "show": true
       },
-      "xBucketNumber": null,
       "xBucketSize": "",
       "yAxis": {
-        "decimals": null,
         "format": "ms",
         "logBase": 2,
-        "max": null,
         "min": "0",
-        "show": true,
-        "splitFactor": null
+        "show": true
       },
-      "yBucketBound": "auto",
-      "yBucketNumber": null,
-      "yBucketSize": null
+      "yBucketBound": "auto"
     },
     {
-      "cards": {
-        "cardPadding": null,
-        "cardRound": null
-      },
+      "cards": {},
       "color": {
         "cardColor": "#806eb7",
         "colorScale": "sqrt",
@@ -817,10 +998,22 @@
         "mode": "opacity"
       },
       "dataFormat": "timeseries",
-      "datasource": "$datasource",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          }
         },
         "overrides": []
       },
@@ -838,10 +1031,62 @@
         "show": true
       },
       "links": [],
+      "options": {
+        "calculate": true,
+        "calculation": {
+          "yBuckets": {
+            "mode": "count",
+            "scale": {
+              "log": 2,
+              "type": "log"
+            }
+          }
+        },
+        "cellGap": 2,
+        "cellValues": {},
+        "color": {
+          "exponent": 0.5,
+          "fill": "#806eb7",
+          "mode": "opacity",
+          "reverse": false,
+          "scale": "exponential",
+          "scheme": "Oranges",
+          "steps": 128
+        },
+        "exemplars": {
+          "color": "rgba(255,0,255,0.7)"
+        },
+        "filterValues": {
+          "le": 1e-9
+        },
+        "legend": {
+          "show": true
+        },
+        "rowsFrame": {
+          "layout": "auto"
+        },
+        "showValue": "never",
+        "tooltip": {
+          "show": true,
+          "yHistogram": false
+        },
+        "yAxis": {
+          "axisPlacement": "left",
+          "decimals": 2,
+          "min": "0",
+          "reverse": false,
+          "unit": "ms"
+        }
+      },
+      "pluginVersion": "9.5.5",
       "reverseYBuckets": false,
       "targets": [
         {
-          "expr": "sum without (instance) (rate(ceph_osd_op_r_latency_sum{ceph_daemon='$osd'}[5m]) / rate(ceph_osd_op_r_latency_count{ceph_daemon='$osd'}[5m]) >= 0)",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum without (instance) (rate(ceph_osd_op_r_latency_sum{ceph_daemon='$osd',cluster=\"$cluster\"}[5m]) / rate(ceph_osd_op_r_latency_count{ceph_daemon='$osd',cluster=\"$cluster\"}[5m]) >= 0)",
           "format": "time_series",
           "instant": false,
           "interval": "$interval",
@@ -859,26 +1104,18 @@
       "xAxis": {
         "show": true
       },
-      "xBucketNumber": null,
       "xBucketSize": "",
       "yAxis": {
         "decimals": 2,
         "format": "ms",
         "logBase": 2,
-        "max": null,
         "min": "0",
-        "show": true,
-        "splitFactor": null
+        "show": true
       },
-      "yBucketBound": "auto",
-      "yBucketNumber": null,
-      "yBucketSize": null
+      "yBucketBound": "auto"
     },
     {
-      "cards": {
-        "cardPadding": null,
-        "cardRound": null
-      },
+      "cards": {},
       "color": {
         "cardColor": "#f9934e",
         "colorScale": "sqrt",
@@ -887,10 +1124,22 @@
         "mode": "opacity"
       },
       "dataFormat": "timeseries",
-      "datasource": "$datasource",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          }
         },
         "overrides": []
       },
@@ -908,10 +1157,62 @@
         "show": true
       },
       "links": [],
+      "options": {
+        "calculate": true,
+        "calculation": {
+          "yBuckets": {
+            "mode": "count",
+            "scale": {
+              "log": 2,
+              "type": "log"
+            }
+          }
+        },
+        "cellGap": 2,
+        "cellValues": {},
+        "color": {
+          "exponent": 0.5,
+          "fill": "#f9934e",
+          "mode": "opacity",
+          "reverse": false,
+          "scale": "exponential",
+          "scheme": "Oranges",
+          "steps": 128
+        },
+        "exemplars": {
+          "color": "rgba(255,0,255,0.7)"
+        },
+        "filterValues": {
+          "le": 1e-9
+        },
+        "legend": {
+          "show": true
+        },
+        "rowsFrame": {
+          "layout": "auto"
+        },
+        "showValue": "never",
+        "tooltip": {
+          "show": true,
+          "yHistogram": false
+        },
+        "yAxis": {
+          "axisPlacement": "left",
+          "decimals": 2,
+          "min": "0",
+          "reverse": false,
+          "unit": "ms"
+        }
+      },
+      "pluginVersion": "9.5.5",
       "reverseYBuckets": false,
       "targets": [
         {
-          "expr": "sum without (instance) (rate(ceph_osd_op_w_latency_sum{ceph_daemon='$osd'}[5m]) / rate(ceph_osd_op_w_latency_count{ceph_daemon='$osd'}[5m]) >= 0)",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum without (instance) (rate(ceph_osd_op_w_latency_sum{ceph_daemon='$osd',cluster=\"$cluster\"}[5m]) / rate(ceph_osd_op_w_latency_count{ceph_daemon='$osd',cluster=\"$cluster\"}[5m]) >= 0)",
           "format": "time_series",
           "instant": false,
           "interval": "$interval",
@@ -929,30 +1230,28 @@
       "xAxis": {
         "show": true
       },
-      "xBucketNumber": null,
       "xBucketSize": "",
       "yAxis": {
         "decimals": 2,
         "format": "ms",
         "logBase": 2,
-        "max": null,
         "min": "0",
-        "show": true,
-        "splitFactor": null
+        "show": true
       },
-      "yBucketBound": "auto",
-      "yBucketNumber": null,
-      "yBucketSize": null
+      "yBucketBound": "auto"
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "links": []
         },
         "overrides": []
       },
@@ -982,11 +1281,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true,
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "9.5.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -996,26 +1294,34 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg without (instance, ceph_daemon) (rate(ceph_osd_op_r_latency_sum{ceph_daemon='$osd'}[5m]) / rate(ceph_osd_op_r_latency_count{ceph_daemon='$osd'}[5m]) >= 0)",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "avg without (instance, ceph_daemon) (rate(ceph_osd_op_r_latency_sum{ceph_daemon='$osd',cluster=\"$cluster\"}[5m]) / rate(ceph_osd_op_r_latency_count{ceph_daemon='$osd',cluster=\"$cluster\"}[5m]) >= 0)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "read",
+          "range": true,
           "refId": "A"
         },
         {
-          "expr": "avg without (instance, ceph_daemon) (rate(ceph_osd_op_w_latency_sum{ceph_daemon='$osd'}[5m]) / rate(ceph_osd_op_w_latency_count{ceph_daemon='$osd'}[5m]) >= 0)",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "avg without (instance, ceph_daemon) (rate(ceph_osd_op_w_latency_sum{ceph_daemon='$osd',cluster=\"$cluster\"}[5m]) / rate(ceph_osd_op_w_latency_count{ceph_daemon='$osd',cluster=\"$cluster\"}[5m]) >= 0)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "write",
+          "range": true,
           "refId": "B"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Avg OSD  Op  Latency",
       "tooltip": {
         "shared": true,
@@ -1024,33 +1330,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "ms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1058,11 +1355,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
-      "decimals": null,
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "links": []
         },
         "overrides": []
       },
@@ -1093,11 +1391,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true,
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "9.5.5",
       "pointradius": 1,
       "points": false,
       "renderer": "flot",
@@ -1107,6 +1404,9 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "avg without (instance, ceph_daemon) (ceph_osd_apply_latency_ms{ceph_daemon='$osd'})",
           "format": "time_series",
           "interval": "$interval",
@@ -1117,6 +1417,9 @@
           "step": 4
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "avg without (instance, ceph_daemon)(ceph_osd_commit_latency_ms{ceph_daemon='$osd'})",
           "format": "time_series",
           "interval": "$interval",
@@ -1128,9 +1431,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "AVG OSD Apply + Commit Latency",
       "tooltip": {
         "shared": true,
@@ -1139,39 +1440,29 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
-          "decimals": null,
           "format": "ms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
   "refresh": "5m",
-  "schemaVersion": 25,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [
     "ceph",
@@ -1181,17 +1472,17 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "default",
           "value": "default"
         },
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "datasource",
         "options": [],
         "query": "prometheus",
+        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1206,7 +1497,6 @@
           "text": "10s",
           "value": "10s"
         },
-        "datasource": null,
         "hide": 0,
         "includeAll": false,
         "label": "Interval",
@@ -1286,17 +1576,19 @@
         "type": "interval"
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "osd.0",
           "value": "osd.0"
         },
-        "datasource": "$datasource",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "$datasource"
+        },
         "definition": "",
         "hide": 0,
         "includeAll": false,
-        "label": "OSD",
+        "label": "osd",
         "multi": false,
         "name": "osd",
         "options": [],
@@ -1306,10 +1598,36 @@
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "cluster",
+          "value": "cluster"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "definition": "label_values(ceph_health_status,cluster)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "cluster",
+        "multi": false,
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "query": "label_values(ceph_health_status,cluster)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
@@ -1343,5 +1661,7 @@
   },
   "timezone": "",
   "title": "Ceph - OSD (Single)",
-  "version": 1
+  "uid": "e4f3091e-b57f-4d3e-95f8-e75a6cb7d577",
+  "version": 1,
+  "weekStart": ""
 }

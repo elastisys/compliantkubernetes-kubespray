@@ -38,6 +38,16 @@ rules:
   peers-rule-nodes:
     peers: {{- toYaml $netpol.nodePeers | nindent 6 }}
 
+  ingress-rule-blackbox:
+    peers:
+      - namespaceSelectorLabels:
+          kubernetes.io/metadata.name: monitoring
+        podSelectorLabels:
+          app.kubernetes.io/name: prometheus-blackbox-exporter
+
+  ingress-rule-apiserver:
+    peers: {{- toYaml $netpol.apiserverPeers | nindent 6 }}
+
 policies:
   rook-ceph:
     all-deny:
@@ -53,6 +63,10 @@ policies:
         - rule: egress-rule-mgr
         - rule: egress-rule-mon
         - rule: egress-rule-osd
+      ingress:
+        - rule: ingress-rule-apiserver
+          ports:
+            - tcp: 9443
 
     csi-detect-version:
       podSelectorLabels:
@@ -83,6 +97,9 @@ policies:
         - rule: egress-rule-mon
         - rule: egress-rule-osd
       ingress:
+        - name: ingress-rule-blackbox
+          ports:
+            - tcp: 9283
         - name: ingress-rule-prometheus
           peers:
             - namespaceSelectorLabels:
@@ -98,7 +115,7 @@ policies:
             - podSelectorLabels:
                 app: rook-ceph-operator
             - podSelectorLabels:
-                app: rook-ceph-toolbox
+                app.kubernetes.io/name: rook-ceph-toolbox
             - podSelectorLabels:
                 app: rook-ceph-mon
             - podSelectorLabels:
@@ -125,7 +142,7 @@ policies:
             - podSelectorLabels:
                 app: rook-ceph-operator
             - podSelectorLabels:
-                app: rook-ceph-toolbox
+                app.kubernetes.io/name: rook-ceph-toolbox
             - podSelectorLabels:
                 app: rook-ceph-mgr
             - podSelectorLabels:
@@ -159,7 +176,7 @@ policies:
             - podSelectorLabels:
                 app: rook-ceph-operator
             - podSelectorLabels:
-                app: rook-ceph-toolbox
+                app.kubernetes.io/name: rook-ceph-toolbox
             - podSelectorLabels:
                 app: rook-ceph-mgr
             - podSelectorLabels:

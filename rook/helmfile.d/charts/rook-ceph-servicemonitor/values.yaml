@@ -1,0 +1,7 @@
+rookMonitor:
+  enabled: true
+  namespace: rook-ceph
+  interval: 15s
+  relabelings: []
+  # - targetLabel: cluster
+  #   replacement: service_cluster
