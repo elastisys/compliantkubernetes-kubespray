@@ -22,7 +22,7 @@ if [[ "$(groupExists ${config[inventory_file]} all)" == "true" ]]; then
     all_section="$(getSection ${config[inventory_file]} all)"
     echo -e "$all_section\n" > ${config[groups_inventory_file]}
 else 
-    log_error "Error: [all] group is defined in ${config[inventory_file]}"
+    log_error "Error: [all] group is not defined in ${config[inventory_file]}"
 fi
 
 if [[ "$(groupExists ${config[inventory_file]} etcd)" == "true" ]]; then
