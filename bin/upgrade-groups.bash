@@ -73,12 +73,6 @@ upgrade_groups() {
     popd
 }
 
-# TO DELETE
-get_group_logs() {
-    group=$1
-    shift
-    tail /tmp/$group.logs "${@}"
-}
 
 case "${2}" in
     logs)
