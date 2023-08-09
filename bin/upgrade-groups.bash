@@ -50,7 +50,7 @@ upgrade_groups() {
 
     pushd "${kubespray_path}"
 
-    ansible-playbook upgrade-cluster.yml -uroot -b -i "${config[groups_inventory_file]}" --skip-tags=download,multus --limit "kube_control_plane[0]"
+    ansible-playbook upgrade-cluster.yml -b -i "${config[groups_inventory_file]}" --skip-tags=download,multus --limit "kube_control_plane[0]"
 
     for index in $(seq 0 100); do
       local -a limit
