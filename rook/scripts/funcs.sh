@@ -1,7 +1,7 @@
 #!/bin/bash
 LOGGING=${LOGGING:-false}
-PIPELINE=${PIPELINE:-false}
-if [[ -z "$PIPELINE" ]]; then
+CK8S_APPS_PIPELINE=${CK8S_APPS_PIPELINE:-false}
+if [[ -z "$CK8S_APPS_PIPELINE" ]]; then
     RETRY_COUNT=6
     RETRY_WAIT=10
 else
@@ -190,10 +190,6 @@ EVENTSFOLDER="events"
 #   3. kind
 #   4. cluster
 function writeLog {
-    if [[ -z "$PIPELINE" ]]; then
-        return
-    fi
-
     NAMESPACE=$1
     NAME=$2
     KIND=$3
@@ -219,10 +215,6 @@ function writeLog {
 #   3. kind
 #   4. cluster
 function writeEvent {
-    if [[ -z "$PIPELINE" ]]; then
-        return
-    fi
-
     NAMESPACE=$1
     NAME=$2
     KIND=$3
