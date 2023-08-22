@@ -1,6 +1,7 @@
 # Preserving source IP on CityCloud (proxy protocol)
 
-> NOTE: This workaround is not needed after [this PR](https://github.com/kubernetes-sigs/kubespray/pull/8629) is part of the release (probably at v1.23.0).
+> [!NOTE]
+> This workaround is not needed after [this PR](https://github.com/kubernetes-sigs/kubespray/pull/8629) is part of the release (probably at v1.23.0).
 
 To use proxy protocol on the loadbalancers on citycloud you'll need to update the cloud controller manager to version `v1.22.0`.
 This can be achieved by setting the following `k8s_cluster` group variables:

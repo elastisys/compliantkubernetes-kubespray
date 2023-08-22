@@ -118,8 +118,9 @@ Done!
 
 Later when you want to destroy the infrastructure.
 
-**Note:** Make sure all cloud resources are destroyed first (persistent volumes, load balancers).
-Otherwise they will be left dangling!
+> [!NOTE]
+> Make sure all cloud resources are destroyed first (persistent volumes, load balancers).
+> Otherwise they will be left dangling!
 
 Then run the following:
 
