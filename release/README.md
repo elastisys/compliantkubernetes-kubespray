@@ -37,8 +37,9 @@ The releases will have the following version string: `<kubespray-version>-<ck8s-
 
 1. Merge `reset-changelog-<kubespray-version>` into `release-<kubespray-version>` then, into `main` as soon as possible to minimize risk of conflicts
 
-    **NOTE**: The release action will fail since we haven't tagged the release commit.
-    We will do that after QA.
+    > [!NOTE]
+    > The release action will fail since we haven't tagged the release commit.
+    > We will do that after QA.
 
 1. Create a `QA-<kubespray-version>` branch and run QA checks on this branch.
 
@@ -48,8 +49,9 @@ The releases will have the following version string: `<kubespray-version>-<ck8s-
     git push -u origin QA-<kubespray-version>
     ```
 
-    **NOTE**: All changes made in QA should be added to `CHANGELOG.md` and **NOT** `WIP-CHANGELOG.md`.
-    Also, make sure to not merge any fixes into `release-<kubespray-version>` on this step.
+    > [!NOTE]
+    > All changes made in QA should be added to `CHANGELOG.md` and **NOT** `WIP-CHANGELOG.md`.
+    > Also, make sure to not merge any fixes into `release-<kubespray-version>` on this step.
 
     If there is no migration document, create one as described [here](../migration/README.md). If a migration document already exists, make sure that it follows [this template](../migration/template/upgrade-cluster.md).
 
@@ -125,8 +127,9 @@ The releases will have the following version string: `<kubespray-version>-<ck8s-
 
 1. Run QA checks on this branch related to the introduced changes.
 
-    **NOTE**: All changes made in QA should be added to `CHANGELOG.md` and **NOT** `WIP-CHANGELOG.md`.
-    Also, make sure to not merge any fixes into `release-<kubespray-version>` on this step.
+    > [!NOTE]
+    > All changes made in QA should be added to `CHANGELOG.md` and **NOT** `WIP-CHANGELOG.md`.
+    > Also, make sure to not merge any fixes into `release-<kubespray-version>` on this step.
 
     If any migration steps are required for the patch, create a migration document as described [here](../migration/README.md). If a migration document already exists, make sure that it follows [this template](../migration/template/upgrade-cluster.md).
 

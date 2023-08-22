@@ -90,7 +90,8 @@ This has only been tested on CityCloud and might not look the same for other clo
 
       Remove `/etc/docker/daemon.json`.
 
-      **NOTE**: This might break docker if it's restarted before running kubespray.
+      > [!NOTE]
+      > This might break docker if it's restarted before running kubespray.
 
       ```bash
       sudo mv /etc/docker/daemon.json /etc/docker/daemon.json.backup
@@ -106,7 +107,8 @@ This has only been tested on CityCloud and might not look the same for other clo
 
       Change ETCD version to `quay.io/coreos/etcd:v3.4.13`
 
-      **NOTE**: This will restart etcd and if you only have one master it will stop the api server until it's restarted.
+      > [!NOTE]
+      > This will restart etcd and if you only have one master it will stop the api server until it's restarted.
 
       ```bash
       sudo vim /etc/kubernetes/manifest/etcd.yaml
@@ -195,8 +197,9 @@ This has only been tested on CityCloud and might not look the same for other clo
 
 1. Remove old masters from kubernetes
 
-    **NOTE**: Make sure you are not removing more than half the masters.
-    That will make you loose quorum.
+    > [!NOTE]
+    > Make sure you are not removing more than half the masters.
+    > That will make you loose quorum.
 
     Make sure the master your'e about to remove isn't on the top of the kube_master and etcd group.
     If it is, move it to something else than first place and run:

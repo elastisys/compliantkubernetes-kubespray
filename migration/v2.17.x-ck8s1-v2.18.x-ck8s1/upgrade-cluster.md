@@ -1,6 +1,7 @@
 # Upgrade v2.17.0-ck8s1 to v2.18.x-ck8s1
 
-**NOTE**: This release will upgrade Kubernetes to v1.22 which has removed a lot of APIs. See [this](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#whats-new-major-themes) for more information.
+> [!NOTE]
+> This release will upgrade Kubernetes to v1.22 which has removed a lot of APIs. See [this](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#whats-new-major-themes) for more information.
 
 1. Checkout the new release: `git switch v2.18.1-ck8s1`
 
@@ -51,4 +52,5 @@
 ./bin/ck8s-kubespray run-playbook {sc|wc} ../migration/v2.17.x-ck8s1-v2.18.x-ck8s1/migrate-to-containerd.yml -b
 ```
 
-**NOTE**: If you are running [Compliant Kubernetes Apps](https://github.com/elastisys/compliantkubernetes-apps). Make sure you're running a version that has support for conatinerd.
+> [!NOTE]
+> If you are running [Compliant Kubernetes Apps](https://github.com/elastisys/compliantkubernetes-apps). Make sure you're running a version that has support for conatinerd.
