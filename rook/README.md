@@ -1,6 +1,7 @@
 # rook-ceph
 
-> **Note**: These instructions assumes that you are standing in this directory and have set `$CK8S_CONFIG_PATH` pointing to your environment.
+> [!NOTE]
+> These instructions assumes that you are standing in this directory and have set `$CK8S_CONFIG_PATH` pointing to your environment.
 
 ## Install
 
@@ -38,7 +39,7 @@ Many options use default within the helmfile state values.
 ### Deploy
 
 The deployment is divided into two steps the bootstrap and the finalising.
-Since parts of the deployment relies on services in apps, such as Gatekeeper constraints and Prometheus operator, and apps relies on rook-ceph for block storage.
+Since parts of the deployment relies on services in [compliantkubernetes-apps](https://github.com/elastisys/compliantkubernetes-apps/), such as Gatekeeper constraints and Prometheus operator, and apps relies on rook-ceph for block storage.
 
 - Bootstrap
 
@@ -57,7 +58,8 @@ Since parts of the deployment relies on services in apps, such as Gatekeeper con
   kubectl -n rook-ceph get cephclusters
   ```
 
-  > **Note**: If rook cannot automatically find your disks and create osds for them then [zap the disks](#zap-ceph-disks) and restart the operator for it to rescan.
+  > [!IMPORTANT]
+  > If rook cannot automatically find your disks and create osds for them then [zap the disks](#zap-ceph-disks) and restart the operator for it to rescan.
 
 - Finalise
 
@@ -75,6 +77,22 @@ Since parts of the deployment relies on services in apps, such as Gatekeeper con
   ```
 
   This autoconfig script can be later used to keep networkpolicies up to date.
+
+### Enabling the dashboard
+
+One can enable the internal Ceph dashboard that is provided by the mgr component.
+
+```diff
+  commons/<cluster>:
+    cluster:
++     dashboard:
++       enabled: true
+```
+
+> [!IMPORTANT]
+> For this to work one must edit the `cephcluster` manually to add `ssl: false` under `dashboard` since the field will be dropped when set to false through the helm chart which then defaults to true.
+
+After applying the changes the operator and mgr components need to be restarted to pick up the new configuration.
 
 ## Upgrade
 

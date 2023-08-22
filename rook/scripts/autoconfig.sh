@@ -13,7 +13,7 @@ updatePeers() {
 
   for address in ${2}; do
     for peer in ${peers}; do
-      if addressInSubnet "${address}" "${peer}"; then
+      if ! [[ "${peer}" =~ ^.*/32$ ]] && addressInSubnet "${address}" "${peer}"; then
         update+=("${peer}")
         continue 2
       fi
@@ -29,9 +29,8 @@ updatePeers() {
     echo -n "apply update? [Y/n]: "
     read -r reply
     if [[ "${reply}" =~ ^(Y|y|)$ ]]; then
-      echo apply
+      yq4 -i ".clusters.${cluster}.networkPolicies.${1} = ${new}" "${CK8S_CONFIG_PATH}/rook/values.yaml"
     fi
-    yq4 -i ".clusters.${cluster}.networkPolicies.${1} = ${new}" "${CK8S_CONFIG_PATH}/rook/values.yaml"
   else
     echo "- ${cluster}/networkPolicies/${1}: up to date"
   fi
@@ -50,7 +49,11 @@ fi
 
 cluster="${1}"
 
-dnsAddresses="$(kubectl -n kube-system get svc kube-dns -ojsonpath='{.spec.clusterIPs[0]}')"
+if kubectl -n kube-system get svc kube-dns > /dev/null 2>&1; then
+  dnsAddresses="$(kubectl -n kube-system get svc kube-dns -ojsonpath='{.spec.clusterIPs[0]}')"
+else
+  dnsAddresses="$(kubectl -n kube-system get svc coredns -ojsonpath='{.spec.clusterIPs[0]}')"
+fi
 
 apiserverAddresses="$(kubectl get no -lnode-role.kubernetes.io/control-plane= -oyaml | yq4 '[
   .items[] | [
@@ -94,7 +97,7 @@ pspcrds=(
 
 if [[ "$(yq4 ".commons * .clusters.${cluster} | .podSecurityPolicies.enabled" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
   if kubectl get crds "${pspcrds[@]}" &> /dev/null; then
-    echo -n "- enable podsecuritypolicies? [Y/n]: "
+    echo -n "- enable Gatekeeper podsecuritypolicies? [Y/n]: "
     read -r reply
     if [[ "${reply}" =~ ^(Y|y|)$ ]]; then
       yq4 -i ".clusters.${cluster}.podSecurityPolicies.enabled = true" "${CK8S_CONFIG_PATH}/rook/values.yaml"
@@ -106,14 +109,14 @@ else
   echo "- podsecuritypolicies enabled"
 fi
 
-echo "checking servicemonitor..."
-if [[ "$(yq4 ".commons * .clusters.${cluster} | .monitoring.installServiceMonitor" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
+echo "checking service monitors..."
+if [[ "$(yq4 ".commons * .clusters.${cluster} | .monitoring.installServiceMonitors" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
   if kubectl get crd prometheuses.monitoring.coreos.com &> /dev/null; then
     if [[ -n "$(kubectl get po -A -l app.kubernetes.io/name=prometheus 2> /dev/null)" ]]; then
-      echo -n "- install Prometheus serviceMonitor? [Y/n]: "
+      echo -n "- install Prometheus service monitors? [Y/n]: "
       read -r reply
       if [[ "${reply}" =~ ^(Y|y|)$ ]]; then
-        yq4 -i ".clusters.${cluster}.monitoring.installServiceMonitor = true" "${CK8S_CONFIG_PATH}/rook/values.yaml"
+        yq4 -i ".clusters.${cluster}.monitoring.installServiceMonitors = true" "${CK8S_CONFIG_PATH}/rook/values.yaml"
       fi
     else
       echo "- note: Prometheus not available"
@@ -122,7 +125,7 @@ if [[ "$(yq4 ".commons * .clusters.${cluster} | .monitoring.installServiceMonito
     echo "- note: Prometheus operator not available"
   fi
 else
-  echo "- rules installed"
+  echo "- service monitors installed"
 fi
 
 echo "checking dashboards..."

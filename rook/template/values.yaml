@@ -1,10 +1,5 @@
 # Values shared with all clusters
 commons:
-  monitoring:
-    # Requires Prometheus operator from apps!
-    # Enable after apps is installed!
-    installServiceMonitors: false
-
   podSecurityPolicies:
     # Requires Gatekeeper PodSecurityPolicies templates from apps!
     # Enable after apps is installed!
@@ -181,7 +176,7 @@ clusters:
       # Requires Prometheus operator from apps!
       # Enable after apps is installed!
       installPrometheusRules: false
-      installServiceMonitor: false
+      installServiceMonitors: false
 
     networkPolicies:
       apiserverPeers: []
@@ -191,8 +186,7 @@ clusters:
     monitoring:
       # Requires Prometheus operator from apps!
       # Enable after apps is installed!
-      installPrometheusRules: false
-      installServiceMonitor: false
+      installServiceMonitors: false
     networkPolicies:
       apiserverPeers: []
       nodePeers: []

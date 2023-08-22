@@ -1,6 +1,7 @@
 # Upgrade rook-ceph to v1.11.x
 
-> **Warning**: Upgrade only supported from v1.10.x.
+> [!WARNING]
+> Upgrade only supported from v1.10.x.
 
 ## Prerequisites
 
@@ -23,9 +24,10 @@
 
 ### Helmfile migration
 
-> **Warning**: This should be followed from v1.10.x to migrate to helmfile, and expects that rook-ceph is setup with the previous method.
+> [!WARNING]
+> This should be followed from v1.10.x to migrate to helmfile, and expects that rook-ceph is setup with the previous method.
 >
-> It assumes that the previous operator values and manifests have been copied over to "${CK8S_CONFIG_PATH}/rook/"
+> It assumes that the previous operator values and manifests have been copied over to `${CK8S_CONFIG_PATH}/rook/`.
 
 1. Migrate configuration:
 
@@ -64,9 +66,10 @@
 
 ### Helmfile migration
 
-> **Warning**: This should be followed from v1.10.x to migrate to helmfile, and expects that rook-ceph is setup with the previous method.
+> [!WARNING]
+> This should be followed from v1.10.x to migrate to helmfile, and expects that rook-ceph is setup with the previous method.
 >
-> It assumes that the previous operator values and manifests have been copied over to "${CK8S_CONFIG_PATH}/rook/"
+> It assumes that the previous operator values and manifests have been copied over to `${CK8S_CONFIG_PATH}/rook/`.
 
 1. Disable monitoring, networkpolicies and podsecuritypolicies for rook-ceph in apps!
 
@@ -120,7 +123,8 @@
 
 1. Upgrade operator:
 
-    > **Warning**: This will cause new rollouts of all rook-ceph components.
+    > [!WARNING]
+    > This will cause new rollouts of all rook-ceph components.
 
     ```bash
     # with kubeconfig pointing to service cluster
@@ -142,7 +146,8 @@
 
 1. Upgrade cluster:
 
-    > **Warning**: This will cause new rollouts of all rook-ceph components.
+    > [!WARNING]
+    > This will cause new rollouts of all rook-ceph components.
 
     ```bash
     # with kubeconfig pointing to service cluster

@@ -2,7 +2,7 @@
 
 configOverride: |
   [global]
-  osd pool default size = 2
+  osd pool default size = {{ $cluster | get "defaultPoolSize" 3 }}
 
 cephClusterSpec:
   cephVersion:
@@ -26,6 +26,7 @@ cephClusterSpec:
 
   dashboard:
     enabled: {{ $cluster | get "dashboard.enabled" false }}
+    port: 7000
     ssl: false
 
   monitoring:
