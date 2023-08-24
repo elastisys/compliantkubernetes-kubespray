@@ -1,0 +1,7 @@
+- name: Master cis benchmark patch
+  hosts: kube_control_plane
+  become: true
+
+  tasks:
+    - name: 1.1.20 Ensure that the Kubernetes PKI certificate file permissions are set to 600 or more restrictive
+      command: chmod -R 600 /etc/kubernetes/pki

@@ -42,6 +42,7 @@ enable_nodelocaldns: false
 kubernetes_audit: true
 audit_log_path: "/var/log/audit/kube-apiserver-audit.log"
 audit_log_maxage: 7
+audit_log_maxbackups: 10
 
 podsecuritypolicy_enabled: false
 calico_felix_prometheusmetricsenabled: true
