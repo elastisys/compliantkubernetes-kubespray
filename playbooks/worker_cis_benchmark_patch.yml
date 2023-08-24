@@ -1,0 +1,10 @@
+- name: Worker cis benchmark patch
+  hosts: kube_node
+  become: true
+  tasks:
+    - name: 4.1.1 Ensure that the kubelet service file permissions are set to 600 or more restrictive
+      command: chmod -R 600 /etc/systemd/system/kubelet.service
+    - name: 4.1.7 Ensure that the certificate authorities file permissions are set to 600 or more restrictive
+      command: chmod -R 600 /etc/kubernetes/ssl/ca.crt
+    - name: 4.1.9 If the kubelet config.yaml configuration file is being used validate permissions set to 600 or more restrictive
+      command: chmod -R 600 /etc/kubernetes/kubelet-config.yaml
