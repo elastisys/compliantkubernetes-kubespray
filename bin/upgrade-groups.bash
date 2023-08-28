@@ -5,12 +5,10 @@ set -eu -o pipefail
 here="$(dirname "$(readlink -f "$0")")"
 usage() {
     echo "COMMANDS:" 1>&2
-    echo "  <prefix> logs                              Check group upgrade logs" 1>&2
-    echo "      args: <group> [<options>]" 1>&2
     echo "  <prefix> list-groups                    List groups " 1>&2
     echo "      args: [<options>]" 1>&2
     echo "  <prefix> upgrade-groups                    Run upgrade playbook " 1>&2
-    echo "      args: [<options>]" 1>&2
+    echo "      args: [--skip-download]" 1>&2
     exit 1
 }
 
@@ -29,7 +27,7 @@ source "${here}/inventory-parser.bash"
 
 list_groups() {
     groups=$(readInventoryGroups ${config[groups_inventory_file]})
-    for group in $groups; do 
+    for group in $groups; do
         log_info "- $group"
     done
 }
@@ -49,8 +47,11 @@ upgrade_groups() {
     done
 
     pushd "${kubespray_path}"
-
-    ansible-playbook upgrade-cluster.yml -b -i "${config[groups_inventory_file]}" --skip-tags=download,multus --limit "kube_control_plane[0]"
+    skip_tags="multus"
+    if [[ "${1}" == "--skip-download" ]]; then
+      skip_tags+=",download"
+    fi
+    ansible-playbook upgrade-cluster.yml -b -i "${config[groups_inventory_file]}" --skip-tags=${skip_tags} --limit "kube_control_plane[0]"
 
     for index in $(seq 0 100); do
       local -a limit
@@ -67,7 +68,7 @@ upgrade_groups() {
       if [[ -z "${limit[*]}" ]]; then
         break
       fi
-      ansible-playbook upgrade-cluster.yml -uroot -b -i "${config[groups_inventory_file]}" --skip-tags=download,multus --limit "$(tr ' ' ',' <<< "${limit[*]}")" -e serial=100%
+      ansible-playbook upgrade-cluster.yml -uroot -b -i "${config[groups_inventory_file]}" --skip-tags=${skip_tags} --limit "$(tr ' ' ',' <<< "${limit[*]}")" -e serial=100%
     done
 
     popd
@@ -75,10 +76,6 @@ upgrade_groups() {
 
 
 case "${2}" in
-    logs)
-        shift 2
-        get_group_logs "${@}"
-        ;;
     list-groups)
         shift 2
         list_groups
