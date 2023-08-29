@@ -20,10 +20,10 @@ fi
 if [[ "$#" -eq 1 ]]; then
     echo -n "Enter disk to wipe (Continue for default: sdb):"
     read -r disk
-    if [[ ${reply} -eq "" ]]; then
+    if [ -z "${disk}" ]; then
         DISK=sdb
     else
-        DISK=${disk}
+        DISK="${disk}"
     fi
     echo ""
 else

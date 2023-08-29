@@ -65,9 +65,8 @@ commons:
       #             - rook-ceph
       # tolerations:
       #   - key: elastisys.io/node-type
-      #     operator: In
-      #     values:
-      #       - rook-ceph
+      #     operator: Equal
+      #     value: rook-ceph
       #     effect: NoSchedule
       ## these can be overridden for mgr, mon, osd below
 

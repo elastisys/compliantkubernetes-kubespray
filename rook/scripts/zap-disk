@@ -26,7 +26,3 @@ sudo rm -rf /dev/mapper/ceph--*
 sudo partprobe $DISK
 
 sudo rm -rf /var/lib/rook/
-
-# Ensure that everything is wiped
-lsblk
-ls /var/lib/rook
