@@ -1,6 +1,0 @@
-- hosts: all
-  tasks:
-    - name: Docker prune unused images, containers, networks etc.
-      command: docker system prune -a -f
-      register: command_output
-    - debug: msg="{{command_output.stdout_lines[-1:]}}"

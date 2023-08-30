@@ -21,7 +21,7 @@ usage() {
     echo "      args: <prefix> [<options>]" 1>&2
     echo "  reboot-nodes                                reboots all nodes in a cluster if needed" 1>&2
     echo "      args: <prefix> [--extra-vars manual_prompt=true] [<options>]" 1>&2
-    echo "  prune-docker                                removes unused docker resources on all nodes" 1>&2
+    echo "  prune-nerdctl                               removes unused container resources on all nodes" 1>&2
     echo "      args: <prefix> [<options>]" 1>&2
     echo "  upgrade                                     prepares config for upgrade" 1>&2
     echo "      args: <version> prepare" 1>&2
@@ -81,12 +81,12 @@ case "${1}" in
         shift 2
         "${here}/reboot-nodes.bash" "${@}"
         ;;
-    prune-docker)
+    prune-nerdctl)
         if [ $# -lt 2 ]; then
             usage
         fi
         shift 2
-        "${here}/prune-docker.bash" "${@}"
+        "${here}/prune-nerdctl.bash" "${@}"
         ;;
     upgrade)
         if [ $# -lt 3 ]; then
