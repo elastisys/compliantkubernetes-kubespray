@@ -1,0 +1,6 @@
+- hosts: all
+  tasks:
+    - name: Prune unused images, containers, networks etc using nerdctl.
+      command: nerdctl system prune -a -f
+      register: command_output
+    - debug: msg="{{command_output.stdout_lines[-1:]}}"
