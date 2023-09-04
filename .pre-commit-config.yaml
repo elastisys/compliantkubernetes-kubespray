@@ -29,7 +29,7 @@ repos:
     hooks:
       - id: markdownlint
         name: check markdown
-        exclude: ^CHANGELOG.md$|^WIP-CHANGELOG.md$|^rook/helmfile.d/upstream/
+        exclude: ^.github/pull_request_template.md$|^CHANGELOG.md$|^WIP-CHANGELOG.md$|^rook/helmfile.d/upstream/
         args:
           - -r
           - ~MD013,~MD024,~MD026,~MD028,~MD034
