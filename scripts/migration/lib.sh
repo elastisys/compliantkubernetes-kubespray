@@ -7,18 +7,6 @@ THIS="$(basename "$(readlink -f "${0}")")"
 declare -A CONFIG
 declare -A VERSION
 
-declare -a CONFIG_FILES
-CONFIG_FILES=(
-  "sc-config/group_vars/all/ck8s-kubespray-general.yaml"
-  "sc-config/group_vars/all/ck8s-ssh-keys.yaml"
-  "sc-config/group_vars/etcd/ck8s-etcd.yaml"
-  "sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml"
-  "wc-config/group_vars/all/ck8s-kubespray-general.yaml"
-  "wc-config/group_vars/all/ck8s-ssh-keys.yaml"
-  "wc-config/group_vars/etcd/ck8s-etcd.yaml"
-  "wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml"
-)
-
 declare -a SC_CONFIG_FILES
 SC_CONFIG_FILES=(
   "sc-config/group_vars/all/ck8s-kubespray-general.yaml"
@@ -120,6 +108,12 @@ check_sops() {
 }
 
 check_config() {
+  if [ -z "${CK8S_CLUSTER:-}" ]; then
+    log_fatal "error: \"CK8S_CLUSTER\" is unset"
+  elif [[ ! "${CK8S_CLUSTER}" =~ ^(sc|wc|both)$ ]]; then
+    log_fatal "error: invalid value set for \"CK8S_CLUSTER\", valid values are <sc|wc|both>"
+  fi
+
   if [ -z "${THIS:-}" ]; then
     log_fatal "error: \"THIS\" is unset"
   elif [ -z "${ROOT:-}" ]; then
@@ -133,12 +127,23 @@ check_config() {
   log_info "using config path: \"${CK8S_CONFIG_PATH}\""
 
   local pass="true"
-  for FILE in "${CONFIG_FILES[@]}"; do
-    if [ ! -f "${CK8S_CONFIG_PATH}/${FILE}" ]; then
-      log_error "error: \"${FILE}\" is not a file"
-      pass="false"
-    fi
-  done
+
+  if [[ "${CK8S_CLUSTER}" =~ ^(sc|both)$ ]]; then
+    for FILE in "${SC_CONFIG_FILES[@]}"; do
+      if [ ! -f "${CK8S_CONFIG_PATH}/${FILE}" ]; then
+        log_error "error: \"${FILE}\" is not a file"
+        pass="false"
+      fi
+    done
+  fi
+  if [[ "${CK8S_CLUSTER}" =~ ^(wc|both)$ ]]; then
+    for FILE in "${WC_CONFIG_FILES[@]}"; do
+      if [ ! -f "${CK8S_CONFIG_PATH}/${FILE}" ]; then
+        log_error "error: \"${FILE}\" is not a file"
+        pass="false"
+      fi
+    done
+  fi
 
   if [[ "${pass}" = "false" ]]; then
     exit 1

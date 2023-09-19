@@ -24,7 +24,13 @@
 
 1. Update the kubespray submodule: `git submodule update --init --recursive`
 
-1. Run `bin/ck8s-kubespray upgrade ${new_version} prepare` to update your config.
+1. Run `bin/ck8s-kubespray upgrade both ${new_version} prepare` to update your config.
+
+    > [!NOTE]
+    > It is possible to update `wc` and `sc` config separately by replacing `both` when running the `upgrade` command, e.g. the following will only update config for the workload cluster:
+    > ```bash
+    > bin/ck8s-kubespray upgrade wc ${new_version} prepare
+    > ```
 
 1. Download the required files on the nodes
 

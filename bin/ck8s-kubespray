@@ -24,7 +24,7 @@ usage() {
     echo "  prune-nerdctl                               removes unused container resources on all nodes" 1>&2
     echo "      args: <prefix> [<options>]" 1>&2
     echo "  upgrade                                     prepares config for upgrade" 1>&2
-    echo "      args: <version> prepare" 1>&2
+    echo "      args: <wc|sc|both> <version> prepare" 1>&2
     exit 1
 }
 
@@ -89,7 +89,7 @@ case "${1}" in
         "${here}/prune-nerdctl.bash" "${@}"
         ;;
     upgrade)
-        if [ $# -lt 3 ]; then
+        if [ $# -ne 4 ]; then
             usage
         fi
         shift 1
