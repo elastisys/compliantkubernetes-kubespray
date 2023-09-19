@@ -6,10 +6,10 @@ ROOT="$(readlink -f "${here}/../")"
 
 CK8S_STACK="$(basename "$0")"
 export CK8S_STACK
+export CK8S_CLUSTER="${1}"
 
 # shellcheck source=scripts/migration/lib.sh
-CK8S_ROOT_SCRIPT="true"
-source "${ROOT}/scripts/migration/lib.sh"
+CK8S_ROOT_SCRIPT="true" source "${ROOT}/scripts/migration/lib.sh"
 
 snippets_list() {
   if [[ ! "${1}" =~ ^prepare$ ]]; then
@@ -73,18 +73,18 @@ usage() {
   fi
 
   printf "commands:\n" 1>&2
-  printf "\tprepare <version> \t- run all prepare steps upgrading the configuration\n" 1>&2
+  printf "\t<wc|sc|both> <version> prepare \t- run all prepare steps upgrading the configuration\n" 1>&2
 
   exit 1
 }
 
 main() {
-  if [[ "${#}" -lt 2 ]] || [[ ! "${2}" =~ ^prepare$ ]]; then
-    usage "${2:-}"
+  if [[ ! "${1}" =~ ^(wc|sc|both)$ ]] || [[ ! "${3}" =~ ^prepare$ ]]; then
+    usage "${3:-}"
   fi
 
-  local version="${1}"
-  local action="${2}"
+  local version="${2}"
+  local action="${3}"
 
   local pass="true"
   for dir in "" "prepare"; do
@@ -102,12 +102,16 @@ main() {
 
   check_config
 
-  for prefix in sc wc; do
-    config_load "${prefix}"
-    check_version "${prefix}" "${action}"
-  done
+  if [[ "${CK8S_CLUSTER:-}" =~ ^(sc|both)$ ]]; then
+    config_load "sc"
+    check_version "sc" "${action}"
+  fi
+  if [[ "${CK8S_CLUSTER:-}" =~ ^(wc|both)$ ]]; then
+    config_load "wc"
+    check_version "wc" "${action}"
+  fi
 
-  "${action}" "${version}"
+  "${action}"
 
   log_info "${action} complete"
 }
