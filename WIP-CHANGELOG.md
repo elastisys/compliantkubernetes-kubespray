@@ -6,7 +6,8 @@
 ### Updated
 
 - Rook version v1.11.9 and Ceph v17.2.6
-- Updated kubespray to branch `v2.22.1+terraform-fix+node-local-dns-egress-ipv6`
+- Updated kubespray to v2.23.0
+  - Branch `v2.23.0+terraform-fix+node-local-dns-egress-ipv6+dhcp-critical`
 
 ### Added
 
