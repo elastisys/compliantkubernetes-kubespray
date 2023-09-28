@@ -1,5 +1,6 @@
 # Compliant Kubernetes Kubespray changelog
 <!-- BEGIN TOC -->
+- [v2.23.0-ck8s1](#v2230-ck8s1---2023-09-28)
 - [v2.21.0-ck8s4](#v2210-ck8s4---2023-07-14)
 - [v2.22.1-ck8s1](#v2221-ck8s1---2023-07-12)
 - [v2.21.0-ck8s1](#v2210-ck8s1---2023-02-06)
@@ -13,6 +14,24 @@
 - [v2.16.0-ck8s1](#v2160-ck8s1---2021-07-02)
 - [v2.15.0-ck8s1](#v2150-ck8s1---2021-05-27)
 <!-- END TOC -->
+
+-------------------------------------------------
+## v2.23.0-ck8s1 - 2023-09-28
+
+### Changed
+
+- Reworked rook-ceph setup to use helmfile with everything included
+- Changed `prune-docker` script/playbook to `prune-nerdctl` which now uses `nerdctl` instead of `docker`
+
+### Updated
+
+- Rook version v1.11.9 and Ceph v17.2.6
+- Updated kubespray to v2.23.0
+  - Branch `v2.23.0+terraform-fix+node-local-dns-egress-ipv6+dhcp-critical`
+
+### Added
+
+- Test script for `rook-ceph`
 
 -------------------------------------------------
 ## v2.21.0-ck8s4 - 2023-07-14
