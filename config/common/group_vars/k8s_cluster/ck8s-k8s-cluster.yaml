@@ -54,6 +54,9 @@ calico_ipip_mode: 'Always'
 calico_vxlan_mode: 'Never'
 calico_network_backend: 'bird'
 
+coredns_additional_error_config: |
+  consolidate 5m ".* i/o timeout$" warning
+
 kube_profiling: false
 
 kube_scheduler_bind_address: 127.0.0.1
