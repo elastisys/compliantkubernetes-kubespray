@@ -75,6 +75,14 @@
 
     These will now be provided from here so they must be removed else they will be in conflict.
 
+    ```bash
+    yq4 -i '.rookCeph.monitoring.enabled = false' "$CK8S_CONFIG_PATH/common-config.yaml"
+    yq4 -i '.rookCeph.gatekeeperPsp.enabled = false' "$CK8S_CONFIG_PATH/common-config.yaml"
+    yq4 -i '.networkPolicies.rookCeph.enabled = false' "$CK8S_CONFIG_PATH/common-config.yaml"
+    ```
+
+    Re-apply apps with the changes in both `sc` and `wc`.
+
 1. Annotate and label resources:
 
     ```bash
@@ -192,4 +200,10 @@
   # should show all running or completed
   kubectl -n rook-ceph get cephclusters
   # should show PHASE = Ready and HEALTH = HEALTH_OK
+  ```
+
+- [ ] Run the test script
+
+  ```bash
+  ./scripts/test-rook.sh both
   ```
