@@ -155,7 +155,9 @@ function test_rook() {
   esac
 
   for cluster in "${clusters[@]}"; do
-    export KUBECONFIG="${CK8S_CONFIG_PATH}/.state/kube_config_${cluster}.yaml"
+    if [[ -z "$CK8S_APPS_PIPELINE" ]]; then
+      export KUBECONFIG="${CK8S_CONFIG_PATH}/.state/kube_config_${cluster}.yaml"
+    fi
     DEPLOYMENTS=()
     DAEMONSETS=()
     JOBS=()
