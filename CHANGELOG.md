@@ -22,6 +22,7 @@
 
 - Reworked rook-ceph setup to use helmfile with everything included
 - Changed `prune-docker` script/playbook to `prune-nerdctl` which now uses `nerdctl` instead of `docker`
+- Changed the `run-playbook` script to run playbooks in the `playbooks` directory instead of the root of the kubespray repository.
 
 ### Updated
 
