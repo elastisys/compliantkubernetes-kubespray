@@ -18,6 +18,9 @@ rules:
           app: rook-ceph-mgr
     ports:
       - tcp: 6800
+      {{- if dig "cluster" "dashboard" "enabled" false .Values }}
+      - tcp: 7000
+      {{- end }}
 
   egress-rule-mon:
     peers:
@@ -54,6 +57,13 @@ policies:
       podSelectorLabels: {}
       egress: {}
       ingress: {}
+
+    crashcollector:
+      podSelectorLabels:
+        app: rook-ceph-crashcollector
+      egress:
+        - rule: egress-rule-mon
+        - rule: egress-rule-mgr
 
     operator:
       podSelectorLabels:
@@ -120,6 +130,8 @@ policies:
                 app: rook-ceph-mon
             - podSelectorLabels:
                 app: rook-ceph-osd
+            - podSelectorLabels:
+                app: rook-ceph-crashcollector
           ports:
             - tcp: 6800
 
@@ -149,6 +161,8 @@ policies:
                 app: rook-ceph-mon
             - podSelectorLabels:
                 app: rook-ceph-osd
+            - podSelectorLabels:
+                app: rook-ceph-crashcollector
           ports:
             - tcp: 3300
             - tcp: 6789
