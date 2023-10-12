@@ -24,6 +24,13 @@
 
 1. Update the kubespray submodule: `git submodule update --init --recursive`
 
+1. Set `ck8sKubesprayVersion` to `any` in `sc-config/group_vars/all/ck8s-kubespray-general.yaml` and `wc-config/group_vars/all/ck8s-kubespray-general.yaml`
+
+    ```bash
+    yq4 -i '.ck8sKubesprayVersion = "any"' ${CK8S_CONFIG_PATH}/sc-config/group_vars/all/ck8s-kubespray-general.yaml
+    yq4 -i '.ck8sKubesprayVersion = "any"' ${CK8S_CONFIG_PATH}/wc-config/group_vars/all/ck8s-kubespray-general.yaml
+    ```
+
 1. Run `bin/ck8s-kubespray upgrade v2.23 prepare` to update your config.
 
 1. Download the required files on the nodes
