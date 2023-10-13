@@ -29,8 +29,8 @@
 1. Download the required files on the nodes
 
     ```bash
-    ./bin/ck8s-kubespray run-playbook sc upgrade-cluster.yml -b --tags=download
-    ./bin/ck8s-kubespray run-playbook wc upgrade-cluster.yml -b --tags=download
+    ./bin/ck8s-kubespray run-playbook sc upgrade_cluster.yml -b --tags=download
+    ./bin/ck8s-kubespray run-playbook wc upgrade_cluster.yml -b --tags=download
     ```
 
 ## Upgrade steps
@@ -40,8 +40,8 @@ These steps will cause disruptions in the environment.
 1. Upgrade the cluster to a new kubernetes version:
 
     ```bash
-    ./bin/ck8s-kubespray run-playbook sc upgrade-cluster.yml -b --skip-tags=download
-    ./bin/ck8s-kubespray run-playbook wc upgrade-cluster.yml -b --skip-tags=download
+    ./bin/ck8s-kubespray run-playbook sc upgrade_cluster.yml -b --skip-tags=download
+    ./bin/ck8s-kubespray run-playbook wc upgrade_cluster.yml -b --skip-tags=download
     ```
 
 ## Postrequisite
