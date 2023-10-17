@@ -3,7 +3,7 @@
 # This script takes care of initializing a CK8S configuration path for kubespray.
 # It writes the default configuration files to the config path and generates
 # some defaults where applicable.
-# It's not to be executed on its own but rather via `ck8s-kubespray init ...`.
+# It's not to be executed on its own but rather via `ck8s-kubespray init <wc|sc>``.
 
 set -eu -o pipefail
 shopt -s globstar nullglob dotglob

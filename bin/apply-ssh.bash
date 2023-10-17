@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script will run an ansible playbook.
-# It's not to be executed on its own but rather via `ck8s-kubespray apply-ssh <prefix>`.
+# It's not to be executed on its own but rather via `ck8s-kubespray apply-ssh <wc|sc>`.
 
 set -eu -o pipefail
 

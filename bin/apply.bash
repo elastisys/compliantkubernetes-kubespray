@@ -2,7 +2,7 @@
 
 # This script will create a kubernetes cluster using kubespray.
 # It will also install some python dependencies for kubespray in a virtual environment
-# It's not to be executed on its own but rather via `ck8s-kubespray apply <prefix>`.
+# It's not to be executed on its own but rather via `ck8s-kubespray apply <wc|sc>`.
 
 set -eu -o pipefail
 shopt -s globstar nullglob dotglob

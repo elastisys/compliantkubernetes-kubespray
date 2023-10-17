@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script will run an ansible playbook.
-# It's not to be executed on its own but rather via `ck8s-kubespray reboot-nodes <prefix>`.
+# It's not to be executed on its own but rather via `ck8s-kubespray reboot-nodes <wc|sc>`.
 # Add the variable "manual_prompt = true" for a manual prompt.
 # The script may fail and in such situations rerun the script.
 

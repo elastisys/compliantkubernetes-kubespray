@@ -5,8 +5,6 @@ To set up a cluster on citycloud these snippets can be used
 Start by setting up some environments for this setup
 
 ```bash
-SERVICE_CLUSTER="my-new-sc-cluster"
-WORKLOAD_CLUSTERS=( "my-new-wc-cluster" )
 PUB_SSH_KEY_FILE="${HOME}/.ssh/id_rsa.pub"
 ```
 
@@ -41,7 +39,7 @@ Set up the clusters into respective folders
 
 ```bash
 pushd kubespray
-for CLUSTER in "${SERVICE_CLUSTER}" "${WORKLOAD_CLUSTERS[@]}"; do
+for CLUSTER in sc wc; do
   mkdir -p "${CK8S_CONFIG_PATH}/${CLUSTER}-config/group_vars"
   ln -s "${CK8S_CONFIG_PATH}/${CLUSTER}-config/" "inventory/$CLUSTER"
   # shellcheck disable=SC2016
@@ -73,7 +71,7 @@ k8s_allowed_remote_ips = ["1.2.3.4/32"]
 Now you're ready to deploy the infrastructure
 
 ```bash
-for CLUSTER in "${SERVICE_CLUSTER}" "${WORKLOAD_CLUSTERS[@]}"; do
+for CLUSTER in sc wc; do
   pushd "kubespray/inventory/${CLUSTER}"
   terraform init ../../contrib/terraform/openstack
   terraform apply \
@@ -94,7 +92,7 @@ To set up kubernetes with compliantkubernetes-kubespray you can follow these ste
 Initialize the configuration with.
 
 ```bash
-for CLUSTER in "${SERVICE_CLUSTER}" "${WORKLOAD_CLUSTERS[@]}"; do
+for CLUSTER in sc wc; do
   ./bin/ck8s-kubespray init "${CLUSTER}" openstack ~/.ssh/id_rsa
   ln -s "$(pwd)/kubespray/inventory/${CLUSTER}/tfstate-${CLUSTER}.tfstate" "${CK8S_CONFIG_PATH}/${CLUSTER}-config/" || true
   cp "kubespray/contrib/terraform/openstack/hosts" "${CK8S_CONFIG_PATH}/${CLUSTER}-config/inventory.ini"
@@ -107,7 +105,7 @@ Check the variables in the `group_vars` folder for each cluster and make sure th
 Apply the configuration and set up kubernetes.
 
 ```bash
-for CLUSTER in "${SERVICE_CLUSTER}" "${WORKLOAD_CLUSTERS[@]}"; do
+for CLUSTER in sc wc; do
   bin/ck8s-kubespray apply "${CLUSTER}"
 done
 ```
@@ -125,7 +123,7 @@ Later when you want to destroy the infrastructure.
 Then run the following:
 
 ```bash
-for CLUSTER in "${SERVICE_CLUSTER}" "${WORKLOAD_CLUSTERS[@]}"; do
+for CLUSTER in sc wc; do
   pushd "kubespray/inventory/${CLUSTER}"
   terraform destroy \
     -var-file cluster.tfvars \
