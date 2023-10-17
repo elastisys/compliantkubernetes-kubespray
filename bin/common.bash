@@ -7,6 +7,11 @@
 : "${CK8S_CONFIG_PATH:?Missing CK8S_CONFIG_PATH}"
 : "${prefix:?Missing prefix}"
 
+if [[ ! "${prefix}" =~ ^(wc|sc|both)$ ]]; then
+  echo "ERROR: invalid value set for \"prefix\", valid values are <wc|sc|both>" 1>&2
+  exit 1
+fi
+
 # Check for this mistake https://github.com/koalaman/shellcheck/wiki/SC2088
 # shellcheck disable=SC2088
 if [[ "${CK8S_CONFIG_PATH:0:2}" == "~/" ]]; then

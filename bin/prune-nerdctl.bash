@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script will run an ansible playbook.
-# It's not to be executed on its own but rather via `ck8s-kubespray prune-nerdctl <prefix>`.
+# It's not to be executed on its own but rather via `ck8s-kubespray prune-nerdctl <wc|sc>`.
 
 set -eu -o pipefail
 

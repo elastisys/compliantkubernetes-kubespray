@@ -2,7 +2,7 @@
 
 # This script will run the remove-node.yml playbook.
 # It will also install some python dependencies for kubespray in a virtual environment
-# It's not to be executed on its own but rather via `ck8s-kubespray remove-node <prefix> <node_name>` [<options>].
+# It's not to be executed on its own but rather via `ck8s-kubespray remove-node <wc|sc> <node_name>` [<options>].
 
 set -eu -o pipefail
 shopt -s globstar nullglob dotglob

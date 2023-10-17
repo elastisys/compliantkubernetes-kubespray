@@ -10,25 +10,25 @@ here="$(dirname "$(readlink -f "$0")")"
 usage() {
     echo "COMMANDS:" 1>&2
     echo "  init                                        initialize the config path" 1>&2
-    echo "      args: <prefix> <flavor> [<SOPS fingerprint>]" 1>&2
+    echo "      args: <wc|sc> <flavor> [<SOPS fingerprint>]" 1>&2
     echo "  apply                                       runs kubespray to create the cluster" 1>&2
-    echo "      args: <prefix> [<options>]" 1>&2
+    echo "      args: <wc|sc> [<options>]" 1>&2
     echo "  remove-node                                 removes specified node from cluster" 1>&2
-    echo "      args: <prefix> <node_name> [<options>]" 1>&2
+    echo "      args: <wc|sc> <node_name> [<options>]" 1>&2
     echo "  run-playbook                                runs any ansible playbook in kubespray" 1>&2
-    echo "      args: <prefix> <playbook> [<options>]" 1>&2
+    echo "      args: <wc|sc> <playbook> [<options>]" 1>&2
     echo "  apply-ssh                                   applies SSH keys from a file to a cluster" 1>&2
-    echo "      args: <prefix> [<options>]" 1>&2
+    echo "      args: <wc|sc> [<options>]" 1>&2
     echo "  reboot-nodes                                reboots all nodes in a cluster if needed" 1>&2
-    echo "      args: <prefix> [--extra-vars manual_prompt=true] [<options>]" 1>&2
+    echo "      args: <wc|sc> [--extra-vars manual_prompt=true] [<options>]" 1>&2
     echo "  prune-nerdctl                               removes unused container resources on all nodes" 1>&2
-    echo "      args: <prefix> [<options>]" 1>&2
+    echo "      args: <wc|sc> [<options>]" 1>&2
     echo "  upgrade                                     prepares config for upgrade" 1>&2
     echo "      args: <wc|sc|both> <version> prepare" 1>&2
     exit 1
 }
 
-if [ $# -lt 2 ]; then
+if [ $# -lt 2 ] || [[ ! "${1}" = upgrade ]] && [[ ! "${2}" =~ ^(wc|sc)$ ]] || [[ ! "${2}" =~ ^(wc|sc|both)$ ]]; then
     usage
 else
     export prefix="${2}"

@@ -2,7 +2,7 @@
 
 # This script will run an ansible playbook available in kubespray.
 # It will also install some python dependencies for kubespray in a virtual environment
-# It's not to be executed on its own but rather via `ck8s-kubespray run-playbook <prefix> <playbook>`.
+# It's not to be executed on its own but rather via `ck8s-kubespray run-playbook <wc|sc> <playbook>`.
 
 set -eu -o pipefail
 shopt -s globstar nullglob dotglob
