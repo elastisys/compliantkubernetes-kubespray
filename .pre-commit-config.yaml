@@ -32,7 +32,7 @@ repos:
         exclude: ^.github/pull_request_template.md$|^CHANGELOG.md$|^WIP-CHANGELOG.md$|^rook/helmfile.d/upstream/
         args:
           - -r
-          - ~MD013,~MD024,~MD026,~MD028,~MD034
+          - ~MD013,~MD024,~MD026,~MD027,~MD028,~MD034
 
   - repo: https://github.com/codespell-project/codespell
     rev: v2.2.4
