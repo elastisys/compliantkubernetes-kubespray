@@ -20,7 +20,7 @@ Many options use default within the helmfile state values.
   cp template/values.yaml "${CK8S_CONFIG_PATH}/rook"
   ```
 
-- Set [preset](values/cluster-presets)
+- Set [preset](helmfile.d/values/cluster-presets)
 
   ```diff
     cluster:
