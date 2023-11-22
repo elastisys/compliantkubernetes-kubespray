@@ -1,10 +1,9 @@
 # Troubleshoot rook-ceph crashcollector
 
-
 If you enable the crash collector in your rook-ceph installation, you might see some error logs in the crashcollector pods :
 
 ```bash
-$ kubectl logs -f rook-ceph-crashcollector-dev-sc-storage-0-6695c6zx8rg
+kubectl logs -f rook-ceph-crashcollector-dev-sc-storage-0-6695c6zx8rg
 INFO:ceph-crash:monitoring path /var/lib/ceph/crash, delay 600s
 WARNING:ceph-crash:post /var/lib/ceph/crash/2023-11-21T22:05:00.157537Z_cd3d06ca-bc60-4b24-9c05-998876d4f209 as client.crash.rook-ceph-crashcollector-dev-sc-storage-0-6695c6zx8rg failed: 2023-11-21T22:20:07.837+0000 7f8489b12700 -1 monclient(hunting): handle_auth_bad_method server allowed_methods [2] but i only support [2,1]
 2023-11-21T22:20:07.837+0000 7f848a313700 -1 monclient(hunting): handle_auth_bad_method server allowed_methods [2] but i only support [2,1]
@@ -19,7 +18,7 @@ Basically, what happens is that Ceph [scans](https://github.com/ceph/ceph/blob/m
 The post action is running a ceph command :
 
 ```bash
-$ ceph post -i /var/lib/ceph/crash/crash-2023-11-01-23-08-00 -n <auth-client>
+ceph post -i /var/lib/ceph/crash/crash-2023-11-01-23-08-00 -n <auth-client>
 ```
 
 The reason why sometimes we see those error messages on the crashcollector pods, is that rook-ceph try posting the crashes using different auth clients, until it succeeds. If you check the code [implementation](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L46C25-L46C25)
@@ -47,9 +46,8 @@ auth_names = ['client.crash.%s' % socket.gethostname(),
 
 So, if you saw those error messages, you just need to double check that the crashes located at **/var/lib/ceph/crash** are posted, meaning moved to the **/var/lib/ceph/crash/posted** folder.
 
-
 In some cases, you might want to generate a crash and see it under the crash folder, and verify that it was posted or not, to do that run the following coming inside any *rook-ceph-mon* pod:
 
-```
-$ ceph --admin-daemon /var/run/ceph/ceph-mon.a.asok assert
+```bash
+ceph --admin-daemon /var/run/ceph/ceph-mon.a.asok assert
 ```
