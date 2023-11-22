@@ -53,4 +53,3 @@ In some cases, you might want to generate a crash and see it under the crash fol
 ```
 $ ceph --admin-daemon /var/run/ceph/ceph-mon.a.asok assert
 ```
-
