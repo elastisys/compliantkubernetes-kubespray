@@ -12,7 +12,7 @@ WARNING:ceph-crash:post /var/lib/ceph/crash/2023-11-21T22:05:00.157537Z_cd3d06ca
 [errno 13] RADOS permission denied (error connecting to the cluster)
 ```
 
-Note that in most cases, those error messages are expected due to the rook-ceph crash posting implemenation.
+Note that in most cases, those error messages are expected due to the rook-ceph crash posting implementation.
 
 Basically, what happens is that Ceph [scans](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L66) the crash folder */var/lib/ceph/crash* every *X* minutes, by default the delay between scans is 10 minutes. Whenever it find crashes, it will try to [post](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L44) them, once the post action succeeds, ceph will [move those crashes](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L84) to the **posted** folder.
 
@@ -48,7 +48,7 @@ auth_names = ['client.crash.%s' % socket.gethostname(),
 So, if you saw those error messages, you just need to double check that the crashes located at **/var/lib/ceph/crash** are posted, meaning moved to the **/var/lib/ceph/crash/posted** folder.
 
 
-In some cases, you might want to generate a crash and see it under the crash folder, and verify that it was posted or not, to do that run the following comming inside any *rook-ceph-mon* pod:
+In some cases, you might want to generate a crash and see it under the crash folder, and verify that it was posted or not, to do that run the following coming inside any *rook-ceph-mon* pod:
 
 ```
 $ ceph --admin-daemon /var/run/ceph/ceph-mon.a.asok assert
