@@ -2,8 +2,8 @@
 
 If you enable the crash collector in your rook-ceph installation, you might see some error logs in the crashcollector pods :
 
-```bash
-kubectl logs -f rook-ceph-crashcollector-dev-sc-storage-0-6695c6zx8rg
+```console
+$ kubectl logs -f rook-ceph-crashcollector-dev-sc-storage-0-6695c6zx8rg
 INFO:ceph-crash:monitoring path /var/lib/ceph/crash, delay 600s
 WARNING:ceph-crash:post /var/lib/ceph/crash/2023-11-21T22:05:00.157537Z_cd3d06ca-bc60-4b24-9c05-998876d4f209 as client.crash.rook-ceph-crashcollector-dev-sc-storage-0-6695c6zx8rg failed: 2023-11-21T22:20:07.837+0000 7f8489b12700 -1 monclient(hunting): handle_auth_bad_method server allowed_methods [2] but i only support [2,1]
 2023-11-21T22:20:07.837+0000 7f848a313700 -1 monclient(hunting): handle_auth_bad_method server allowed_methods [2] but i only support [2,1]
