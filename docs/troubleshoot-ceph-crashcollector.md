@@ -13,7 +13,7 @@ WARNING:ceph-crash:post /var/lib/ceph/crash/2023-11-21T22:05:00.157537Z_cd3d06ca
 
 Note that in most cases, those error messages are expected due to the rook-ceph crash posting implementation.
 
-Basically, what happens is that Ceph [scans](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L66) the crash folder */var/lib/ceph/crash* every *X* minutes, by default the delay between scans is 10 minutes. Whenever it find crashes, it will try to [post](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L44) them, once the post action succeeds, ceph will [move those crashes](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L84) to the **posted** folder.
+Basically, what happens is that Ceph [scans](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L66) the crash folder `/var/lib/ceph/crash` every *X* minutes, by default the delay between scans is 10 minutes. Whenever it find crashes, it will try to [post](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L44) them, once the post action succeeds, Ceph will [move those crashes](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L84) to the **posted** folder.
 
 The post action is running a ceph command :
 
