@@ -46,7 +46,7 @@ auth_names = ['client.crash.%s' % socket.gethostname(),
 
 So, if you saw those error messages, you just need to double check that the crashes located at **/var/lib/ceph/crash** are posted, meaning moved to the **/var/lib/ceph/crash/posted** folder.
 
-In some cases, you might want to generate a crash and see it under the crash folder, and verify that it was posted or not, to do that run the following coming inside any *rook-ceph-mon* pod:
+In some cases, you might want to generate a crash and see it under the crash folder, and verify that it was posted or not, to do that run the following command inside any `rook-ceph-mon` pod:
 
 ```bash
 ceph --admin-daemon /var/run/ceph/ceph-mon.a.asok assert
