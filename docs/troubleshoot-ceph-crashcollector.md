@@ -36,7 +36,7 @@ def post_crash(path):
         )
 ```
 
-and **auth_names** variable is set by default to :
+and `auth_names` variable is set by default to :
 
 ```
 auth_names = ['client.crash.%s' % socket.gethostname(),
