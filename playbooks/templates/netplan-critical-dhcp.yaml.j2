@@ -1,0 +1,6 @@
+network:
+  version: 2
+  ethernets:
+    {{ netplan_critical_dhcp_interface }}:
+      dhcp4: true
+      critical: true

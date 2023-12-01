@@ -1,0 +1,16 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Make sure netplan folder exists
+      file:
+        path: /etc/netplan/
+        state: directory
+    - name: Add netplan configuration file
+      vars:
+        netplan_critical_dhcp_interface: "ens3"
+      template:
+        src: "netplan-critical-dhcp.yaml.j2"
+        dest: /etc/netplan/90-critical-dhcp.yaml
+      register: cluster_admin_manifests
+    - name: Apply netplan
+      shell: netplan apply
