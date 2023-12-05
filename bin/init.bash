@@ -22,12 +22,6 @@ here="$(dirname "$(readlink -f "$0")")"
 # shellcheck source=bin/common.bash
 source "${here}/common.bash"
 
-CK8S_CLOUD_PROVIDER=${CK8S_CLOUD_PROVIDER:-""}
-if [[ ${CK8S_CLOUD_PROVIDER} != "" ]]; then
-    log_error "ERROR: CK8S_CLOUD_PROVIDER is not supported"
-    exit 1
-fi
-
 # Validate the flavor
 if [ "${flavor}" != "default" ] && \
     [ "${flavor}" != "gcp" ] && \
