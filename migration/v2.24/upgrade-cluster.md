@@ -46,8 +46,8 @@ These steps will cause disruptions in the environment.
 1. Upgrade the cluster to a new kubernetes version:
 
     ```bash
-    ./bin/ck8s-kubespray run-playbook sc upgrade_cluster.yml -b --skip-tags=download
-    ./bin/ck8s-kubespray run-playbook wc upgrade_cluster.yml -b --skip-tags=download
+    ./bin/ck8s-kubespray run-playbook sc upgrade_cluster.yml -b -e skip_downloads=true
+    ./bin/ck8s-kubespray run-playbook wc upgrade_cluster.yml -b -e skip_downloads=true
     ```
 
 1. **If the cluster runs on Safespring** Update netplan to set default interface as critical
