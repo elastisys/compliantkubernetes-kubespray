@@ -22,7 +22,7 @@ repos:
     hooks:
       - id: editorconfig-checker
         name: check indentation
-        exclude: ^.gitmodules$|^LICENSE$|^rook/helmfile.d/upstream/
+        exclude: ^.gitmodules$|^LICENSE$|^rook/helmfile.d/upstream/|^migration/v2.24/upgrade-cluster.md$
 
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
     rev: 3.0.0
