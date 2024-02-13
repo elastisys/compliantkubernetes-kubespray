@@ -50,6 +50,12 @@ These steps will cause disruptions in the environment.
     ./bin/ck8s-kubespray run-playbook wc upgrade_cluster.yml -b -e skip_downloads=true
     ```
 
+1. Ensure control plane nodes only have the `control-plane` taint and not `master`.
+
+    ```bash
+    ./migration/v2.24/apply/01-fix-cp-node-taints.sh <sc|wc|both>
+    ```
+
 1. **If the cluster runs on Safespring** Update netplan to set default interface as critical
 
     This is to prevent the interface to release the IP when the DHCP server stop responding for a while.
