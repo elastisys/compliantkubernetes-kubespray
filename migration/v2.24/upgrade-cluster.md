@@ -57,8 +57,8 @@ These steps will cause disruptions in the environment.
     Run the following playbook, if the default interface is something else than `ens3` you can add the following flag `-e netplan_critical_dhcp_interface=<interface name>`
 
     ```bash
-    ./bin/ck8s-kubespray run-playbook wc ../playbooks/set_critical_interface.yml -e netplan_critical_dhcp_interface=ens3
-    ./bin/ck8s-kubespray run-playbook sc ../playbooks/set_critical_interface.yml -e netplan_critical_dhcp_interface=ens3
+    ./bin/ck8s-kubespray run-playbook wc ../../playbooks/set_critical_interface.yml -e netplan_critical_dhcp_interface=ens3
+    ./bin/ck8s-kubespray run-playbook sc ../../playbooks/set_critical_interface.yml -e netplan_critical_dhcp_interface=ens3
     ```
 
     Also add a comment to your config so that any new nodes that will be created get this change as well
@@ -76,7 +76,7 @@ These steps will cause disruptions in the environment.
     ...
      "worker-0" = {
          "az"          = "nova"
-         "flavor"      = "3e072efc-8313-4652-8da5-78e6bf4c6322" #2C-8GB-0GB
+         "flavor"      = "..."
          "floating_ip" = false
     +    # "netplan_critical_dhcp_interface" = "ens3" # Uncomment this when creating new nodes
      },
