@@ -28,24 +28,24 @@ source "${ROOT}/scripts/migration/lib.sh"
 
 
 function get_cp_nodes() {
-  #shellcheck disable=SC2207
-  CP_NODES=($(kubectl get no -l node-role.kubernetes.io/control-plane -oyaml | yq4 ".items[].metadata.name"))
-  export CP_NODES
+  kubectl get no -l node-role.kubernetes.io/control-plane -oyaml | yq4 ".items[].metadata.name"
 }
 
 function add_control_plane_taint() {
-  get_cp_nodes
+  local cp_nodes=()
+  mapfile -t cp_nodes < <(get_cp_nodes)
 
-  for node in "${CP_NODES[@]}"; do
+  for node in "${cp_nodes[@]}"; do
     log_info "Adding taint \"node-role.kubernetes.io/control-plane:NoSchedule\" from node \"${node}\""
     kubectl taint no "${node}" node-role.kubernetes.io/control-plane:NoSchedule --overwrite
   done
 }
 
 function remove_master_taint() {
-  get_cp_nodes
+  local cp_nodes=()
+  mapfile -t cp_nodes < <(get_cp_nodes)
 
-  for node in "${CP_NODES[@]}"; do
+  for node in "${cp_nodes[@]}"; do
     log_info "Removing taint \"node-role.kubernetes.io/master:NoSchedule\" from node \"${node}\""
     kubectl taint no "${node}" node-role.kubernetes.io/master- ||  true
   done
