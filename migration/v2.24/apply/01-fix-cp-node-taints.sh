@@ -61,7 +61,7 @@ if [[ "${CK8S_CLUSTER}" =~ ^(sc|both)$ ]]; then
   remove_master_taint
 fi
 if [[ "${CK8S_CLUSTER}" =~ ^(wc|both)$ ]]; then
-  log_info "operation on service cluster"
+  log_info "operation on workload cluster"
 
   KUBECONFIG="${CK8S_CONFIG_PATH}/.state/kube_config_wc.yaml"
   export KUBECONFIG
