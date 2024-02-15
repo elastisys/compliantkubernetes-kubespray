@@ -24,6 +24,8 @@
 
 1. Update the kubespray submodule: `git submodule update --init --recursive`
 
+1. If the cluster config folders are named with different prefixes than `sc` and `wc`, rename the folders to `sc-config` and `wc-config` respectively
+
 1. Run `bin/ck8s-kubespray upgrade both v2.24 prepare` to update your config.
 
     > [!NOTE]
