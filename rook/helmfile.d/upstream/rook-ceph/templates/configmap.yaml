@@ -119,7 +119,7 @@ data:
   ROOK_CSI_RBD_POD_LABELS: {{ .Values.csi.rbdPodLabels | quote }}
 {{- end }}
 {{- if .Values.csi.provisionerTolerations }}
-  CSI_PROVISIONER_TOLERATIONS: {{ toYaml .Values.csi.provisionerTolerations | quote }}
+  CSI_PROVISIONER_TOLERATIONS: | {{- toYaml .Values.csi.provisionerTolerations | nindent 4 }}
 {{- end }}
 {{- if .Values.csi.provisionerNodeAffinity }}
   CSI_PROVISIONER_NODE_AFFINITY: {{ .Values.csi.provisionerNodeAffinity }}
@@ -146,7 +146,7 @@ data:
   ROOK_CSI_ALLOW_UNSUPPORTED_VERSION: {{ .Values.csi.allowUnsupportedVersion | quote }}
 {{- end }}
 {{- if .Values.csi.pluginTolerations }}
-  CSI_PLUGIN_TOLERATIONS: {{ toYaml .Values.csi.pluginTolerations | quote }}
+  CSI_PLUGIN_TOLERATIONS: | {{- toYaml .Values.csi.pluginTolerations | nindent 4 }}
 {{- end }}
 {{- if .Values.csi.pluginNodeAffinity }}
   CSI_PLUGIN_NODE_AFFINITY: {{ .Values.csi.pluginNodeAffinity }}
@@ -203,10 +203,10 @@ data:
   CSI_PROVISIONER_REPLICAS: {{ .Values.csi.provisionerReplicas | quote }}
 {{- end }}
 {{- if .Values.csi.csiRBDProvisionerResource }}
-  CSI_RBD_PROVISIONER_RESOURCE: {{ .Values.csi.csiRBDProvisionerResource | quote }}
+  CSI_RBD_PROVISIONER_RESOURCE: | {{- toYaml .Values.csi.csiRBDProvisionerResource | nindent 4 }}
 {{- end }}
 {{- if .Values.csi.csiRBDPluginResource }}
-  CSI_RBD_PLUGIN_RESOURCE: {{ .Values.csi.csiRBDPluginResource | quote }}
+  CSI_RBD_PLUGIN_RESOURCE: | {{ toYaml .Values.csi.csiRBDPluginResource | nindent 4 }}
 {{- end }}
 {{- if .Values.csi.csiCephFSProvisionerResource }}
   CSI_CEPHFS_PROVISIONER_RESOURCE: {{ .Values.csi.csiCephFSProvisionerResource | quote }}

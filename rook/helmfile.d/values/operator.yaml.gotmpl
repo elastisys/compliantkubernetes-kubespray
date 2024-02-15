@@ -18,7 +18,7 @@ tolerations: {{- toYaml . | nindent 2 }}
 csi:
   enableCephfsDriver: false
 
-  csiRBDProvisionerResource: |
+  csiRBDProvisionerResource:
     {{- range $name, $config := omit .Values.provisioner "tolerations" }}
     - name: {{ $name }}
       {{- with get "resources" dict $config }}
@@ -28,7 +28,7 @@ csi:
 
   provisionerTolerations: {{- toYaml .Values.provisioner.tolerations | nindent 4 }}
 
-  csiRBDPluginResource: |
+  csiRBDPluginResource:
     {{- range $name, $config := omit .Values.plugin "tolerations" }}
     - name: {{ $name }}
       {{- with get "resources" dict $config }}
