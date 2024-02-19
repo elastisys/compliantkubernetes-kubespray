@@ -2,7 +2,7 @@
 
 ## Migration template and script
 
-There is a script that can help you create the initial migration folder and `upgrade-cluster.md` document.
+There is a script that can help you create the initial migration folder and `README.md` document.
 
 This script must have ck8s-kubespray old and new versions as arguments.
 These arguments should include as much of the versions as is necessary; for new minor versions include major/minor version, for new patch versions include major/minor/patch version, etc.

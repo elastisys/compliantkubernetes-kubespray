@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: no-commit-to-branch
       - id: check-merge-conflict
@@ -17,25 +17,37 @@ repos:
       - id: trailing-whitespace
         exclude: ^rook/helmfile.d/upstream/
 
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.39.0
+    hooks:
+      - id: markdownlint
+        name: lint markdown
+        args:
+          - --disable
+          - MD013 # Line length
+          - MD024 # Multiple headings with the same content
+          - MD026 # Trailing punctuation in heading
+          - MD028 # Blank line inside blockquote
+          - MD029 # Ordered list item prefix
+          - MD033 # Inline HTML
+          - MD034 # Bare URL used
+          - MD036 # Emphasis used instead of a heading
+          - MD040 # Fenced code blocks should have a language specified
+          - MD041 # First line in a file should be a top-level heading
+          - MD042 # No empty links
+          - MD051 # Link fragments should be valid
+          - --
+        exclude: ^rook/helmfile.d/upstream/
+
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 2.7.1
+    rev: 2.7.3
     hooks:
       - id: editorconfig-checker
         name: check indentation
         exclude: ^.gitmodules$|^LICENSE$|^rook/helmfile.d/upstream/|^migration/v2.24/upgrade-cluster.md$
 
-  - repo: https://github.com/jumanjihouse/pre-commit-hooks
-    rev: 3.0.0
-    hooks:
-      - id: markdownlint
-        name: check markdown
-        exclude: ^.github/pull_request_template.md$|^CHANGELOG.md$|^WIP-CHANGELOG.md$|^rook/helmfile.d/upstream/
-        args:
-          - -r
-          - ~MD013,~MD024,~MD026,~MD027,~MD028,~MD034
-
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.4
+    rev: v2.2.6
     hooks:
       - id: codespell
         name: check spelling
@@ -50,6 +62,7 @@ repos:
       - id: shellcheck
         name: check scripts
         exclude: ^rook/helmfile.d/upstream/
+        require_serial: true
         args:
         - --color=always
         - --external-sources

@@ -1,33 +1,26 @@
-name: Release
+name: release
 
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+-ck8s[0-9]+'
+      - v[0-9]+.[0-9]+.[0-9]+-ck8s[0-9]+
 
 jobs:
   release:
-    name: Create Release
+    name: create-release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Fetches all tags
-      - name: Only on release branch
+          fetch-depth: 0
+      - name: Check on release branch
         run: for branch in $(git branch -r --contains tags/${GITHUB_REF_NAME}); do [[ "${branch}" =~ release-.* ]] && exit 0; done; exit 1
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::$(git describe --tags --abbrev=0 HEAD)
-      - name: Get the Kubespray version
-        id: get_kubespray_version
-        run: echo ::set-output name=VERSION::$(echo "${{ steps.get_version.outputs.VERSION }}" | sed 's/v\(.*\)-.*/\1/')
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get release series
+        id: get_release_series
+        run: echo "SERIES=$(echo "${{ github.ref_name }}" | sed 's/v\(.*\)-.*/\1/')" >> "${GITHUB_OUTPUT}"
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.get_version.outputs.VERSION }}
-          release_name: ${{ steps.get_version.outputs.VERSION }}
           body: |
-            See [CHANGELOG](https://github.com/elastisys/compliantkubernetes-kubespray/blob/${{ steps.get_version.outputs.VERSION }}/changelog/${{ steps.get_kubespray_version.outputs.VERSION }}.md) for details.
+            See [CHANGELOG](https://github.com/elastisys/compliantkubernetes-kubespray/blob/${{ github.ref_name }}/changelog/${{ steps.get_release_series.outputs.SERIES }}.md) for details.

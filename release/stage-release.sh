@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
@@ -16,14 +16,14 @@ function usage() {
 [ ${#} -eq 1 ] || usage
 
 full_version="${1}"
-kubespray_version="$(echo "${full_version}" | cut -d '-' -f 1)"
-ck8s_patch_version="$(echo "${full_version}" | cut -d '-' -f 2)"
+series="$(echo "${full_version}" | cut -d '-' -f 1)"
+patch="$(echo "${full_version}" | cut -d '-' -f 2)"
 
 #
 # Create staging branch
 #
 
-git switch "release-${kubespray_version}"
+git switch "release-${series}"
 git pull
 git switch -c "staging-${full_version}"
 
@@ -41,7 +41,7 @@ done
 
 here="$(dirname "$(readlink -f "$0")")"
 changelog_dir="${here}/../changelog"
-changelog_path="${changelog_dir}/${kubespray_version}.md"
+changelog_path="${changelog_dir}/${series}.md"
 
 mkdir -p "${changelog_dir}"
 
@@ -49,7 +49,7 @@ mkdir -p "${changelog_dir}"
 # notes. Also add an extra hashtag to please the markdownlint rule:
 # MD025 Multiple top level headers in the same document
 # TODO: Find a nicer way to do this.
-[ "${ck8s_patch_version}" != "ck8s1" ] && printf "\n#" >> "${changelog_path}"
+[ "${patch}" != "ck8s1" ] && printf "\n#" >> "${changelog_path}"
 
 releaser changelog compliantkubernetes-kubespray "${full_version}" >> "${changelog_path}"
 

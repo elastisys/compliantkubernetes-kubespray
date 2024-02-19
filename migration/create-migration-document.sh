@@ -46,16 +46,16 @@ else
     echo "- ${folder_name} directory created"
 fi
 
-if [ -f "${folder_name}/upgrade-cluster.md" ]; then
-    echo -n "- ${folder_name}/upgrade-cluster.md exists. Do you want to replace it? (y/N): "
+if [ -f "${folder_name}/README.md" ]; then
+    echo -n "- ${folder_name}/README.md exists. Do you want to replace it? (y/N): "
     read -r reply
     if [[ ${reply} =~ ^[yY]$ ]]; then
-        envsubst < "${here}/template/upgrade-cluster.md" > "${folder_name}/upgrade-cluster.md"
-        echo "- ${folder_name}/upgrade-cluster.md replaced"
+        envsubst < "${here}/template/README.md" > "${folder_name}/README.md"
+        echo "- ${folder_name}/README.md replaced"
     fi
 else
-    envsubst < "${here}/template/upgrade-cluster.md" > "${folder_name}/upgrade-cluster.md"
-    echo "- ${folder_name}/upgrade-cluster.md created"
+    envsubst < "${here}/template/README.md" > "${folder_name}/README.md"
+    echo "- ${folder_name}/README.md created"
 fi
 
 cp -r "${here}/template/prepare" "${folder_name}/"
