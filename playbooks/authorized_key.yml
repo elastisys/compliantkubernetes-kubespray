@@ -8,7 +8,7 @@
     ssh_known_hosts: "{{ groups['all'] }}"
   tasks:
   - name: For each host, scan for its ssh public key
-    shell: "ssh-keyscan -t rsa {{ hostvars[item].ansible_ssh_host }} 2>/dev/null"
+    shell: "ssh-keyscan -t rsa {{ hostvars[item].ansible_host }} 2>/dev/null"
     with_items: "{{ ssh_known_hosts }}"
     register: ssh_known_host_results
     retries: 10
@@ -19,7 +19,7 @@
 
   - name: Remove the public key in the '{{ ssh_known_hosts_file }}'
     known_hosts:
-      name: "{{ hostvars[item.item].ansible_ssh_host }}"
+      name: "{{ hostvars[item.item].ansible_host }}"
       state: "absent"
       path: "{{ ssh_known_hosts_file }}"
     with_items: "{{ ssh_known_host_results.results }}"
@@ -28,7 +28,7 @@
 
   - name: Add/update the public key in the '{{ ssh_known_hosts_file }}'
     known_hosts:
-      name: "{{ hostvars[item.item].ansible_ssh_host }}"
+      name: "{{ hostvars[item.item].ansible_host }}"
       key: "{{ item.stdout }}"
       state: "present"
       path: "{{ ssh_known_hosts_file }}"
