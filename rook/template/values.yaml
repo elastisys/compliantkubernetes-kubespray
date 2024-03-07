@@ -39,6 +39,11 @@ commons:
       name: rook-ceph-block
       # default: true
 
+      ## If the storage nodes use kernel 5.4 or newer, set imageFeatures to
+      ## "layering,fast-diff,object-map,deep-flatten,exclusive-lock"
+      # parameters:
+      #  imageFeatures: layering
+
       # allowVolumeExpansion: true
       # volumeBindingMode: Immediate
       # reclaimPolicy: Delete
