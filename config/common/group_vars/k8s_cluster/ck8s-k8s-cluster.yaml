@@ -65,6 +65,20 @@ kube_scheduler_bind_address: 127.0.0.1
 kube_kubeadm_scheduler_extra_args:
     profiling: false
 
+kube_scheduler_profiles:
+  - schedulerName: default-scheduler
+    pluginConfig:
+      - name: PodTopologySpread
+        args:
+          defaultingType: List
+          defaultConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: ScheduleAnyway
+            - maxSkew: 1
+              topologyKey: topology.kubernetes.io/zone
+              whenUnsatisfiable: ScheduleAnyway
+
 kube_controller_manager_bind_address: 127.0.0.1
 
 kubelet_secure_addresses: >-
