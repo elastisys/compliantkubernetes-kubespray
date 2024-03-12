@@ -55,6 +55,8 @@ repos:
         args:
           - -L
           - fpr
+          - -I
+          - .codespellignore
 
   - repo: https://github.com/koalaman/shellcheck-precommit
     rev: v0.9.0
