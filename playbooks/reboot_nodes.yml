@@ -37,11 +37,6 @@
       ignore_errors: true
       when: reboot_required_file.stat.exists
 
-    # Either ansible_host or ansible_ssh_host should be set to the target IP,
-    # but the other is probably set to localhost when running a local_action.
-    # So we need to pick the correct one.
-    # If both are set then a redundant wait is run.
-
     - name: Waiting for the machine to come back (ansible_host)
       local_action: wait_for host={{ ansible_host }} state=started port=22 delay=30 timeout=600
       become: no
@@ -50,12 +45,12 @@
       - ansible_host != "localhost"
       - reboot_required_file.stat.exists
 
-    - name: Waiting for the machine to come back (ansible_ssh_host)
-      local_action: wait_for host={{ ansible_ssh_host }} state=started port=22 delay=30 timeout=600
+    - name: Waiting for the machine to come back (ansible_host)
+      local_action: wait_for host={{ ansible_host }} state=started port=22 delay=30 timeout=600
       become: no
       register: machine_up
       when:
-      - ansible_ssh_host != "localhost"
+      - ansible_host != "localhost"
       - reboot_required_file.stat.exists
 
     - name: wait for kubectl access
