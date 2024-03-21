@@ -40,6 +40,25 @@
     ./bin/ck8s-kubespray run-playbook wc upgrade_cluster.yml -b --tags=download
     ```
 
+1. Run `migration/v2.25/prepare/20-change-topology-constraints.sh` **or** manually add the following snippet at the end of both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`
+
+    ```yaml
+    kube_scheduler_profiles:
+      - schedulerName: default-scheduler
+        pluginConfig:
+          - name: PodTopologySpread
+            args:
+              defaultingType: List
+              defaultConstraints:
+                - maxSkew: 1
+                  topologyKey: kubernetes.io/hostname
+                  whenUnsatisfiable: ScheduleAnyway
+                - maxSkew: 1
+                  topologyKey: topology.kubernetes.io/zone
+                  whenUnsatisfiable: ScheduleAnyway
+
+    ```
+
 ## Upgrade steps
 
 These steps will cause disruptions in the environment.
@@ -49,6 +68,15 @@ These steps will cause disruptions in the environment.
     ```bash
     ./bin/ck8s-kubespray run-playbook sc upgrade_cluster.yml -b -e skip_downloads=true
     ./bin/ck8s-kubespray run-playbook wc upgrade_cluster.yml -b -e skip_downloads=true
+    ```
+
+1. Restart `kube-scheduler` on the control plane nodes:
+
+    ```bash
+    TERRAFORM_STATE_ROOT="${CK8S_CONFIG_PATH}/sc-config"
+    ansible -i "${CK8S_CONFIG_PATH}/sc-config/inventory.ini" kube_control_plane -b -m shell -a "crictl pods  --name 'kube-scheduler*' -q | xargs -I% bash -c 'crictl stopp % && crictl rmp %'"
+    TERRAFORM_STATE_ROOT="${CK8S_CONFIG_PATH}/wc-config"
+    ansible -i "${CK8S_CONFIG_PATH}/wc-config/inventory.ini" kube_control_plane -b -m shell -a "crictl pods  --name 'kube-scheduler*' -q | xargs -I% bash -c 'crictl stopp % && crictl rmp %'"
     ```
 
 ## Postrequisite
