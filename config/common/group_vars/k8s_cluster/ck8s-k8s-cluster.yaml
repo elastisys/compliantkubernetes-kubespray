@@ -59,6 +59,8 @@ dns_extra_tolerations: [{effect: NoSchedule, operator: Exists}]
 coredns_additional_error_config: |
   consolidate 5m ".* i/o timeout$" warning
 
+csi_snapshot_controller_enabled: true
+
 kube_profiling: false
 
 kube_scheduler_bind_address: 127.0.0.1
