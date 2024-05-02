@@ -58,7 +58,7 @@ releases:
       app: operator
       stage: bootstrap
     chart: ./upstream/rook-ceph
-    version: v1.11.9
+    version: v1.14.4
     disableValidationOnInstall: true
     needs:
       - kube-system/rook-ceph-namespace
@@ -71,7 +71,7 @@ releases:
       app: cluster
       stage: bootstrap
     chart: ./upstream/rook-ceph-cluster
-    version: v1.11.9
+    version: v1.14.4
     disableValidationOnInstall: true
     needs:
       - kube-system/rook-ceph-namespace
