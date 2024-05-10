@@ -59,7 +59,7 @@ assignees: ""
   ```
 
   </details>
-- [ ] Set the environment variable `NAMESPACE` to an application developer namespace
+- [ ] Set the environment variable `NAMESPACE` to an application developer namespace (this cannot be a subnamespace)
 - [ ] Set the environment variable `DOMAIN` to the environment domain
 
 ### Automated tests
@@ -279,7 +279,7 @@ assignees: ""
 - [ ] With valid values, try to deploy, should succeed
 
   ```bash
-  helm -n "${NAMESPACE}" upgrade --atomic --install "${PUBLIC_DOCS_PATH}/user-demo/deploy/ck8s-user-demo" \
+  helm -n "${NAMESPACE}" upgrade --atomic --install demo "${PUBLIC_DOCS_PATH}/user-demo/deploy/ck8s-user-demo" \
       --set image.repository="harbor.${DOMAIN}/${REGISTRY_PROJECT}/ck8s-user-demo" \
       --set image.tag="${TAG}" \
       --set ingress.hostname="demoapp.${DOMAIN}"
@@ -456,7 +456,7 @@ assignees: ""
   ```
 
   </details>
-- [ ] Set the environment variable `NAMESPACE` to an application developer namespace
+- [ ] Set the environment variable `NAMESPACE` to an application developer namespace (this cannot be a subnamespace)
 - [ ] Set the environment variable `DOMAIN` to the environment domain
 
 #### Upgrade
@@ -680,7 +680,7 @@ assignees: ""
 - [ ] With valid values, try to deploy, should succeed
 
   ```bash
-  helm -n "${NAMESPACE}" upgrade --atomic --install "${PUBLIC_DOCS_PATH}/user-demo/deploy/ck8s-user-demo" \
+  helm -n "${NAMESPACE}" upgrade --atomic --install demo "${PUBLIC_DOCS_PATH}/user-demo/deploy/ck8s-user-demo" \
       --set image.repository="harbor.${DOMAIN}/${REGISTRY_PROJECT}/ck8s-user-demo" \
       --set image.tag="${TAG}" \
       --set ingress.hostname="demoapp.${DOMAIN}"
