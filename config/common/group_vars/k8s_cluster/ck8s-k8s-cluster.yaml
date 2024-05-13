@@ -751,3 +751,10 @@ local_volume_provisioner_storage_classes: # Installation via kubespray has no su
 
 local_volume_provisioner_nodelabels: []
 local_volume_provisioner_tolerations: []
+
+ntp_filter_interface: true
+# Specify the interfaces
+# Only takes effect when ntp_filter_interface is true
+ntp_interfaces:
+  - ignore wildcard
+  - listen ens3

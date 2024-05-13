@@ -33,6 +33,9 @@
     > bin/ck8s-kubespray upgrade wc v2.25 prepare
     > ```
 
+> [!NOTE]
+> The prepare step ran earlier will set the `ntp_filter_interface` to `true` and the default interface ntp listens on is `ens3` but if the underlying host uses a different interface, add that instead of ens3 under `ntp_interfaces`
+
 1. Download the required files on the nodes
 
     ```bash
