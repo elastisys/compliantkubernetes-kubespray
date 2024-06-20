@@ -61,6 +61,8 @@ coredns_additional_error_config: |
 
 kube_profiling: false
 
+csi_snapshot_controller_enabled: true
+
 kube_scheduler_bind_address: 127.0.0.1
 kube_kubeadm_scheduler_extra_args:
     profiling: false
