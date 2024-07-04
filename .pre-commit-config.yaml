@@ -37,7 +37,7 @@ repos:
           - MD042 # No empty links
           - MD051 # Link fragments should be valid
           - --
-        exclude: ^rook/helmfile.d/upstream/
+        exclude: ^rook/helmfile.d/upstream/|^changelog/
 
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
     rev: 2.7.3
