@@ -102,6 +102,8 @@ You can remove a node from a ck8s cluster by running:
 
 - The script may fail with the message `error while evaluating conditional (kubelet_heartbeat.rc == 0): 'dict object' has no attribute 'rc'`
   - In such situations just rerun the script. It will skip the check for that node, so check that it is up and running manually afterwards.
+- The script might fail with a timeout: `Timeout (12s) waiting for privilege escalation prompt`
+  - Try running the script again with a longer ansible timeout: `export ANSIBLE_TIMEOUT=30`
 
 ## Running other kubespray playbooks
 
