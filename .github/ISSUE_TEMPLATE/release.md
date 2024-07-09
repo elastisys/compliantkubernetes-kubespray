@@ -424,9 +424,7 @@ assignees: ""
 
 ### Infrastructure provider
 
-- [ ] Cleura
 - [ ] Elastx
-- [ ] Exoscale
 - [ ] Safespring
 - [ ] UpCloud
 
