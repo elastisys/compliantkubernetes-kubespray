@@ -39,6 +39,7 @@ storage_classes:
 # external_openstack_network_public_networks:
 #   - "ext-net"
 # external_openstack_metadata_search_order: "configDrive,metadataService"
-# supplementary_addresses_in_ssl_keys: []
 
-# kubeconfig_localhost_ansible_host: true
+supplementary_addresses_in_ssl_keys: []
+
+kubeconfig_localhost_ansible_host: true
