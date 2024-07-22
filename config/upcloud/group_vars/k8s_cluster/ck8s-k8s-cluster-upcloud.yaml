@@ -1,0 +1,20 @@
+etcd_deployment_type: kubeadm
+
+## Repo for UpClouds csi-driver: https://github.com/UpCloudLtd/upcloud-csi
+## To use UpClouds CSI plugin to provision volumes set this value to true
+## Remember to set the main account credentials as UPCLOUD_USERNAME and UPCLOUD_PASSWORD when running kubespray.
+upcloud_csi_enabled: true
+upcloud_csi_enable_volume_snapshot: true
+upcloud_csi_snapshot_is_default: true
+velero_upcloud_volumesnapshotclass_enabled: true
+
+## Storage class options
+expand_persistent_volumes: true
+persistent_volumes_enabled: true
+storage_classes:
+  - name: standard
+    is_default: true
+
+supplementary_addresses_in_ssl_keys: [<loadbalancer-domain>, "kube.ops.CHANGE-ME-BASE-DOMAIN"]
+
+kubeconfig_localhost_ansible_host: true
