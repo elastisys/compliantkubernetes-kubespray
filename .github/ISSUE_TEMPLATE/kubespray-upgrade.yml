@@ -1,0 +1,47 @@
+name: Kubespray Fork Upgrade Request
+description: Create a request to upgrade the Elastisys Kubespray Fork for Compliant Kubernetes Kubespray
+body:
+  - type: markdown
+    attributes:
+      value: |-
+        Thank you for taking the time to help improve Compliant Kubernetes!
+
+        > [!warning]
+        > **This is a public repository, ensure not to disclose:**
+        >
+        > - [x] personal data beyond what is necessary for interacting with this issue, nor
+        > - [x] business confidential information, such as customer names.
+  - type: checkboxes
+    attributes:
+      label: Reason for upgrade
+      options:
+        - label: Security patching
+        - label: Upgrade to allow new features
+        - label: Upgrade to prevent future issues
+        - label: Upgrade to maintain a supported version
+        - label: Other - _Write the reason below_
+  - type: textarea
+    attributes:
+      label: Additional context
+      placeholder: |-
+        Any additional information about the upgrade here.
+
+        Deadline for supported version, minimum version required, other reason for upgrade,...
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Definition of done
+      description: Testable conditions for when this can be considered completed
+      placeholder: |-
+        - [ ] Upgraded [Elastisys Kubespray Fork](https://github.com/elastisys/kubespray) to the desired version from upstream.
+        - I checked the migration of the new version:
+          - [ ] The upgrade does not require migration steps
+          - [ ] The upgrade requires migration steps
+        - I tested the functionality of the new version:
+          - [ ] The upgrade does not change current functionality
+          - [ ] The upgrade changes current functionality
+        - [ ] Created a release branch in the fork repo.
+        - [ ] Merged the submodule pointer to [Compliant Kubernetes Kubespray](https://github.com/elastisys/compliantkubernetes-kubespray) main.
+    validations:
+      required: true
