@@ -76,9 +76,9 @@ These steps will cause disruptions in the environment.
 1. Restart `kube-scheduler` on the control plane nodes:
 
     ```bash
-    TERRAFORM_STATE_ROOT="${CK8S_CONFIG_PATH}/sc-config"
+    export TERRAFORM_STATE_ROOT="${CK8S_CONFIG_PATH}/sc-config"
     ansible -i "${CK8S_CONFIG_PATH}/sc-config/inventory.ini" kube_control_plane -b -m shell -a "crictl pods  --name 'kube-scheduler*' -q | xargs -I% bash -c 'crictl stopp % && crictl rmp %'"
-    TERRAFORM_STATE_ROOT="${CK8S_CONFIG_PATH}/wc-config"
+    export TERRAFORM_STATE_ROOT="${CK8S_CONFIG_PATH}/wc-config"
     ansible -i "${CK8S_CONFIG_PATH}/wc-config/inventory.ini" kube_control_plane -b -m shell -a "crictl pods  --name 'kube-scheduler*' -q | xargs -I% bash -c 'crictl stopp % && crictl rmp %'"
     ```
 
