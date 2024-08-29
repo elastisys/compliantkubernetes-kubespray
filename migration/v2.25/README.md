@@ -36,6 +36,17 @@
 > [!NOTE]
 > The prepare step ran earlier will set the `ntp_filter_interface` to `true` and the default interface ntp listens on is `ens3` but if the underlying host uses a different interface, add that instead of ens3 under `ntp_interfaces`
 
+1. Manually add the following snippet at the end of both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`:
+
+  ```yaml
+  calico_version: v3.27.4
+  calicoctl_binary_checksums:
+    amd64:
+      v3.27.4: 84f2bd29ef7b06e85a2caf0b6c6e0d3da5ab5264d46b360e6baaf49bbc3b957d
+  calico_crds_archive_checksums:
+    v3.27.4: 5f6ac510bd6bd8c14542afe91f7dbcf2a846dba02ae3152a3b07a1bfdea96078
+  ```
+
 1. Download the required files on the nodes
 
     ```bash
