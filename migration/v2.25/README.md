@@ -36,6 +36,9 @@
 > [!NOTE]
 > The prepare step ran earlier will set the `ntp_filter_interface` to `true` and the default interface ntp listens on is `ens3` but if the underlying host uses a different interface, add that instead of ens3 under `ntp_interfaces`
 
+> [!NOTE]
+> The following step for setting the Calico version in the config can be skipped on `v2.25.0-ck8s4`.
+
 1. Manually add the following snippet at the end of both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`:
 
   ```yaml
