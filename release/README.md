@@ -6,6 +6,30 @@ The releases will follow the version of the Kubespray submodule, with the versio
 - `<ck8s-patch>` - denotes the current patch of our additions and modifications, following `ck8sP`
   - The `<ck8s-patch>` will always start at `ck8s1` for each new Kubespray submodule release and then increment the number for each patch release on top of that Kubespray submodule release.
 
+## Check fork status
+
+We currently create one release branch `release-X.Y.Z-ck8s` in our fork per upstream release `X.Y.Z`.
+We then tag the latest commit of that release branch with `vX.Y.Z-ck8s<patch-number>`.
+
+If the kubespray fork has been modified for the release, make sure the correct release branch of the fork is tracked and that the commit is tagged. More information can be found [here](../docs/managing-fork.md).
+
+```bash
+git switch main
+
+# Restore local fork to track the same SHA-1 as remote ck8s-kubespray.
+git submodule update --init
+
+# Make sure we track the correct release branch commit and that it's tagged.
+git ls-tree main kubespray
+# Output should look like: <SHA-1 of fork release branch> kubespray <tag>
+
+# If tag is missing, move to fork git directory and add it.
+cd kubespray
+git checkout <release-X.Y.Z-ck8s>
+git tag -a <vX.Y.Z-ck8sP>
+git push --tags
+```
+
 ## Feature freeze
 
 Create a release branch `release-X.Y.Z` from the main branch:
