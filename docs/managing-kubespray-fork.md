@@ -60,7 +60,7 @@ $ cd kubespray
 $ git fetch --all
 $ git switch master
 
-$ git status # Ensure these lines match
+$ git status # Ensure these lines match. If they do skip to step 3.
 On branch master
 Your branch is up to date with 'origin/master'.
 
@@ -139,7 +139,7 @@ git push
 # open pull request towards main branch of compliantkubernetes-kubespray
 ```
 
-### Step 7
+### Step 7 (Only do this when creating a release for compliantkubernetes-kubespray)
 
 Tag the latest commit in the fork release branch. `patch-number` starts at 1 and increments by one for every new `compliantkubernetes-kubespray` release.
 
