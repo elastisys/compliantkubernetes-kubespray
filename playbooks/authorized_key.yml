@@ -1,7 +1,6 @@
 # Original idea found at http://stackoverflow.com/a/39083724
 - name: Store known hosts of 'all' the hosts in the inventory file
   hosts: localhost
-  connection: local
   vars:
     ssh_known_hosts_command: "ssh-keyscan -T 10"
     ssh_known_hosts_file: "{{ lookup('env','HOME') + '/.ssh/known_hosts' }}"
@@ -16,6 +15,7 @@
     until: ssh_known_host_results.rc == 0
     tags:
       - ssh
+    delegate_to: "{{ 'bastion' if groups['bastion'] is defined else omit }}"
 
   - name: Remove the public key in the '{{ ssh_known_hosts_file }}'
     known_hosts:
