@@ -31,14 +31,14 @@ ansible-playbook -i "${config[inventory_file]}" cluster.yml -b "${@}"
 log_info "Kubespray done"
 
 log_info "Get kubeconfig"
-ansible-playbook -i "${config[inventory_file]}" ../playbooks/kubeconfig.yml -b
+ansible-playbook -i "${config[inventory_file]}" ../playbooks/kubeconfig.yml -b "${@}"
 log_info "Adding cluster-admin ClusterRoleBinding"
-ansible-playbook -i "${config[inventory_file]}" ../playbooks/cluster_admin_rbac.yml -b
+ansible-playbook -i "${config[inventory_file]}" ../playbooks/cluster_admin_rbac.yml -b "${@}"
 
 log_info "Master cis benchmark patching"
-ansible-playbook -i "${config[inventory_file]}" ../playbooks/master_cis_benchmark_patch.yml -b
+ansible-playbook -i "${config[inventory_file]}" ../playbooks/master_cis_benchmark_patch.yml -b "${@}"
 log_info "Worker cis benchmark patching"
-ansible-playbook -i "${config[inventory_file]}" ../playbooks/worker_cis_benchmark_patch.yml -b
+ansible-playbook -i "${config[inventory_file]}" ../playbooks/worker_cis_benchmark_patch.yml -b "${@}"
 
 popd
 
