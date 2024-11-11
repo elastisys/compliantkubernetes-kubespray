@@ -51,6 +51,59 @@ These steps will cause disruptions in the environment.
     ./bin/ck8s-kubespray run-playbook wc upgrade_cluster.yml -b -e skip_downloads=true
     ```
 
+1. For UpCloud environments, update terraform state
+
+    <details>
+    <summary>UpCloud environments only</summary>
+
+    Clean up old terraform state
+
+    ```bash
+    export CK8S_CLUSTER=<sc|wc|both>
+    ./apply/00-upcloud-clean-tfstate.sh
+    ```
+
+    Configure proxy protocol per LB backend in `cluster.tfvars`
+
+    ```diff
+    - loadbalancer_proxy_protocol = true
+      loadbalancers = {
+      "http" : {
+    +   "proxy_protocol" : true,
+        "port" : 80,
+        "target_port" : 80,
+        "backend_servers" : [
+        ]
+      },
+      "https" : {
+    +   "proxy_protocol" : true,
+        "port" : 443,
+        "target_port" : 443,
+        "backend_servers" : [
+        ]
+      },
+      "master-api" : {
+    +   "proxy_protocol" : false,
+        "port" : 6443,
+        "target_port" : 6443,
+        "backend_servers" : [
+        ]
+    ```
+
+    Apply terraform to update state
+
+    ```bash
+    # Source credentials
+    CK8S_KUBESPRAY_PATH=/path/to/compliantkubernetes-kubespray
+    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" plan -var-file="${CK8S_CONFIG_PATH}/sc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/sc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/sc-config/inventory.ini"
+    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" apply -var-file="${CK8S_CONFIG_PATH}/sc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/sc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/sc-config/inventory.ini"
+
+    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" plan -var-file="${CK8S_CONFIG_PATH}/wc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/wc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/wc-config/inventory.ini"
+    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" apply -var-file="${CK8S_CONFIG_PATH}/wc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/wc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/wc-config/inventory.ini"
+    ```
+
+    </details>
+
 ## Postrequisite
 
 - [ ] Check the state of the environment, pods and nodes:
