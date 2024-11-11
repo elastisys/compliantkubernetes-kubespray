@@ -37,3 +37,8 @@ csi:
     {{- end }}
 
   pluginTolerations: {{- toYaml .Values.plugin.tolerations | nindent 4 }}
+
+  allowUnsupportedVersion: {{ .Values.cluster.cephCsi.allowUnsupportedVersion }}
+  cephcsi:
+    # -- Ceph CSI image tag
+    tag: {{ .Values.cluster.cephCsi.tag }}
