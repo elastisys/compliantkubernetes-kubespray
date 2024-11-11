@@ -17,6 +17,15 @@ commons:
     # the preset primarily includes resources requests and limits
     # these can however be overridden for each component below
 
+    csi:
+      # For Ubuntu 24, Ceph might fail with:
+      # "modprobe: ERROR: could not insert 'rbd': Exec format error"
+      # Using a newer image for cephcsi can address this,
+      # but then you also need to set allowUnsupportedVersion=true
+      cephcsi:
+        allowUnsupportedVersion: #true
+        tag: #v3.12.0
+
     cephVersion:
       # allowUnsupported: false
       # imagePullPolicy: IfNotPresent

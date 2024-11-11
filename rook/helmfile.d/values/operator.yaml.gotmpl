@@ -37,3 +37,18 @@ csi:
     {{- end }}
 
   pluginTolerations: {{- toYaml .Values.plugin.tolerations | nindent 4 }}
+
+  {{- if dig "cluster" "cephCsi" "allowUnsupportedVersion" false .Values }}
+  {{- with .Values.cluster.cephCsi.allowUnsupportedVersion }}
+  # -- This configures ROOK_CSI_ALLOW_UNSUPPORTED_VERSION for the rook operator
+  allowUnsupportedVersion: {{ . }}
+  {{- end }}
+  {{- end }}
+
+  {{- if dig "cluster" "cephCsi" "tag" false .Values }}
+  {{- with .Values.cluster.cephCsi.tag }}
+  cephcsi:
+    # -- Ceph CSI image tag, this configures ROOK_CSI_CEPH_IMAGE for the rook operator
+    tag: {{ . }}
+  {{- end }}
+  {{- end }}
