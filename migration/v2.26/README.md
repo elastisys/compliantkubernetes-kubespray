@@ -63,7 +63,7 @@ These steps will cause disruptions in the environment.
     ./apply/00-upcloud-clean-tfstate.sh
     ```
 
-    Configure proxy protocol per LB backend in `cluster.tfvars`
+    Configure proxy protocol per LB backend in `cluster.tfvars` (Make sure to keep the same value as was configured before, except for master-api if it was enabled)
 
     ```diff
     - loadbalancer_proxy_protocol = true
