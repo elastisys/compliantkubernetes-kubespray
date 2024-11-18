@@ -140,6 +140,7 @@ Check the [migration guides](migration) between each version.
     cephbuckettopics.ceph.rook.io \
     cephclients.ceph.rook.io \
     cephclusters.ceph.rook.io \
+    cephcosidrivers.ceph.rook.io \
     cephfilesystemmirrors.ceph.rook.io \
     cephfilesystems.ceph.rook.io \
     cephfilesystemsubvolumegroups.ceph.rook.io \
