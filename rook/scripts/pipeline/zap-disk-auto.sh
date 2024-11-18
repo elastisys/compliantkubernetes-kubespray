@@ -11,9 +11,15 @@ fi
 
 here="$(dirname "$(readlink -f "$0")")"
 
-if [[ "$#" -lt 1 || "$#" -gt 2 ]]; then
-    echo "${0} <host ip> [sdb]" >&2
+if [[ "$#" -lt 1 || "$#" -gt 3 ]]; then
+    echo "${0} <host ip> [sdb] [ssh-user]" >&2
     exit 1
+fi
+
+SSH_USER="${3:-}"
+if [[ -z "$SSH_USER" ]]; then
+  SSH_USER="ubuntu"
+  echo "INFO: no SSH user provided, will use \"${SSH_USER}\""
 fi
 
 HOST_IP=${1}
@@ -41,4 +47,4 @@ echo "WARNING!"
 echo "This script will wipe the disk /dev/${DISK} on machine ${HOST_IP}"
 
 echo "Staring to wipe disk"
-ssh -i "${CK8S_CONFIG_PATH}"/id_rsa  -oStrictHostKeyChecking=no ubuntu@"${HOST_IP}" DISK="/dev/${DISK}" 'bash -s' < "${here}/../zap-disk"
+ssh -i "${CK8S_CONFIG_PATH}"/id_rsa  -oStrictHostKeyChecking=no "${SSH_USER}@${HOST_IP}" DISK="/dev/${DISK}" 'bash -s' < "${here}/../zap-disk"
