@@ -12,6 +12,13 @@ rules:
     ports:
       - tcp: 6443
 
+  egress-rule-exporter:
+    peers:
+      - podSelectorLabels:
+          app: rook-ceph-exporter
+    ports:
+      - tcp: 9926
+
   egress-rule-mgr:
     peers:
       - podSelectorLabels:
@@ -50,6 +57,13 @@ rules:
 
   ingress-rule-apiserver:
     peers: {{- toYaml $netpol.apiserverPeers | nindent 6 }}
+
+  ingress-rule-prometheus:
+    peers:
+      - namespaceSelectorLabels:
+          kubernetes.io/metadata.name: monitoring
+        podSelectorLabels:
+          app.kubernetes.io/name: prometheus
 
 policies:
   rook-ceph:
@@ -99,6 +113,14 @@ policies:
       egress:
         - rule: egress-rule-apiserver
 
+    exporter:
+      podSelectorLabels:
+        app: rook-ceph-exporter
+      egress:
+        - rule: egress-rule-mon
+      ingress:
+        - rule: ingress-rule-prometheus
+
     mgr:
       podSelectorLabels:
         app: rook-ceph-mgr
@@ -110,12 +132,7 @@ policies:
         - name: ingress-rule-blackbox
           ports:
             - tcp: 9283
-        - name: ingress-rule-prometheus
-          peers:
-            - namespaceSelectorLabels:
-                kubernetes.io/metadata.name: monitoring
-              podSelectorLabels:
-                app.kubernetes.io/name: prometheus
+        - rule: ingress-rule-prometheus
         - rule: peers-rule-nodes
           ports:
             - tcp: 6800
@@ -140,6 +157,7 @@ policies:
         app: rook-ceph-mon
       egress:
         - rule: egress-rule-apiserver
+        - rule: egress-rule-exporter
         - rule: egress-rule-mgr
         - rule: egress-rule-mon
         - rule: egress-rule-osd
@@ -163,6 +181,8 @@ policies:
                 app: rook-ceph-osd
             - podSelectorLabels:
                 app: rook-ceph-crashcollector
+            - podSelectorLabels:
+                app: rook-ceph-exporter
           ports:
             - tcp: 3300
             - tcp: 6789
