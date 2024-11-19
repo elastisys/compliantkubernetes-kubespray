@@ -200,3 +200,20 @@ constraints:
           rule: RunAsAny
       mutation:
         dropAllCapabilities: false
+
+    exporter:
+      podSelectorLabels:
+        app: rook-ceph-exporter
+      allow:
+        volumes:
+          - hostPath
+          - projected
+          - secret
+        allowedHostPaths:
+          - pathPrefix: /var/lib/rook/rook-ceph/log
+          - pathPrefix: /var/lib/rook/rook-ceph/crash
+          - pathPrefix: /var/lib/rook/exporter
+        runAsUser:
+          rule: RunAsAny
+      mutation:
+        dropAllCapabilities: false
