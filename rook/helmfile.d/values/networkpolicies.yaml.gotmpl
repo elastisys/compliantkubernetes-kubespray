@@ -181,6 +181,8 @@ policies:
                 app: rook-ceph-osd
             - podSelectorLabels:
                 app: rook-ceph-crashcollector
+            - podSelectorLabels:
+                app: rook-ceph-exporter
           ports:
             - tcp: 3300
             - tcp: 6789
