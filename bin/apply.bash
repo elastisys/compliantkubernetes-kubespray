@@ -10,6 +10,12 @@ shopt -s globstar nullglob dotglob
 here="$(dirname "$(readlink -f "$0")")"
 # shellcheck source=bin/common.bash
 source "${here}/common.bash"
+
+if [[ "$#" -gt 0 ]]; then
+  log_warning "Warning: Additional flags have been provided to use for running playbooks"
+  log_warning "This might not work if the first control-plane node is not provided"
+fi
+
 ck8s_kubespray_version_check
 kubespray_version_check
 check_openstack_credentials
