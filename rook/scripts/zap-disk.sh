@@ -4,9 +4,15 @@ set -e -o pipefail
 
 here="$(dirname "$(readlink -f "$0")")"
 
-if [[ "$#" -lt 1 || "$#" -gt 2 ]]; then
-    echo "${0} <host ip> [sdb]"
+if [[ "$#" -lt 1 || "$#" -gt 3 ]]; then
+    echo "${0} <host ip> [sdb] [ssh-user]"
     exit 1
+fi
+
+SSH_USER="${3:-}"
+if [[ -z "$SSH_USER" ]]; then
+  SSH_USER="ubuntu"
+  echo "INFO: no SSH user provided, will use \"${SSH_USER}\""
 fi
 
 HOST_IP=${1}
@@ -40,4 +46,4 @@ if [[ ${reply} != "y" ]]; then
 fi
 
 echo "Staring to wipe disk"
-ssh ubuntu@"${HOST_IP}" DISK="/dev/${DISK}" 'bash -s' < "${here}/zap-disk"
+ssh "${SSH_USER}@${HOST_IP}" DISK="/dev/${DISK}" 'bash -s' < "${here}/zap-disk"
