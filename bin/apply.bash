@@ -12,8 +12,8 @@ here="$(dirname "$(readlink -f "$0")")"
 source "${here}/common.bash"
 
 if [[ "$#" -gt 0 ]]; then
-  log_warning "Warning: Additional flags have been provided to use for running playbooks"
-  log_warning "This might not work if the first control-plane node is not provided"
+    log_warning "Warning: Additional flags have been provided to use for running playbooks"
+    log_warning "This might not work if the first control-plane node is not provided"
 fi
 
 ck8s_kubespray_version_check
