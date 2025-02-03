@@ -54,7 +54,8 @@ These steps will cause disruptions in the environment.
     Update the loadbalancer to match the following:
 
     ```diff
-    - loadbalancer_plan    = "development"
+    - loadbalancer_legacy_network = false
+    - loadbalancer_plan = "development"
       loadbalancers = {
     +   "public" = {
     +     plan = "development"
