@@ -2,6 +2,7 @@
 
 HERE="$(dirname "$(readlink -f "${0}")")"
 ROOT="$(readlink -f "${HERE}/../../../")"
+: "${CK8S_CONFIG_PATH:?Missing CK8S_CONFIG_PATH}"
 
 # shellcheck source=scripts/migration/lib.sh
 source "${ROOT}/scripts/migration/lib.sh"
@@ -21,7 +22,7 @@ for cluster in "${clusters[@]}"; do
 
   export TF_VAR_inventory_file="${CK8S_CONFIG_PATH}/${cluster}-config/inventory.ini"
 
-  log_info "Enter the new name for the loadbalancer:"
+  log_info "Enter the new name for the loadbalancer in the ${cluster} cluster:"
   read -r lb_name
   if [[ -z "${lb_name}" ]]; then
     log_fatal "No loadbalancer was given!"

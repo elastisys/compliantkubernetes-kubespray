@@ -57,7 +57,7 @@ These steps will cause disruptions in the environment.
     - loadbalancer_plan    = "development"
       loadbalancers = {
     +   "public" = {
-          plan = "development"
+    +     plan = "development"
     +     legacy_network = false
     +     public_network = true
     +     private_network = true
@@ -101,6 +101,7 @@ These steps will cause disruptions in the environment.
     That is the name in the previous config update, `public` or what you specified.
 
     ```bash
+    export CK8S_CONFIG_PATH=...
     export CK8S_CLUSTER=<sc|wc|both>
     00-migrate-loadbalancers.sh
     ```
