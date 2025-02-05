@@ -63,7 +63,9 @@ These steps will cause disruptions in the environment.
     ./apply/00-upcloud-clean-tfstate.sh
     ```
 
-    Configure proxy protocol per LB backend in `cluster.tfvars` (Make sure to keep the same value as was configured before, except for master-api if it was enabled)
+    Configure proxy protocol per LB backend in `cluster.tfvars`.
+
+    If `loadbalancer_proxy_protocol = true` is present in the cluster.tfvars file, do the following:
 
     ```diff
     - loadbalancer_proxy_protocol = true
@@ -77,6 +79,32 @@ These steps will cause disruptions in the environment.
       },
       "https" : {
     +   "proxy_protocol" : true,
+        "port" : 443,
+        "target_port" : 443,
+        "backend_servers" : [
+        ]
+      },
+      "master-api" : {
+    +   "proxy_protocol" : false,
+        "port" : 6443,
+        "target_port" : 6443,
+        "backend_servers" : [
+        ]
+    ```
+
+    Else if `loadbalancer_proxy_protocol = true` is not present in the cluster.tfvars file, do the following:
+
+    ```diff
+      loadbalancers = {
+      "http" : {
+    +   "proxy_protocol" : false,
+        "port" : 80,
+        "target_port" : 80,
+        "backend_servers" : [
+        ]
+      },
+      "https" : {
+    +   "proxy_protocol" : false,
         "port" : 443,
         "target_port" : 443,
         "backend_servers" : [
