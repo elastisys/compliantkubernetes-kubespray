@@ -51,7 +51,7 @@ These steps will cause disruptions in the environment.
 
     It is now possible to create multiple loadbalancers. Even if you are just going to use one loadbalancer, this config update is still needed.
 
-    Update the loadbalancer to match the following:
+    Update the loadbalancer configuration in accordance to the following diff:
 
     ```diff
     - loadbalancer_legacy_network = false
