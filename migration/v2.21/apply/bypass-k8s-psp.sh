@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 apply() {
   condition="$(kubectl -n kube-system get configmap kubeadm-config -o yaml | yq4 '.data.ClusterConfiguration | @yamld | .apiServer.extraArgs.enable-admission-plugins | split(",") | .[] | select(. == "PodSecurityPolicy")')"
   if [[ "${condition}" != "PodSecurityPolicy" ]]; then

@@ -26,7 +26,6 @@ source "${ROOT}/scripts/migration/lib.sh"
 #     - yq_remove <sc|wc> <file> <target>
 #     - yq_length <sc|wc> <file> <target>
 
-
 function get_cp_nodes() {
   kubectl get no -l node-role.kubernetes.io/control-plane -oyaml | yq4 ".items[].metadata.name"
 }
@@ -47,7 +46,7 @@ function remove_master_taint() {
 
   for node in "${cp_nodes[@]}"; do
     log_info "Removing taint \"node-role.kubernetes.io/master:NoSchedule\" from node \"${node}\""
-    kubectl taint no "${node}" node-role.kubernetes.io/master- ||  true
+    kubectl taint no "${node}" node-role.kubernetes.io/master- || true
   done
 }
 

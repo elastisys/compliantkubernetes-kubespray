@@ -7,7 +7,7 @@ here="$(dirname "$(readlink -f "$0")")"
 source "${here}/common.bash"
 
 # Cache hosts info
-output_hosts_info(){
+output_hosts_info() {
   local filename="$1"
   # shellcheck disable=SC2016
   cluster_path=$(dirname "${filename}")
@@ -24,7 +24,7 @@ output_hosts_info(){
 
 # Get inventory groups
 # Args: <inventory>
-read_inventory_groups(){
+read_inventory_groups() {
   local filename="$1"
   output_hosts_info "${filename}" | jq -r ". | keys[] | select(. != \"_meta\")"
 }
@@ -38,8 +38,8 @@ get_group_hosts() {
 
   # shellcheck disable=SC2091
   if [[ ${section} == "all" ]]; then
-    readarray -td '' hosts < <(output_hosts_info "${filename}" |  jq -r "._meta.hostvars | keys[]")
-  elif $(output_hosts_info "${filename}"| jq ".$section | has(\"hosts\")"); then
+    readarray -td '' hosts < <(output_hosts_info "${filename}" | jq -r "._meta.hostvars | keys[]")
+  elif $(output_hosts_info "${filename}" | jq ".$section | has(\"hosts\")"); then
     readarray -td '' hosts < <(output_hosts_info "${filename}" | jq -r ".$section.hosts[]")
   fi
 
@@ -53,11 +53,12 @@ group_has_children() {
   local section="$2"
 
   # shellcheck disable=SC2091
-  if $(output_hosts_info "${filename}"| jq ".$section | has(\"children\")" ); then
-    echo true; return ;
+  if $(output_hosts_info "${filename}" | jq ".$section | has(\"children\")"); then
+    echo true
+    return
   fi
 
-  echo "false";
+  echo "false"
 }
 
 # Get the children of a specific group
@@ -68,8 +69,8 @@ get_group_children() {
   hosts=()
 
   # shellcheck disable=SC2091
-  if $(output_hosts_info "${filename}"| jq ".$section | has(\"children\")" ); then
-    readarray -td '' hosts < <(output_hosts_info "${filename}"| jq -r ".$section.children[]")
+  if $(output_hosts_info "${filename}" | jq ".$section | has(\"children\")"); then
+    readarray -td '' hosts < <(output_hosts_info "${filename}" | jq -r ".$section.children[]")
   fi
 
   echo "${hosts[@]}"
@@ -79,11 +80,10 @@ get_group_children() {
 # Args: <inventory>
 get_all_hosts() {
   local filename="$1"
-  readarray -td '' all < <(output_hosts_info "${filename}"| jq -r "._meta.hostvars | keys[]")
+  readarray -td '' all < <(output_hosts_info "${filename}" | jq -r "._meta.hostvars | keys[]")
 
   echo "${all[@]}"
 }
-
 
 # Get the full section of a group
 # Args: <inventory> <group>
@@ -92,22 +92,22 @@ get_section() {
   local section="$2"
   output="[${section}]\n"
   # shellcheck disable=SC2091
-  if $(output_hosts_info "${filename}"| jq ".$section | has(\"hosts\")" ); then
+  if $(output_hosts_info "${filename}" | jq ".$section | has(\"hosts\")"); then
     output+=$(get_group_hosts "${filename}" "${section}")
-  elif $(group_has_children "$filename" "${section}" ); then
+  elif $(group_has_children "$filename" "${section}"); then
     if [[ "${section}" == "all" ]]; then
       all_hosts=$(get_all_hosts "${filename}")
       variables=("ansible_user" "ansible_host" "ip" "etcd_member_name")
       for host in ${all_hosts}; do
         output+="${host}"
         for var in "${variables[@]}"; do
-          if $(output_hosts_info "${filename}"| jq "._meta.hostvars[\"$host\"] | has(\"$var\")"); then
-            value=$(output_hosts_info "${filename}"| jq -r "._meta.hostvars[\"$host\"].$var")
+          if $(output_hosts_info "${filename}" | jq "._meta.hostvars[\"$host\"] | has(\"$var\")"); then
+            value=$(output_hosts_info "${filename}" | jq -r "._meta.hostvars[\"$host\"].$var")
             output+=" ${var}=${value}"
           fi
         done
-        if $(output_hosts_info "${filename}"| jq "._meta.hostvars[\"$host\"] | has(\"ansible_ssh_user\")"); then
-          ansible_user=$(output_hosts_info "${filename}"| jq -r "._meta.hostvars[\"$host\"].ansible_ssh_user")
+        if $(output_hosts_info "${filename}" | jq "._meta.hostvars[\"$host\"] | has(\"ansible_ssh_user\")"); then
+          ansible_user=$(output_hosts_info "${filename}" | jq -r "._meta.hostvars[\"$host\"].ansible_ssh_user")
           output+=" ansible_user=${ansible_user}"
         fi
         output+="\n"
@@ -127,7 +127,7 @@ get_host_var() {
   local host="$2"
   local hostvar="$3"
 
-  output_hosts_info "${filename}"| jq -r "._meta.hostvars[\"$host\"].$hostvar"
+  output_hosts_info "${filename}" | jq -r "._meta.hostvars[\"$host\"].$hostvar"
 }
 
 # Check if host is part of a group
@@ -138,10 +138,13 @@ is_host_in_group() {
   local group="$3"
 
   for h in $(get_group_hosts "${filename}" "${group}"); do
-    if [[ "$host" ==  "$h" ]]; then echo "true"; return; fi
+    if [[ "$host" == "$h" ]]; then
+      echo "true"
+      return
+    fi
   done
 
-  echo "false";
+  echo "false"
 }
 
 # Check if a group exists
@@ -152,10 +155,13 @@ group_exists() {
 
   groups="$(read_inventory_groups "$filename")"
   for g in $groups; do
-    if [[ "$group" == "$g" ]]; then  echo "true"; return; fi
+    if [[ "$group" == "$g" ]]; then
+      echo "true"
+      return
+    fi
   done
 
-  echo "false";
+  echo "false"
 }
 
 # Get a list of host variables
@@ -164,7 +170,7 @@ get_host_vars() {
   local filename="$1"
   local host="$2"
   if [[ $(is_host_in_group "$filename" "$host" "all") == "true" ]]; then
-    output_hosts_info "${filename}"| jq -r "._meta.hostvars[\"$host\"] | keys[]"
+    output_hosts_info "${filename}" | jq -r "._meta.hostvars[\"$host\"] | keys[]"
   else
     log_error "Host ${host} is not defined in the inventory"
     exit 1
@@ -180,11 +186,11 @@ set_host_var() {
   local hostvar="$3"
   local value="$4"
 
-  if [[ "${value}" == "null" ]]; then  return; fi ;
+  if [[ "${value}" == "null" ]]; then return; fi
 
   if [[ "$(is_host_in_group "$filename" "$host" "all")" ]]; then
-    awk -v target_host="$host"  -v hostvar="$hostvar"  -v val="$value" \
-            -F' ' '{
+    awk -v target_host="$host" -v hostvar="$hostvar" -v val="$value" \
+      -F' ' '{
                     exists=1
                     if ($1 ~ /^\[/) {
                       section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1))
@@ -211,7 +217,7 @@ set_host_var() {
                       print $0
                     }
                   }
-    ' "${filename}" > /tmp/secondary-inventory.ini
+    ' "${filename}" >/tmp/secondary-inventory.ini
     cp /tmp/secondary-inventory.ini "$filename"
     rm -rf /tmp/secondary-inventory.ini
   else
@@ -229,8 +235,8 @@ unset_host_var() {
   local hostvar="$3"
 
   if [[ "$(is_host_in_group "$filename" "$host" "all")" ]]; then
-    awk -v target_host="$host"  -v hostvar="$hostvar"  \
-            -F' ' '{
+    awk -v target_host="$host" -v hostvar="$hostvar" \
+      -F' ' '{
                     if ($1 ~ /^\[/) {
                       section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1))
                       print $0
@@ -252,7 +258,7 @@ unset_host_var() {
                       print $0
                     }
                   }
-    ' "${filename}" > /tmp/secondary-inventory.ini
+    ' "${filename}" >/tmp/secondary-inventory.ini
     cp /tmp/secondary-inventory.ini "${filename}"
     rm -rf /tmp/secondary-inventory.ini
   else
@@ -271,8 +277,8 @@ update_host_var() {
   local value="$4"
 
   if [[ "$(is_host_in_group "${filename}" "${host}" all)" ]]; then
-    awk -v target_host="$host"  -v hostvar="${hostvar}"  -v val="${value}" \
-            -F' ' '{
+    awk -v target_host="$host" -v hostvar="${hostvar}" -v val="${value}" \
+      -F' ' '{
                     if ($1 ~ /^\[/) {
                       section=tolower(gensub(/\[(.+)\]/,"\\1",1,$1))
                       print $0
@@ -294,7 +300,7 @@ update_host_var() {
                       print $0
                     }
                   }
-    ' "${filename}" > /tmp/secondary-inventory.ini
+    ' "${filename}" >/tmp/secondary-inventory.ini
     cp /tmp/secondary-inventory.ini "$filename"
     rm -rf /tmp/secondary-inventory.ini
   else
@@ -341,7 +347,7 @@ add_host_to_group_as_last() {
     if [[ "$hostExists" == "true" ]]; then
       log_warning "Host $host is already part of group $group"
     else
-      awk -v sec="[$group]" -v host="$host" 'p && $1~/\[[^]]*\]/{p=0; print host"\n"}  $1==sec{p=1} END{if (p) print host} 1' "${filename}" > /tmp/secondary-inventory.ini
+      awk -v sec="[$group]" -v host="$host" 'p && $1~/\[[^]]*\]/{p=0; print host"\n"}  $1==sec{p=1} END{if (p) print host} 1' "${filename}" >/tmp/secondary-inventory.ini
       cp /tmp/secondary-inventory.ini "$filename"
     fi
   else
@@ -349,7 +355,6 @@ add_host_to_group_as_last() {
     exit 1
   fi
 }
-
 
 # Remove a host from a group
 # Args: <inventory> <host> <group>
@@ -361,7 +366,7 @@ remove_host_from_group() {
 
   if [[ "$(is_host_in_group "$filename" "$host" "$group")" == "true" ]]; then
     awk -v target_host="$host" -v target_group="$group" \
-        -F' ' '{
+      -F' ' '{
                 global_removal=1
                 if (target_group == "all") global_removal=0
                 if ($1 ~ /^\[/) {
@@ -381,7 +386,7 @@ remove_host_from_group() {
                   }
                 }
               }
-    ' "${filename}" > /tmp/secondary-inventory.ini
+    ' "${filename}" >/tmp/secondary-inventory.ini
     cp /tmp/secondary-inventory.ini "$filename"
   else
     log_error "Could not remove host : $host, as it is not part of the group: $group"
@@ -399,6 +404,6 @@ add_group() {
   if [[ "$(group_exists "$filename" "$group")" == "true" ]]; then
     log_warning "Group $group already exists"
   else
-    echo -e "\n\n[$group]" >> "$filename"
+    echo -e "\n\n[$group]" >>"$filename"
   fi
 }

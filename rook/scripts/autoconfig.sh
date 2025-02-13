@@ -22,10 +22,10 @@ updatePeers() {
     update+=("${address}/32")
   done
 
-  old="$(yq4 -oj -I0 '[split(" ") | sort | .[] | {"cidr": .}]' <<< "$peers")"
-  new="$(yq4 -oj -I0 '[split(" ") | sort | unique | .[] | {"cidr": .}]' <<< "${update[*]}")"
+  old="$(yq4 -oj -I0 '[split(" ") | sort | .[] | {"cidr": .}]' <<<"$peers")"
+  new="$(yq4 -oj -I0 '[split(" ") | sort | unique | .[] | {"cidr": .}]' <<<"${update[*]}")"
 
-  if ! diff -u3 --color --label "current .commons * .clusters.${cluster} | .${1}" <(yq4 -P <<< "$old") --label "update .cluster.${cluster}.${1}" <(yq4 -P <<< "$new"); then
+  if ! diff -u3 --color --label "current .commons * .clusters.${cluster} | .${1}" <(yq4 -P <<<"$old") --label "update .cluster.${cluster}.${1}" <(yq4 -P <<<"$new"); then
     echo -n "apply update? [Y/n]: "
     read -r reply
     if [[ "${reply}" =~ ^(Y|y|)$ ]]; then
@@ -49,20 +49,22 @@ fi
 
 cluster="${1}"
 
-if kubectl -n kube-system get svc kube-dns > /dev/null 2>&1; then
+if kubectl -n kube-system get svc kube-dns >/dev/null 2>&1; then
   dnsAddresses="$(kubectl -n kube-system get svc kube-dns -ojsonpath='{.spec.clusterIPs[0]}')"
 else
   dnsAddresses="$(kubectl -n kube-system get svc coredns -ojsonpath='{.spec.clusterIPs[0]}')"
 fi
 
-apiserverAddresses="$(kubectl get no -lnode-role.kubernetes.io/control-plane= -oyaml | yq4 '[
+apiserverAddresses="$(
+  kubectl get no -lnode-role.kubernetes.io/control-plane= -oyaml | yq4 '[
   .items[] | [
     .status.addresses[] | select(.type == "InternalIP") | .address
   ] + (
     .metadata.annotations | [."projectcalico.org/IPv4IPIPTunnelAddr", ."projectcalico.org/IPv4WireguardInterfaceAddr"]) | .[]] | sort | .[]'
 )"
 
-nodeAddresses="$(kubectl get no -oyaml | yq4 '[
+nodeAddresses="$(
+  kubectl get no -oyaml | yq4 '[
   .items[] | [
     .status.addresses[] | select(.type == "InternalIP") | .address
   ] + (
@@ -96,7 +98,7 @@ pspcrds=(
 )
 
 if [[ "$(yq4 ".commons * .clusters.${cluster} | .podSecurityPolicies.enabled" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
-  if kubectl get crds "${pspcrds[@]}" &> /dev/null; then
+  if kubectl get crds "${pspcrds[@]}" &>/dev/null; then
     echo -n "- enable Gatekeeper podsecuritypolicies? [Y/n]: "
     read -r reply
     if [[ "${reply}" =~ ^(Y|y|)$ ]]; then
@@ -111,8 +113,8 @@ fi
 
 echo "checking service monitors..."
 if [[ "$(yq4 ".commons * .clusters.${cluster} | .monitoring.installServiceMonitors" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
-  if kubectl get crd prometheuses.monitoring.coreos.com &> /dev/null; then
-    if [[ -n "$(kubectl get po -A -l app.kubernetes.io/name=prometheus 2> /dev/null)" ]]; then
+  if kubectl get crd prometheuses.monitoring.coreos.com &>/dev/null; then
+    if [[ -n "$(kubectl get po -A -l app.kubernetes.io/name=prometheus 2>/dev/null)" ]]; then
       echo -n "- install Prometheus service monitors? [Y/n]: "
       read -r reply
       if [[ "${reply}" =~ ^(Y|y|)$ ]]; then
@@ -130,7 +132,7 @@ fi
 
 echo "checking dashboards..."
 if [[ "$(yq4 ".commons * .clusters.${cluster} | .monitoring.installGrafanaDashboards" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
-  if [[ -n "$(kubectl get po -A -l app.kubernetes.io/name=grafana 2> /dev/null)" ]]; then
+  if [[ -n "$(kubectl get po -A -l app.kubernetes.io/name=grafana 2>/dev/null)" ]]; then
     echo -n "- install Grafana dashboards? [Y/n]: "
     read -r reply
     if [[ "${reply}" =~ ^(Y|y|)$ ]]; then
@@ -145,8 +147,8 @@ fi
 
 echo "checking rules..."
 if [[ "$(yq4 ".commons * .clusters.${cluster} | .monitoring.installPrometheusRules" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
-  if kubectl get crd prometheusrules.monitoring.coreos.com &> /dev/null; then
-    if [[ -n "$(kubectl get po -A -l app.kubernetes.io/name=thanos 2> /dev/null)" ]]; then
+  if kubectl get crd prometheusrules.monitoring.coreos.com &>/dev/null; then
+    if [[ -n "$(kubectl get po -A -l app.kubernetes.io/name=thanos 2>/dev/null)" ]]; then
       echo -n "- install Prometheus rules? [Y/n]: "
       read -r reply
       if [[ "${reply}" =~ ^(Y|y|)$ ]]; then

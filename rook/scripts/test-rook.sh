@@ -18,15 +18,19 @@ function testCephCluster {
   health=$(echo "${jsonData}" | jq -r '.status.ceph.health')
   phase=$(echo "${jsonData}" | jq -r '.status.phase')
   if [[ ! $health = "HEALTH_OK" ]]; then
-    echo "Cluster health is not ok: $health ❌"; FAILURES=$((FAILURES+1))
+    echo "Cluster health is not ok: $health ❌"
+    FAILURES=$((FAILURES + 1))
     DEBUG_OUTPUT+=("$(echo "${jsonData}" | jq '.status.ceph.details')")
   else
-    echo "Cluster health is ok ✔"; SUCCESSES=$((SUCCESSES+1))
+    echo "Cluster health is ok ✔"
+    SUCCESSES=$((SUCCESSES + 1))
   fi
   if [[ ! $phase = "Ready" ]]; then
-    echo "Cluster phase is not ready: $phase ❌"; FAILURES=$((FAILURES+1))
+    echo "Cluster phase is not ready: $phase ❌"
+    FAILURES=$((FAILURES + 1))
   else
-    echo "Cluster phase is ready ✔"; SUCCESSES=$((SUCCESSES+1))
+    echo "Cluster phase is ready ✔"
+    SUCCESSES=$((SUCCESSES + 1))
   fi
 }
 
@@ -37,14 +41,16 @@ function testOSDs {
   numberOfOSDs=$(kubectl -n rook-ceph get deployments.apps -o=name | grep -c rook-ceph-osd)
   numberOfStorageNodes=$(kubectl get nodes -o=name | grep -cP "storage-\d+$")
   osdDeployments=()
-  read -r -d '' -a osdDeployments <<< "$(kubectl -n rook-ceph get deployments.apps -o=json | jq -r '.items[].metadata.name' | grep "rook-ceph-osd")"
+  read -r -d '' -a osdDeployments <<<"$(kubectl -n rook-ceph get deployments.apps -o=json | jq -r '.items[].metadata.name' | grep "rook-ceph-osd")"
   if [[ ! "$numberOfStorageNodes" -gt 0 ]]; then
     numberOfStorageNodes=$(kubectl get nodes -o=name | grep -cP "worker-\d+$")
   fi
   if [[ ! $numberOfStorageNodes = "$numberOfOSDs" ]]; then
-    echo "${numberOfOSDs}/${numberOfStorageNodes} deployments exist ❌"; FAILURES=$((FAILURES+1))
+    echo "${numberOfOSDs}/${numberOfStorageNodes} deployments exist ❌"
+    FAILURES=$((FAILURES + 1))
   else
-    echo "${numberOfOSDs}/${numberOfStorageNodes} deployments exist ✔"; SUCCESSES=$((SUCCESSES+1))
+    echo "${numberOfOSDs}/${numberOfStorageNodes} deployments exist ✔"
+    SUCCESSES=$((SUCCESSES + 1))
   fi
   for osd in "${osdDeployments[@]}"; do
     echo -n "$osd"
@@ -59,14 +65,16 @@ function testMons {
   numberOfMons=$(kubectl -n rook-ceph get deployments.apps -o=name | grep -c rook-ceph-mon)
   numberOfMonsDesired=$(yq4 ".commons.mon.count" "$CONFIG_FILE")
   monDeployments=()
-  read -r -d '' -a monDeployments <<< "$(kubectl -n rook-ceph get deployments.apps -o=json | jq -r '.items[].metadata.name' | grep "rook-ceph-mon")"
+  read -r -d '' -a monDeployments <<<"$(kubectl -n rook-ceph get deployments.apps -o=json | jq -r '.items[].metadata.name' | grep "rook-ceph-mon")"
   if [[ -z $numberOfMonsDesired || $numberOfMonsDesired = "null" ]]; then
     numberOfMonsDesired=$(yq4 ".cephClusterSpec.mon.count" "${here}/../helmfile.d/upstream/rook-ceph-cluster/values.yaml")
   fi
   if [[ ! $numberOfMons = "$numberOfMonsDesired" ]]; then
-    echo "${numberOfMons}/${numberOfMonsDesired} deployments exist ❌"; FAILURES=$((FAILURES+1))
+    echo "${numberOfMons}/${numberOfMonsDesired} deployments exist ❌"
+    FAILURES=$((FAILURES + 1))
   else
-    echo "${numberOfMons}/${numberOfMonsDesired} deployments exist ✔"; SUCCESSES=$((SUCCESSES+1))
+    echo "${numberOfMons}/${numberOfMonsDesired} deployments exist ✔"
+    SUCCESSES=$((SUCCESSES + 1))
   fi
   for mon in "${monDeployments[@]}"; do
     echo -n "$mon"
@@ -81,24 +89,26 @@ function testMgrs {
   numberOfMgrs=$(kubectl -n rook-ceph get deployments.apps -o=name | grep -c rook-ceph-mgr)
   numberOfMgrsDesired=$(yq4 ".commons.mgr.count" "$CONFIG_FILE")
   mgrDeployments=()
-  read -r -d '' -a mgrDeployments <<< "$(kubectl -n rook-ceph get deployments.apps -o=json | jq -r '.items[].metadata.name' | grep "rook-ceph-mgr")"
+  read -r -d '' -a mgrDeployments <<<"$(kubectl -n rook-ceph get deployments.apps -o=json | jq -r '.items[].metadata.name' | grep "rook-ceph-mgr")"
   if [[ -z "$numberOfMgrsDesired" || "$numberOfMgrsDesired" = "null" ]]; then
     if [[ "${cluster}" = "sc" ]]; then
       TMP_DIR=$(mktemp -p /tmp -d rook-ceph-test.XXXXXX)
       append_trap "rm -rf ${TMP_DIR}" EXIT
-      helmfile -e service write-values --output-file-template "${TMP_DIR}/{{ .State.BaseName }}-{{ .State.AbsPathSHA1 }}/{{ .Release.Name}}.yaml" &> /dev/null
+      helmfile -e service write-values --output-file-template "${TMP_DIR}/{{ .State.BaseName }}-{{ .State.AbsPathSHA1 }}/{{ .Release.Name}}.yaml" &>/dev/null
       numberOfMgrsDesired=$(yq4 ".cephClusterSpec.mgr.count" "$(find "${TMP_DIR}"/helmfile-*/ -name "rook-ceph-cluster.yaml")")
     elif [[ "${cluster}" = "wc" ]]; then
       TMP_DIR=$(mktemp -p /tmp -d rook-ceph-test.XXXXXX)
       append_trap "rm -rf ${TMP_DIR}" EXIT
-      helmfile -e workload write-values --output-file-template "${TMP_DIR}/{{ .State.BaseName }}-{{ .State.AbsPathSHA1 }}/{{ .Release.Name}}.yaml" &> /dev/null
+      helmfile -e workload write-values --output-file-template "${TMP_DIR}/{{ .State.BaseName }}-{{ .State.AbsPathSHA1 }}/{{ .Release.Name}}.yaml" &>/dev/null
       numberOfMgrsDesired=$(yq4 ".cephClusterSpec.mgr.count" "$(find "${TMP_DIR}"/helmfile-*/ -name "rook-ceph-cluster.yaml")")
     fi
   fi
   if [[ ! $numberOfMgrs = "$numberOfMgrsDesired" ]]; then
-    echo "${numberOfMgrs}/${numberOfMgrsDesired} deployments exist ❌"; FAILURES=$((FAILURES+1))
+    echo "${numberOfMgrs}/${numberOfMgrsDesired} deployments exist ❌"
+    FAILURES=$((FAILURES + 1))
   else
-    echo "${numberOfMgrs}/${numberOfMgrsDesired} deployments exist ✔"; SUCCESSES=$((SUCCESSES+1))
+    echo "${numberOfMgrs}/${numberOfMgrsDesired} deployments exist ✔"
+    SUCCESSES=$((SUCCESSES + 1))
   fi
   for mgr in "${mgrDeployments[@]}"; do
     echo -n "$mgr"
@@ -122,11 +132,11 @@ function setExpectedResources {
   numberOfStorageNodes=$(kubectl get nodes -o=name | grep -cP "storage-\d+$")
   if [[ ! "$numberOfStorageNodes" -gt 0 ]]; then
     numberOfStorageNodes=$(kubectl get nodes -o=name | grep -cP "worker-\d+$")
-    read -r -d '' -a storageNodes <<< "$(kubectl get nodes -o=json | jq -r '.items[].metadata.name' | grep -P "worker-\d+$")"
+    read -r -d '' -a storageNodes <<<"$(kubectl get nodes -o=json | jq -r '.items[].metadata.name' | grep -P "worker-\d+$")"
   else
-    read -r -d '' -a storageNodes <<< "$(kubectl get nodes -o=json | jq -r '.items[].metadata.name' | grep -P "storage-\d+$")"
+    read -r -d '' -a storageNodes <<<"$(kubectl get nodes -o=json | jq -r '.items[].metadata.name' | grep -P "storage-\d+$")"
   fi
-  for (( i=0; i<numberOfStorageNodes; i++ )); do
+  for ((i = 0; i < numberOfStorageNodes; i++)); do
     DEPLOYMENTS+=("rook-ceph-crashcollector-${storageNodes[i]}")
     JOBS+=("rook-ceph-osd-prepare-${storageNodes[i]}")
   done

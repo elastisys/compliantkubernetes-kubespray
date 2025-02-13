@@ -12,23 +12,23 @@ log_info "If your environment is not hosted in Sweden, set ntp_servers in group_
 log_info_no_newline "Is your environment hosted in Sweden? [y/N]: "
 read -r reply
 if [[ "${reply}" == "y" ]]; then
-    set_ntp_servers=true
+  set_ntp_servers=true
 fi
 
 yq_add sc k8s_cluster/ck8s-k8s-cluster .ntp_enabled true
 yq_add sc k8s_cluster/ck8s-k8s-cluster .ntp_manage_config true
 if [[ "${set_ntp_servers}" == true ]]; then
-    yq_add sc k8s_cluster/ck8s-k8s-cluster .ntp_servers '[ "gbg1.ntp.netnod.se iburst", "gbg2.ntp.netnod.se iburst", "lul1.ntp.netnod.se iburst", "lul2.ntp.netnod.se iburst", "mmo1.ntp.netnod.se iburst", "mmo2.ntp.netnod.se iburst", "sth1.ntp.netnod.se iburst", "sth2.ntp.netnod.se iburst", "sth3.ntp.netnod.se iburst", "sth4.ntp.netnod.se iburst", "svl1.ntp.netnod.se iburst", "svl2.ntp.netnod.se iburst"]'
+  yq_add sc k8s_cluster/ck8s-k8s-cluster .ntp_servers '[ "gbg1.ntp.netnod.se iburst", "gbg2.ntp.netnod.se iburst", "lul1.ntp.netnod.se iburst", "lul2.ntp.netnod.se iburst", "mmo1.ntp.netnod.se iburst", "mmo2.ntp.netnod.se iburst", "sth1.ntp.netnod.se iburst", "sth2.ntp.netnod.se iburst", "sth3.ntp.netnod.se iburst", "sth4.ntp.netnod.se iburst", "svl1.ntp.netnod.se iburst", "svl2.ntp.netnod.se iburst"]'
 else
-    yq_add sc k8s_cluster/ck8s-k8s-cluster .ntp_servers '[]'
+  yq_add sc k8s_cluster/ck8s-k8s-cluster .ntp_servers '[]'
 fi
 yq_add sc k8s_cluster/ck8s-k8s-cluster .ntp_timezone "\"Etc/UTC\""
 
 yq_add wc k8s_cluster/ck8s-k8s-cluster .ntp_enabled true
 yq_add wc k8s_cluster/ck8s-k8s-cluster .ntp_manage_config true
 if [[ "${set_ntp_servers}" == true ]]; then
-    yq_add wc k8s_cluster/ck8s-k8s-cluster .ntp_servers '[ "gbg1.ntp.netnod.se iburst", "gbg2.ntp.netnod.se iburst", "lul1.ntp.netnod.se iburst", "lul2.ntp.netnod.se iburst", "mmo1.ntp.netnod.se iburst", "mmo2.ntp.netnod.se iburst", "sth1.ntp.netnod.se iburst", "sth2.ntp.netnod.se iburst", "sth3.ntp.netnod.se iburst", "sth4.ntp.netnod.se iburst", "svl1.ntp.netnod.se iburst", "svl2.ntp.netnod.se iburst"]'
+  yq_add wc k8s_cluster/ck8s-k8s-cluster .ntp_servers '[ "gbg1.ntp.netnod.se iburst", "gbg2.ntp.netnod.se iburst", "lul1.ntp.netnod.se iburst", "lul2.ntp.netnod.se iburst", "mmo1.ntp.netnod.se iburst", "mmo2.ntp.netnod.se iburst", "sth1.ntp.netnod.se iburst", "sth2.ntp.netnod.se iburst", "sth3.ntp.netnod.se iburst", "sth4.ntp.netnod.se iburst", "svl1.ntp.netnod.se iburst", "svl2.ntp.netnod.se iburst"]'
 else
-    yq_add wc k8s_cluster/ck8s-k8s-cluster .ntp_servers '[]'
+  yq_add wc k8s_cluster/ck8s-k8s-cluster .ntp_servers '[]'
 fi
 yq_add wc k8s_cluster/ck8s-k8s-cluster .ntp_timezone "\"Etc/UTC\""

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [[ $# -lt 2 ]]; then
-    echo "Usage: ./conformance-test-remote.bash USERNAME IP"
-    exit 1
+  echo "Usage: ./conformance-test-remote.bash USERNAME IP"
+  exit 1
 fi
 
 USERNAME=$1

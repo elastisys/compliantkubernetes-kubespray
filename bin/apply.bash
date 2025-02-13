@@ -12,8 +12,8 @@ here="$(dirname "$(readlink -f "$0")")"
 source "${here}/common.bash"
 
 if [[ "$#" -gt 0 ]]; then
-    log_warning "Warning: Additional flags have been provided to use for running playbooks"
-    log_warning "This might not work if the first control-plane node is not provided"
+  log_warning "Warning: Additional flags have been provided to use for running playbooks"
+  log_warning "This might not work if the first control-plane node is not provided"
 fi
 
 ck8s_kubespray_version_check
@@ -24,11 +24,11 @@ log_info "Creating kubernetes cluster using kubespray"
 pushd "${kubespray_path}"
 
 if [ -z "${CK8S_KUBESPRAY_NO_VENV+x}" ]; then
-    log_info "Installing requirements for kubespray"
-    python3 -m venv venv
-    # shellcheck disable=SC1091
-    source venv/bin/activate
-    pip install -r requirements.txt
+  log_info "Installing requirements for kubespray"
+  python3 -m venv venv
+  # shellcheck disable=SC1091
+  source venv/bin/activate
+  pip install -r requirements.txt
 fi
 
 log_info "Running kubespray"
