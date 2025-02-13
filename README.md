@@ -1,10 +1,10 @@
-# Elastisys Compliant Kubernetes Kubespray
+# Elastisys Welkin® Kubespray
 
 ## On API Stability
 
-⚠️  Please note that the Elastisys Compliant Kubernetes Kubespray project frequently changes admin-facing API, i.e., configuration, in a backwards-incompatible way. Make sure to read the [change log](CHANGELOG.md) and the [migration steps](/migration). These migration steps are subject to quality assurance and are used in production environments. Hence, if properly executed, they shouldn't cause any downtime.
+⚠️  Please note that the Elastisys Welkin® Kubespray project frequently changes admin-facing API, i.e., configuration, in a backwards-incompatible way. Make sure to read the [change log](CHANGELOG.md) and the [migration steps](/migration). These migration steps are subject to quality assurance and are used in production environments. Hence, if properly executed, they shouldn't cause any downtime.
 
-The user-facing API changes more rarely, usually as a result of a Kubernetes version upgrade. For details, read the [user-facing release notes](https://elastisys.io/compliantkubernetes/release-notes/#compliant-kubernetes-kubespray).
+The user-facing API changes more rarely, usually as a result of a Kubernetes version upgrade. For details, read the [user-facing release notes](https://elastisys.io/welkin/release-notes/kubespray/).
 
 ## Content
 
