@@ -1,11 +1,11 @@
 name: Bug Report
-description: Create a bug report to help us improve Compliant Kubernetes Kubespray
+description: Create a bug report to help us improve Welkin Kubespray
 labels: kind/bug
 body:
   - type: markdown
     attributes:
       value: |-
-        Thank you for taking the time to help improve Compliant Kubernetes!
+        Thank you for taking the time to help improve Welkin!
 
         > [!warning]
         > **This is a public repository, ensure not to disclose:**
@@ -37,13 +37,13 @@ body:
       required: true
   - type: input
     attributes:
-      label: Compliant Kubernetes Kubespray Version
+      label: Welkin Kubespray Version
       placeholder: vX.Y.Z-ck8sP
     validations:
       required: true
   - type: input
     attributes:
-      label: Compliant Kubernetes Apps Version
+      label: Welkin Apps Version
       placeholder: vX.Y.Z
     validations:
       required: false

@@ -66,7 +66,7 @@
 
 ## Update terraform state for Openstack environments
 
-If you're running on an Openstack cloud provider, you will have to update the terraform state. *This only applies to Openstack environments that have been upgraded from kubespray v2.18. For environments that were initially set up on v2.19, you do not need to perform the steps below.*
+If you're running on an Openstack cloud provider, you will have to update the terraform state. _This only applies to Openstack environments that have been upgraded from kubespray v2.18. For environments that were initially set up on v2.19, you do not need to perform the steps below._
 
 1. For Safespring environments only, add the following to your `sc-config/cluster.tfvars` and `wc-config/cluster.tfvars`:
 

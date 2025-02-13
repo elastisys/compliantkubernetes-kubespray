@@ -12,11 +12,11 @@ on:
       - reopened
 
 jobs:
-  pull-requst:
+  pull-request:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: fetch pull request
-        run: jq -r '.pull_request.body' "${{ github.event_path }}"  > /tmp/pr-body.md
-      - name: validate pull request
-        run: ./scripts/validate-pr.sh /tmp/pr-body.md
+      - uses: actions/checkout@v4
+      - name: Fetch pull request
+        run: jq -r ".pull_request.body" "${{ github.event_path }}" > /tmp/pull-request-body.md
+      - name: Validate pull request
+        run: ./scripts/validate-pull-request.sh /tmp/pull-request-body.md

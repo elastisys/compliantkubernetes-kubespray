@@ -1,15 +1,31 @@
 root = true
 
 [*]
+charset = utf-8
 end_of_line = lf
+max_line_length = 120
+indent_size = 2
+indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
-indent_style = space
-indent_size = 2
 
 [Makefile]
-intent_style = tab
-tab_width = 4
+indent_size = 4
+indent_style = tab
+
+[*.html]
+max_line_length = 1000
+
+[*.js]
+indent_size = 2
 
 [*.md]
-max_line_length = 10000
+max_line_length = 1000
+indent_size = 4
+
+[*.py]
+indent_size = 4
+
+[*.rego]
+indent_size = 4
+indent_style = tab

@@ -42,7 +42,7 @@
 
     > [!NOTE]
     > 1. This enables NTP service and with multiple NTP servers, specifically in Sweden. You can visit [www.ntppool.org](https://www.ntppool.org/zone/@) to find other ntp pools if you are in other parts of the world, and edit `ntp_servers` in `group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` manually.
-    > 2. The `containerd_version` and `containerd_archive_checksums` will be removed from `"${CK8S_CONFIG_PATH}"/sc|wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`, if the version is set to `1.6.12`
+    > 1. The `containerd_version` and `containerd_archive_checksums` will be removed from `"${CK8S_CONFIG_PATH}"/sc|wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml`, if the version is set to `1.6.12`
 
 1. Download the required files on the nodes
 

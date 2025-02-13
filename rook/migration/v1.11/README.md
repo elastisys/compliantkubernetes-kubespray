@@ -18,9 +18,9 @@
   # should show PHASE = Ready and HEALTH = HEALTH_OK
   ```
 
-## Prepare upgrade - *non-disruptive*
+## Prepare upgrade - _non-disruptive_
 
-> *Done before maintenance window*
+> _Done before maintenance window_
 
 ### Helmfile migration
 
@@ -60,9 +60,9 @@
     Ensure that the are no major changes.
     New default values and resource requests and limits are expected.
 
-## Apply upgrade - *disruptive*
+## Apply upgrade - _disruptive_
 
-> *Done during maintenance window*
+> _Done during maintenance window_
 
 ### Helmfile migration
 

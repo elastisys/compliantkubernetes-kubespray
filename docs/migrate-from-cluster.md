@@ -86,7 +86,7 @@ This has only been tested on CityCloud and might not look the same for other clo
 
     Before running kubespray you'll need to make a couple of tweaks on the old machines.
 
-    * All machines
+    - All machines
 
       Remove `/etc/docker/daemon.json`.
 
@@ -97,7 +97,7 @@ This has only been tested on CityCloud and might not look the same for other clo
       sudo mv /etc/docker/daemon.json /etc/docker/daemon.json.backup
       ```
 
-    * Masters only
+    - Masters only
 
       Create `/var/log/kube-audit`
 

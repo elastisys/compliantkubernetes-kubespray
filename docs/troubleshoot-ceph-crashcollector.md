@@ -13,7 +13,7 @@ WARNING:ceph-crash:post /var/lib/ceph/crash/2023-11-21T22:05:00.157537Z_cd3d06ca
 
 Note that in most cases, those error messages are expected due to the rook-ceph crash posting implementation.
 
-Basically, what happens is that Ceph [scans](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L66) the crash folder `/var/lib/ceph/crash` every *X* minutes, by default the delay between scans is 10 minutes. Whenever it find crashes, it will try to [post](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L44) them, once the post action succeeds, Ceph will [move those crashes](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L84) to the **posted** folder.
+Basically, what happens is that Ceph [scans](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L66) the crash folder `/var/lib/ceph/crash` every _X_ minutes, by default the delay between scans is 10 minutes. Whenever it find crashes, it will try to [post](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L44) them, once the post action succeeds, Ceph will [move those crashes](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L84) to the **posted** folder.
 
 The post action is running a ceph command :
 
@@ -23,7 +23,7 @@ ceph post -i /var/lib/ceph/crash/crash-2023-11-01-23-08-00 -n <auth-client>
 
 The reason why sometimes we see those error messages on the crashcollector pods, is that rook-ceph try posting the crashes using different auth clients, until it succeeds. If you check the code [implementation](https://github.com/ceph/ceph/blob/main/src/ceph-crash.in#L46C25-L46C25)
 
-```
+```python
 def post_crash(path):
     rc = 0
     for n in auth_names:
@@ -38,7 +38,7 @@ def post_crash(path):
 
 and `auth_names` variable is set by default to :
 
-```
+```python
 auth_names = ['client.crash.%s' % socket.gethostname(),
               'client.crash',
               'client.admin']

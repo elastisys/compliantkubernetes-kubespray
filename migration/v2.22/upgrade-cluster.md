@@ -33,7 +33,7 @@
 
 1. Run `bin/ck8s-kubespray upgrade v2.22 prepare` to update your config.
 
-1. *If UpCloud* Add `target_port` to each loadbalancer config (typically same as `port`) in `sc-config/cluster.tfvars` and `wc-config/cluster.tfvars`
+1. _If UpCloud_ Add `target_port` to each loadbalancer config (typically same as `port`) in `sc-config/cluster.tfvars` and `wc-config/cluster.tfvars`
 
     Example:
 

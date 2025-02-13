@@ -34,7 +34,7 @@ These steps will not disrupt the environment and can be done ahead of a maintena
     +    1.6.12: a56c39795fd0d0ee356b4099a4dfa34689779f61afc858ef84c765c63e983a7d
     ```
 
-1. set the values for `kubeconfig_cluster_name` in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` to the corresponding name like below:
+1. Set the values for `kubeconfig_cluster_name` in both `sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` and `wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` to the corresponding name like below:
 
     ```yaml
     kubeconfig_cluster_name: <CHANGE-ME-ENVIRONMENT-NAME-sc>
@@ -44,7 +44,7 @@ These steps will not disrupt the environment and can be done ahead of a maintena
 1. For upcloud environments, remove or update storage class specification.
     The new default in the config is the following:
 
-    ```
+    ```yaml
     storage_classes:
       - name: standard
         is_default: true
@@ -63,7 +63,7 @@ These steps will not disrupt the environment and can be done ahead of a maintena
     Update example:
     Old format:
 
-    ```
+    ```yaml
     expand_persistent_volumes: true
     parameters:
       tier: maxiops
@@ -97,7 +97,7 @@ These steps will cause disruptions in the environment.
     ./bin/ck8s-kubespray run-playbook wc upgrade-cluster.yml -b
     ```
 
-1. generate updated kubeconfigs:
+1. Generate updated kubeconfigs:
 
     ```bash
     ./bin/ck8s-kubespray run-playbook sc ../playbooks/kubeconfig.yml -b

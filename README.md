@@ -35,7 +35,7 @@ ansible-playbook -e 'ansible_python_interpreter=/usr/bin/python3' --ask-become-p
     ```
 
     Arguments:
-    - The init command accepts `wc` (*workload cluster*) or `sc` (*service cluster*) as first argument as to create separate folders for each cluster's configuration files.
+    - The init command accepts `wc` (_workload cluster_) or `sc` (_service cluster_) as first argument as to create separate folders for each cluster's configuration files.
     - `flavor` will determine some default values for a variety of config options.
       Supported options are `default`, `gcp`, `aws`, `vsphere`, and `openstack`.
     - `SOPS fingerprint` is the gpg fingerprint that will be used for SOPS encryption.
@@ -72,7 +72,7 @@ Authorized SSH keys can be changed for a cluster using:
 ```
 
 It will set the public SSH key(s) found in`<CK8S_CONFIG_PATH>/<wc|sc>-config/group_vars/all/ck8s-ssh-keys.yaml` as authorized keys in your cluster (just add the keys you want to be authorized as elements in `ck8s_ssh_pub_keys_list`).
-Note that the authorized SSH keys for the cluster will be set to these keys *exclusively*, removing any keys that may already be authorized, so make sure the list includes **every SSH key** that should be authorized.
+Note that the authorized SSH keys for the cluster will be set to these keys _exclusively_, removing any keys that may already be authorized, so make sure the list includes **every SSH key** that should be authorized.
 
 When running this command, the SSH keys are applied to each node in the cluster sequentially, in reverse inventory order (first the workers and then the masters).
 A connection test is performed after each node which has to succeed in order for the playbook to continue.
@@ -101,9 +101,9 @@ You can remove a node from a ck8s cluster by running:
 ### Known issues
 
 - The script may fail with the message `error while evaluating conditional (kubelet_heartbeat.rc == 0): 'dict object' has no attribute 'rc'`
-  - In such situations just rerun the script. It will skip the check for that node, so check that it is up and running manually afterwards.
+    - In such situations just rerun the script. It will skip the check for that node, so check that it is up and running manually afterwards.
 - The script might fail with a timeout: `Timeout (12s) waiting for privilege escalation prompt`
-  - Try running the script again with a longer ansible timeout: `export ANSIBLE_TIMEOUT=30`
+    - Try running the script again with a longer ansible timeout: `export ANSIBLE_TIMEOUT=30`
 
 ## Running other kubespray playbooks
 

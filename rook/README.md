@@ -43,7 +43,7 @@ Since parts of the deployment relies on services in [compliantkubernetes-apps](h
 
 - Bootstrap
 
-  > *Before Apps install*
+  > _Before Apps install_
 
   For both service and workload clusters:
 
@@ -63,7 +63,7 @@ Since parts of the deployment relies on services in [compliantkubernetes-apps](h
 
 - Finalise
 
-  > *After Apps install*
+  > _After Apps install_
 
   For both service and workload clusters:
 
