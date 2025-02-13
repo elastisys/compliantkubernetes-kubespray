@@ -13,9 +13,9 @@ openstack_terraform_dir="${here}/../../../kubespray/contrib/terraform/openstack"
 source "${CK8S_CONFIG_PATH}/openrc.sh"
 
 for CLUSTER in sc wc; do
-    ck8s_kubespray_config_path="${CK8S_CONFIG_PATH}/${CLUSTER}-config"
-    pushd "${ck8s_kubespray_config_path}" || return
-    terraform -chdir="${openstack_terraform_dir}" init
-    terraform -chdir="${openstack_terraform_dir}" apply -var-file="${ck8s_kubespray_config_path}/cluster.tfvars" -state="${ck8s_kubespray_config_path}/terraform.tfstate"
-    popd || return
+  ck8s_kubespray_config_path="${CK8S_CONFIG_PATH}/${CLUSTER}-config"
+  pushd "${ck8s_kubespray_config_path}" || return
+  terraform -chdir="${openstack_terraform_dir}" init
+  terraform -chdir="${openstack_terraform_dir}" apply -var-file="${ck8s_kubespray_config_path}/cluster.tfvars" -state="${ck8s_kubespray_config_path}/terraform.tfstate"
+  popd || return
 done

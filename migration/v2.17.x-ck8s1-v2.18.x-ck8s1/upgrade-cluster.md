@@ -53,4 +53,4 @@
 ```
 
 > [!NOTE]
-> If you are running [Compliant Kubernetes Apps](https://github.com/elastisys/compliantkubernetes-apps). Make sure you're running a version that has support for conatinerd.
+> If you are running [Welkin Apps](https://github.com/elastisys/compliantkubernetes-apps). Make sure you're running a version that has support for containerd.

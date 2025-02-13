@@ -26,7 +26,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/kubespray/be0
 After this if you already have a loadbalancer you can add the annotation `loadbalancer.openstack.org/proxy-protocol: true` to the loadbalancer service and make sure that the backing service supports the proxy protocol.
 The cloud controller will automatically change the pool of the loadbalancer to use the proxy protocol so there might be a couple of seconds downtime while the change is made but otherwise it shouldn't change anything else.
 
-For [Compliant Kubernetes](https://github.com/elastisys/compliantkubernetes-apps) this specifically means making the following change:
+For [Welkin](https://github.com/elastisys/compliantkubernetes-apps) this specifically means making the following change:
 
 ```diff
 ingressNginx:

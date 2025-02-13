@@ -57,7 +57,7 @@ log_fatal() {
 # --- git version
 
 git_version() {
-  git -C "${ROOT}" describe --exact-match --tags 2> /dev/null || git -C "${ROOT}" rev-parse HEAD
+  git -C "${ROOT}" describe --exact-match --tags 2>/dev/null || git -C "${ROOT}" rev-parse HEAD
 }
 
 # --- config functions ---
@@ -71,7 +71,7 @@ config_version() {
   local prefix="${1}"
 
   local version
-  version="$(yq4 ".ck8sKubesprayVersion" <<< "${CONFIG["${prefix}"]}")"
+  version="$(yq4 ".ck8sKubesprayVersion" <<<"${CONFIG["${prefix}"]}")"
 
   VERSION["${prefix}-config"]="${version}"
   version="${version#v}"

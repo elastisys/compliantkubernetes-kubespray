@@ -8,8 +8,8 @@ set -eu -o pipefail
 shopt -s globstar nullglob dotglob
 
 if [ $# -lt 1 ]; then
-    echo "error when running $0: argument mismatch" 1>&2
-    exit 1
+  echo "error when running $0: argument mismatch" 1>&2
+  exit 1
 fi
 
 playbook=$1
@@ -26,11 +26,11 @@ log_info "Running kubespray playbook ${playbook}"
 pushd "${kubespray_path}"
 
 if [ -z "${CK8S_KUBESPRAY_NO_VENV+x}" ]; then
-    log_info "Installing requirements for kubespray"
-    python3 -m venv venv
-    # shellcheck disable=SC1091
-    source venv/bin/activate
-    pip install -r requirements.txt
+  log_info "Installing requirements for kubespray"
+  python3 -m venv venv
+  # shellcheck disable=SC1091
+  source venv/bin/activate
+  pip install -r requirements.txt
 fi
 
 log_info "Running kubespray"

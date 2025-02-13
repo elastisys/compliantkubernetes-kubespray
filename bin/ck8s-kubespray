@@ -6,38 +6,37 @@ set -e -o pipefail
 
 here="$(dirname "$(readlink -f "$0")")"
 
-
 usage() {
-    echo "COMMANDS:" 1>&2
-    echo "  init                                        initialize the config path" 1>&2
-    echo "      args: <wc|sc> <flavor> [<SOPS fingerprint>]" 1>&2
-    echo "  apply                                       runs kubespray to create the cluster" 1>&2
-    echo "      args: <wc|sc> [<options>]" 1>&2
-    echo "  remove-node                                 removes specified node from cluster" 1>&2
-    echo "      args: <wc|sc> <node_name> [<options>]" 1>&2
-    echo "  run-playbook                                runs any ansible playbook in kubespray" 1>&2
-    echo "      args: <wc|sc> <playbook> [<options>]" 1>&2
-    echo "  apply-ssh                                   applies SSH keys from a file to a cluster" 1>&2
-    echo "      args: <wc|sc> [<options>]" 1>&2
-    echo "  reboot-nodes                                reboots all nodes in a cluster if needed" 1>&2
-    echo "      args: <wc|sc> [--extra-vars manual_prompt=true] [<options>]" 1>&2
-    echo "  prune-nerdctl                               removes unused container resources on all nodes" 1>&2
-    echo "      args: <wc|sc> [<options>]" 1>&2
-    echo "  upgrade                                     prepares config for upgrade" 1>&2
-    echo "      args: <wc|sc|both> <version> prepare" 1>&2
-    echo "  upgrade-groups                              upgrade groups in parallel" 1>&2
-    echo "      args: <wc|sc> <list-groups|apply>" 1>&2
-    echo "  generate-groups-inventory                   generate groups static inventory" 1>&2
-    echo "      args: <wc|sc>" 1>&2
-    echo "  sync-groups-inventory                       sync groups static inventory" 1>&2
-    echo "      args: <wc|sc>" 1>&2
-    exit 1
+  echo "COMMANDS:" 1>&2
+  echo "  init                                        initialize the config path" 1>&2
+  echo "      args: <wc|sc> <flavor> [<SOPS fingerprint>]" 1>&2
+  echo "  apply                                       runs kubespray to create the cluster" 1>&2
+  echo "      args: <wc|sc> [<options>]" 1>&2
+  echo "  remove-node                                 removes specified node from cluster" 1>&2
+  echo "      args: <wc|sc> <node_name> [<options>]" 1>&2
+  echo "  run-playbook                                runs any ansible playbook in kubespray" 1>&2
+  echo "      args: <wc|sc> <playbook> [<options>]" 1>&2
+  echo "  apply-ssh                                   applies SSH keys from a file to a cluster" 1>&2
+  echo "      args: <wc|sc> [<options>]" 1>&2
+  echo "  reboot-nodes                                reboots all nodes in a cluster if needed" 1>&2
+  echo "      args: <wc|sc> [--extra-vars manual_prompt=true] [<options>]" 1>&2
+  echo "  prune-nerdctl                               removes unused container resources on all nodes" 1>&2
+  echo "      args: <wc|sc> [<options>]" 1>&2
+  echo "  upgrade                                     prepares config for upgrade" 1>&2
+  echo "      args: <wc|sc|both> <version> prepare" 1>&2
+  echo "  upgrade-groups                              upgrade groups in parallel" 1>&2
+  echo "      args: <wc|sc> <list-groups|apply>" 1>&2
+  echo "  generate-groups-inventory                   generate groups static inventory" 1>&2
+  echo "      args: <wc|sc>" 1>&2
+  echo "  sync-groups-inventory                       sync groups static inventory" 1>&2
+  echo "      args: <wc|sc>" 1>&2
+  exit 1
 }
 
 if [ $# -lt 2 ] || [[ ! "${1}" = upgrade ]] && [[ ! "${2}" =~ ^(wc|sc)$ ]] || [[ ! "${2}" =~ ^(wc|sc|both)$ ]]; then
-    usage
+  usage
 else
-    export prefix="${2}"
+  export prefix="${2}"
 fi
 
 # shellcheck source=bin/common.bash
@@ -45,82 +44,82 @@ source "${here}/common.bash"
 check_tools
 
 case "${1}" in
-    init)
-        if [ $# -lt 3 ] || [ $# -gt 4 ]; then
-            usage
-        fi
-        shift 2
-        "${here}/init.bash" "${@}"
-        ;;
-    apply)
-        if [ $# -lt 2 ]; then
-            usage
-        fi
-        shift 2
-        "${here}/apply.bash" "${@}"
-        ;;
-    remove-node)
-        if [ $# -lt 2 ]; then
-            usage
-        fi
-        shift 2
-        "${here}/remove-node.bash" "${@}"
-        ;;
-    run-playbook)
-        if [ $# -lt 3 ]; then
-            usage
-        fi
-        shift 2
-        "${here}/run-playbook.bash" "${@}"
-        ;;
-    apply-ssh)
-        if [ $# -lt 2 ]; then
-            usage
-        fi
-        shift 2
-        "${here}/apply-ssh.bash" "${@}"
-        ;;
-    reboot-nodes)
-        if [ $# -lt 2 ]; then
-            usage
-        fi
-        shift 2
-        "${here}/reboot-nodes.bash" "${@}"
-        ;;
-    prune-nerdctl)
-        if [ $# -lt 2 ]; then
-            usage
-        fi
-        shift 2
-        "${here}/prune-nerdctl.bash" "${@}"
-        ;;
-    upgrade)
-        if [ $# -ne 4 ]; then
-            usage
-        fi
-        shift 1
-        "${here}/upgrade.bash" "${@}"
-        ;;
-    upgrade-groups)
-        if [ $# -lt 3 ]; then
-            usage
-        fi
-        shift 2
-        "${here}/upgrade-groups.bash" "${@}"
-        ;;
-    generate-groups-inventory)
-        if [ $# -lt 2 ]; then
-            usage
-        fi
-        shift 2
-        "${here}/generate-groups-inventory.bash" "${@}"
-        ;;
-    sync-groups-inventory)
-        if [ $# -lt 2 ]; then
-            usage
-        fi
-        shift 2
-        "${here}/sync-groups-inventory.bash" "${@}"
-        ;;
-    *) usage ;;
+init)
+  if [ $# -lt 3 ] || [ $# -gt 4 ]; then
+    usage
+  fi
+  shift 2
+  "${here}/init.bash" "${@}"
+  ;;
+apply)
+  if [ $# -lt 2 ]; then
+    usage
+  fi
+  shift 2
+  "${here}/apply.bash" "${@}"
+  ;;
+remove-node)
+  if [ $# -lt 2 ]; then
+    usage
+  fi
+  shift 2
+  "${here}/remove-node.bash" "${@}"
+  ;;
+run-playbook)
+  if [ $# -lt 3 ]; then
+    usage
+  fi
+  shift 2
+  "${here}/run-playbook.bash" "${@}"
+  ;;
+apply-ssh)
+  if [ $# -lt 2 ]; then
+    usage
+  fi
+  shift 2
+  "${here}/apply-ssh.bash" "${@}"
+  ;;
+reboot-nodes)
+  if [ $# -lt 2 ]; then
+    usage
+  fi
+  shift 2
+  "${here}/reboot-nodes.bash" "${@}"
+  ;;
+prune-nerdctl)
+  if [ $# -lt 2 ]; then
+    usage
+  fi
+  shift 2
+  "${here}/prune-nerdctl.bash" "${@}"
+  ;;
+upgrade)
+  if [ $# -ne 4 ]; then
+    usage
+  fi
+  shift 1
+  "${here}/upgrade.bash" "${@}"
+  ;;
+upgrade-groups)
+  if [ $# -lt 3 ]; then
+    usage
+  fi
+  shift 2
+  "${here}/upgrade-groups.bash" "${@}"
+  ;;
+generate-groups-inventory)
+  if [ $# -lt 2 ]; then
+    usage
+  fi
+  shift 2
+  "${here}/generate-groups-inventory.bash" "${@}"
+  ;;
+sync-groups-inventory)
+  if [ $# -lt 2 ]; then
+    usage
+  fi
+  shift 2
+  "${here}/sync-groups-inventory.bash" "${@}"
+  ;;
+*) usage ;;
 esac

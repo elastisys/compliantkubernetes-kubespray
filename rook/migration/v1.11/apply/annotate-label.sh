@@ -17,7 +17,6 @@ kubectl -n rook-ceph label configmap rook-config-override app.kubernetes.io/mana
 kubectl -n rook-ceph annotate cephcluster rook-ceph meta.helm.sh/release-namespace=rook-ceph meta.helm.sh/release-name=rook-ceph-cluster --overwrite
 kubectl -n rook-ceph label cephcluster rook-ceph app.kubernetes.io/managed-by=Helm --overwrite
 
-
 kubectl -n rook-ceph annotate cephblockpool "${block_pool}" meta.helm.sh/release-namespace=rook-ceph meta.helm.sh/release-name=rook-ceph-cluster --overwrite
 kubectl -n rook-ceph label cephblockpool "${block_pool}" app.kubernetes.io/managed-by=Helm --overwrite
 
