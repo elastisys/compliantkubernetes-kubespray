@@ -9,6 +9,13 @@ ROOT="$(readlink -f "${HERE}/../../../")"
 # shellcheck source=scripts/migration/lib.sh
 source "${ROOT}/scripts/migration/lib.sh"
 
+if [[ $# -lt 1 ]]; then
+  echo "Usage: $0 <name of lb to migrate>" >&2
+  exit 1
+fi
+
+lb_name="${1}"
+
 openstack_upcloud_dir="${ROOT}/kubespray/contrib/terraform/upcloud"
 
 clusters=()
@@ -23,12 +30,6 @@ fi
 for cluster in "${clusters[@]}"; do
 
   export TF_VAR_inventory_file="${CK8S_CONFIG_PATH}/${cluster}-config/inventory.ini"
-
-  log_info "Enter the new name for the loadbalancer in the ${cluster} cluster:"
-  read -r lb_name
-  if [[ -z "${lb_name}" ]]; then
-    log_fatal "No loadbalancer was given!"
-  fi
 
   terraform_state_file="${CK8S_CONFIG_PATH}/${cluster}-config/terraform.tfstate"
   terraform_var_file="${CK8S_CONFIG_PATH}/${cluster}-config/cluster.tfvars"

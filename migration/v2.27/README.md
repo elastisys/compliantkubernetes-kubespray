@@ -98,13 +98,13 @@ These steps will cause disruptions in the environment.
     + }
     ```
 
-    The migration script will ask for the loadbalancer name.
-    That is the name in the previous config update, `public` or what you specified.
+    The migration script takes the name of the loadbalancer to migrate as an argument.
+    This should be `public` if you followed the change above.
 
     ```bash
     export CK8S_CONFIG_PATH=...
     export CK8S_CLUSTER=<sc|wc|both>
-    00-migrate-loadbalancers.sh
+    00-migrate-loadbalancers.sh <name of lb>
     ```
 
     Apply terraform to update state.
