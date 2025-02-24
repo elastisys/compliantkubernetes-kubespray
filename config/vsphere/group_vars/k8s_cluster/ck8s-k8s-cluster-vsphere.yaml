@@ -14,3 +14,10 @@ external_vsphere_user: ""
 external_vsphere_datacenter: ""
 external_vsphere_kubernetes_cluster_id: ""
 vsphere_csi_enabled: true
+
+ntp_filter_interface: false
+# Specify the interfaces
+# Only takes effect when ntp_filter_interface is true
+# ntp_interfaces:
+#   - ignore wildcard
+#   - listen <default interface>
