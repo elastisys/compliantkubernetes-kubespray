@@ -54,12 +54,12 @@ These steps will cause disruptions in the environment.
     Update the loadbalancer configuration in accordance to the following diff:
 
     ```diff
-    - loadbalancer_legacy_network = false
-    - loadbalancer_plan = "development"
+    - loadbalancer_legacy_network = copy-me # Copy whatever value you have in your cluster
+    - loadbalancer_plan = "copy-me" # Copy whatever value you have in your cluster
       loadbalancers = {
     +   "public" = {
-    +     plan = "development"
-    +     legacy_network = false
+    +     plan = "<Copied value from loadbalancer_plan>"
+    +     legacy_network = <Copied value from loadbalancer_legacy_network>
     +     public_network = true
     +     private_network = true
     +     targets = {
