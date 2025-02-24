@@ -40,10 +40,6 @@
     ./bin/ck8s-kubespray run-playbook wc upgrade_cluster.yml -b --tags=download
     ```
 
-## Upgrade steps
-
-These steps will cause disruptions in the environment.
-
 1. For UpCloud environments, update loadbalancer configuration
 
     <details>
@@ -107,17 +103,35 @@ These steps will cause disruptions in the environment.
     00-migrate-loadbalancers.sh <name of lb>
     ```
 
-    Apply terraform to update state.
+    Verify the terraform to update state.
     The expected difference from `terraform plan` should be that the loadbalancer should be updated in-place with a new name and the output `loadbalancer_domain` object will become a list of loadbalancers.
 
     ```bash
     # Source credentials
     CK8S_KUBESPRAY_PATH=/path/to/compliantkubernetes-kubespray
     terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" plan -var-file="${CK8S_CONFIG_PATH}/sc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/sc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/sc-config/inventory.ini"
+    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" plan -var-file="${CK8S_CONFIG_PATH}/wc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/wc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/wc-config/inventory.ini"
+    ```
+
+    </details>
+
+## Upgrade steps
+
+These steps will cause disruptions in the environment.
+
+1. For UpCloud environments, update loadbalancer configuration
+
+    <details>
+    <summary>UpCloud environments only</summary>
+
+    Apply terraform to update state.
+
+    ```bash
+    # Source credentials
+    CK8S_KUBESPRAY_PATH=/path/to/compliantkubernetes-kubespray
     terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" apply -var-file="${CK8S_CONFIG_PATH}/sc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/sc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/sc-config/inventory.ini"
 
     terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" plan -var-file="${CK8S_CONFIG_PATH}/wc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/wc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/wc-config/inventory.ini"
-    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" apply -var-file="${CK8S_CONFIG_PATH}/wc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/wc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/wc-config/inventory.ini"
     ```
 
     </details>
