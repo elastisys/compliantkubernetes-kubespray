@@ -1,4 +1,4 @@
-# Upgrade ${old_version} to ${new_version}
+# Upgrade v2.26 to v2.27
 
 ## Prerequisites
 
