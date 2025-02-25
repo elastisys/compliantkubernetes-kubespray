@@ -27,6 +27,7 @@ if [ "${flavor}" != "default" ] &&
   [ "${flavor}" != "gcp" ] &&
   [ "${flavor}" != "openstack" ] &&
   [ "${flavor}" != "vsphere" ] &&
+  [ "${flavor}" != "upcloud" ] &&
   [ "${flavor}" != "aws" ]; then
   log_error "ERROR: Unsupported flavor: ${flavor}"
   exit 1

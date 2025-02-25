@@ -37,7 +37,7 @@ ansible-playbook -e 'ansible_python_interpreter=/usr/bin/python3' --ask-become-p
     Arguments:
     - The init command accepts `wc` (_workload cluster_) or `sc` (_service cluster_) as first argument as to create separate folders for each cluster's configuration files.
     - `flavor` will determine some default values for a variety of config options.
-      Supported options are `default`, `gcp`, `aws`, `vsphere`, and `openstack`.
+      Supported options are `default`, `gcp`, `aws`, `vsphere`, `openstack` and `upcloud`.
     - `SOPS fingerprint` is the gpg fingerprint that will be used for SOPS encryption.
       You need to set this or the environment variable `CK8S_PGP_FP` the first time SOPS is used in your specified config path.
 
