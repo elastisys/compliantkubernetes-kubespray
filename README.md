@@ -127,6 +127,6 @@ For development you can skip OIDC and instead get a regular cluster admin kubeco
 The kubeconfig and OIDC cluster admin RBAC are managed with the playbooks `playbooks/kubeconfig.yml` and `playbooks/cluster_admin_rbac.yml`. You can run them manually with:
 
 ```bash
-./bin/ck8s-kubespray run-playbook <wc|sc> ../playbooks/kubeconfig.yml -b
-./bin/ck8s-kubespray run-playbook <wc|sc> ../playbooks/cluster_admin_rbac.yml -b
+./bin/ck8s-kubespray run-playbook <wc|sc> ../../playbooks/kubeconfig.yml -b
+./bin/ck8s-kubespray run-playbook <wc|sc> ../../playbooks/cluster_admin_rbac.yml -b
 ```
