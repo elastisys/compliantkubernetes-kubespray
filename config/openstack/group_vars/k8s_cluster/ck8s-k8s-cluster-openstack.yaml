@@ -48,3 +48,10 @@ external_openstack_enable_ingress_hostname: true
 
 ## used to expose the openstack cloud controller metrics
 external_openstack_cloud_controller_bind_address: 0.0.0.0
+
+ntp_filter_interface: false
+# Specify the interfaces
+# Only takes effect when ntp_filter_interface is true
+# ntp_interfaces:
+#   - ignore wildcard
+#   - listen <default interface>
