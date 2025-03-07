@@ -1,6 +1,6 @@
 kube_oidc_auth: true
 kube_oidc_url: <IDP-URL|https://dex.BASE-DOMAIN>
-kube_oidc_client_id: <id-from-IDP|kubelogin>
+kube_oidc_client_id: kubelogin
 kube_oidc_client_secret: <secret-from-IDP|secret-from-dex>
 kube_oidc_username_claim: "email"
 kubeconfig_cluster_name: <CHANGE-ME-ENVIRONMENT-NAME-sc|CHANGE-ME-ENVIRONMENT-NAME-wc>
@@ -47,13 +47,14 @@ audit_log_maxbackups: 10
 podsecuritypolicy_enabled: false
 calico_felix_prometheusmetricsenabled: true
 
+resolvconf_mode: host_resolvconf
 kubelet_config_extra_args:
   imageGCHighThresholdPercent: 75
   imageGCLowThresholdPercent: 70
 
-calico_ipip_mode: 'Always'
-calico_vxlan_mode: 'Never'
-calico_network_backend: 'bird'
+calico_ipip_mode: "Always"
+calico_vxlan_mode: "Never"
+calico_network_backend: "bird"
 
 dns_extra_tolerations: [{effect: NoSchedule, operator: Exists}]
 coredns_additional_error_config: |
@@ -65,7 +66,12 @@ csi_snapshot_controller_enabled: true
 
 kube_scheduler_bind_address: 127.0.0.1
 kube_kubeadm_scheduler_extra_args:
-    profiling: false
+  profiling: false
+
+kubelet_shutdown_grace_period: 30s
+kubelet_shutdown_grace_period_critical_pods: 10s
+kubelet_image_gc_high_threshold: 75
+kubelet_image_gc_low_threshold: 70
 
 kube_scheduler_profiles:
   - schedulerName: default-scheduler
@@ -89,6 +95,7 @@ kubelet_secure_addresses: >-
   {%- endfor -%}
 
 ntp_enabled: true
+ntp_package: ntpsec
 ntp_manage_config: true
 ntp_servers:
   - "gbg1.ntp.netnod.se iburst"
@@ -104,6 +111,15 @@ ntp_servers:
   - "svl1.ntp.netnod.se iburst"
   - "svl2.ntp.netnod.se iburst"
 ntp_timezone: "Etc/UTC"
+
+local_volume_provisioner_nodelabels: []
+local_volume_provisioner_tolerations: []
+
+local_volume_provisioner_enabled: false # Set this to true if needed.
+local_volume_provisioner_storage_classes: # Installation via kubespray has no support for affinity, so the daemonset would run on all nodes.
+  local-storage:
+    host_dir: /mnt/disks/
+    mount_dir: /mnt/disks/
 
 audit_policy_custom_rules: |-
   # The following requests were manually identified as high-volume and low-risk,
@@ -744,19 +760,3 @@ audit_policy_custom_rules: |-
   - level: RequestResponse
     omitStages:
       - "RequestReceived"
-
-local_volume_provisioner_enabled: false # Set this to true if needed.
-local_volume_provisioner_storage_classes: # Installation via kubespray has no support for affinity, so the daemonset would run on all nodes.
-  local-storage:
-    host_dir: /mnt/disks/
-    mount_dir: /mnt/disks/
-
-local_volume_provisioner_nodelabels: []
-local_volume_provisioner_tolerations: []
-
-ntp_filter_interface: true
-# Specify the interfaces
-# Only takes effect when ntp_filter_interface is true
-ntp_interfaces:
-  - ignore wildcard
-  - listen ens3
