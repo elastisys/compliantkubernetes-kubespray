@@ -37,7 +37,7 @@ for cluster in "${clusters[@]}"; do
   lb_state="$(jq -r '.resources[] | select(.type == "upcloud_loadbalancer") | .instances[] | select(.index_key == 0)' "${terraform_state_file}")"
 
   if [[ -n "${lb_state}" ]]; then
-    lb_id="$(jq -r '.attributes.id' <<< "${lb_state}")"
+    lb_id="$(jq -r '.attributes.id' <<<"${lb_state}")"
     terraform -chdir="${openstack_upcloud_dir}" import -state="${terraform_state_file}" -var-file "${terraform_var_file}" "module.kubernetes.upcloud_loadbalancer.lb[\"${lb_name}\"]" "${lb_id}"
     terraform -chdir="${openstack_upcloud_dir}" state rm -state="${terraform_state_file}" 'module.kubernetes.upcloud_loadbalancer.lb[0]'
   fi
