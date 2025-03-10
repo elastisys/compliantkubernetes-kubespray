@@ -9,6 +9,7 @@ external_openstack_cloud_controller_extra_args:
   cluster-name: "set-me"
 
 cinder_csi_enabled: true
+cinder_topology: false
 persistent_volumes_enabled: true
 expand_persistent_volumes: true
 openstack_blockstorage_ignore_volume_az: true
@@ -25,7 +26,7 @@ storage_classes:
 # external_openstack_lbaas_floating_network_id: "Neutron floating network ID to create LBaaS VIP"
 # external_openstack_lbaas_floating_subnet_id: "Neutron subnet ID to get floating IP from"
 # external_openstack_lbaas_method: "ROUND_ROBIN"
-# external_openstack_lbaas_provider: "octavia"
+# external_openstack_lbaas_provider: "amphora"
 # external_openstack_lbaas_use_octavia: true
 # external_openstack_lbaas_create_monitor: true
 # external_openstack_lbaas_monitor_delay: "1m"
@@ -42,3 +43,15 @@ storage_classes:
 supplementary_addresses_in_ssl_keys: []
 
 kubeconfig_localhost_ansible_host: true
+
+external_openstack_enable_ingress_hostname: true
+
+## used to expose the openstack cloud controller metrics
+external_openstack_cloud_controller_bind_address: 0.0.0.0
+
+ntp_filter_interface: false
+# Specify the interfaces
+# Only takes effect when ntp_filter_interface is true
+# ntp_interfaces:
+#   - ignore wildcard
+#   - listen <default interface>
