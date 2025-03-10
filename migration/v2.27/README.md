@@ -18,19 +18,19 @@
 
 ## Steps that can be done before the upgrade - non-disruptive
 
-1. Checkout the new release: `git switch -d ${full_version}`
+1. Checkout the new release: `git switch -d v2.27.x-ck8sx`
 
 1. Switch to the correct remote: `git submodule sync`
 
 1. Update the kubespray submodule: `git submodule update --init --recursive`
 
-1. Run `bin/ck8s-kubespray upgrade both ${new_version} prepare` to update your config.
+1. Run `bin/ck8s-kubespray upgrade both v2.27 prepare` to update your config.
 
     > [!NOTE]
     > It is possible to update `wc` and `sc` config separately by replacing `both` when running the `upgrade` command, e.g. the following will only update config for the workload cluster:
     >
     > ```bash
-    > bin/ck8s-kubespray upgrade wc ${new_version} prepare
+    > bin/ck8s-kubespray upgrade wc v2.27 prepare
     > ```
 
 1. Download the required files on the nodes
