@@ -130,3 +130,8 @@ The kubeconfig and OIDC cluster admin RBAC are managed with the playbooks `playb
 ./bin/ck8s-kubespray run-playbook <wc|sc> ../../playbooks/kubeconfig.yml -b
 ./bin/ck8s-kubespray run-playbook <wc|sc> ../../playbooks/cluster_admin_rbac.yml -b
 ```
+
+## 📜 Licensing Information
+
+All source files in this repository are licensed under the Apache License, Version 2.0 unless otherwise stated.
+See the [LICENSE](./LICENSE) file for full details.
