@@ -125,7 +125,7 @@ Update the submodule reference in compliantkubernetes-kubespray.
 
 ```sh
 cd compliantkubernetes-kubespray
-git switch master
+git switch main
 git pull
 git submodule update --init
 git switch -c <development-branch>
