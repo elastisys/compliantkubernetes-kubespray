@@ -38,7 +38,7 @@ for cluster in "${clusters[@]}"; do
 
   if [[ -n "${lb_state}" ]]; then
     lb_id="$(jq -r '.attributes.id' <<<"${lb_state}")"
-    terraform -chdir="${openstack_upcloud_dir}" import -state="${terraform_state_file}" -var-file "${terraform_var_file}" "module.kubernetes.upcloud_loadbalancer.lb[\"${lb_name}\"]" "${lb_id}"
+    terraform -chdir="${openstack_upcloud_dir}" import -state="${terraform_state_file}" -var "UPCLOUD_PASSWORD=${UPCLOUD_PASSWORD}" -var "UPCLOUD_USERNAME=${UPCLOUD_USERNAME}" -var-file "${terraform_var_file}" "module.kubernetes.upcloud_loadbalancer.lb[\"${lb_name}\"]" "${lb_id}"
     terraform -chdir="${openstack_upcloud_dir}" state rm -state="${terraform_state_file}" 'module.kubernetes.upcloud_loadbalancer.lb[0]'
   fi
 
@@ -48,7 +48,7 @@ for cluster in "${clusters[@]}"; do
     for lb_backend_id in "${lb_backend_ids[@]}"; do
       lb_backend_name="$(jq -rc '.resources[] | select(.type == "upcloud_loadbalancer_backend") | .instances[] | select(.attributes.id == "'"${lb_backend_id}"'") | .index_key' "${terraform_state_file}")"
       if [[ "${lb_backend_name}" != "${lb_name}"* ]]; then
-        terraform -chdir="${openstack_upcloud_dir}" import -state="${terraform_state_file}" -var-file "${terraform_var_file}" 'module.kubernetes.upcloud_loadbalancer_backend.lb_backend["'"${lb_name}-${lb_backend_name}"'"]' "${lb_backend_id}"
+        terraform -chdir="${openstack_upcloud_dir}" import -state="${terraform_state_file}" -var "UPCLOUD_PASSWORD=${UPCLOUD_PASSWORD}" -var "UPCLOUD_USERNAME=${UPCLOUD_USERNAME}" -var-file "${terraform_var_file}" 'module.kubernetes.upcloud_loadbalancer_backend.lb_backend["'"${lb_name}-${lb_backend_name}"'"]' "${lb_backend_id}"
         terraform -chdir="${openstack_upcloud_dir}" state rm -state="${terraform_state_file}" 'module.kubernetes.upcloud_loadbalancer_backend.lb_backend["'"${lb_backend_name}"'"]'
       fi
     done
@@ -60,7 +60,7 @@ for cluster in "${clusters[@]}"; do
     for lb_frontend_id in "${lb_frontend_ids[@]}"; do
       lb_frontend_name=$(jq -r '.resources[] | select(.type == "upcloud_loadbalancer_frontend") | .instances[] |  select(.attributes.id == "'"${lb_frontend_id}"'") | .index_key' "${terraform_state_file}")
       if [[ "${lb_frontend_name}" != "${lb_name}"* ]]; then
-        terraform -chdir="${openstack_upcloud_dir}" import -state="${terraform_state_file}" -var-file "${terraform_var_file}" 'module.kubernetes.upcloud_loadbalancer_frontend.lb_frontend["'"${lb_name}-${lb_frontend_name}"'"]' "${lb_frontend_id}"
+        terraform -chdir="${openstack_upcloud_dir}" import -state="${terraform_state_file}" -var "UPCLOUD_PASSWORD=${UPCLOUD_PASSWORD}" -var "UPCLOUD_USERNAME=${UPCLOUD_USERNAME}" -var-file "${terraform_var_file}" 'module.kubernetes.upcloud_loadbalancer_frontend.lb_frontend["'"${lb_name}-${lb_frontend_name}"'"]' "${lb_frontend_id}"
         terraform -chdir="${openstack_upcloud_dir}" state rm -state="${terraform_state_file}" 'module.kubernetes.upcloud_loadbalancer_frontend.lb_frontend["'"${lb_frontend_name}"'"]'
       fi
     done
@@ -72,7 +72,7 @@ for cluster in "${clusters[@]}"; do
     for lb_static_backend_id in "${lb_static_backend_ids[@]}"; do
       lb_static_backend_name=$(jq -r '.resources[] | select(.type == "upcloud_loadbalancer_static_backend_member") | .instances[] |  select(.attributes.id == "'"${lb_static_backend_id}"'") | .index_key' "${terraform_state_file}")
       if [[ "${lb_static_backend_name}" != "${lb_name}"* ]]; then
-        terraform -chdir="${openstack_upcloud_dir}" import -state="${terraform_state_file}" -var-file "${terraform_var_file}" 'module.kubernetes.upcloud_loadbalancer_static_backend_member.lb_backend_member["'"${lb_name}-${lb_static_backend_name}"'"]' "${lb_static_backend_id}"
+        terraform -chdir="${openstack_upcloud_dir}" import -state="${terraform_state_file}" -var "UPCLOUD_PASSWORD=${UPCLOUD_PASSWORD}" -var "UPCLOUD_USERNAME=${UPCLOUD_USERNAME}" -var-file "${terraform_var_file}" 'module.kubernetes.upcloud_loadbalancer_static_backend_member.lb_backend_member["'"${lb_name}-${lb_static_backend_name}"'"]' "${lb_static_backend_id}"
         terraform -chdir="${openstack_upcloud_dir}" state rm -state="${terraform_state_file}" 'module.kubernetes.upcloud_loadbalancer_static_backend_member.lb_backend_member["'"${lb_static_backend_name}"'"]'
       fi
     done

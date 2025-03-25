@@ -100,7 +100,7 @@
     ```bash
     export CK8S_CONFIG_PATH=...
     export CK8S_CLUSTER=<sc|wc|both>
-    00-migrate-loadbalancers.sh <name of lb>
+    ./migration/v2.27/apply/00-migrate-upcloud-loadbalancer-state.sh <name of lb>
     ```
 
     Verify the terraform to update state.
@@ -109,8 +109,8 @@
     ```bash
     # Source credentials
     CK8S_KUBESPRAY_PATH=/path/to/compliantkubernetes-kubespray
-    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" plan -var-file="${CK8S_CONFIG_PATH}/sc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/sc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/sc-config/inventory.ini"
-    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" plan -var-file="${CK8S_CONFIG_PATH}/wc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/wc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/wc-config/inventory.ini"
+    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" plan -var "UPCLOUD_PASSWORD=${UPCLOUD_PASSWORD}" -var "UPCLOUD_USERNAME=${UPCLOUD_USERNAME}" -var-file="${CK8S_CONFIG_PATH}/sc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/sc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/sc-config/inventory.ini"
+    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" plan -var "UPCLOUD_PASSWORD=${UPCLOUD_PASSWORD}" -var "UPCLOUD_USERNAME=${UPCLOUD_USERNAME}" -var-file="${CK8S_CONFIG_PATH}/wc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/wc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/wc-config/inventory.ini"
     ```
 
     </details>
@@ -129,9 +129,9 @@ These steps will cause disruptions in the environment.
     ```bash
     # Source credentials
     CK8S_KUBESPRAY_PATH=/path/to/compliantkubernetes-kubespray
-    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" apply -var-file="${CK8S_CONFIG_PATH}/sc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/sc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/sc-config/inventory.ini"
+    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" apply -var "UPCLOUD_PASSWORD=${UPCLOUD_PASSWORD}" -var "UPCLOUD_USERNAME=${UPCLOUD_USERNAME}" -var-file="${CK8S_CONFIG_PATH}/sc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/sc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/sc-config/inventory.ini"
 
-    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" apply -var-file="${CK8S_CONFIG_PATH}/wc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/wc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/wc-config/inventory.ini"
+    terraform -chdir="${CK8S_KUBESPRAY_PATH}/kubespray/contrib/terraform/upcloud/" apply -var "UPCLOUD_PASSWORD=${UPCLOUD_PASSWORD}" -var "UPCLOUD_USERNAME=${UPCLOUD_USERNAME}" -var-file="${CK8S_CONFIG_PATH}/wc-config/cluster.tfvars" -state="${CK8S_CONFIG_PATH}/wc-config/terraform.tfstate" -var="inventory_file=${CK8S_CONFIG_PATH}/wc-config/inventory.ini"
     ```
 
     </details>
