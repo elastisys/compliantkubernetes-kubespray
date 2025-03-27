@@ -123,6 +123,11 @@ local_volume_provisioner_storage_classes: # Installation via kubespray has no su
     host_dir: /mnt/disks/
     mount_dir: /mnt/disks/
 
+kube_memory_reserved: "512Mi"
+kube_cpu_reserved: "100m"
+system_cpu_reserved: "0m"
+system_memory_reserved: "0Mi"
+
 audit_policy_custom_rules: |-
   # The following requests were manually identified as high-volume and low-risk,
   # so drop them.
