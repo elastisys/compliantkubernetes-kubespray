@@ -60,7 +60,11 @@ apiserverAddresses="$(
   .items[] | [
     .status.addresses[] | select(.type == "InternalIP") | .address
   ] + (
-    .metadata.annotations | [."projectcalico.org/IPv4IPIPTunnelAddr", ."projectcalico.org/IPv4WireguardInterfaceAddr"]) | .[]] | sort | .[]'
+    .metadata.annotations | [
+        ."projectcalico.org/IPv4VXLANTunnelAddr", ."projectcalico.org/IPv6VXLANTunnelAddr",
+        ."projectcalico.org/IPv4IPIPTunnelAddr",
+        ."projectcalico.org/IPv4WireguardInterfaceAddr", ."projectcalico.org/IPv6WireguardInterfaceAddr"
+    ]) | .[]] | sort | .[]'
 )"
 
 nodeAddresses="$(
@@ -68,7 +72,12 @@ nodeAddresses="$(
   .items[] | [
     .status.addresses[] | select(.type == "InternalIP") | .address
   ] + (
-    .metadata.annotations | [."projectcalico.org/IPv4IPIPTunnelAddr", ."projectcalico.org/IPv4WireguardInterfaceAddr"]) | .[]] | sort | .[]'
+    .metadata.annotations |
+      [
+        ."projectcalico.org/IPv4VXLANTunnelAddr", ."projectcalico.org/IPv6VXLANTunnelAddr",
+        ."projectcalico.org/IPv4IPIPTunnelAddr",
+        ."projectcalico.org/IPv4WireguardInterfaceAddr", ."projectcalico.org/IPv6WireguardInterfaceAddr"
+      ]) | .[]] | sort | .[]'
 )"
 
 echo "checking networkpolicies..."
