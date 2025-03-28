@@ -45,6 +45,16 @@ rules:
       - tcp: 6800
         end: 7300
 
+  {{- if .Values | get "csi.enableCephfsDriver" false }}
+  egress-rule-mds:
+    peers:
+      - podSelectorLabels:
+          app: rook-ceph-mds
+    ports:
+      - tcp: 6800
+        end: 7568
+  {{- end }}
+
   peers-rule-nodes:
     peers: {{- toYaml $netpol.nodePeers | nindent 6 }}
 
@@ -87,6 +97,9 @@ policies:
         - rule: egress-rule-mgr
         - rule: egress-rule-mon
         - rule: egress-rule-osd
+        {{- if .Values | get "csi.enableCephfsDriver" false }}
+        - rule: egress-rule-mds
+        {{- end }}
       ingress:
         - rule: ingress-rule-apiserver
           ports:
@@ -128,6 +141,9 @@ policies:
         - rule: egress-rule-apiserver
         - rule: egress-rule-mon
         - rule: egress-rule-osd
+        {{- if .Values | get "csi.enableCephfsDriver" false }}
+        - rule: egress-rule-mds
+        {{- end }}
       ingress:
         - name: ingress-rule-blackbox
           ports:
@@ -149,6 +165,12 @@ policies:
                 app: rook-ceph-osd
             - podSelectorLabels:
                 app: rook-ceph-crashcollector
+            {{- if .Values | get "csi.enableCephfsDriver" false }}
+            - podSelectorLabels:
+                app: csi-cephfsplugin-provisioner
+            - podSelectorLabels:
+                app: rook-ceph-mds
+            {{- end }}
           ports:
             - tcp: 6800
 
@@ -161,6 +183,9 @@ policies:
         - rule: egress-rule-mgr
         - rule: egress-rule-mon
         - rule: egress-rule-osd
+        {{- if .Values | get "csi.enableCephfsDriver" false }}
+        - rule: egress-rule-mds
+        {{- end }}
       ingress:
         - rule: peers-rule-nodes
           ports:
@@ -183,6 +208,12 @@ policies:
                 app: rook-ceph-crashcollector
             - podSelectorLabels:
                 app: rook-ceph-exporter
+            {{- if .Values | get "csi.enableCephfsDriver" false }}
+            - podSelectorLabels:
+                app: csi-cephfsplugin-provisioner
+            - podSelectorLabels:
+                app: rook-ceph-mds
+            {{- end }}
           ports:
             - tcp: 3300
             - tcp: 6789
@@ -195,6 +226,9 @@ policies:
         - rule: egress-rule-mgr
         - rule: egress-rule-mon
         - rule: egress-rule-osd
+        {{- if .Values | get "csi.enableCephfsDriver" false }}
+        - rule: egress-rule-mds
+        {{- end }}
         - rule: peers-rule-nodes
           ports:
             - tcp: 6800
@@ -215,6 +249,12 @@ policies:
                 app: rook-ceph-mgr
             - podSelectorLabels:
                 app: rook-ceph-osd
+            {{- if .Values | get "csi.enableCephfsDriver" false }}
+            - podSelectorLabels:
+                app: csi-cephfsplugin-provisioner
+            - podSelectorLabels:
+                app: rook-ceph-mds
+            {{- end }}
           ports:
             - tcp: 6800
               end: 7300
@@ -233,3 +273,56 @@ policies:
       egress:
         - rule: egress-rule-mgr
         - rule: egress-rule-mon
+        {{- if .Values | get "csi.enableCephfsDriver" false }}
+        - rule: egress-rule-mds
+        {{- end }}
+
+    {{- if .Values | get "csi.enableCephfsDriver" false }}
+    csi-cephfsplugin-provisioner:
+      podSelectorLabels:
+        app: csi-cephfsplugin-provisioner
+      egress:
+        - rule: egress-rule-apiserver
+        - rule: egress-rule-mgr
+        - rule: egress-rule-mon
+        - rule: egress-rule-mds
+        - rule: egress-rule-osd
+
+    ceph-file-controller-detect-version:
+      podSelectorLabels:
+        app: ceph-file-controller-detect-version
+      egress:
+        - rule: egress-rule-apiserver
+
+    mds:
+      podSelectorLabels:
+        app: rook-ceph-mds
+      egress:
+        - rule: egress-rule-apiserver
+        - rule: egress-rule-mgr
+        - rule: egress-rule-mon
+        - rule: egress-rule-osd
+      ingress:
+        - rule: peers-rule-nodes
+          ports:
+            - tcp: 6800
+              end: 7568
+        - peers:
+            - podSelectorLabels:
+                app: csi-cephfsplugin-provisioner
+            - podSelectorLabels:
+                app: rook-ceph-operator
+            - podSelectorLabels:
+                app.kubernetes.io/name: rook-ceph-toolbox
+            - podSelectorLabels:
+                app: rook-ceph-mon
+            - podSelectorLabels:
+                app: rook-ceph-osd
+            - podSelectorLabels:
+                app: rook-ceph-mgr
+            - podSelectorLabels:
+                app: rook-ceph-crashcollector
+          ports:
+            - tcp: 6800
+              end: 7568
+    {{- end }}

@@ -203,3 +203,9 @@ clusters:
     networkPolicies:
       apiserverPeers: []
       nodePeers: []
+    csi:
+      # when true, the rook operator will install the necessary compononents
+      # for creating cephfs volumes in the workload cluster, which facilitate
+      # RWX mounts. This adds operational overhead in the form of
+      # metadata (mds), cephfs provisioner, and plugin pods in the ceph cluster.
+      enableCephfsDriver: false
