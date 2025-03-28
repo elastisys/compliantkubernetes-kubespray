@@ -217,3 +217,97 @@ constraints:
           rule: RunAsAny
       mutation:
         dropAllCapabilities: false
+
+    {{ if .Values | get "csi.enableCephfsDriver" false }}
+    cephfs-ctrl-detect-version:
+      podSelectorLabels:
+        app: ceph-file-controller-detect-version
+      allow:
+        volumes:
+          - emptyDir
+          - projected
+      mutation:
+        runAsGroup: 2016
+        runAsUser: 2016
+        fsGroup: 2016
+
+    csi-cephfsplugin-provisioner:
+      podSelectorLabels:
+        app: csi-cephfsplugin-provisioner
+      allow:
+        volumes:
+          - configMap
+          - emptyDir
+          - hostPath
+          - projected
+        allowedHostPaths:
+          - pathPrefix: /dev
+          - pathPrefix: /lib/modules
+          - pathPrefix: /sys
+        runAsUser:
+          rule: RunAsAny
+        runAsGroup:
+          rule: RunAsAny
+        supplementalGroups:
+          rule: RunAsAny
+        fsGroup:
+          rule: RunAsAny
+      mutation:
+        dropAllCapabilities: false
+
+    csi-cephfsplugin:
+      podSelectorLabels:
+        app: csi-cephfsplugin
+      allow:
+        allowPrivilegeEscalation: true
+        hostNetworkPorts: true
+        hostNamespace: true
+        privileged: true
+        volumes:
+          - configMap
+          - emptyDir
+          - hostPath
+          - projected
+        allowedHostPaths:
+          - pathPrefix: /dev
+          - pathPrefix: /lib/modules
+          - pathPrefix: /run/mount
+          - pathPrefix: /run/udev
+          - pathPrefix: /sys
+          - pathPrefix: /var/lib/rook
+          - pathPrefix: /var/lib/kubelet/plugins_registry
+          - pathPrefix: /var/lib/kubelet/plugins
+          - pathPrefix: /var/lib/kubelet/pods
+        runAsUser:
+          rule: RunAsAny
+        runAsGroup:
+          rule: RunAsAny
+        supplementalGroups:
+          rule: RunAsAny
+        fsGroup:
+          rule: RunAsAny
+      mutation:
+        dropAllCapabilities: false
+
+    mds:
+      podSelectorLabels:
+        app: rook-ceph-mds
+      allow:
+        volumes:
+          - emptyDir
+          - hostPath
+          - projected
+          - secret
+        allowedHostPaths:
+          - pathPrefix: /var/lib/rook
+        runAsUser:
+          rule: RunAsAny
+        runAsGroup:
+          rule: RunAsAny
+        supplementalGroups:
+          rule: RunAsAny
+        fsGroup:
+          rule: RunAsAny
+      mutation:
+        dropAllCapabilities: false
+    {{ end }}
