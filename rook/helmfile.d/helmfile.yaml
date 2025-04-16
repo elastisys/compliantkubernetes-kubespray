@@ -33,6 +33,7 @@ releases:
     namespace: rook-ceph
     labels:
       app: netpol
+    installed: {{ .Values.networkPolicies.enabled }}
     chart: ./charts/networkpolicies
     version: 0.1.0
     needs:
