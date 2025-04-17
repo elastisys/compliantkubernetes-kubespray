@@ -191,7 +191,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "sum without (instance, ceph_daemon) (irate(ceph_osd_op_w_in_bytes{cluster=\"$cluster\"}[5m]))",
+          "expr": "sum (irate(ceph_osd_op_w_in_bytes{cluster=\"$cluster\"}[5m]))",
           "format": "time_series",
           "instant": true,
           "interval": "$interval",
@@ -260,7 +260,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "sum without (ceph_daemon, instance) (irate(ceph_osd_op_r_out_bytes{cluster=\"$cluster\"}[5m]))",
+          "expr": "sum (irate(ceph_osd_op_r_out_bytes{cluster=\"$cluster\"}[5m]))",
           "format": "time_series",
           "instant": true,
           "interval": "$interval",
@@ -328,7 +328,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "sum without (instance) (ceph_cluster_total_bytes{cluster=\"$cluster\"})",
+          "expr": "sum (ceph_cluster_total_bytes{cluster=\"$cluster\"})",
           "format": "time_series",
           "instant": true,
           "interval": "$interval",
@@ -551,7 +551,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "sum without (instance, ceph_daemon) (ceph_osd_op_w_in_bytes{cluster=\"$cluster\"})",
+          "expr": "sum (ceph_osd_op_w_in_bytes{cluster=\"$cluster\"})",
           "format": "time_series",
           "instant": false,
           "interval": "$interval",
@@ -620,7 +620,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "sum without (instance, ceph_daemon) (ceph_osd_op_r_out_bytes{cluster=\"$cluster\"})",
+          "expr": "sum (ceph_osd_op_r_out_bytes{cluster=\"$cluster\"})",
           "format": "time_series",
           "instant": false,
           "interval": "$interval",
@@ -758,7 +758,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "sum without (ceph_daemon, instance) (irate(ceph_osd_op_w{cluster=\"$cluster\"}[5m]))",
+          "expr": "sum (irate(ceph_osd_op_w{cluster=\"$cluster\"}[5m]))",
           "format": "time_series",
           "instant": true,
           "interval": "$interval",
@@ -827,7 +827,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "sum without (ceph_daemon, instance) (irate(ceph_osd_op_r{cluster=\"$cluster\"}[5m]))",
+          "expr": "sum (irate(ceph_osd_op_r{cluster=\"$cluster\"}[5m]))",
           "format": "time_series",
           "instant": true,
           "interval": "$interval",
@@ -895,7 +895,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "sum without (instance) (ceph_cluster_total_used_bytes{cluster=\"$cluster\"})",
+          "expr": "sum (ceph_cluster_total_used_bytes{cluster=\"$cluster\"})",
           "format": "time_series",
           "instant": true,
           "interval": "$interval",
@@ -968,7 +968,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "sum without (instance, ceph_daemon) (ceph_mon_num_sessions{cluster='$cluster'})",
+          "expr": "sum (ceph_mon_num_sessions{cluster='$cluster'})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1435,7 +1435,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "avg without (instance, ceph_daemon) (ceph_osd_numpg{cluster=\"$cluster\"})",
+          "expr": "avg (ceph_osd_numpg{cluster=\"$cluster\"})",
           "format": "time_series",
           "instant": true,
           "interval": "$interval",
@@ -1512,7 +1512,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "avg without (instance, ceph_daemon) (ceph_osd_apply_latency_ms{cluster=\"$cluster\"})",
+          "expr": "avg (ceph_osd_apply_latency_ms{cluster=\"$cluster\"})",
           "format": "time_series",
           "instant": true,
           "interval": "$interval",
@@ -1666,7 +1666,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "avg without (instance, ceph_daemon) (rate(ceph_osd_op_w_latency_sum{cluster=\"$cluster\"}[5m]) / rate(ceph_osd_op_w_latency_count{cluster=\"$cluster\"}[5m]) >= 0)",
+          "expr": "avg (rate(ceph_osd_op_w_latency_sum{cluster=\"$cluster\"}[5m]) / rate(ceph_osd_op_w_latency_count{cluster=\"$cluster\"}[5m]) >= 0)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -1742,7 +1742,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "avg without (instance, ceph_daemon) (rate(ceph_osd_op_r_latency_sum{cluster=\"$cluster\"}[5m])/rate(ceph_osd_op_r_latency_count{cluster=\"$cluster\"}[5m]) >= 0)",
+          "expr": "avg (rate(ceph_osd_op_r_latency_sum{cluster=\"$cluster\"}[5m])/rate(ceph_osd_op_r_latency_count{cluster=\"$cluster\"}[5m]) >= 0)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -4367,7 +4367,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg without (instance,ceph_daemon) (rate(ceph_osd_op_r_latency_sum{cluster=\"$cluster\"}[5m]) / rate(ceph_osd_op_r_latency_count{cluster=\"$cluster\"}[5m]) >= 0)",
+          "expr": "avg (rate(ceph_osd_op_r_latency_sum{cluster=\"$cluster\"}[5m]) / rate(ceph_osd_op_r_latency_count{cluster=\"$cluster\"}[5m]) >= 0)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4375,7 +4375,7 @@
           "refId": "A"
         },
         {
-          "expr": "avg without (instance, ceph_daemon) (rate(ceph_osd_op_w_latency_sum{cluster=\"$cluster\"}[5m]) / rate(ceph_osd_op_w_latency_count{cluster=\"$cluster\"}[5m]) >= 0)",
+          "expr": "avg (rate(ceph_osd_op_w_latency_sum{cluster=\"$cluster\"}[5m]) / rate(ceph_osd_op_w_latency_count{cluster=\"$cluster\"}[5m]) >= 0)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
