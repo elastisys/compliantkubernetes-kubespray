@@ -89,7 +89,7 @@ Elastisys Welkin® Kubespray
 - [ ] Successful `./bin/ck8s test sc|wc` from the apps repository
 - [ ] If possible let the environment stabilise into a steady state after the install
     - Best is to perform the install at the end of the day to give it the night to stabilise.
-    - Otherwise give it at least one to two hours to stabilise if possible.
+    - Otherwise, give it at least one to two hours to stabilise if possible.
 
 #### Automated tests
 
