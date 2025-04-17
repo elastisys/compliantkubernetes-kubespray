@@ -97,6 +97,31 @@ constraints:
         runAsUser: 167
         fsGroup: 167
 
+    exporter:
+      podSelectorLabels:
+        app: rook-ceph-exporter
+      allow:
+        allowPrivilegeEscalation: true
+        privileged: true
+        volumes:
+          - hostPath
+          - projected
+          - secret
+        allowedHostPaths:
+          - pathPrefix: /var/lib/rook/exporter
+          - pathPrefix: /var/lib/rook/rook-ceph/crash
+          - pathPrefix: /var/lib/rook/rook-ceph/log
+        runAsUser:
+          rule: RunAsAny
+        runAsGroup:
+          rule: RunAsAny
+        supplementalGroups:
+          rule: RunAsAny
+        fsGroup:
+          rule: RunAsAny
+      mutation:
+        dropAllCapabilities: false
+
     mgr:
       podSelectorLabels:
         app: rook-ceph-mgr
