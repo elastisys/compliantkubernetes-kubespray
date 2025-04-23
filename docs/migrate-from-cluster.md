@@ -47,7 +47,7 @@ This has only been tested on CityCloud and might not look the same for other clo
     export TF_VAR_ssh_pub_key_sc="${CK8S_CONFIG_PATH}/ssh/id_rsa_sc.pub"
     export TF_VAR_ssh_pub_key_wc="${CK8S_CONFIG_PATH}/ssh/id_rsa_wc.pub"
     export TF_DATA_DIR="${CK8S_CONFIG_PATH}/.state/.terraform"
-    export TF_WORKSPACE=$(yq4 ".environment_name" ${CK8S_CONFIG_PATH}/config.yaml)
+    export TF_WORKSPACE=$(yq ".environment_name" ${CK8S_CONFIG_PATH}/config.yaml)
 
     terraform state show module.service_cluster.module.network.openstack_networking_network_v2.network
     .
@@ -235,7 +235,7 @@ This has only been tested on CityCloud and might not look the same for other clo
     export TF_VAR_ssh_pub_key_sc="${CK8S_CONFIG_PATH}/ssh/id_rsa_sc.pub"
     export TF_VAR_ssh_pub_key_wc="${CK8S_CONFIG_PATH}/ssh/id_rsa_wc.pub"
     export TF_DATA_DIR="${CK8S_CONFIG_PATH}/.state/.terraform"
-    export TF_WORKSPACE=$(yq4 r ${CK8S_CONFIG_PATH}/config.yaml environment_name)
+    export TF_WORKSPACE=$(yq r ${CK8S_CONFIG_PATH}/config.yaml environment_name)
 
     terraform state rm module.service_cluster.module.network.openstack_networking_network_v2.network
     terraform state rm module.service_cluster.module.network.openstack_networking_router_v2.router

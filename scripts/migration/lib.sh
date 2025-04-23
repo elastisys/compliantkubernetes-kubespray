@@ -71,7 +71,7 @@ config_version() {
   local prefix="${1}"
 
   local version
-  version="$(yq4 ".ck8sKubesprayVersion" <<<"${CONFIG["${prefix}"]}")"
+  version="$(yq ".ck8sKubesprayVersion" <<<"${CONFIG["${prefix}"]}")"
 
   VERSION["${prefix}-config"]="${version}"
   version="${version#v}"

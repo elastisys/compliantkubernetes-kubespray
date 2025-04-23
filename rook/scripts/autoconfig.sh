@@ -7,7 +7,7 @@ addressInSubnet() {
 
 # fn <key> <addresses>
 updatePeers() {
-  peers="$(yq4 ".commons * .clusters.${cluster} | .networkPolicies.${1} | .[].cidr" "${CK8S_CONFIG_PATH}/rook/values.yaml")"
+  peers="$(yq ".commons * .clusters.${cluster} | .networkPolicies.${1} | .[].cidr" "${CK8S_CONFIG_PATH}/rook/values.yaml")"
 
   local -a update
 
@@ -22,14 +22,14 @@ updatePeers() {
     update+=("${address}/32")
   done
 
-  old="$(yq4 -oj -I0 '[split(" ") | sort | .[] | {"cidr": .}]' <<<"$peers")"
-  new="$(yq4 -oj -I0 '[split(" ") | sort | unique | .[] | {"cidr": .}]' <<<"${update[*]}")"
+  old="$(yq -oj -I0 '[split(" ") | sort | .[] | {"cidr": .}]' <<<"$peers")"
+  new="$(yq -oj -I0 '[split(" ") | sort | unique | .[] | {"cidr": .}]' <<<"${update[*]}")"
 
-  if ! diff -u3 --color --label "current .commons * .clusters.${cluster} | .${1}" <(yq4 -P <<<"$old") --label "update .cluster.${cluster}.${1}" <(yq4 -P <<<"$new"); then
+  if ! diff -u3 --color --label "current .commons * .clusters.${cluster} | .${1}" <(yq -P <<<"$old") --label "update .cluster.${cluster}.${1}" <(yq -P <<<"$new"); then
     echo -n "apply update? [Y/n]: "
     read -r reply
     if [[ "${reply}" =~ ^(Y|y|)$ ]]; then
-      yq4 -i ".clusters.${cluster}.networkPolicies.${1} = ${new}" "${CK8S_CONFIG_PATH}/rook/values.yaml"
+      yq -i ".clusters.${cluster}.networkPolicies.${1} = ${new}" "${CK8S_CONFIG_PATH}/rook/values.yaml"
     fi
   else
     echo "- ${cluster}/networkPolicies/${1}: up to date"
@@ -42,7 +42,7 @@ if [[ -z "${CK8S_CONFIG_PATH:-}" ]]; then
 elif [[ -z "${1:-}" ]]; then
   echo "err: missing cluster name" >&2
   exit
-elif [[ "$(yq4 ".clusters | keys | [\"${1}\"] - . | length" "${CK8S_CONFIG_PATH}/rook/values.yaml")" == "1" ]]; then
+elif [[ "$(yq ".clusters | keys | [\"${1}\"] - . | length" "${CK8S_CONFIG_PATH}/rook/values.yaml")" == "1" ]]; then
   echo "err: invalid cluster name" >&2
   exit
 fi
@@ -56,7 +56,7 @@ else
 fi
 
 apiserverAddresses="$(
-  kubectl get no -lnode-role.kubernetes.io/control-plane= -oyaml | yq4 '[
+  kubectl get no -lnode-role.kubernetes.io/control-plane= -oyaml | yq '[
   .items[] | [
     .status.addresses[] | select(.type == "InternalIP") | .address
   ] + (
@@ -64,7 +64,7 @@ apiserverAddresses="$(
 )"
 
 nodeAddresses="$(
-  kubectl get no -oyaml | yq4 '[
+  kubectl get no -oyaml | yq '[
   .items[] | [
     .status.addresses[] | select(.type == "InternalIP") | .address
   ] + (
@@ -97,12 +97,12 @@ pspcrds=(
   k8spspvolumetypes.constraints.gatekeeper.sh
 )
 
-if [[ "$(yq4 ".commons * .clusters.${cluster} | .podSecurityPolicies.enabled" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
+if [[ "$(yq ".commons * .clusters.${cluster} | .podSecurityPolicies.enabled" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
   if kubectl get crds "${pspcrds[@]}" &>/dev/null; then
     echo -n "- enable Gatekeeper podsecuritypolicies? [Y/n]: "
     read -r reply
     if [[ "${reply}" =~ ^(Y|y|)$ ]]; then
-      yq4 -i ".clusters.${cluster}.podSecurityPolicies.enabled = true" "${CK8S_CONFIG_PATH}/rook/values.yaml"
+      yq -i ".clusters.${cluster}.podSecurityPolicies.enabled = true" "${CK8S_CONFIG_PATH}/rook/values.yaml"
     fi
   else
     echo "- warning: Gatekeeper constraints not available"
@@ -112,13 +112,13 @@ else
 fi
 
 echo "checking service monitors..."
-if [[ "$(yq4 ".commons * .clusters.${cluster} | .monitoring.installServiceMonitors" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
+if [[ "$(yq ".commons * .clusters.${cluster} | .monitoring.installServiceMonitors" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
   if kubectl get crd prometheuses.monitoring.coreos.com &>/dev/null; then
     if [[ -n "$(kubectl get po -A -l app.kubernetes.io/name=prometheus 2>/dev/null)" ]]; then
       echo -n "- install Prometheus service monitors? [Y/n]: "
       read -r reply
       if [[ "${reply}" =~ ^(Y|y|)$ ]]; then
-        yq4 -i ".clusters.${cluster}.monitoring.installServiceMonitors = true" "${CK8S_CONFIG_PATH}/rook/values.yaml"
+        yq -i ".clusters.${cluster}.monitoring.installServiceMonitors = true" "${CK8S_CONFIG_PATH}/rook/values.yaml"
       fi
     else
       echo "- note: Prometheus not available"
@@ -131,12 +131,12 @@ else
 fi
 
 echo "checking dashboards..."
-if [[ "$(yq4 ".commons * .clusters.${cluster} | .monitoring.installGrafanaDashboards" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
+if [[ "$(yq ".commons * .clusters.${cluster} | .monitoring.installGrafanaDashboards" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
   if [[ -n "$(kubectl get po -A -l app.kubernetes.io/name=grafana 2>/dev/null)" ]]; then
     echo -n "- install Grafana dashboards? [Y/n]: "
     read -r reply
     if [[ "${reply}" =~ ^(Y|y|)$ ]]; then
-      yq4 -i ".clusters.${cluster}.monitoring.installGrafanaDashboards = true" "${CK8S_CONFIG_PATH}/rook/values.yaml"
+      yq -i ".clusters.${cluster}.monitoring.installGrafanaDashboards = true" "${CK8S_CONFIG_PATH}/rook/values.yaml"
     fi
   else
     echo "- note: Grafana not available"
@@ -146,13 +146,13 @@ else
 fi
 
 echo "checking rules..."
-if [[ "$(yq4 ".commons * .clusters.${cluster} | .monitoring.installPrometheusRules" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
+if [[ "$(yq ".commons * .clusters.${cluster} | .monitoring.installPrometheusRules" "${CK8S_CONFIG_PATH}/rook/values.yaml")" != "true" ]]; then
   if kubectl get crd prometheusrules.monitoring.coreos.com &>/dev/null; then
     if [[ -n "$(kubectl get po -A -l app.kubernetes.io/name=thanos 2>/dev/null)" ]]; then
       echo -n "- install Prometheus rules? [Y/n]: "
       read -r reply
       if [[ "${reply}" =~ ^(Y|y|)$ ]]; then
-        yq4 -i ".clusters.${cluster}.monitoring.installPrometheusRules = true" "${CK8S_CONFIG_PATH}/rook/values.yaml"
+        yq -i ".clusters.${cluster}.monitoring.installPrometheusRules = true" "${CK8S_CONFIG_PATH}/rook/values.yaml"
       fi
     else
       echo "- note: Thanos not available"

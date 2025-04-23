@@ -5,7 +5,7 @@ yq_null() {
     log_fatal "usage: yq_null <sc|wc> <file> <target>"
   fi
 
-  test "$(yq4 "${3}" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml")" = "null"
+  test "$(yq "${3}" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml")" = "null"
 }
 
 yq_check() {
@@ -13,7 +13,7 @@ yq_check() {
     log_fatal "usage: yq_check <sc|wc> <file> <target> <value>"
   fi
 
-  test "$(yq4 "${3}" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml")" = "$4"
+  test "$(yq "${3}" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml")" = "$4"
 }
 
 yq_copy() {
@@ -23,7 +23,7 @@ yq_copy() {
 
   if ! yq_null "${1}" "${2}" "${3}"; then
     log_info "  - copy: ${3} to ${4}"
-    yq4 -i "${4} = ${3}" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml"
+    yq -i "${4} = ${3}" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml"
   fi
 }
 
@@ -34,7 +34,7 @@ yq_move() {
 
   if ! yq_null "${1}" "${2}" "${3}"; then
     log_info "  - move: ${3} to ${4}"
-    yq4 -i "${4} = ${3} | del(${3})" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml"
+    yq -i "${4} = ${3} | del(${3})" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml"
   fi
 }
 
@@ -44,7 +44,7 @@ yq_add() {
   fi
 
   log_info "  - add: ${4} to ${3}"
-  yq4 -i "$3 = $4" "$CK8S_CONFIG_PATH/$1-config/group_vars/${2}.yaml"
+  yq -i "$3 = $4" "$CK8S_CONFIG_PATH/$1-config/group_vars/${2}.yaml"
 }
 
 yq_remove() {
@@ -54,16 +54,16 @@ yq_remove() {
 
   if ! yq_null "${1}" "${2}" "${3}"; then
     log_info "  - remove: ${3}"
-    yq4 -i "del(${3})" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml"
+    yq -i "del(${3})" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml"
   fi
 }
 
 yq_merge() {
-  yq4 eval-all --prettyPrint "... comments=\"\" | explode(.) as \$item ireduce ({}; . * \$item )" "${@}"
+  yq eval-all --prettyPrint "... comments=\"\" | explode(.) as \$item ireduce ({}; . * \$item )" "${@}"
 }
 
 yq_paths() {
-  yq4 "[.. | select(tag != \"!!map\" and . == \"${1}\") | path | with(.[]; . = (\"\\\"\" + .) + \"\\\"\") | \".\" + join \".\" | sub(\"\\.\\\"[0-9]\\\"+.*\"; \"\")] | sort | unique | .[]"
+  yq "[.. | select(tag != \"!!map\" and . == \"${1}\") | path | with(.[]; . = (\"\\\"\" + .) + \"\\\"\") | \".\" + join \".\" | sub(\"\\.\\\"[0-9]\\\"+.*\"; \"\")] | sort | unique | .[]"
 }
 
 # Returns the length of the target object.
@@ -72,5 +72,5 @@ yq_length() {
     log_fatal "usage: yq_length <sc|wc> <file> <target>"
   fi
 
-  yq4 "${3} | length()" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml"
+  yq "${3} | length()" "${CK8S_CONFIG_PATH}/${1}-config/group_vars/${2}.yaml"
 }

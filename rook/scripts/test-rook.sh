@@ -63,11 +63,11 @@ function testOSDs {
 #   2. cluster
 function testMons {
   numberOfMons=$(kubectl -n rook-ceph get deployments.apps -o=name | grep -c rook-ceph-mon)
-  numberOfMonsDesired=$(yq4 ".commons.mon.count" "$CONFIG_FILE")
+  numberOfMonsDesired=$(yq ".commons.mon.count" "$CONFIG_FILE")
   monDeployments=()
   read -r -d '' -a monDeployments <<<"$(kubectl -n rook-ceph get deployments.apps -o=json | jq -r '.items[].metadata.name' | grep "rook-ceph-mon")"
   if [[ -z $numberOfMonsDesired || $numberOfMonsDesired = "null" ]]; then
-    numberOfMonsDesired=$(yq4 ".cephClusterSpec.mon.count" "${here}/../helmfile.d/upstream/rook-ceph-cluster/values.yaml")
+    numberOfMonsDesired=$(yq ".cephClusterSpec.mon.count" "${here}/../helmfile.d/upstream/rook-ceph-cluster/values.yaml")
   fi
   if [[ ! $numberOfMons = "$numberOfMonsDesired" ]]; then
     echo "${numberOfMons}/${numberOfMonsDesired} deployments exist ❌"
@@ -87,7 +87,7 @@ function testMons {
 #   2. cluster
 function testMgrs {
   numberOfMgrs=$(kubectl -n rook-ceph get deployments.apps -o=name | grep -c rook-ceph-mgr)
-  numberOfMgrsDesired=$(yq4 ".commons.mgr.count" "$CONFIG_FILE")
+  numberOfMgrsDesired=$(yq ".commons.mgr.count" "$CONFIG_FILE")
   mgrDeployments=()
   read -r -d '' -a mgrDeployments <<<"$(kubectl -n rook-ceph get deployments.apps -o=json | jq -r '.items[].metadata.name' | grep "rook-ceph-mgr")"
   if [[ -z "$numberOfMgrsDesired" || "$numberOfMgrsDesired" = "null" ]]; then
@@ -95,12 +95,12 @@ function testMgrs {
       TMP_DIR=$(mktemp -p /tmp -d rook-ceph-test.XXXXXX)
       append_trap "rm -rf ${TMP_DIR}" EXIT
       helmfile -e service write-values --output-file-template "${TMP_DIR}/{{ .State.BaseName }}-{{ .State.AbsPathSHA1 }}/{{ .Release.Name}}.yaml" &>/dev/null
-      numberOfMgrsDesired=$(yq4 ".cephClusterSpec.mgr.count" "$(find "${TMP_DIR}"/helmfile-*/ -name "rook-ceph-cluster.yaml")")
+      numberOfMgrsDesired=$(yq ".cephClusterSpec.mgr.count" "$(find "${TMP_DIR}"/helmfile-*/ -name "rook-ceph-cluster.yaml")")
     elif [[ "${cluster}" = "wc" ]]; then
       TMP_DIR=$(mktemp -p /tmp -d rook-ceph-test.XXXXXX)
       append_trap "rm -rf ${TMP_DIR}" EXIT
       helmfile -e workload write-values --output-file-template "${TMP_DIR}/{{ .State.BaseName }}-{{ .State.AbsPathSHA1 }}/{{ .Release.Name}}.yaml" &>/dev/null
-      numberOfMgrsDesired=$(yq4 ".cephClusterSpec.mgr.count" "$(find "${TMP_DIR}"/helmfile-*/ -name "rook-ceph-cluster.yaml")")
+      numberOfMgrsDesired=$(yq ".cephClusterSpec.mgr.count" "$(find "${TMP_DIR}"/helmfile-*/ -name "rook-ceph-cluster.yaml")")
     fi
   fi
   if [[ ! $numberOfMgrs = "$numberOfMgrsDesired" ]]; then
@@ -232,9 +232,9 @@ function test_rook() {
     targets=(
       "serviceMonitor/rook-ceph/rook-ceph-mgr/0 1"
     )
-    if [[ $cluster = "sc" && $(yq4 ".clusters.service.monitoring.installServiceMonitors" "$CONFIG_FILE") = true ]]; then
+    if [[ $cluster = "sc" && $(yq ".clusters.service.monitoring.installServiceMonitors" "$CONFIG_FILE") = true ]]; then
       test_targets_retry "svc/kube-prometheus-stack-prometheus" "${targets[@]}"
-    elif [[ $cluster = "wc" && $(yq4 ".clusters.workload.monitoring.installServiceMonitors" "$CONFIG_FILE") = true ]]; then
+    elif [[ $cluster = "wc" && $(yq ".clusters.workload.monitoring.installServiceMonitors" "$CONFIG_FILE") = true ]]; then
       test_targets_retry "svc/kube-prometheus-stack-prometheus" "${targets[@]}"
     else
       echo "ServiceMontiors not enabled in $cluster - Skipping"
