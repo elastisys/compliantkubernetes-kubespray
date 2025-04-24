@@ -85,7 +85,7 @@ done
 
 If all went well the infrastructure should now be up and running
 
-## Compliantkubernetes kubespray
+## Welkin Kubespray
 
 To set up kubernetes with compliantkubernetes-kubespray you can follow these steps.
 

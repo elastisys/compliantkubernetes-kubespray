@@ -53,11 +53,11 @@ Elastisys Welkin® Kubespray
 
     ```bash
     # configure
-    yq4 -i '.grafana.user.oidc.allowedDomains += ["example.com"]' "${CK8S_CONFIG_PATH}/sc-config.yaml"
-    yq4 -i '.grafana.ops.oidc.allowedDomains += ["example.com"]' "${CK8S_CONFIG_PATH}/sc-config.yaml"
-    yq4 -i 'with(.opensearch.extraRoleMappings[]; with(select(.mapping_name != "all_access"); .definition.users += ["admin@example.com"]))' "${CK8S_CONFIG_PATH}/sc-config.yaml"
-    yq4 -i '.user.adminUsers += ["admin@example.com"]' "${CK8S_CONFIG_PATH}/wc-config.yaml"
-    yq4 -i '.dex.enableStaticLogin = true' "${CK8S_CONFIG_PATH}/sc-config.yaml"
+    yq -i '.grafana.user.oidc.allowedDomains += ["example.com"]' "${CK8S_CONFIG_PATH}/sc-config.yaml"
+    yq -i '.grafana.ops.oidc.allowedDomains += ["example.com"]' "${CK8S_CONFIG_PATH}/sc-config.yaml"
+    yq -i 'with(.opensearch.extraRoleMappings[]; with(select(.mapping_name != "all_access"); .definition.users += ["admin@example.com"]))' "${CK8S_CONFIG_PATH}/sc-config.yaml"
+    yq -i '.user.adminUsers += ["admin@example.com"]' "${CK8S_CONFIG_PATH}/wc-config.yaml"
+    yq -i '.dex.enableStaticLogin = true' "${CK8S_CONFIG_PATH}/sc-config.yaml"
 
     # apply from the apps repository
     ./bin/ck8s apply sc
@@ -69,8 +69,8 @@ Elastisys Welkin® Kubespray
     <details><summary>Commands</summary>
 
     ```sh
-    yq4 -i '.grafana.user.trailingDots = false' "${CK8S_CONFIG_PATH}/sc-config.yaml"
-    yq4 -i '.grafana.ops.trailingDots = false' "${CK8S_CONFIG_PATH}/sc-config.yaml"
+    yq -i '.grafana.user.trailingDots = false' "${CK8S_CONFIG_PATH}/sc-config.yaml"
+    yq -i '.grafana.ops.trailingDots = false' "${CK8S_CONFIG_PATH}/sc-config.yaml"
 
     # apply from the apps repository
     ./bin/ck8s ops helmfile sc -lapp=grafana diff
@@ -89,7 +89,7 @@ Elastisys Welkin® Kubespray
 - [ ] Successful `./bin/ck8s test sc|wc` from the apps repository
 - [ ] If possible let the environment stabilise into a steady state after the install
     - Best is to perform the install at the end of the day to give it the night to stabilise.
-    - Otherwise give it at least one to two hours to stabilise if possible.
+    - Otherwise, give it at least one to two hours to stabilise if possible.
 
 #### Automated tests
 
@@ -477,11 +477,11 @@ Elastisys Welkin® Kubespray
 
     ```bash
     # configure
-    yq4 -i '.grafana.user.oidc.allowedDomains += ["example.com"]' "${CK8S_CONFIG_PATH}/sc-config.yaml"
-    yq4 -i '.grafana.ops.oidc.allowedDomains += ["example.com"]' "${CK8S_CONFIG_PATH}/sc-config.yaml"
-    yq4 -i 'with(.opensearch.extraRoleMappings[]; with(select(.mapping_name != "all_access"); .definition.users += ["admin@example.com"]))' "${CK8S_CONFIG_PATH}/sc-config.yaml"
-    yq4 -i '.user.adminUsers += ["admin@example.com"]' "${CK8S_CONFIG_PATH}/wc-config.yaml"
-    yq4 -i '.dex.enableStaticLogin = true' "${CK8S_CONFIG_PATH}/sc-config.yaml"
+    yq -i '.grafana.user.oidc.allowedDomains += ["example.com"]' "${CK8S_CONFIG_PATH}/sc-config.yaml"
+    yq -i '.grafana.ops.oidc.allowedDomains += ["example.com"]' "${CK8S_CONFIG_PATH}/sc-config.yaml"
+    yq -i 'with(.opensearch.extraRoleMappings[]; with(select(.mapping_name != "all_access"); .definition.users += ["admin@example.com"]))' "${CK8S_CONFIG_PATH}/sc-config.yaml"
+    yq -i '.user.adminUsers += ["admin@example.com"]' "${CK8S_CONFIG_PATH}/wc-config.yaml"
+    yq -i '.dex.enableStaticLogin = true' "${CK8S_CONFIG_PATH}/sc-config.yaml"
 
     # apply from the apps repository
     ./bin/ck8s apply sc
@@ -493,8 +493,8 @@ Elastisys Welkin® Kubespray
     <details><summary>Commands</summary>
 
     ```sh
-    yq4 -i '.grafana.user.trailingDots = false' "${CK8S_CONFIG_PATH}/sc-config.yaml"
-    yq4 -i '.grafana.ops.trailingDots = false' "${CK8S_CONFIG_PATH}/sc-config.yaml"
+    yq -i '.grafana.user.trailingDots = false' "${CK8S_CONFIG_PATH}/sc-config.yaml"
+    yq -i '.grafana.ops.trailingDots = false' "${CK8S_CONFIG_PATH}/sc-config.yaml"
 
     # apply from the apps repository
     ./bin/ck8s ops helmfile sc -lapp=grafana diff

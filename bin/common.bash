@@ -89,7 +89,7 @@ check_tools() {
   warn=0
   err=0
 
-  for executable in jq yq4 sops kubectl helm helmfile terraform; do
+  for executable in jq yq sops kubectl helm helmfile terraform; do
     if ! command -v "${executable}" >/dev/null; then
       log_error "Required dependency ${executable} missing"
       err=1
@@ -114,7 +114,7 @@ check_tools() {
     fi
   }
 
-  check_minor "$(yq4 '.[0].vars.terraform_version' "${req}")" "$(terraform --version --json | yq4 '.terraform_version')" "terraform"
+  check_minor "$(yq '.[0].vars.terraform_version' "${req}")" "$(terraform --version --json | yq '.terraform_version')" "terraform"
 
   if [[ "${warn}" != 0 ]]; then
     if [[ -t 1 ]]; then
@@ -133,13 +133,13 @@ validate_sops_config() {
     exit 1
   fi
 
-  rule_count=$(yq4 '.creation_rules | length' "${sops_config}")
+  rule_count=$(yq '.creation_rules | length' "${sops_config}")
   if [ "${rule_count:-0}" -gt 1 ]; then
     log_error "ERROR: SOPS config has more than one creation rule."
     exit 1
   fi
 
-  fingerprints=$(yq4 '.creation_rules[0].pgp' "${sops_config}")
+  fingerprints=$(yq '.creation_rules[0].pgp' "${sops_config}")
   if ! [[ "${fingerprints}" =~ ^[A-Z0-9,' ']+$ ]]; then
     log_error "ERROR: SOPS config contains no or invalid PGP keys."
     log_error "fingerprints=${fingerprints}"
@@ -176,7 +176,7 @@ append_trap() {
 
 # Write PGP fingerprints to SOPS config
 sops_config_write_fingerprints() {
-  yq4 -n '.creation_rules[0].pgp = "'"${1}"'"' >"${sops_config}" ||
+  yq -n '.creation_rules[0].pgp = "'"${1}"'"' >"${sops_config}" ||
     (log_error "Failed to write fingerprints" && rm "${sops_config}" && exit 1)
 }
 
@@ -331,7 +331,7 @@ ck8s_kubespray_version_check() {
   pushd "${root_path}" || exit
   version=$(git describe --exact-match --tags 2>/dev/null || git rev-parse HEAD)
   popd || exit
-  version_in_config=$(yq4 .ck8sKubesprayVersion "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
+  version_in_config=$(yq .ck8sKubesprayVersion "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
 
   if [[ -z "${version_in_config}" || "${version_in_config}" == "null" ]]; then
     log_error "ERROR: No version set. Ensure that ${config_path}/group_vars/all/ck8s-kubespray-general.yaml exists and has ck8sKubesprayVersion set."
@@ -384,10 +384,10 @@ ops_kubectl() { # <prefix> <args...>
 assign_host() {
   local node=$1
   # Check for control plane nodes
-  control_plane_label=$(yq4 .control_plane_label "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
+  control_plane_label=$(yq .control_plane_label "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
   # Check for AMS
-  primary_group_label=$(yq4 .group_label_primary "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
-  secondary_group_label=$(yq4 .group_label_secondary "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
+  primary_group_label=$(yq .group_label_primary "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
+  secondary_group_label=$(yq .group_label_secondary "${config_path}/group_vars/all/ck8s-kubespray-general.yaml")
   if [[ $(ops_kubectl "$prefix" get node "$node" -ojson | jq ".metadata.labels | has(\"${control_plane_label}\")") == "true" ]]; then
     target_group="kube_control_plane"
     if [[ "$(group_exists "${config[groups_inventory_file]}" "$target_group")" != "true" ]]; then
