@@ -1,0 +1,13 @@
+# containerd_registries_mirrors:
+#   - prefix: docker.io
+#     mirrors:
+#       - host: https://<private_registry>
+#         capabilities: ["pull", "resolve"]
+#         skip_verify: true
+#         override_path: true
+#         auth:
+#           username: "<username>"
+#           password: "<password>"
+#       - host: https://registry-1.docker.io
+#         capabilities: ["pull", "resolve"]
+#         skip_verify: false
