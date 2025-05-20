@@ -30,6 +30,8 @@ usage() {
   echo "      args: <wc|sc>" 1>&2
   echo "  sync-groups-inventory                       sync groups static inventory" 1>&2
   echo "      args: <wc|sc>" 1>&2
+  echo "  node-labels-and-taints-inventory            dynamic inventory that configures node labels and taints" 1>&2
+  echo "      args: <wc|sc> [--list] [--host <hostname>]" 1>&2
   exit 1
 }
 
@@ -120,6 +122,13 @@ sync-groups-inventory)
   fi
   shift 2
   "${here}/sync-groups-inventory.bash" "${@}"
+  ;;
+node-labels-and-taints-inventory)
+  if [ $# -lt 2 ]; then
+    usage
+  fi
+  shift 2
+  "${here}/node-labels-and-taints-inventory.bash" "${@}"
   ;;
 *) usage ;;
 esac

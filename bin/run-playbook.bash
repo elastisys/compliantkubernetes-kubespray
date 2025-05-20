@@ -34,7 +34,7 @@ if [ -z "${CK8S_KUBESPRAY_NO_VENV+x}" ]; then
 fi
 
 log_info "Running kubespray"
-ansible-playbook -i "${config[inventory_file]}" "-e serial=1" "playbooks/${playbook}" "${@}"
+ansible-playbook -i "${config[inventory_file]}" -i "${here}/node-labels-and-taints-inventory.bash" "-e serial=1" "playbooks/${playbook}" "${@}"
 
 popd
 
