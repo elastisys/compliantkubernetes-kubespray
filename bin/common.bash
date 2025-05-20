@@ -43,6 +43,8 @@ declare -A config
 config["inventory_file"]="${config_path}/inventory.ini"
 # shellcheck disable=SC2034
 config["groups_inventory_file"]="${config_path}/groups-inventory.ini"
+# shellcheck disable=SC2034
+config["node_labels_and_taints"]="${config_path}/node-labels-and-taints.yaml"
 
 declare -A KUBE
 KUBE[sc]="${CK8S_CONFIG_PATH}/.state/kube_config_sc.yaml"
