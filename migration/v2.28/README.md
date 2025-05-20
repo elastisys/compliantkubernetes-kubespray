@@ -40,6 +40,13 @@
     ./bin/ck8s-kubespray run-playbook wc upgrade_cluster.yml -b --tags=download
     ```
 
+1. Read [docs/node-labels-and-taints.md](../../docs/node-labels-and-taints.md) and write the node labels and taints configuration files to match the existing node labels and taints
+
+    ```bash
+    $EDITOR $CK8S_CONFIG_PATH/sc-config/node-labels-and-taints.yaml
+    $EDITOR $CK8S_CONFIG_PATH/wc-config/node-labels-and-taints.yaml
+    ```
+
 ## Upgrade steps
 
 These steps will cause disruptions in the environment.

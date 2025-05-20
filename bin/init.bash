@@ -68,6 +68,13 @@ else
   log_info "Inventory already exists, leaving it as it is"
 fi
 
+# Copy node-labels-and-taints.yaml
+if [[ ! -f "${config[node_labels_and_taints]}" ]]; then
+  PREFIX=${prefix} envsubst >"${config[node_labels_and_taints]}" <"${config_defaults_path}/node-labels-and-taints.yaml"
+else
+  log_info "Node labels and taints configuration file already exists, leaving it as it is"
+fi
+
 log_info "Config initialized"
 
 log_info "Time to edit the following files:"
