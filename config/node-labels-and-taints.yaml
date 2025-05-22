@@ -1,0 +1,6 @@
+control-plane:
+  node_labels:
+    elastisys.io/node-group: control-plane
+worker:
+  node_labels:
+    elastisys.io/node-group: worker
