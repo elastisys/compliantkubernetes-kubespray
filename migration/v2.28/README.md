@@ -33,6 +33,9 @@
     > bin/ck8s-kubespray upgrade wc v2.28 prepare
     > ```
 
+    > [!IMPORTANT]
+    > This upgrade removes the pinned Calico version (`calico_version: v3.27.4`) from your configuration, allowing Kubespray to use its default version (v3.29.1). This change fixes compatibility issues with calico-accountant in Calico v3.29.x. Ensure your compliantkubernetes-apps version is v0.48+ before proceeding with this upgrade.
+
 1. Download the required files on the nodes
 
     ```bash
