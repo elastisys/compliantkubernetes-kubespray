@@ -12,6 +12,14 @@ ck8s_cilium:
   # This feature helps to validate the impact of host policies before enforcing them.
   policyAuditMode: false
 
+  # enableNodeSelectability: when true, allows Kubernetes nodes to be selected
+  # by cidr block selectors in classic NetworkPolicies.
+  #
+  # Without this, access to the Kubernets API Server pods might be restricted.
+  #
+  # See: https://github.com/cilium/cilium/issues/20550
+  enableNodeSelectability: true
+
   operator:
     unmanagedPodWatcher:
       restart: true
