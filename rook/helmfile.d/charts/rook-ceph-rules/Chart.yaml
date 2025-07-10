@@ -1,5 +1,0 @@
-apiVersion: v2
-name: rook-ceph-rules
-description: prometheus rules for rook-ceph
-type: application
-version: 0.1.0
