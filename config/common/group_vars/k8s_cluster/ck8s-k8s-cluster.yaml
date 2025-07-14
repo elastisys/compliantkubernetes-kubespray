@@ -767,3 +767,6 @@ audit_policy_custom_rules: |-
   - level: RequestResponse
     omitStages:
       - "RequestReceived"
+
+post_kubeadm_hooks:
+  - "{{ playbook_dir }}/../../playbooks/early_crds.yml"
