@@ -1,0 +1,50 @@
+---
+
+- name: "Find GPU nodes by label"
+  # This play runs on your Ansible control node
+  hosts: localhost
+  gather_facts: yes
+
+  tasks:
+    - name: "Get GPU nodes"
+      kubernetes.core.k8s_info:
+        kind: Node
+        label_selectors:
+          - "elastisys.io/node-group=gpu"
+      register: nodes_gpu
+
+    - name: "Create a dynamic inventory group from the found nodes"
+      ansible.builtin.add_host:
+        name: "{{ item.metadata.name }}"
+        groups: gpu_worker_nodes
+      loop: "{{ nodes_gpu.resources }}"
+      loop_control:
+        label: "{{ item.metadata.name }}"
+
+- name: "Restart nvidia toolkit pods"
+  hosts: gpu_worker_nodes
+  gather_facts: yes
+
+  tasks:
+    - name: "Find the pod to restart on gpu node"
+      delegate_to: localhost
+      kubernetes.core.k8s_info:
+        kind: Pod
+        label_selectors:
+          - "app=nvidia-container-toolkit-daemonset"
+        field_selectors:
+          - "spec.nodeName={{ inventory_hostname }}"
+        namespace: "gpu-operator"
+      register: pod_to_restart
+
+    - name: "Restart the pod by deleting it"
+      delegate_to: localhost
+      kubernetes.core.k8s:
+        kind: Pod
+        state: absent
+        name: "{{ item.metadata.name }}"
+        namespace: "{{ item.metadata.namespace }}"
+      loop: "{{ pod_to_restart.resources }}"
+      loop_control:
+        label: "{{ item.metadata.name }}"
+      when: pod_to_restart.resources
