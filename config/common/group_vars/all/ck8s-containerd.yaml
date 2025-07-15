@@ -11,3 +11,6 @@
 #       - host: https://registry-1.docker.io
 #         capabilities: ["pull", "resolve"]
 #         skip_verify: false
+
+containerd_extra_args: |
+  imports = ["/etc/containerd/*-config.toml"]
