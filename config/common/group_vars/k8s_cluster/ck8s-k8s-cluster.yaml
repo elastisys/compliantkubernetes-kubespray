@@ -662,13 +662,13 @@ audit_policy_custom_rules: |-
       - group: "rbac.authorization.k8s.io"
         resources: ["rolebindings", "roles"]
 
-  ## Redis ##
+  ## Valkey ##
 
   - level: None
-    namespaces: ["redis-system"]
+    namespaces: ["valkey-system"]
     verbs: ["get", "list"]
     users:
-      - system:serviceaccount:redis-system:redis-operator
+      - system:serviceaccount:valkey-system:valkey-operator-redis-operator
     resources:
       - group: "" # core
         resources: ["pods", "configmaps", "services"]
@@ -678,10 +678,10 @@ audit_policy_custom_rules: |-
         resources: ["poddisruptionbudgets"]
 
   - level: None
-    namespaces: ["redis-system"]
+    namespaces: ["valkey-system"]
     verbs: ["update"]
     users:
-      - system:serviceaccount:redis-system:redis-operator
+      - system:serviceaccount:valkey-system:valkey-operator-redis-operator
     resources:
       - group: "" # core
         resources: ["configmaps"]
@@ -690,7 +690,7 @@ audit_policy_custom_rules: |-
 
   # Ignore deployment status updates
   - level: None
-    namespaces: ["redis-system"]
+    namespaces: ["valkey-system"]
     verbs: ["update"]
     users:
       - system:serviceaccount:kube-system:deployment-controller
