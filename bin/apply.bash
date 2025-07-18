@@ -32,7 +32,10 @@ if [ -z "${CK8S_KUBESPRAY_NO_VENV+x}" ]; then
 fi
 
 log_info "Running kubespray"
-ansible-playbook -i "${config[inventory_file]}" cluster.yml -b "${@}"
+ansible-playbook \
+  -i "${config[inventory_file]}" \
+  -i "${here}/../config/cilium-values-inventory.yaml" \
+  cluster.yml -b "${@}"
 
 log_info "Kubespray done"
 

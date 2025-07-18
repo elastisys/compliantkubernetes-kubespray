@@ -1,0 +1,51 @@
+ck8s_cilium:
+  # policyEnforcementMode: Determine whether an endpoint accepts traffic from a source or not
+  #
+  # Has three options:
+  # - default: endpoints have unrestricted network access until selected by policy
+  # - always: policy enforcement is enabled on all endpoints even if no rules select specific endpoints.
+  # - never: All traffic is allowed from any source (on ingress) or destination (on egress)
+  policyEnforcementMode: default
+
+  # policyAuditMode: when true, no network policy is enforced.
+  #
+  # This feature helps to validate the impact of host policies before enforcing them.
+  policyAuditMode: false
+
+  # enableNodeSelectability: when true, allows Kubernetes nodes to be selected
+  # by cidr block selectors in classic NetworkPolicies.
+  #
+  # Without this, access to the Kubernets API Server pods might be restricted.
+  #
+  # See: https://github.com/cilium/cilium/issues/20550
+  enableNodeSelectability: true
+
+  operator:
+    unmanagedPodWatcher:
+      restart: true
+    monitoring:
+      enabled: true
+      installServiceMonitor: false
+
+  wireguard:
+    enabled: true
+    strictMode: false
+
+  hubble:
+    enabled: true
+    monitoring:
+      installServiceMonitor: false
+    metrics:
+      - dns
+      - drop
+      - tcp
+      - flow
+      - icmp
+      - http
+
+  prometheus:
+    enabled: true
+    installServiceMonitor: false
+
+  envoy:
+    enabled: false
