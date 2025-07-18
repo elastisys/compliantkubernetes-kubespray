@@ -1,0 +1,27 @@
+- name: Early CRDs
+  when:
+    - inventory_hostname == groups['kube_control_plane'][0]
+  block:
+    - name: Create temporary directory
+      tempfile:
+        state: directory
+        suffix: k8s-monitoring-crd-manifests
+      register: temp_dir
+
+    - name: Render template for ServiceMonitors CRD
+      template:
+        src: "crds/crd-servicemonitors.yaml"
+        dest: "{{ temp_dir.path }}/crd-servicemonitors.yaml"
+
+    - name: Apply ServiceMonitors CRD manifest
+      shell: >-
+        {{ kubectl }} get crd servicemonitors.monitoring.coreos.com \
+        || {{ kubectl }} apply -f {{ temp_dir.path }}/crd-servicemonitors.yaml
+      args:
+        executable: /bin/bash
+      run_once: true
+
+    - name: Clean up temporary directory
+      file:
+        path: "{{ temp_dir.path }}"
+        state: absent
