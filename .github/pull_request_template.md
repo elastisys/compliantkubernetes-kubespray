@@ -82,7 +82,6 @@ Include screenshots if applicable to help explain these changes.
     - deploy: changes to deployments
     - docs: changes to documentation
     - release: release related
-    - rook: changes to rook deployment
     - scripts: changes to scripts
     - tests: changes to tests
     --->

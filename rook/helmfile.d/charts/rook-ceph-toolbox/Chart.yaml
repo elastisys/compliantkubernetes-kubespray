@@ -1,6 +1,0 @@
-apiVersion: v2
-name: rook-ceph-toolbox
-description: deploy rook-ceph toolbox
-type: application
-version: 0.1.0
-appVersion: 0.1.0
