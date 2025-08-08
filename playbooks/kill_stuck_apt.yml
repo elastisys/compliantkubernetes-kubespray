@@ -8,14 +8,14 @@
         dest: /usr/local/bin/kill_stuck_apt.sh
         content: |
           #!/bin/bash
-          
+
           # Find and kill apt-related processes that have been running for more than 24 hours (86400 seconds)
           PIDS=$(ps -eo pid,etimes,comm | awk '
             $3 ~ /^apt(-get|itude)?$/ && $2 > 86400 {
               print $1
             }
           ')
-          
+
           for pid in $PIDS; do
             echo "Killing stuck apt process PID=$pid"
             kill -9 "$pid"
