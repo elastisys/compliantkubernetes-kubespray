@@ -56,8 +56,6 @@ calico_ipip_mode: "Always"
 calico_vxlan_mode: "Never"
 calico_network_backend: "bird"
 
-calico_version: 3.27.4
-
 dns_extra_tolerations: [{effect: NoSchedule, operator: Exists}]
 coredns_additional_error_config: |
   consolidate 5m ".* i/o timeout$" warning
