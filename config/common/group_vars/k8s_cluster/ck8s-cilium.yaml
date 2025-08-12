@@ -36,12 +36,12 @@ ck8s_cilium:
     monitoring:
       installServiceMonitor: false
     metrics:
+      - drop:labelsContext=traffic_direction,source_pod,source_namespace,source_ip,destination_pod,destination_namespace,destination_ip
+      - flow:labelsContext=traffic_direction,source_pod,source_namespace,source_ip,destination_pod,destination_namespace,destination_ip
       - dns
-      - drop
       - tcp
-      - flow
       - icmp
-      - http
+      - httpV2
 
   prometheus:
     enabled: true
