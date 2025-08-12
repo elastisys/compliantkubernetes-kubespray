@@ -1,0 +1,48 @@
+all:
+  vars:
+    cilium_extra_values: "{{ cilium_extra_values_template | from_yaml }}"
+    cilium_extra_values_template: |
+      {% if ck8s_cilium | default(false) %}
+      policyEnforcementMode: {{ ck8s_cilium.policyEnforcementMode }}
+
+      policyAuditMode: {{ ck8s_cilium.policyAuditMode }}
+
+      operator:
+        unmanagedPodWatcher:
+          restart: {{ ck8s_cilium.operator.unmanagedPodWatcher.restart }}
+        prometheus:
+          enabled: {{ ck8s_cilium.operator.monitoring.enabled }}
+          serviceMonitor:
+            enabled: {{ ck8s_cilium.operator.monitoring.installServiceMonitor }}
+
+      encryption:
+        enabled: {{ ck8s_cilium.wireguard.enabled }}
+        type: wireguard
+        strictMode:
+          enabled: {{ ck8s_cilium.wireguard.strictMode }}
+
+      hubble:
+        enabled: {{ ck8s_cilium.hubble.enabled }}
+        metrics:
+          enabled: {{ ck8s_cilium.hubble.metrics }}
+          serviceMonitor:
+            enabled: {{ ck8s_cilium.hubble.monitoring.installServiceMonitor }}
+
+      prometheus:
+        enabled: {{ ck8s_cilium.prometheus.enabled }}
+        serviceMonitor:
+          enabled: {{ ck8s_cilium.prometheus.installServiceMonitor }}
+          trustCRDsExist: true
+
+      envoy:
+        enabled: {{ ck8s_cilium.envoy.enabled }}
+
+      {% if ck8s_cilium.enableNodeSelectability | default(false) %}
+      policyCIDRMatchMode: nodes
+      {% endif %}
+
+      annotateK8sNode: true
+
+      {% else %}
+      {}
+      {% endif %}
