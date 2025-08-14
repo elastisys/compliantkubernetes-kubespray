@@ -35,7 +35,7 @@ log_info "Running kubespray"
 ansible-playbook \
   -i "${config[inventory_file]}" \
   -i "${here}/node-labels-and-taints-inventory.bash" \
-  -i "${here}/../config/cilium-values-inventory.yaml" \
+  -i "${here}/../dynamic-config/cilium-values-inventory.yaml" \
   cluster.yml -b "${@}"
 
 log_info "Kubespray done"
