@@ -22,7 +22,7 @@ fi
 for cluster in "${clusters[@]}"; do
   mapfile -t matches < <(grep -Rn "additional_sysctl" "${CK8S_CONFIG_PATH}/${cluster}-config/group_vars")
 
-  if (( ${#matches[@]} > 0 )); then
+  if ((${#matches[@]} > 0)); then
     log_info "Existing settings found in ${CK8S_CONFIG_PATH}/${cluster}-config/group_vars, skipping"
   else
     log_info "Copying sysctl defaults for ${cluster}"
@@ -30,4 +30,3 @@ for cluster in "${clusters[@]}"; do
     cp "${src_file}" "${dst_file}"
   fi
 done
-
