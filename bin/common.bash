@@ -79,6 +79,22 @@ log_error() {
   log_error_no_newline "${*}\n"
 }
 
+log_fatal() {
+  log_error "${*}"
+  exit 1
+}
+
+log_continue() {
+  if [[ "${CK8S_AUTO_APPROVE:-false}" != "true" ]]; then
+    log_warning_no_newline "${1} [y/N]: "
+
+    read -r reply
+    if ! [[ "${reply}" =~ ^(y|Y|yes|Yes|YES)$ ]]; then
+      log_fatal "aborted"
+    fi
+  fi
+}
+
 # Checks that all dependencies are available and critical ones for matching minor version.
 check_tools() {
   local req
@@ -294,11 +310,7 @@ check_openstack_credentials() {
     log_warning "If you are not running on openstack, then you can safely ignore this."
   fi
 
-  log_info_no_newline "Proceed with the current credentials [y/N]: "
-  read -r reply
-  if [[ "${reply}" != "y" ]]; then
-    exit 1
-  fi
+  log_continue "Continue with the current credentials?"
 }
 
 # Compares the expected and actual git state of the kubespray submodule.
@@ -317,13 +329,7 @@ kubespray_version_check() {
 
     log_info "The status of the kubespray git submodule differs from the expected status, either it is on another commit or there are file changes. This can cause unexpected versions to be installed or cause other errors. We recommend that you stop and check what has changed."
     log_info "Expected" "${expected_commit}", "got" "${current_commit}".
-    log_info_no_newline "Do you want to abort? (Y/n): "
-
-    read -r reply
-
-    if [[ "${reply}" != "n" ]]; then
-      exit 1
-    fi
+    log_continue "Do you want to continue?"
   fi
 }
 
