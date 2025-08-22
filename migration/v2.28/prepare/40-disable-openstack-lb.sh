@@ -36,5 +36,3 @@ if [[ "${CK8S_CLUSTER}" =~ ^(wc|both)$ ]]; then
   fi
 fi
 
-log_info "Calico will now use the default version from Kubespray (v3.29.1)"
-log_info "This change requires compliantkubernetes-apps version v0.47+ that supports Calico v3.29.x"
