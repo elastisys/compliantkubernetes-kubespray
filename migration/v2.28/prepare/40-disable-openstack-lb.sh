@@ -35,4 +35,3 @@ if [[ "${CK8S_CLUSTER}" =~ ^(wc|both)$ ]]; then
     yq4 -i '.external_openstack_lbaas_enabled = false' "$CONFIG_FILE"
   fi
 fi
-
