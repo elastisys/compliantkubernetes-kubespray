@@ -14,11 +14,11 @@ if [[ "${CK8S_CLUSTER}" =~ ^(sc|both)$ ]]; then
   CONFIG_FILE="${CK8S_CONFIG_PATH}/sc-config/group_vars/k8s_cluster/ck8s-k8s-cluster-openstack.yaml"
 
   # Check if the key exists and equals false
-  if yq4 '.openstack_lbaas_enabled' "$CONFIG_FILE" | grep -q '^false$'; then
+  if yq '.openstack_lbaas_enabled' "$CONFIG_FILE" | grep -q '^false$'; then
     # Delete old key
-    yq4 -i 'del(.openstack_lbaas_enabled)' "$CONFIG_FILE"
+    yq -i 'del(.openstack_lbaas_enabled)' "$CONFIG_FILE"
     # Add new key with same value
-    yq4 -i '.external_openstack_lbaas_enabled = false' "$CONFIG_FILE"
+    yq -i '.external_openstack_lbaas_enabled = false' "$CONFIG_FILE"
   fi
 fi
 
@@ -28,10 +28,10 @@ if [[ "${CK8S_CLUSTER}" =~ ^(wc|both)$ ]]; then
   CONFIG_FILE="${CK8S_CONFIG_PATH}/wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster-openstack.yaml"
 
   # Check if the key exists and equals false
-  if yq4 '.openstack_lbaas_enabled' "$CONFIG_FILE" | grep -q '^false$'; then
+  if yq '.openstack_lbaas_enabled' "$CONFIG_FILE" | grep -q '^false$'; then
     # Delete old key
-    yq4 -i 'del(.openstack_lbaas_enabled)' "$CONFIG_FILE"
+    yq -i 'del(.openstack_lbaas_enabled)' "$CONFIG_FILE"
     # Add new key with same value
-    yq4 -i '.external_openstack_lbaas_enabled = false' "$CONFIG_FILE"
+    yq -i '.external_openstack_lbaas_enabled = false' "$CONFIG_FILE"
   fi
 fi
