@@ -1,0 +1,21 @@
+##### BEGIN CILIUM #####
+# Set cilium as the network plugin
+kube_network_plugin: cilium
+
+# Pin the cilium chart version
+cilium_version: "1.17.5"
+
+# Tell cilium to store identities in CRDs rather than try talking to etcd directly
+cilium_identity_allocation_mode: "crd"
+
+# Enable hubble (needed for some of the metrics)
+cilium_enable_hubble: true
+cilium_hubble_install: true
+cilium_hubble_tls_generate: true
+
+# Matches the value set in cilium-values.yaml during migration
+cilium_pool_cidr: 10.235.64.0/18
+
+# In case this was missed earlier - Cilium requires kube_owner=root
+kube_owner: root
+##### END CILIUM #####

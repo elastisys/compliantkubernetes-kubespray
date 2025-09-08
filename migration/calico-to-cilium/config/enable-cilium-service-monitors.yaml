@@ -1,0 +1,9 @@
+ck8s_cilium:
+  operator:
+    monitoring:
+      installServiceMonitor: true
+  hubble:
+    monitoring:
+      installServiceMonitor: true
+  prometheus:
+    installServiceMonitor: true
