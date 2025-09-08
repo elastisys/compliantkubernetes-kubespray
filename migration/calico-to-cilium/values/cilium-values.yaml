@@ -1,0 +1,160 @@
+MTU: 0
+debug:
+  enabled: False
+
+image:
+  repository: quay.io/cilium/cilium
+  tag: v1.17.5
+
+k8sServiceHost: "auto"
+k8sServicePort: "auto"
+
+ipv4:
+  enabled: True
+ipv6:
+  enabled: False
+
+l2announcements:
+  enabled: False
+
+healthPort: 9879
+
+identityAllocationMode: crd
+
+tunnelProtocol: vxlan
+
+loadbalancer:
+  mode: snat
+
+kubeProxyReplacement: False
+
+
+extraVolumes:
+  []
+
+
+extraVolumeMounts:
+  []
+
+
+extraArgs:
+  []
+
+
+bpf:
+  masquerade: False
+  hostLegacyRouting: True
+  monitorAggregation: medium
+  preallocateMaps: False
+  mapDynamicSizeRatio: 0.0025
+
+cni:
+  exclusive: False
+  customConf: True
+  uninstall: False
+  logFile: /var/run/cilium/cilium-cni.log
+
+autoDirectNodeRoutes: False
+
+ipv4NativeRoutingCIDR:
+ipv6NativeRoutingCIDR:
+
+encryption:
+  enabled: False
+
+bandwidthManager:
+  enabled: False
+  bbr: False
+
+ipMasqAgent:
+  enabled: False
+
+hubble:
+  enabled: True
+  relay:
+    enabled: True
+    image:
+      repository: quay.io/cilium/hubble-relay
+      tag: v1.17.5
+  ui:
+    enabled: True
+    backend:
+      image:
+        repository: quay.io/cilium/hubble-ui-backend
+        tag: v0.13.2
+    frontend:
+      image:
+        repository: quay.io/cilium/hubble-ui
+        tag: v0.13.2
+  metrics:
+    enabled: []
+  export:
+    fileMaxBackups: 5
+    fileMaxSizeMb: 10
+    dynamic:
+      enabled: False
+      config:
+        content:
+          - excludeFilters: []
+            fieldMask: []
+            filePath: /var/run/cilium/hubble/events.log
+            includeFilters: []
+            name: all
+
+
+gatewayAPI:
+  enabled: False
+
+ipam:
+  mode: cluster-pool
+  operator:
+    clusterPoolIPv4PodCIDRList:
+      - 10.235.64.0/18
+    clusterPoolIPv4MaskSize: 24
+
+    clusterPoolIPv6PodCIDRList:
+      - fd85:ee78:d8a6:8607::1:0000/112
+    clusterPoolIPv6MaskSize: 120
+
+cgroup:
+  autoMount:
+    enabled: True
+  hostRoot: /run/cilium/cgroupv2
+
+operator:
+  image:
+    repository: quay.io/cilium/operator
+    tag: v1.17.5
+  replicas: 2
+  extraArgs:
+    []
+
+  extraVolumes:
+    []
+
+  extraVolumeMounts:
+    []
+
+  tolerations:
+    - operator: Exists
+
+
+cluster:
+  id: 0
+  name: default
+
+enableIPv4Masquerade: True
+enableIPv6Masquerade: True
+
+hostFirewall:
+  enabled: False
+
+certgen:
+  image:
+    repository: quay.io/cilium/certgen
+    tag: v0.2.1
+
+envoy:
+  image:
+    repository: quay.io/cilium/cilium-envoy
+    tag: v1.32.5-1744305768-f9ddca7dcd91f7ca25a505560e655c47d3dec2cf
