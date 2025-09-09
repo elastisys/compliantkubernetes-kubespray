@@ -127,7 +127,7 @@ get_node_pods_with_ip_prefix() {
   kubectl get pods --all-namespaces --field-selector spec.nodeName="${node}" -o json |
     jq -r --arg ip_test "^${ip_prefix}" '
       .items[] |
-      select(.status.phase == "Running") |
+      select(.status.phase == "Running" or .status.phase == "Pending") |
       select(.status.podIP | test($ip_test)) |
       "\(.metadata.namespace)/\(.metadata.name)"'
 }
