@@ -25,7 +25,7 @@ ck8s_cilium:
       restart: true
     monitoring:
       enabled: true
-      installServiceMonitor: false
+      installServiceMonitor: true
 
   wireguard:
     enabled: true
@@ -34,7 +34,7 @@ ck8s_cilium:
   hubble:
     enabled: true
     monitoring:
-      installServiceMonitor: false
+      installServiceMonitor: true
     metrics:
       - drop:labelsContext=traffic_direction,source_pod,source_namespace,source_ip,destination_pod,destination_namespace,destination_ip
       - flow:labelsContext=traffic_direction,source_pod,source_namespace,source_ip,destination_pod,destination_namespace,destination_ip
@@ -45,7 +45,7 @@ ck8s_cilium:
 
   prometheus:
     enabled: true
-    installServiceMonitor: false
+    installServiceMonitor: true
 
   envoy:
     enabled: false
