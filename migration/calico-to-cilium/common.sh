@@ -103,7 +103,7 @@ check_node_connectivity() {
 
   local attempt
   for attempt in $(seq 1 60); do
-    log_info "Checking status of node $(yellow_text "${node}") [$attempt/60]"
+    log_info "Checking status of node $(yellow_text "${node}") [attempt #${attempt}/60]"
 
     # shellcheck disable=SC2016
     if kubectl --namespace kube-system run --attach --rm --restart=Never "verify-network-${node_hash}" \
