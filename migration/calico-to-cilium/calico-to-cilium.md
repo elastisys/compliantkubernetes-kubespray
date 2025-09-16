@@ -5,6 +5,8 @@
 >
 > It does not matter which cluster is migrated first, but it is recommended to start the migration with the _service_ cluster.
 >
+> It's also worth mentioning that full network connectivity is maintained between the Calico and Cilium subnets during the migration.
+>
 > For reference, it takes about 5 minutes to complete the disruptive parts of this guide, on a cluster with 5 nodes.
 
 ## Prerequisites
