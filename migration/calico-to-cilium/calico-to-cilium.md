@@ -69,7 +69,7 @@ These steps can be performed without any disruption to the target cluster.
 - Wait for Cilium DaemonSet to successfully roll out
 
   ```bash
-  kubectl -n kube-system rollout status daemonset/cilium --wait
+  kubectl -n kube-system rollout status daemonset/cilium --watch
   ```
 
 > [!NOTE]
