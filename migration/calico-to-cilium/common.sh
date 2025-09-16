@@ -101,9 +101,13 @@ check_node_connectivity() {
 
   kubectl get -o wide node "${node}"
 
-  local attempt
+  local attempt attempt_txt
   for attempt in $(seq 1 60); do
-    log_info "Checking status of node $(yellow_text "${node}") [attempt #${attempt}/60]"
+    attempt_txt=""
+    if [ "$attempt" -gt 1 ]; then
+      attempt_txt=" [attempt #${attempt}/60]"
+    fi
+    log_info "Checking status of node $(yellow_text "${node}")${attempt_txt}"
 
     # shellcheck disable=SC2016
     if kubectl --namespace kube-system run --attach --rm --restart=Never "verify-network-${node_hash}" \

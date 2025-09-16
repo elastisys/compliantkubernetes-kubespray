@@ -55,7 +55,8 @@ def main(pods: list[str]) -> int:
         #
         # See https://github.com/kubernetes/kubernetes/blob/v1.32.8/pkg/apis/core/types.go#L2919
         if phase == "Running" or phase == "Pending":
-            log_info(f"Evicting pod {yellow_text(pod)} [attempt #{attempts}/{MAX_ATTEMPTS}]")
+            attempt_txt = f" [attempt #{attempts}/{MAX_ATTEMPTS}]" if attempts > 1 else ""
+            log_info(f"Evicting pod {yellow_text(pod)}{attempt_txt}")
             if kubectl(f"evict --namespace {pod_ns} {pod_name}") is None:
                 queue.append((pod, attempts + 1, datetime.now()))
 
