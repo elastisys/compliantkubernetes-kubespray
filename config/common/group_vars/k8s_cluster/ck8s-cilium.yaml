@@ -20,6 +20,11 @@ ck8s_cilium:
   # See: https://github.com/cilium/cilium/issues/20550
   enableNodeSelectability: true
 
+  cni:
+    uninstall: false
+    customConf: false
+    exclusive: true
+
   operator:
     unmanagedPodWatcher:
       restart: true

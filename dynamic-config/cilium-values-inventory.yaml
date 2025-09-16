@@ -7,6 +7,11 @@ all:
 
       policyAuditMode: {{ ck8s_cilium.policyAuditMode }}
 
+      cni:
+        uninstall: {{ ck8s_cilium.cni.uninstall }}
+        customConf: {{ ck8s_cilium.cni.customConf }}
+        exclusive: {{ ck8s_cilium.cni.exclusive }}
+
       operator:
         unmanagedPodWatcher:
           restart: {{ ck8s_cilium.operator.unmanagedPodWatcher.restart }}
