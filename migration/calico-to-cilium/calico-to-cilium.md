@@ -131,10 +131,10 @@ popd
 
 ## Cleanup
 
-- Relax the Cilium node configuration so it picks up any new nodes
+- Remove the per-node Cilium configuration
 
   ```bash
-  kubectl replace --force -f node-config/final.yaml
+  kubectl -n kube-system delete ciliumnodeconfigs.cilium.io cilium-default
   ```
 
 - Remove Calico remnants
