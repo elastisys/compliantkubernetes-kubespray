@@ -4,6 +4,8 @@ Queue-based pod eviction.
 
 If an unevictable pod is encountered, it is thrown to the back of the queue,
 so the remaining evictions can continue.
+
+Accepts a variable number of <pod_namespace>/<pod_name> arguments.
 """
 import random
 import subprocess
