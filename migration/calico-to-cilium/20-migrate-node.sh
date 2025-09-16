@@ -27,7 +27,7 @@ deferred_cleanup() {
   log_info "Removing temporary taint from all nodes"
   untaint_nodes "cilium-guard-${NODE_HASH}" "$(get_all_nodes)"
 }
-trap deferred_cleanup EXIT INT TERM
+trap deferred_cleanup EXIT
 
 # Mark the node to allow cilium per-node configuration + skip from tainting
 label_node "${NODE}" "cilium-default"
