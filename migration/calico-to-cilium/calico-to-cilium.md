@@ -18,13 +18,13 @@ To have it installed under `${HOME}/bin`:
 
 ```shell
 mkdir -p "${HOME}/bin"
-curl -fsSL -o- https://github.com/cilium/cilium-cli/releases/download/v0.18.7/cilium-linux-amd64.tar.gz | tar -zxv -C "${HOME}/bin"
-mv "${HOME}/bin/cilium" "${HOME}/bin/cilium-cli"
+curl -fsSL -o- https://github.com/cilium/cilium-cli/releases/download/v0.18.7/cilium-linux-amd64.tar.gz | tar -zxv -C "${HOME}/.local/bin"
+mv "${HOME}/.local/bin/cilium" "${HOME}/.local/bin/cilium-cli"
 ```
 
 > [!NOTE]
-> This assumes that the `${HOME}/bin` directory is within your `PATH`. If that's not the case:
-> `export PATH="$PATH:$HOME/bin"`
+> This assumes that the `${HOME}/.local/bin` directory is within your `PATH`. If that's not the case:
+> `export PATH="$PATH:$HOME/.local/bin"`
 
 > [!IMPORTANT]
 > The migration scripts assume the executable name for the Cilium CLI is `cilium-cli` and not `cilium`.
