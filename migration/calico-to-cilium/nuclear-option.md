@@ -6,7 +6,7 @@ This is the most disruptive, but also the _quickest_ way to migrate a cluster fr
 
 ## Prepare
 
-Follow the prepare steps from the [main migration guide](./calico-to-cilium.md).
+Follow the prepare steps from the [main migration guide](./README.md).
 
 ## Execute
 
