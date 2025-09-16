@@ -134,7 +134,7 @@ kubectl get nodes --no-headers -o custom-columns=":metadata.name" |
 
 ```bash
 pushd "${CK8S_KUBESPRAY_REPOSITORY_PATH}"
-./bin/ck8s-kubespray apply $TARGET_CLUSTER -b -e=ignore_assert_errors=true --skip-tags="bootstrap-os,preinstall,container-engine,multus"
+./bin/ck8s-kubespray apply $TARGET_CLUSTER -b -e=ignore_assert_errors=true --tags="download,network"
 popd
 ```
 
