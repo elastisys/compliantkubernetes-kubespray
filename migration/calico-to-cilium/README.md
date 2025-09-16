@@ -9,6 +9,9 @@
 >
 > For reference, it takes about 5 minutes to complete the disruptive parts of this guide, on a cluster with 5 nodes.
 
+> [!IMPORTANT]
+> This guide assumes all commands are run from the `migration/calico-to-cilium` directory of the `compliantkubernetes-kubespray` repository.
+
 ## Prerequisites
 
 The migration uses the Cilium CLI for status checks, as well as the `evict` plugin for `kubectl`.
@@ -53,7 +56,6 @@ These steps can be performed without any disruption to the target cluster.
   ```bash
   export TARGET_CLUSTER="<sc|wc>"
   export CK8S_CONFIG_PATH="/path/to/cluster/config"
-  export CK8S_KUBESPRAY_REPOSITORY_PATH="/path/to/compliantkubernetes-kubespray"
   export KUBECONFIG="${CK8S_CONFIG_PATH}/.state/kube_config_${TARGET_CLUSTER}.yaml"
   ```
 
@@ -64,9 +66,7 @@ These steps can be performed without any disruption to the target cluster.
 
   ```bash
   yq -i '.kube_owner = "root"' "${CK8S_CONFIG_PATH}/${TARGET_CLUSTER}-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml"
-  pushd "${CK8S_KUBESPRAY_REPOSITORY_PATH}"
-  ./bin/ck8s-kubespray apply $TARGET_CLUSTER -b -e=ignore_assert_errors=true --skip-tags=multus
-  popd
+  ../../bin/ck8s-kubespray apply $TARGET_CLUSTER -b -e=ignore_assert_errors=true --skip-tags=multus
   ```
 
 - Install Cilium using the values provided in the `cilium-chart-values` directory
@@ -133,9 +133,7 @@ kubectl get nodes --no-headers -o custom-columns=":metadata.name" |
 ...and do a Kubespray apply step:
 
 ```bash
-pushd "${CK8S_KUBESPRAY_REPOSITORY_PATH}"
-./bin/ck8s-kubespray apply $TARGET_CLUSTER -b -e=ignore_assert_errors=true --tags="download,network"
-popd
+../../bin/ck8s-kubespray apply $TARGET_CLUSTER -b -e=ignore_assert_errors=true --tags="download,network"
 ```
 
 ## Cleanup
