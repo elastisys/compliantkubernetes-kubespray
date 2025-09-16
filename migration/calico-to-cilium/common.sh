@@ -112,7 +112,7 @@ check_node_connectivity() {
     # shellcheck disable=SC2016
     if kubectl --namespace kube-system run --attach --rm --restart=Never "verify-network-${node_hash}" \
       --overrides='{"spec": {"nodeName": "'"${node}"'", "tolerations": [{"operator": "Exists"}]}}' \
-      --image ghcr.io/nicolaka/netshoot:v0.8 -- /bin/bash -c 'ip -br addr && curl -s -k https://$KUBERNETES_SERVICE_HOST/healthz && echo' | grep "$CILIUM_IP_PREFIX"; then
+      --image ghcr.io/nicolaka/netshoot:v0.14 -- /bin/bash -c 'ip -br addr && curl -s -k https://$KUBERNETES_SERVICE_HOST/healthz && echo' | grep "$CILIUM_IP_PREFIX"; then
       return 0
     fi
 
