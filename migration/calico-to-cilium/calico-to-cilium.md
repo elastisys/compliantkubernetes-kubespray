@@ -1,5 +1,12 @@
 # Migrating Kubespray cluster from Calico to Cilium CNI
 
+> [!NOTE]
+> Clusters will be migrated one at a time depending on the environment variable `TARGET_CLUSTER`.
+>
+> It does not matter which cluster is migrated first, but it is recommended to start the migration with the _service_ cluster.
+>
+> For reference, it takes about 5 minutes to complete the disruptive parts of this guide, on a cluster with 5 nodes.
+
 ## Prerequisites
 
 The migration uses the Cilium CLI for status checks, as well as the `evict` plugin for `kubectl`.
