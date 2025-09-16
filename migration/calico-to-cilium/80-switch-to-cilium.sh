@@ -29,7 +29,7 @@ enable_monitoring() {
   yq -i '.ck8s_cilium.prometheus.installServiceMonitor = true' "${config}"
 }
 
-patch_yaml_config config/enable-cilium.yaml ck8s-k8s-cluster.yaml
+patch_yaml_config k8s-cluster-config/enable-cilium.yaml ck8s-k8s-cluster.yaml
 if kubectl get crd servicemonitors.monitoring.coreos.com >/dev/null; then
   enable_monitoring
 fi

@@ -28,18 +28,9 @@ loadbalancer:
 
 kubeProxyReplacement: False
 
-
-extraVolumes:
-  []
-
-
-extraVolumeMounts:
-  []
-
-
-extraArgs:
-  []
-
+extraVolumes: []
+extraVolumeMounts: []
+extraArgs: []
 
 bpf:
   masquerade: False
@@ -101,7 +92,6 @@ hubble:
             includeFilters: []
             name: all
 
-
 gatewayAPI:
   enabled: False
 
@@ -126,18 +116,11 @@ operator:
     repository: quay.io/cilium/operator
     tag: v1.17.5
   replicas: 2
-  extraArgs:
-    []
-
-  extraVolumes:
-    []
-
-  extraVolumeMounts:
-    []
-
+  extraArgs: []
+  extraVolumes: []
+  extraVolumeMounts: []
   tolerations:
     - operator: Exists
-
 
 cluster:
   id: 0

@@ -60,10 +60,10 @@ These steps can be performed without any disruption to the target cluster.
   popd
   ```
 
-- Install Cilium using the values provided in the `values` directory
+- Install Cilium using the values provided in the `cilium-chart-values` directory
 
   ```bash
-  cilium-cli install --version 1.17.5 -f values/cilium-values.yaml -f values/cilium-extra.yaml
+  cilium-cli install --version 1.17.5 -f cilium-chart-values/cilium-values.yaml -f cilium-chart-values/cilium-extra.yaml
   ```
 
 - Wait for Cilium DaemonSet to successfully roll out
@@ -78,7 +78,7 @@ These steps can be performed without any disruption to the target cluster.
 - Enable the [Per-node configuration](https://docs.cilium.io/en/v1.17/configuration/per-node-config/) feature
 
   ```bash
-  kubectl apply -f node-config/during-migration.yaml
+  kubectl apply -f cilium-node-config/during-migration.yaml
   ```
 
 ## Execute
