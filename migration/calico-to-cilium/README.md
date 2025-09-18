@@ -12,6 +12,11 @@
 > [!IMPORTANT]
 > This guide assumes all commands are run from the `migration/calico-to-cilium` directory of the `compliantkubernetes-kubespray` repository.
 
+> [!IMPORTANT]
+> The Cilium pod subnet is preconfigured to `10.235.64.0/18`, in accordance with the recommended value from the official documentation.
+>
+> This should prevent any overlaps with the Calico subnet, assumed to have the `10.233.0.0/16` prefix.
+
 ## Prerequisites
 
 The migration uses the Cilium CLI for status checks, as well as the `evict` plugin for `kubectl`.
@@ -69,20 +74,12 @@ These steps can be performed without any disruption to the target cluster.
   ../../bin/ck8s-kubespray apply $TARGET_CLUSTER -b -e=ignore_assert_errors=true --skip-tags=multus
   ```
 
-- Install Cilium using the values provided in the `cilium-chart-values` directory
+- Install Cilium using the values provided in the `cilium-chart-values` directory and wait for the `DaemonSet` rollout
 
   ```bash
   cilium-cli install --version 1.17.5 -f cilium-chart-values/cilium-values.yaml -f cilium-chart-values/cilium-extra.yaml
-  ```
-
-- Wait for Cilium DaemonSet to successfully roll out
-
-  ```bash
   kubectl -n kube-system rollout status daemonset/cilium --watch
   ```
-
-> [!NOTE]
-> The pod CIDR used by the Cilium installation is `10.235.64.0/18`
 
 - Enable the [Per-node configuration](https://docs.cilium.io/en/v1.17/configuration/per-node-config/) feature
 
