@@ -1,12 +1,14 @@
 # Nuclear option: evict all pods in the cluster
 
-## 🐉 Dragons be here
-
-This is the most disruptive, but also the _quickest_ way to migrate a cluster from Calico to Cilium.
+> [!CAUTION]
+>
+> 🐉 Dragons be here
+>
+> This is the most disruptive, but also the _quickest_ way to migrate a cluster from Calico to Cilium.
 
 ## Prepare
 
-Follow the prepare steps from the [main migration guide](./README.md).
+Follow the prepare steps from the [main migration guide](./README.md#prepare).
 
 ## Execute
 
@@ -36,6 +38,8 @@ kubectl -n kube-system rollout status daemonset/cilium --watch
 > [!NOTE]
 > You might want to do a node connectivity test at this point, similar to how it's done in [common.sh](./common.sh)
 
+### Evict all pods
+
 Finally, get a list of all pods managed by Calico (by filtering IPs using the Calico prefix),
 and evict them:
 
@@ -48,3 +52,7 @@ kubectl get pods --all-namespaces -o json |
       select(.status.podIP | test($ip_test)) |
       "\(.metadata.namespace)/\(.metadata.name)"' | xargs ./evict_queue.py
 ```
+
+### Finish the migration
+
+Continue from the `Switch the Kubespray configuration to Cilium` step from the [main migration guide](./README.md#switch-the-kubespray-configuration-to-cilium)
