@@ -32,7 +32,7 @@ inventory_yaml() {
   for identifier in "${identifiers[@]}"; do
     echo "node-label-and-taints-${identifier}:"
     echo "  hosts:"
-    echo "${inventory}" | yq --input-format json --output-format yaml '[.k8s_cluster.hosts[] | select(test("'"${identifier}"'"))]' | sed 's/^/    /'
+    echo "${inventory}" | yq --input-format json --output-format yaml '[(.kube_control_plane.hosts + .kube_node.hosts)[] | select(test("'"${identifier}"'"))]' | sed 's/^/    /'
     echo "  vars:"
     yq ".${identifier}" "${config["node_labels_and_taints"]}" | sed 's/^/    /'
   done
