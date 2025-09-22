@@ -55,6 +55,8 @@ kubelet_config_extra_args:
 calico_ipip_mode: "Always"
 calico_vxlan_mode: "Never"
 calico_network_backend: "bird"
+typha_enabled: true
+typha_prometheusmetricsenabled: true
 
 dns_extra_tolerations: [{effect: NoSchedule, operator: Exists}]
 coredns_additional_error_config: |
