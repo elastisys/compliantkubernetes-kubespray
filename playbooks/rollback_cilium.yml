@@ -1,0 +1,7 @@
+- hosts: all
+  tasks:
+    - name: Give priority to the calico CNI config instead of cilium
+      shell: |
+        test -f /etc/cni/net.d/05-cilium.conflist && mv /etc/cni/net.d/05-cilium.conflist /etc/cni/net.d/05-cilium.conflist.calico_bak || true
+        test -f /etc/cni/net.d/10-calico.conflist.cilium_bak && mv /etc/cni/net.d/10-calico.conflist.cilium_bak /etc/cni/net.d/10-calico.conflist || true
+      register: command_output
