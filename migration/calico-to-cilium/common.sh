@@ -135,24 +135,3 @@ get_node_pods_with_ip_prefix() {
       select(.status.podIP | test($ip_test)) |
       "\(.metadata.namespace)/\(.metadata.name)"'
 }
-
-# Usage: evict_pod <namespace> <pod_name>
-evict_pod() {
-  local -r ns="${1}"
-  local -r pod="${2}"
-
-  local attempt
-  for attempt in $(seq 1 60); do
-    log_info "Evicting pod $(yellow_text "${ns}/${pod}") [$attempt/60]"
-
-    if [[ "$(kubectl get pod --namespace "${ns}" "${pod}" -o jsonpath='{.status.phase}')" != "Running" ]]; then
-      return
-    fi
-
-    if kubectl evict --namespace "${ns}" "${pod}"; then
-      return
-    fi
-
-    sleep 10
-  done
-}
