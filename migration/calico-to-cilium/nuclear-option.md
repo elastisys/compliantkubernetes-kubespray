@@ -28,15 +28,19 @@ Start by adding the correct label to all nodes:
 kubectl label nodes $(kubectl get nodes -o jsonpath='{.items[*].metadata.name}') --overwrite "io.cilium.migration/cilium-default=true"
 ```
 
-Then roll-out the Cilium DaemonSet:
+Roll-out the Cilium DaemonSet:
 
 ```bash
 kubectl -n kube-system rollout restart daemonset/cilium
 kubectl -n kube-system rollout status daemonset/cilium --watch
 ```
 
-> [!NOTE]
-> You might want to do a node connectivity test at this point, similar to how it's done in [common.sh](./common.sh)
+Check network connectivity of all nodes:
+
+```bash
+kubectl get nodes --no-headers -o custom-columns=":metadata.name"
+  | xargs -rt -I{} ./common.sh check_node_connectivity {}
+```
 
 ### Evict all pods
 

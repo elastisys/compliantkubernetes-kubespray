@@ -1,4 +1,4 @@
-# Migrating Kubespray cluster from Calico to Cilium CNI
+# Migrating Kubespray clusters from Calico to Cilium CNI
 
 > [!NOTE]
 > Clusters will be migrated one at a time depending on the environment variable `TARGET_CLUSTER`.

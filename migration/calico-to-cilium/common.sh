@@ -141,3 +141,10 @@ get_node_pods_with_ip_prefix() {
       select(.status.podIP | test($ip_test)) |
       "\(.metadata.namespace)/\(.metadata.name)"'
 }
+
+# Make this script executable
+if [[ -n "${1:-}" ]]; then
+  cmd="${1}"
+  shift
+  "${cmd}" "${@}"
+fi
