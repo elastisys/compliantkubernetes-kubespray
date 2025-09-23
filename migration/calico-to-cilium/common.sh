@@ -32,6 +32,12 @@ check_bin() {
   }
 }
 
+# Usage: hash_node <node_name>
+hash_node() {
+  local -r node="${1}"
+  echo -n "${node}" | md5sum | awk '{print $1}'
+}
+
 # Usage: label_node <node_name> <sub_label>
 # -> will use LABEL_PREFIX to namespace labels
 label_node() {
@@ -96,7 +102,7 @@ get_unlabeled_nodes() {
 # Usage: check_node_connectivity <node_name> <node_hash>
 check_node_connectivity() {
   local -r node="${1}"
-  local -r node_hash="${2}"
+  local -r node_hash="${2:-$(hash_node "${node}")}"
   cilium-cli status --wait --interactive=false
 
   kubectl get -o wide node "${node}"

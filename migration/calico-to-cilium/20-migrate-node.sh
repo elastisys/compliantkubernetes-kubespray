@@ -15,7 +15,7 @@ if [[ -z "${NODE}" ]]; then
   log_error "FATAL: need a node name" >&2
   exit 1
 fi
-NODE_HASH="$(echo -n "${NODE}" | md5sum | awk '{print $1}')"
+NODE_HASH="$(hash_node "${NODE}")"
 
 CALICO_TO_CILIUM=true
 EVICT_PODS_WITH_IP_PREFIX="${CALICO_IP_PREFIX}"
