@@ -91,13 +91,13 @@ These steps can be performed without any disruption to the target cluster.
 
 These steps will cause disruption in the target cluster.
 
-### Temporarily allow all traffic through Calico
+### 1. Temporarily allow all traffic through Calico
 
 ```bash
 kubectl apply -f policies/calico-allow-all.yaml
 ```
 
-### Migrate worker nodes
+### 2. Migrate worker nodes
 
 Get the list of worker nodes and migrate them one by one, passing the node name as argument to the `./20-migrate-node.sh` script.
 
@@ -109,7 +109,7 @@ kubectl get nodes --no-headers -o custom-columns=":metadata.name" |
   xargs -rt -I{} --interactive ./20-migrate-node.sh {}
 ```
 
-### Migrate control plane nodes
+### 3. Migrate control plane nodes
 
 Get the list of control plane nodes and migrate them one by one, passing the node name as argument to the `./20-migrate-node.sh` script.
 
@@ -121,7 +121,7 @@ kubectl get nodes --no-headers -o custom-columns=":metadata.name" |
   xargs -rt -I{} --interactive ./20-migrate-node.sh {}
 ```
 
-### Switch the Kubespray configuration to Cilium
+### 4. Switch the Kubespray configuration to Cilium
 
 ```bash
 ./80-switch-to-cilium.sh
@@ -133,7 +133,7 @@ kubectl get nodes --no-headers -o custom-columns=":metadata.name" |
 ../../bin/ck8s-kubespray apply $TARGET_CLUSTER -b -e=ignore_assert_errors=true --tags="download,network"
 ```
 
-## Cleanup
+### 5. Cleanup
 
 - Remove the per-node Cilium configuration
 
@@ -146,3 +146,21 @@ kubectl get nodes --no-headers -o custom-columns=":metadata.name" |
   ```bash
   ./90-cleanup-calico.sh
   ```
+
+### 6. (Optional) Reconfigure Apps
+
+If Welkin Apps have been deployed on the environment, it will require a reconfiguration step:
+
+```bash
+export CK8S_APPS_REPOSITORY_PATH=/path/to/welkin-apps
+
+yq -i '.networkPlugin.type = "cilium"' "${CK8S_CONFIG_PATH}/common-config.yaml"
+yq -i '.networkPlugin.calico.calicoAccountant.enabled = false' "${CK8S_CONFIG_PATH}/common-config.yaml"
+yq -i '.networkPlugin.calico.calicoFelixMetrics.enabled = false' "${CK8S_CONFIG_PATH}/common-config.yaml"
+
+${CK8S_APPS_REPOSITORY_PATH}/bin/update-ips.bash both dry-run
+${CK8S_APPS_REPOSITORY_PATH}/bin/update-ips.bash both apply
+
+${CK8S_APPS_REPOSITORY_PATH}/bin/ck8s apply sc --concurrency=$(nproc)
+${CK8S_APPS_REPOSITORY_PATH}/bin/ck8s apply wc --concurrency=$(nproc)
+```
