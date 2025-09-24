@@ -38,8 +38,8 @@ kubectl -n kube-system rollout status daemonset/cilium --watch
 Check network connectivity of all nodes:
 
 ```bash
-kubectl get nodes --no-headers -o custom-columns=":metadata.name"
-  | xargs -rt -I{} ./common.sh check_node_connectivity {}
+kubectl get nodes --no-headers -o custom-columns=":metadata.name" |
+    xargs -rt -I{} ./common.sh check_node_connectivity {}
 ```
 
 ### Evict all pods
