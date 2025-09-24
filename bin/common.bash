@@ -129,6 +129,13 @@ check_tools() {
   fi
 }
 
+# Retrieve version from git
+get_repo_version() {
+  pushd "${root_path}" >/dev/null || exit 1
+  git describe --exact-match --tags 2>/dev/null || git rev-parse HEAD
+  popd >/dev/null || exit 1
+}
+
 validate_sops_config() {
   if [ ! -f "${sops_config}" ]; then
     log_error "ERROR: SOPS config not found: ${sops_config}"
