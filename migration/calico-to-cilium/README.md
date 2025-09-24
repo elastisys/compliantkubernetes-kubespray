@@ -64,7 +64,23 @@ These steps can be performed without any disruption to the target cluster.
   export KUBECONFIG="${CK8S_CONFIG_PATH}/.state/kube_config_${TARGET_CLUSTER}.yaml"
   ```
 
-- Ensure that the checked out tag in your Kubespray repository matches the version in the cluster.
+- The migration guide includes a complete Kubespray run for the target cluster. This requires the proper credentials to be sourced:
+
+  ```bash
+  test -f ${CK8S_CONFIG_PATH}/openrc.sh && source ${CK8S_CONFIG_PATH}/openrc.sh
+  test -f ${CK8S_CONFIG_PATH}/secret/openstack-app-credentials-for-kubespray.sh && source <(sops -d ${CK8S_CONFIG_PATH}/secret/openstack-app-credentials-for-kubespray.sh)
+  ```
+
+- Ensure that the checked out tag or commit in your Kubespray repository matches the version in the cluster:
+
+  ```bash
+  KUBESPRAY_REF="$(yq '.ck8sKubesprayVersion' ${CK8S_CONFIG_PATH}/${TARGET_CLUSTER}-config/group_vars/all/ck8s-kubespray-general.yaml)"
+  git switch --detach "${KUBESPRAY_REF}"
+
+  # update the kubespray submodule if needed
+  git submodule sync
+  git submodule update --init --recursive
+  ```
 
 - Switch `kube_owner` to `root` in the `${CK8S_CONFIG_PATH}/${TARGET_CLUSTER}_config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml` file
   and apply the changes:
