@@ -143,7 +143,9 @@ get_node_pods_with_ip_prefix() {
 }
 
 # Make this script executable
-if [[ -n "${1:-}" ]]; then
+(return 0 2>/dev/null) && sourced=1 || sourced=0
+
+if [[ "$sourced" == "0" ]] && [[ -n "${1:-}" ]]; then
   cmd="${1}"
   shift
   "${cmd}" "${@}"
