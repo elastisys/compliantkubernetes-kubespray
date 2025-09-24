@@ -37,7 +37,7 @@
 
 1. (Optional) Nuclear option: evict all pods
 
-- If feeling adventurous, you can skip steps 3 & 4, and just evict all pods in the system with Cilium IPs:
+- If feeling adventurous, you can skip steps 3 & 4, and just evict all pods with Cilium IPs:
 
   ```bash
   CILIUM_PREFIX="10.235"

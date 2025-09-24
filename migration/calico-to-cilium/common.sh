@@ -25,6 +25,7 @@ log_error() {
   echo -e "[$(red_text calico-to-cilium)] ${*}" 1>&2
 }
 
+# Usage: check_bin <binary_basename>
 check_bin() {
   command -v "${1}" >/dev/null || {
     log_error "FATAL: ${1} not found; Ensure you have it installed and within PATH" >&2
