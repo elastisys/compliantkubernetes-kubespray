@@ -42,6 +42,7 @@ def main(pods: list[str]) -> int:
 
         if attempts >= MAX_ATTEMPTS:
             ret = 1
+            continue
 
         if attempts > 1:
             if (chill_time := WAIT_TIME - (datetime.now() - queue_time).total_seconds()) > 0:
