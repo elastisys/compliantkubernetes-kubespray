@@ -273,6 +273,7 @@ sops_exec_file_no_fifo() {
 # The user can still proceed if nothing is set, to allow for other types of cloud providers.
 check_openstack_credentials() {
   log_info "Checking for openstack user or openstack application credentials"
+  credentials_set="yes"
 
   if [ -n "${OS_USERNAME:-}" ] && [ -n "${OS_APPLICATION_CREDENTIAL_NAME:-}" ]; then
     log_error "ERROR: Both OS_USERNAME and OS_APPLICATION_CREDENTIAL_NAME are set."
@@ -287,13 +288,13 @@ check_openstack_credentials() {
       log_info "OS_APPLICATION_CREDENTIAL_ID is not empty (check contents by running \"echo \$OS_APPLICATION_CREDENTIAL_ID\")"
       log_info "OS_APPLICATION_CREDENTIAL_SECRET is not empty (check contents by running \"echo \$OS_APPLICATION_CREDENTIAL_SECRET\")"
     elif [ -n "${OS_APPLICATION_CREDENTIAL_ID:-}" ]; then
-      log_error "ERROR: OS_APPLICATION_CREDENTIAL_NAME and OS_APPLICATION_CREDENTIAL_ID is set but OS_APPLICATION_CREDENTIAL_SECRET is emppty!"
+      log_error "ERROR: OS_APPLICATION_CREDENTIAL_NAME and OS_APPLICATION_CREDENTIAL_ID is set but OS_APPLICATION_CREDENTIAL_SECRET is empty!"
       exit 1
     elif [ -n "${OS_APPLICATION_CREDENTIAL_SECRET:-}" ]; then
-      log_error "ERROR: OS_APPLICATION_CREDENTIAL_NAME and OS_APPLICATION_CREDENTIAL_SECRET is set but OS_APPLICATION_CREDENTIAL_ID is emppty!"
+      log_error "ERROR: OS_APPLICATION_CREDENTIAL_NAME and OS_APPLICATION_CREDENTIAL_SECRET is set but OS_APPLICATION_CREDENTIAL_ID is empty!"
       exit 1
     else
-      log_error "ERROR: OS_APPLICATION_CREDENTIAL_NAME is set but OS_APPLICATION_CREDENTIAL_ID and OS_APPLICATION_CREDENTIAL_SECRET is emppty!"
+      log_error "ERROR: OS_APPLICATION_CREDENTIAL_NAME is set but OS_APPLICATION_CREDENTIAL_ID and OS_APPLICATION_CREDENTIAL_SECRET is empty!"
       exit 1
     fi
   elif [ -n "${OS_USERNAME:-}" ]; then
@@ -308,9 +309,15 @@ check_openstack_credentials() {
   else
     log_warning "Warning: No openstack user or openstack application credentials found."
     log_warning "If you are not running on openstack, then you can safely ignore this."
+    credentials_set="no"
   fi
 
-  log_continue "Continue with the current credentials?"
+  if [[ "${credentials_set}" == "yes" ]]; then
+    log_continue "Continue with the current credentials?"
+  else
+    log_continue "Continue without openstack credentials?"
+  fi
+
 }
 
 # Compares the expected and actual git state of the kubespray submodule.
