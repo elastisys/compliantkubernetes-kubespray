@@ -1,0 +1,35 @@
+annotateK8sNode: true
+encryption:
+  enabled: true
+  strictMode:
+    enabled: false
+  type: wireguard
+envoy:
+  enabled: false
+hubble:
+  enabled: true
+  metrics:
+    enabled:
+    - drop:labelsContext=traffic_direction,source_pod,source_namespace,source_ip,destination_pod,destination_namespace,destination_ip
+    - flow:labelsContext=traffic_direction,source_pod,source_namespace,source_ip,destination_pod,destination_namespace,destination_ip
+    - dns
+    - tcp
+    - icmp
+    - httpV2
+    servicejonitor:
+      enabled: true
+operator:
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  unmanagedPodWatcher:
+    restart: false
+policyAuditMode: false
+policyCIDRMatchMode: nodes
+policyEnforcementMode: never
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    trustCRDsExist: true
