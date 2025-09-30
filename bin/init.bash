@@ -61,6 +61,11 @@ cp -r "${config_defaults_path}/common/group_vars" "${config_path}/"
 
 cp -r --dereference "${config_defaults_path}/${flavor}/group_vars" "${config_path}/"
 
+# Set ck8sKubesprayVersion to be the current repo version
+CK8S_KUBESPRAY_VERSION=$(get_repo_version)
+export CK8S_KUBESPRAY_VERSION
+yq -i ".ck8sKubesprayVersion = \"${CK8S_KUBESPRAY_VERSION}\"" "${CK8S_CONFIG_PATH}/${prefix}-config/group_vars/all/ck8s-kubespray-general.yaml"
+
 # Copy inventory.ini
 if [[ ! -f "${config[inventory_file]}" ]]; then
   PREFIX=${prefix} envsubst >"${config[inventory_file]}" <"${config_defaults_path}/inventory.ini"
