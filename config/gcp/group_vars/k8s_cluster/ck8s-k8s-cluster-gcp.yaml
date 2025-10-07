@@ -1,2 +1,2 @@
-etcd_kubeadm_enabled: true
+etcd_deployment_type: kubeadm
 persistent_volumes_enabled: true
