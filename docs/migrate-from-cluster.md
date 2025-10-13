@@ -130,7 +130,7 @@ This has only been tested on CityCloud and might not look the same for other clo
     Add the following to the `k8s-cluster` group
 
     ```yaml
-    etcd_kubeadm_enabled: true
+    etcd_deployment_type: kubeadm
     kube_cert_dir: "/etc/kubernetes/pki"
     kube_service_addresses: "10.96.0.0/12"
     kube_pods_subnet: "192.168.0.0/16"

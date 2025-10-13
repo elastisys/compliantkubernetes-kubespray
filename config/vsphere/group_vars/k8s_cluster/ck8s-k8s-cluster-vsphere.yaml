@@ -1,4 +1,4 @@
-etcd_kubeadm_enabled: true
+etcd_deployment_type: kubeadm
 
 cloud_provider: "external"
 external_cloud_provider: "vsphere"
