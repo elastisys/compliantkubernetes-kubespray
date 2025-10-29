@@ -1,0 +1,18 @@
+{
+    "custom_stats": {},
+    "global_custom_stats": {},
+    "plays": [
+        {
+            "play": {
+                "duration": {
+                    "start": "2025-10-29T16:13:04.622495Z"
+                },
+                "id": "a002a503-ae2b-016f-a160-000000000001",
+                "name": "all",
+                "path": "/home/elastisyschangeme/SBOM2/compliantkubernetes-kubespray/tmp/sbom/upcloud/dump-image-vars.yml:2"
+            },
+            "tasks": []
+        }
+    ],
+    "stats": {}
+}

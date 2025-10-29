@@ -1,0 +1,3342 @@
+{
+  "ansible_image_variables": {},
+  "ansible_image_variables_count": 0,
+  "generated_at": "2025-10-29T16:13:01Z",
+  "inventory": "/home/elastisyschangeme/SBOM2/compliantkubernetes-kubespray/kubespray/inventory/sample/inventory.ini",
+  "scenario": "aws",
+  "static_scan": {
+    "image_fields": [
+      {
+        "file": ".gitlab-ci.yml",
+        "line": 39,
+        "raw": "$PIPELINE_IMAGE",
+        "value": "$PIPELINE_IMAGE"
+      },
+      {
+        "file": ".gitlab-ci/terraform.yml",
+        "line": 156,
+        "raw": "python",
+        "value": "python"
+      },
+      {
+        "file": ".gitlab-ci/lint.yml",
+        "line": 6,
+        "raw": "'ghcr.io/pre-commit-ci/runner-image@sha256:aaf2c7b38b22286f2d381c11673bec571c28f61dd086d11b43a1c9444a813cef'",
+        "value": "ghcr.io/pre-commit-ci/runner-image@sha256:aaf2c7b38b22286f2d381c11673bec571c28f61dd086d11b43a1c9444a813cef"
+      },
+      {
+        "file": ".gitlab-ci/lint.yml",
+        "line": 33,
+        "raw": "python:3",
+        "value": "python:3"
+      },
+      {
+        "file": ".gitlab-ci/pre-commit-dynamic-stub.yml",
+        "line": 6,
+        "raw": "'ghcr.io/pre-commit-ci/runner-image@sha256:aaf2c7b38b22286f2d381c11673bec571c28f61dd086d11b43a1c9444a813cef'",
+        "value": "ghcr.io/pre-commit-ci/runner-image@sha256:aaf2c7b38b22286f2d381c11673bec571c28f61dd086d11b43a1c9444a813cef"
+      },
+      {
+        "file": ".gitlab-ci/vagrant.yml",
+        "line": 18,
+        "raw": "quay.io/kubespray/vm-kubespray-ci:v13",
+        "value": "quay.io/kubespray/vm-kubespray-ci:v13"
+      },
+      {
+        "file": ".gitlab-ci/molecule.yml",
+        "line": 6,
+        "raw": "quay.io/kubespray/vm-kubespray-ci:v13",
+        "value": "quay.io/kubespray/vm-kubespray-ci:v13"
+      },
+      {
+        "file": "tests/files/custom_cni/cilium.yaml",
+        "line": 1037,
+        "raw": "\"quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28\"",
+        "value": "quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28"
+      },
+      {
+        "file": "tests/files/custom_cni/cilium.yaml",
+        "line": 1188,
+        "raw": "\"quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28\"",
+        "value": "quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28"
+      },
+      {
+        "file": "tests/files/custom_cni/cilium.yaml",
+        "line": 1211,
+        "raw": "\"quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28\"",
+        "value": "quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28"
+      },
+      {
+        "file": "tests/files/custom_cni/cilium.yaml",
+        "line": 1248,
+        "raw": "\"quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28\"",
+        "value": "quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28"
+      },
+      {
+        "file": "tests/files/custom_cni/cilium.yaml",
+        "line": 1286,
+        "raw": "\"quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28\"",
+        "value": "quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28"
+      },
+      {
+        "file": "tests/files/custom_cni/cilium.yaml",
+        "line": 1302,
+        "raw": "\"quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28\"",
+        "value": "quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28"
+      },
+      {
+        "file": "tests/files/custom_cni/cilium.yaml",
+        "line": 1349,
+        "raw": "\"quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28\"",
+        "value": "quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28"
+      },
+      {
+        "file": "tests/files/custom_cni/cilium.yaml",
+        "line": 1512,
+        "raw": "\"quay.io/cilium/cilium-envoy:v1.29.9-1728346947-0d05e48bfbb8c4737ec40d5781d970a550ed2bbd@sha256:42614a44e508f70d03a04470df5f61e3cffd22462471a0be0544cf116f2c50ba\"",
+        "value": "quay.io/cilium/cilium-envoy:v1.29.9-1728346947-0d05e48bfbb8c4737ec40d5781d970a550ed2bbd@sha256:42614a44e508f70d03a04470df5f61e3cffd22462471a0be0544cf116f2c50ba"
+      },
+      {
+        "file": "tests/files/custom_cni/cilium.yaml",
+        "line": 1688,
+        "raw": "\"quay.io/cilium/operator-generic:v1.16.3@sha256:6e2925ef47a1c76e183c48f95d4ce0d34a1e5e848252f910476c3e11ce1ec94b\"",
+        "value": "quay.io/cilium/operator-generic:v1.16.3@sha256:6e2925ef47a1c76e183c48f95d4ce0d34a1e5e848252f910476c3e11ce1ec94b"
+      },
+      {
+        "file": "tests/testcases/030_check-network.yml",
+        "line": 83,
+        "raw": "{{ test_image_repo }}:{{ test_image_tag }}",
+        "value": "{{ test_image_repo }}:{{ test_image_tag }}"
+      },
+      {
+        "file": "tests/testcases/040_check-network-adv.yml",
+        "line": 146,
+        "raw": "dougbtv/centos-network",
+        "value": "dougbtv/centos-network"
+      },
+      {
+        "file": "tests/cloud_playbooks/roles/packet-ci/templates/vm.yml.j2",
+        "line": 56,
+        "raw": "quay.io/kubespray/vm-{{ cloud_image }}",
+        "value": "quay.io/kubespray/vm-{{ cloud_image }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/metallb/templates/metallb.yaml.j2",
+        "line": 1719,
+        "raw": "\"{{ metallb_controller_image_repo }}:{{ metallb_version }}\"",
+        "value": "{{ metallb_controller_image_repo }}:{{ metallb_version }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/metallb/templates/metallb.yaml.j2",
+        "line": 1827,
+        "raw": "\"{{ metallb_speaker_image_repo }}:{{ metallb_version }}\"",
+        "value": "{{ metallb_speaker_image_repo }}:{{ metallb_version }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_provisioner/local_volume_provisioner/templates/local-volume-provisioner-ds.yml.j2",
+        "line": 31,
+        "raw": "{{ local_volume_provisioner_image_repo }}:{{ local_volume_provisioner_image_tag }}",
+        "value": "{{ local_volume_provisioner_image_repo }}:{{ local_volume_provisioner_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_provisioner/rbd_provisioner/templates/deploy-rbd-provisioner.yml.j2",
+        "line": 28,
+        "raw": "{{ rbd_provisioner_image_repo }}:{{ rbd_provisioner_image_tag }}",
+        "value": "{{ rbd_provisioner_image_repo }}:{{ rbd_provisioner_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_provisioner/cephfs_provisioner/templates/deploy-cephfs-provisioner.yml.j2",
+        "line": 26,
+        "raw": "{{ cephfs_provisioner_image_repo }}:{{ cephfs_provisioner_image_tag }}",
+        "value": "{{ cephfs_provisioner_image_repo }}:{{ cephfs_provisioner_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_provisioner/local_path_provisioner/templates/local-path-storage-deployment.yml.j2",
+        "line": 20,
+        "raw": "{{ local_path_provisioner_image_repo }}:{{ local_path_provisioner_image_tag }}",
+        "value": "{{ local_path_provisioner_image_repo }}:{{ local_path_provisioner_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_provisioner/local_path_provisioner/templates/local-path-storage-cm.yml.j2",
+        "line": 33,
+        "raw": "\"{{ local_path_provisioner_helper_image_repo }}:{{ local_path_provisioner_helper_image_tag }}\"",
+        "value": "{{ local_path_provisioner_helper_image_repo }}:{{ local_path_provisioner_helper_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/metrics_server/templates/metrics-server-deployment.yaml.j2",
+        "line": 32,
+        "raw": "{{ metrics_server_image_repo }}:{{ metrics_server_image_tag }}",
+        "value": "{{ metrics_server_image_repo }}:{{ metrics_server_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ingress_controller/cert_manager/templates/cert-manager.yml.j2",
+        "line": 899,
+        "raw": "\"{{ cert_manager_cainjector_image_repo }}:{{ cert_manager_cainjector_image_tag }}\"",
+        "value": "{{ cert_manager_cainjector_image_repo }}:{{ cert_manager_cainjector_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ingress_controller/cert_manager/templates/cert-manager.yml.j2",
+        "line": 991,
+        "raw": "\"{{ cert_manager_controller_image_repo }}:{{ cert_manager_controller_image_tag }}\"",
+        "value": "{{ cert_manager_controller_image_repo }}:{{ cert_manager_controller_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ingress_controller/cert_manager/templates/cert-manager.yml.j2",
+        "line": 1107,
+        "raw": "\"{{ cert_manager_webhook_image_repo }}:{{ cert_manager_webhook_image_tag }}\"",
+        "value": "{{ cert_manager_webhook_image_repo }}:{{ cert_manager_webhook_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ingress_controller/alb_ingress_controller/templates/alb-ingress-deploy.yml.j2",
+        "line": 63,
+        "raw": "\"{{ alb_ingress_image_repo }}:{{ alb_ingress_image_tag }}\"",
+        "value": "{{ alb_ingress_image_repo }}:{{ alb_ingress_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ingress_controller/ingress_nginx/templates/admission-webhook-job.yml.j2",
+        "line": 29,
+        "raw": "\"{{ ingress_nginx_kube_webhook_certgen_image_repo }}:{{ ingress_nginx_kube_webhook_certgen_image_tag }}\"",
+        "value": "{{ ingress_nginx_kube_webhook_certgen_image_repo }}:{{ ingress_nginx_kube_webhook_certgen_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ingress_controller/ingress_nginx/templates/admission-webhook-job.yml.j2",
+        "line": 73,
+        "raw": "\"{{ ingress_nginx_kube_webhook_certgen_image_repo }}:{{ ingress_nginx_kube_webhook_certgen_image_tag }}\"",
+        "value": "{{ ingress_nginx_kube_webhook_certgen_image_repo }}:{{ ingress_nginx_kube_webhook_certgen_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ingress_controller/ingress_nginx/templates/ds-ingress-nginx-controller.yml.j2",
+        "line": 31,
+        "raw": "{{ ingress_nginx_opentelemetry_image_repo }}:{{ ingress_nginx_opentelemetry_image_tag }}",
+        "value": "{{ ingress_nginx_opentelemetry_image_repo }}:{{ ingress_nginx_opentelemetry_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ingress_controller/ingress_nginx/templates/ds-ingress-nginx-controller.yml.j2",
+        "line": 64,
+        "raw": "{{ ingress_nginx_controller_image_repo }}:{{ ingress_nginx_controller_image_tag }}",
+        "value": "{{ ingress_nginx_controller_image_repo }}:{{ ingress_nginx_controller_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/snapshots/snapshot-controller/templates/snapshot-controller.yml.j2",
+        "line": 37,
+        "raw": "{{ snapshot_controller_image_repo }}:{{ snapshot_controller_image_tag }}",
+        "value": "{{ snapshot_controller_image_repo }}:{{ snapshot_controller_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_cloud_controller/hcloud/templates/external-hcloud-cloud-controller-manager-ds-with-networks.yml.j2",
+        "line": 35,
+        "raw": "{{ docker_image_repo }}/hetznercloud/hcloud-cloud-controller-manager:{{ external_hcloud_cloud.controller_image_tag }}",
+        "value": "{{ docker_image_repo }}/hetznercloud/hcloud-cloud-controller-manager:{{ external_hcloud_cloud.controller_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_cloud_controller/hcloud/templates/external-hcloud-cloud-controller-manager-ds.yml.j2",
+        "line": 35,
+        "raw": "{{ docker_image_repo }}/hetznercloud/hcloud-cloud-controller-manager:{{ external_hcloud_cloud.controller_image_tag }}",
+        "value": "{{ docker_image_repo }}/hetznercloud/hcloud-cloud-controller-manager:{{ external_hcloud_cloud.controller_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_cloud_controller/vsphere/templates/external-vsphere-cloud-controller-manager-ds.yml.j2",
+        "line": 39,
+        "raw": "{{ kube_image_repo }}/cloud-pv-vsphere/cloud-provider-vsphere:{{ external_vsphere_cloud_controller_image_tag }}",
+        "value": "{{ kube_image_repo }}/cloud-pv-vsphere/cloud-provider-vsphere:{{ external_vsphere_cloud_controller_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_cloud_controller/openstack/templates/external-openstack-cloud-controller-manager-ds.yml.j2",
+        "line": 39,
+        "raw": "{{ external_openstack_cloud_controller_image_repo }}:{{ external_openstack_cloud_controller_image_tag }}",
+        "value": "{{ external_openstack_cloud_controller_image_repo }}:{{ external_openstack_cloud_controller_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_cloud_controller/oci/templates/external-oci-cloud-controller-manager.yml.j2",
+        "line": 45,
+        "raw": "{{ external_oracle_cloud_controller_image_repo }}:{{ external_oracle_cloud_controller_image_tag }}",
+        "value": "{{ external_oracle_cloud_controller_image_repo }}:{{ external_oracle_cloud_controller_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_cloud_controller/huaweicloud/templates/external-huawei-cloud-controller-manager-ds.yml.j2",
+        "line": 43,
+        "raw": "{{ external_huawei_cloud_controller_image_repo }}/k8s-cloudprovider/huawei-cloud-controller-manager:{{ external_huawei_cloud_controller_image_tag }}",
+        "value": "{{ external_huawei_cloud_controller_image_repo }}/k8s-cloudprovider/huawei-cloud-controller-manager:{{ external_huawei_cloud_controller_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/scheduler_plugins/templates/deploy-scheduler-plugins.yaml.j2",
+        "line": 21,
+        "raw": "{{ scheduler_plugins_controller_image_repo }}:{{ scheduler_plugins_controller_image_tag }}",
+        "value": "{{ scheduler_plugins_controller_image_repo }}:{{ scheduler_plugins_controller_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/scheduler_plugins/templates/deploy-scheduler-plugins.yaml.j2",
+        "line": 46,
+        "raw": "{{ scheduler_plugins_scheduler_image_repo }}:{{ scheduler_plugins_scheduler_image_tag }}",
+        "value": "{{ scheduler_plugins_scheduler_image_repo }}:{{ scheduler_plugins_scheduler_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/container_engine_accelerator/nvidia_gpu/templates/nvidia-driver-install-daemonset.yml.j2",
+        "line": 55,
+        "raw": "\"{{ nvidia_driver_install_container }}\"",
+        "value": "{{ nvidia_driver_install_container }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/container_engine_accelerator/nvidia_gpu/templates/nvidia-driver-install-daemonset.yml.j2",
+        "line": 81,
+        "raw": "\"{{ pod_infra_image_repo }}:{{ pod_infra_image_tag }}\"",
+        "value": "{{ pod_infra_image_repo }}:{{ pod_infra_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/container_engine_accelerator/nvidia_gpu/templates/k8s-device-plugin-nvidia-daemonset.yml.j2",
+        "line": 42,
+        "raw": "\"{{ nvidia_gpu_device_plugin_container }}\"",
+        "value": "{{ nvidia_gpu_device_plugin_container }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/policy_controller/calico/templates/calico-kube-controllers.yml.j2",
+        "line": 39,
+        "raw": "{{ calico_policy_image_repo }}:{{ calico_policy_image_tag }}",
+        "value": "{{ calico_policy_image_repo }}:{{ calico_policy_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/registry/templates/registry-rs.yml.j2",
+        "line": 34,
+        "raw": "{{ registry_image_repo }}:{{ registry_image_tag }}",
+        "value": "{{ registry_image_repo }}:{{ registry_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ansible/templates/netchecker-agent-ds.yml.j2",
+        "line": 26,
+        "raw": "\"{{ netcheck_agent_image_repo }}:{{ netcheck_agent_image_tag }}\"",
+        "value": "{{ netcheck_agent_image_repo }}:{{ netcheck_agent_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ansible/templates/netchecker-agent-hostnet-ds.yml.j2",
+        "line": 28,
+        "raw": "\"{{ netcheck_agent_image_repo }}:{{ netcheck_agent_image_tag }}\"",
+        "value": "{{ netcheck_agent_image_repo }}:{{ netcheck_agent_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ansible/templates/netchecker-server-deployment.yml.j2",
+        "line": 25,
+        "raw": "\"{{ netcheck_server_image_repo }}:{{ netcheck_server_image_tag }}\"",
+        "value": "{{ netcheck_server_image_repo }}:{{ netcheck_server_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ansible/templates/netchecker-server-deployment.yml.j2",
+        "line": 52,
+        "raw": "\"{{ etcd_image_repo }}:{{ netcheck_etcd_image_tag }}\"",
+        "value": "{{ etcd_image_repo }}:{{ netcheck_etcd_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ansible/templates/dashboard.yml.j2",
+        "line": 163,
+        "raw": "{{ dashboard_image_repo }}:{{ dashboard_image_tag }}",
+        "value": "{{ dashboard_image_repo }}:{{ dashboard_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ansible/templates/dashboard.yml.j2",
+        "line": 296,
+        "raw": "{{ dashboard_metrics_scraper_repo }}:{{ dashboard_metrics_scraper_tag }}",
+        "value": "{{ dashboard_metrics_scraper_repo }}:{{ dashboard_metrics_scraper_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ansible/templates/coredns-deployment.yml.j2",
+        "line": 58,
+        "raw": "\"{{ coredns_image_repo }}:{{ coredns_image_tag }}\"",
+        "value": "{{ coredns_image_repo }}:{{ coredns_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ansible/templates/nodelocaldns-second-daemonset.yml.j2",
+        "line": 34,
+        "raw": "\"{{ nodelocaldns_image_repo }}:{{ nodelocaldns_image_tag }}\"",
+        "value": "{{ nodelocaldns_image_repo }}:{{ nodelocaldns_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ansible/templates/dns-autoscaler.yml.j2",
+        "line": 68,
+        "raw": "\"{{ dnsautoscaler_image_repo }}:{{ dnsautoscaler_image_tag }}\"",
+        "value": "{{ dnsautoscaler_image_repo }}:{{ dnsautoscaler_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/ansible/templates/nodelocaldns-daemonset.yml.j2",
+        "line": 34,
+        "raw": "\"{{ nodelocaldns_image_repo }}:{{ nodelocaldns_image_tag }}\"",
+        "value": "{{ nodelocaldns_image_repo }}:{{ nodelocaldns_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2",
+        "line": 24,
+        "raw": "{{ csi_attacher_image_repo }}:{{ cinder_csi_attacher_image_tag }}",
+        "value": "{{ csi_attacher_image_repo }}:{{ cinder_csi_attacher_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2",
+        "line": 43,
+        "raw": "{{ csi_provisioner_image_repo }}:{{ cinder_csi_provisioner_image_tag }}",
+        "value": "{{ csi_provisioner_image_repo }}:{{ cinder_csi_provisioner_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2",
+        "line": 66,
+        "raw": "{{ csi_snapshotter_image_repo }}:{{ cinder_csi_snapshotter_image_tag }}",
+        "value": "{{ csi_snapshotter_image_repo }}:{{ cinder_csi_snapshotter_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2",
+        "line": 85,
+        "raw": "{{ csi_resizer_image_repo }}:{{ cinder_csi_resizer_image_tag }}",
+        "value": "{{ csi_resizer_image_repo }}:{{ cinder_csi_resizer_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2",
+        "line": 104,
+        "raw": "{{ csi_livenessprobe_image_repo }}:{{ cinder_csi_livenessprobe_image_tag }}",
+        "value": "{{ csi_livenessprobe_image_repo }}:{{ cinder_csi_livenessprobe_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2",
+        "line": 118,
+        "raw": "{{ cinder_csi_plugin_image_repo }}:{{ cinder_csi_plugin_image_tag }}",
+        "value": "{{ cinder_csi_plugin_image_repo }}:{{ cinder_csi_plugin_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-nodeplugin.yml.j2",
+        "line": 25,
+        "raw": "{{ csi_node_driver_registrar_image_repo }}:{{ csi_node_driver_registrar_image_tag }}",
+        "value": "{{ csi_node_driver_registrar_image_repo }}:{{ csi_node_driver_registrar_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-nodeplugin.yml.j2",
+        "line": 45,
+        "raw": "{{ csi_livenessprobe_image_repo }}:{{ csi_livenessprobe_image_tag }}",
+        "value": "{{ csi_livenessprobe_image_repo }}:{{ csi_livenessprobe_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-nodeplugin.yml.j2",
+        "line": 57,
+        "raw": "{{ cinder_csi_plugin_image_repo }}:{{ cinder_csi_plugin_image_tag }}",
+        "value": "{{ cinder_csi_plugin_image_repo }}:{{ cinder_csi_plugin_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/templates/vsphere-csi-controller-deployment.yml.j2",
+        "line": 55,
+        "raw": "{{ kube_image_repo }}/sig-storage/csi-attacher:{{ vsphere_csi_attacher_image_tag }}",
+        "value": "{{ kube_image_repo }}/sig-storage/csi-attacher:{{ vsphere_csi_attacher_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/templates/vsphere-csi-controller-deployment.yml.j2",
+        "line": 78,
+        "raw": "{{ kube_image_repo }}/sig-storage/csi-resizer:{{ vsphere_csi_resizer_tag }}",
+        "value": "{{ kube_image_repo }}/sig-storage/csi-resizer:{{ vsphere_csi_resizer_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/templates/vsphere-csi-controller-deployment.yml.j2",
+        "line": 102,
+        "raw": "{{ kube_image_repo }}/csi-vsphere/driver:{{ vsphere_csi_controller }}",
+        "value": "{{ kube_image_repo }}/csi-vsphere/driver:{{ vsphere_csi_controller }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/templates/vsphere-csi-controller-deployment.yml.j2",
+        "line": 156,
+        "raw": "{{ kube_image_repo }}/sig-storage/livenessprobe:{{ vsphere_csi_liveness_probe_image_tag }}",
+        "value": "{{ kube_image_repo }}/sig-storage/livenessprobe:{{ vsphere_csi_liveness_probe_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/templates/vsphere-csi-controller-deployment.yml.j2",
+        "line": 171,
+        "raw": "{{ kube_image_repo }}/csi-vsphere/syncer:{{ vsphere_syncer_image_tag }}",
+        "value": "{{ kube_image_repo }}/csi-vsphere/syncer:{{ vsphere_syncer_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/templates/vsphere-csi-controller-deployment.yml.j2",
+        "line": 210,
+        "raw": "{{ kube_image_repo }}/sig-storage/csi-provisioner:{{ vsphere_csi_provisioner_image_tag }}",
+        "value": "{{ kube_image_repo }}/sig-storage/csi-provisioner:{{ vsphere_csi_provisioner_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/templates/vsphere-csi-controller-deployment.yml.j2",
+        "line": 238,
+        "raw": "{{ kube_image_repo }}/sig-storage/csi-snapshotter:{{ vsphere_csi_snapshotter_image_tag }}",
+        "value": "{{ kube_image_repo }}/sig-storage/csi-snapshotter:{{ vsphere_csi_snapshotter_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/templates/vsphere-csi-node.yml.j2",
+        "line": 32,
+        "raw": "{{ kube_image_repo }}/sig-storage/csi-node-driver-registrar:{{ vsphere_csi_node_driver_registrar_image_tag }}",
+        "value": "{{ kube_image_repo }}/sig-storage/csi-node-driver-registrar:{{ vsphere_csi_node_driver_registrar_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/templates/vsphere-csi-node.yml.j2",
+        "line": 65,
+        "raw": "{{ kube_image_repo }}/csi-vsphere/driver:{{ vsphere_csi_driver_image_tag }}",
+        "value": "{{ kube_image_repo }}/csi-vsphere/driver:{{ vsphere_csi_driver_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/templates/vsphere-csi-node.yml.j2",
+        "line": 129,
+        "raw": "{{ kube_image_repo }}/sig-storage/livenessprobe:{{ vsphere_csi_liveness_probe_image_tag }}",
+        "value": "{{ kube_image_repo }}/sig-storage/livenessprobe:{{ vsphere_csi_liveness_probe_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/templates/upcloud-csi-controller.yml.j2",
+        "line": 22,
+        "raw": "registry.k8s.io/sig-storage/csi-provisioner:{{ upcloud_csi_provisioner_image_tag }}",
+        "value": "registry.k8s.io/sig-storage/csi-provisioner:{{ upcloud_csi_provisioner_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/templates/upcloud-csi-controller.yml.j2",
+        "line": 35,
+        "raw": "registry.k8s.io/sig-storage/csi-attacher:{{ upcloud_csi_attacher_image_tag }}",
+        "value": "registry.k8s.io/sig-storage/csi-attacher:{{ upcloud_csi_attacher_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/templates/upcloud-csi-controller.yml.j2",
+        "line": 48,
+        "raw": "registry.k8s.io/sig-storage/csi-resizer:{{ upcloud_csi_resizer_image_tag }}",
+        "value": "registry.k8s.io/sig-storage/csi-resizer:{{ upcloud_csi_resizer_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/templates/upcloud-csi-controller.yml.j2",
+        "line": 62,
+        "raw": "k8s.gcr.io/sig-storage/csi-snapshotter:{{ upcloud_csi_snapshotter_image_tag }}",
+        "value": "k8s.gcr.io/sig-storage/csi-snapshotter:{{ upcloud_csi_snapshotter_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/templates/upcloud-csi-controller.yml.j2",
+        "line": 76,
+        "raw": "ghcr.io/upcloudltd/upcloud-csi:{{ upcloud_csi_plugin_image_tag }}",
+        "value": "ghcr.io/upcloudltd/upcloud-csi:{{ upcloud_csi_plugin_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/templates/upcloud-csi-node.yml.j2",
+        "line": 21,
+        "raw": "registry.k8s.io/sig-storage/csi-node-driver-registrar:{{ upcloud_csi_node_image_tag }}",
+        "value": "registry.k8s.io/sig-storage/csi-node-driver-registrar:{{ upcloud_csi_node_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/templates/upcloud-csi-node.yml.j2",
+        "line": 41,
+        "raw": "ghcr.io/upcloudltd/upcloud-csi:{{ upcloud_csi_plugin_image_tag }}",
+        "value": "ghcr.io/upcloudltd/upcloud-csi:{{ upcloud_csi_plugin_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-nodeservice.yml.j2",
+        "line": 27,
+        "raw": "{{ aws_ebs_csi_plugin_image_repo }}:{{ aws_ebs_csi_plugin_image_tag }}",
+        "value": "{{ aws_ebs_csi_plugin_image_repo }}:{{ aws_ebs_csi_plugin_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-nodeservice.yml.j2",
+        "line": 59,
+        "raw": "{{ csi_node_driver_registrar_image_repo }}:{{ csi_node_driver_registrar_image_tag }}",
+        "value": "{{ csi_node_driver_registrar_image_repo }}:{{ csi_node_driver_registrar_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-nodeservice.yml.j2",
+        "line": 79,
+        "raw": "{{ csi_livenessprobe_image_repo }}:{{ csi_livenessprobe_image_tag }}",
+        "value": "{{ csi_livenessprobe_image_repo }}:{{ csi_livenessprobe_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2",
+        "line": 31,
+        "raw": "{{ aws_ebs_csi_plugin_image_repo }}:{{ aws_ebs_csi_plugin_image_tag }}",
+        "value": "{{ aws_ebs_csi_plugin_image_repo }}:{{ aws_ebs_csi_plugin_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2",
+        "line": 70,
+        "raw": "{{ csi_provisioner_image_repo }}:{{ csi_provisioner_image_tag }}",
+        "value": "{{ csi_provisioner_image_repo }}:{{ csi_provisioner_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2",
+        "line": 85,
+        "raw": "{{ csi_attacher_image_repo }}:{{ csi_attacher_image_tag }}",
+        "value": "{{ csi_attacher_image_repo }}:{{ csi_attacher_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2",
+        "line": 97,
+        "raw": "{{ csi_snapshotter_image_repo }}:{{ csi_snapshotter_image_tag }}",
+        "value": "{{ csi_snapshotter_image_repo }}:{{ csi_snapshotter_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2",
+        "line": 110,
+        "raw": "{{ csi_resizer_image_repo }}:{{ csi_resizer_image_tag }}",
+        "value": "{{ csi_resizer_image_repo }}:{{ csi_resizer_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2",
+        "line": 123,
+        "raw": "{{ csi_livenessprobe_image_repo }}:{{ csi_livenessprobe_image_tag }}",
+        "value": "{{ csi_livenessprobe_image_repo }}:{{ csi_livenessprobe_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/gcp_pd/templates/gcp-pd-csi-controller.yml.j2",
+        "line": 27,
+        "raw": "{{ csi_provisioner_image_repo }}:{{ csi_provisioner_image_tag }}",
+        "value": "{{ csi_provisioner_image_repo }}:{{ csi_provisioner_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/gcp_pd/templates/gcp-pd-csi-controller.yml.j2",
+        "line": 62,
+        "raw": "{{ csi_attacher_image_repo }}:{{ csi_attacher_image_tag }}",
+        "value": "{{ csi_attacher_image_repo }}:{{ csi_attacher_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/gcp_pd/templates/gcp-pd-csi-controller.yml.j2",
+        "line": 91,
+        "raw": "{{ csi_resizer_image_repo }}:{{ csi_resizer_image_tag }}",
+        "value": "{{ csi_resizer_image_repo }}:{{ csi_resizer_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/gcp_pd/templates/gcp-pd-csi-controller.yml.j2",
+        "line": 120,
+        "raw": "{{ csi_snapshotter_image_repo }}:{{ csi_snapshotter_image_tag }}",
+        "value": "{{ csi_snapshotter_image_repo }}:{{ csi_snapshotter_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/gcp_pd/templates/gcp-pd-csi-controller.yml.j2",
+        "line": 139,
+        "raw": "{{ gcp_pd_csi_plugin_image_repo }}:{{ gcp_pd_csi_plugin_image_tag }}",
+        "value": "{{ gcp_pd_csi_plugin_image_repo }}:{{ gcp_pd_csi_plugin_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/gcp_pd/templates/gcp-pd-csi-node.yml.j2",
+        "line": 24,
+        "raw": "{{ csi_node_driver_registrar_image_repo }}:{{ csi_node_driver_registrar_image_tag }}",
+        "value": "{{ csi_node_driver_registrar_image_repo }}:{{ csi_node_driver_registrar_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/gcp_pd/templates/gcp-pd-csi-node.yml.j2",
+        "line": 48,
+        "raw": "{{ gcp_pd_csi_plugin_image_repo }}:{{ gcp_pd_csi_plugin_image_tag }}",
+        "value": "{{ gcp_pd_csi_plugin_image_repo }}:{{ gcp_pd_csi_plugin_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-azuredisk-controller.yml.j2",
+        "line": 31,
+        "raw": "{{ azure_csi_image_repo }}/csi-provisioner:{{ azure_csi_provisioner_image_tag }}",
+        "value": "{{ azure_csi_image_repo }}/csi-provisioner:{{ azure_csi_provisioner_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-azuredisk-controller.yml.j2",
+        "line": 55,
+        "raw": "{{ azure_csi_image_repo }}/csi-attacher:{{ azure_csi_attacher_image_tag }}",
+        "value": "{{ azure_csi_image_repo }}/csi-attacher:{{ azure_csi_attacher_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-azuredisk-controller.yml.j2",
+        "line": 76,
+        "raw": "{{ azure_csi_image_repo }}/csi-snapshotter:{{ azure_csi_snapshotter_image_tag }}",
+        "value": "{{ azure_csi_image_repo }}/csi-snapshotter:{{ azure_csi_snapshotter_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-azuredisk-controller.yml.j2",
+        "line": 94,
+        "raw": "{{ azure_csi_image_repo }}/csi-resizer:{{ azure_csi_resizer_image_tag }}",
+        "value": "{{ azure_csi_image_repo }}/csi-resizer:{{ azure_csi_resizer_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-azuredisk-controller.yml.j2",
+        "line": 114,
+        "raw": "{{ azure_csi_image_repo }}/livenessprobe:{{ azure_csi_livenessprobe_image_tag }}",
+        "value": "{{ azure_csi_image_repo }}/livenessprobe:{{ azure_csi_livenessprobe_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-azuredisk-controller.yml.j2",
+        "line": 130,
+        "raw": "{{ azure_csi_plugin_image_repo }}/azuredisk-csi:{{ azure_csi_plugin_image_tag }}",
+        "value": "{{ azure_csi_plugin_image_repo }}/azuredisk-csi:{{ azure_csi_plugin_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-azuredisk-node.yml.j2",
+        "line": 37,
+        "raw": "{{ azure_csi_image_repo }}/livenessprobe:{{ azure_csi_livenessprobe_image_tag }}",
+        "value": "{{ azure_csi_image_repo }}/livenessprobe:{{ azure_csi_livenessprobe_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-azuredisk-node.yml.j2",
+        "line": 51,
+        "raw": "{{ azure_csi_image_repo }}/csi-node-driver-registrar:{{ azure_csi_node_registrar_image_tag }}",
+        "value": "{{ azure_csi_image_repo }}/csi-node-driver-registrar:{{ azure_csi_node_registrar_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-azuredisk-node.yml.j2",
+        "line": 81,
+        "raw": "{{ azure_csi_plugin_image_repo }}/azuredisk-csi:{{ azure_csi_plugin_image_tag }}",
+        "value": "{{ azure_csi_plugin_image_repo }}/azuredisk-csi:{{ azure_csi_plugin_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/node_feature_discovery/templates/nfd-worker.yaml.j2",
+        "line": 31,
+        "raw": "{{ node_feature_discovery_image_repo }}:{{ node_feature_discovery_image_tag }}",
+        "value": "{{ node_feature_discovery_image_repo }}:{{ node_feature_discovery_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/node_feature_discovery/templates/nfd-master.yaml.j2",
+        "line": 33,
+        "raw": "{{ node_feature_discovery_image_repo }}:{{ node_feature_discovery_image_tag }}",
+        "value": "{{ node_feature_discovery_image_repo }}:{{ node_feature_discovery_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/node_feature_discovery/templates/nfd-gc.yaml.j2",
+        "line": 25,
+        "raw": "{{ node_feature_discovery_image_repo }}:{{ node_feature_discovery_image_tag }}",
+        "value": "{{ node_feature_discovery_image_repo }}:{{ node_feature_discovery_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/kube-ovn/templates/cni-ovn.yml.j2",
+        "line": 355,
+        "raw": "{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}",
+        "value": "{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/kube-ovn/templates/cni-ovn.yml.j2",
+        "line": 505,
+        "raw": "{% if kube_ovn_dpdk_enabled %}{{ kube_ovn_dpdk_container_image_repo }}:{{ kube_ovn_dpdk_container_image_tag }}{% else %}{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}{% endif %}",
+        "value": "{% if kube_ovn_dpdk_enabled %}{{ kube_ovn_dpdk_container_image_repo }}:{{ kube_ovn_dpdk_container_image_tag }}{% else %}{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}{% endif %}"
+      },
+      {
+        "file": "roles/network_plugin/kube-ovn/templates/cni-kube-ovn.yml.j2",
+        "line": 11,
+        "raw": "{{ kube_ovn_vpc_container_image_repo }}:{{ kube_ovn_vpc_container_image_tag }}",
+        "value": "{{ kube_ovn_vpc_container_image_repo }}:{{ kube_ovn_vpc_container_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/kube-ovn/templates/cni-kube-ovn.yml.j2",
+        "line": 239,
+        "raw": "{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}",
+        "value": "{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/kube-ovn/templates/cni-kube-ovn.yml.j2",
+        "line": 385,
+        "raw": "{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}",
+        "value": "{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/kube-ovn/templates/cni-kube-ovn.yml.j2",
+        "line": 398,
+        "raw": "{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}",
+        "value": "{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/kube-ovn/templates/cni-kube-ovn.yml.j2",
+        "line": 587,
+        "raw": "{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}",
+        "value": "{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/kube-ovn/templates/cni-kube-ovn.yml.j2",
+        "line": 718,
+        "raw": "{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}",
+        "value": "{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/cilium/templates/cilium/ds.yml.j2",
+        "line": 31,
+        "raw": "\"{{ cilium_image_repo }}:{{ cilium_image_tag }}\"",
+        "value": "{{ cilium_image_repo }}:{{ cilium_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/cilium/templates/cilium/ds.yml.j2",
+        "line": 206,
+        "raw": "\"{{ cilium_image_repo }}:{{ cilium_image_tag }}\"",
+        "value": "{{ cilium_image_repo }}:{{ cilium_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/cilium/templates/cilium/ds.yml.j2",
+        "line": 235,
+        "raw": "\"{{ cilium_image_repo }}:{{ cilium_image_tag }}\"",
+        "value": "{{ cilium_image_repo }}:{{ cilium_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/cilium/templates/cilium/ds.yml.j2",
+        "line": 261,
+        "raw": "\"{{ cilium_image_repo }}:{{ cilium_image_tag }}\"",
+        "value": "{{ cilium_image_repo }}:{{ cilium_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/cilium/templates/cilium/ds.yml.j2",
+        "line": 314,
+        "raw": "\"{{ cilium_image_repo }}:{{ cilium_image_tag }}\"",
+        "value": "{{ cilium_image_repo }}:{{ cilium_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/cilium/templates/cilium-operator/deploy.yml.j2",
+        "line": 38,
+        "raw": "\"{{ cilium_operator_image_repo }}:{{ cilium_operator_image_tag }}\"",
+        "value": "{{ cilium_operator_image_repo }}:{{ cilium_operator_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/cilium/templates/hubble/job.yml.j2",
+        "line": 20,
+        "raw": "\"{{ cilium_hubble_certgen_image_repo }}:{{ cilium_hubble_certgen_image_tag }}\"",
+        "value": "{{ cilium_hubble_certgen_image_repo }}:{{ cilium_hubble_certgen_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/cilium/templates/hubble/cronjob.yml.j2",
+        "line": 24,
+        "raw": "\"{{ cilium_hubble_certgen_image_repo }}:{{ cilium_hubble_certgen_image_tag }}\"",
+        "value": "{{ cilium_hubble_certgen_image_repo }}:{{ cilium_hubble_certgen_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/cilium/templates/hubble/deploy.yml.j2",
+        "line": 37,
+        "raw": "\"{{ cilium_hubble_relay_image_repo }}:{{ cilium_hubble_relay_image_tag }}\"",
+        "value": "{{ cilium_hubble_relay_image_repo }}:{{ cilium_hubble_relay_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/cilium/templates/hubble/deploy.yml.j2",
+        "line": 134,
+        "raw": "\"{{ cilium_hubble_ui_image_repo }}:{{ cilium_hubble_ui_image_tag }}\"",
+        "value": "{{ cilium_hubble_ui_image_repo }}:{{ cilium_hubble_ui_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/cilium/templates/hubble/deploy.yml.j2",
+        "line": 148,
+        "raw": "\"{{ cilium_hubble_ui_backend_image_repo }}:{{ cilium_hubble_ui_backend_image_tag }}\"",
+        "value": "{{ cilium_hubble_ui_backend_image_repo }}:{{ cilium_hubble_ui_backend_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/flannel/templates/cni-flannel.yml.j2",
+        "line": 75,
+        "raw": "{{ flannel_image_repo }}:{{ flannel_image_tag }}",
+        "value": "{{ flannel_image_repo }}:{{ flannel_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/flannel/templates/cni-flannel.yml.j2",
+        "line": 122,
+        "raw": "{{ flannel_init_image_repo }}:{{ flannel_init_image_tag }}",
+        "value": "{{ flannel_init_image_repo }}:{{ flannel_init_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/flannel/templates/cni-flannel.yml.j2",
+        "line": 133,
+        "raw": "{{ flannel_image_repo }}:{{ flannel_image_tag }}",
+        "value": "{{ flannel_image_repo }}:{{ flannel_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/kube-router/templates/kube-router.yml.j2",
+        "line": 35,
+        "raw": "{{ kube_router_image_repo }}:{{ kube_router_image_tag }}",
+        "value": "{{ kube_router_image_repo }}:{{ kube_router_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/calico/templates/calico-typha.yml.j2",
+        "line": 75,
+        "raw": "{{ calico_typha_image_repo }}:{{ calico_typha_image_tag }}",
+        "value": "{{ calico_typha_image_repo }}:{{ calico_typha_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/calico/templates/calico-apiserver.yml.j2",
+        "line": 65,
+        "raw": "{{ calico_apiserver_image_repo }}:{{ calico_apiserver_image_tag }}",
+        "value": "{{ calico_apiserver_image_repo }}:{{ calico_apiserver_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/calico/templates/calico-node.yml.j2",
+        "line": 56,
+        "raw": "{{ calico_cni_image_repo }}:{{ calico_cni_image_tag }}",
+        "value": "{{ calico_cni_image_repo }}:{{ calico_cni_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/calico/templates/calico-node.yml.j2",
+        "line": 85,
+        "raw": "{{ calico_cni_image_repo }}:{{ calico_cni_image_tag }}",
+        "value": "{{ calico_cni_image_repo }}:{{ calico_cni_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/calico/templates/calico-node.yml.j2",
+        "line": 136,
+        "raw": "{{ calico_node_image_repo }}:{{ calico_node_image_tag }}",
+        "value": "{{ calico_node_image_repo }}:{{ calico_node_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/calico/templates/calico-node.yml.j2",
+        "line": 162,
+        "raw": "{{ calico_node_image_repo }}:{{ calico_node_image_tag }}",
+        "value": "{{ calico_node_image_repo }}:{{ calico_node_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/multus/templates/multus-daemonset.yml.j2",
+        "line": 38,
+        "raw": "{{ multus_image_repo }}:{{ multus_image_tag }}",
+        "value": "{{ multus_image_repo }}:{{ multus_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/multus/templates/multus-daemonset.yml.j2",
+        "line": 56,
+        "raw": "{{ multus_image_repo }}:{{ multus_image_tag }}",
+        "value": "{{ multus_image_repo }}:{{ multus_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/weave/templates/weave-net.yml.j2",
+        "line": 124,
+        "raw": "{{ weave_kube_image_repo }}:{{ weave_kube_image_tag }}",
+        "value": "{{ weave_kube_image_repo }}:{{ weave_kube_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/weave/templates/weave-net.yml.j2",
+        "line": 202,
+        "raw": "{{ weave_kube_image_repo }}:{{ weave_kube_image_tag }}",
+        "value": "{{ weave_kube_image_repo }}:{{ weave_kube_image_tag }}"
+      },
+      {
+        "file": "roles/network_plugin/weave/templates/weave-net.yml.j2",
+        "line": 237,
+        "raw": "{{ weave_npc_image_repo }}:{{ weave_npc_image_tag }}",
+        "value": "{{ weave_npc_image_repo }}:{{ weave_npc_image_tag }}"
+      },
+      {
+        "file": "roles/container-engine/kata-containers/templates/configuration-qemu.toml.j2",
+        "line": 21,
+        "raw": "\"/opt/kata/share/kata-containers/kata-containers.img\"",
+        "value": "/opt/kata/share/kata-containers/kata-containers.img"
+      },
+      {
+        "file": "roles/kubernetes/node/templates/manifests/kube-vip.manifest.j2",
+        "line": 103,
+        "raw": "{{ kube_vip_image_repo }}:{{ kube_vip_image_tag }}",
+        "value": "{{ kube_vip_image_repo }}:{{ kube_vip_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes/node/templates/manifests/nginx-proxy.manifest.j2",
+        "line": 19,
+        "raw": "{{ nginx_image_repo }}:{{ nginx_image_tag }}",
+        "value": "{{ nginx_image_repo }}:{{ nginx_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes/node/templates/manifests/haproxy.manifest.j2",
+        "line": 19,
+        "raw": "{{ haproxy_image_repo }}:{{ haproxy_image_tag }}",
+        "value": "{{ haproxy_image_repo }}:{{ haproxy_image_tag }}"
+      }
+    ],
+    "summary": {
+      "image_fields_found": 151,
+      "variables_found": 298
+    },
+    "variables": [
+      {
+        "file": ".gitlab-ci/terraform.yml",
+        "line": 195,
+        "name": "TF_VAR_image",
+        "raw": "ubuntu-20.04-server-latest",
+        "value": "ubuntu-20.04-server-latest"
+      },
+      {
+        "file": "tests/common_vars.yml",
+        "line": 36,
+        "name": "netcheck_agent_image_repo",
+        "raw": "\"{{ quay_image_repo }}/kubespray/k8s-netchecker-agent\"",
+        "value": "{{ quay_image_repo }}/kubespray/k8s-netchecker-agent"
+      },
+      {
+        "file": "tests/common_vars.yml",
+        "line": 37,
+        "name": "netcheck_server_image_repo",
+        "raw": "\"{{ quay_image_repo }}/kubespray/k8s-netchecker-server\"",
+        "value": "{{ quay_image_repo }}/kubespray/k8s-netchecker-server"
+      },
+      {
+        "file": "tests/common_vars.yml",
+        "line": 39,
+        "name": "nginx_image_repo",
+        "raw": "\"{{ quay_image_repo }}/kubespray/nginx\"",
+        "value": "{{ quay_image_repo }}/kubespray/nginx"
+      },
+      {
+        "file": "tests/common_vars.yml",
+        "line": 41,
+        "name": "flannel_image_repo",
+        "raw": "\"{{ quay_image_repo }}/kubespray/flannel\"",
+        "value": "{{ quay_image_repo }}/kubespray/flannel"
+      },
+      {
+        "file": "tests/common_vars.yml",
+        "line": 42,
+        "name": "flannel_init_image_repo",
+        "raw": "\"{{ quay_image_repo }}/kubespray/flannel-cni-plugin\"",
+        "value": "{{ quay_image_repo }}/kubespray/flannel-cni-plugin"
+      },
+      {
+        "file": "tests/files/packet_ubuntu20-calico-etcd-kubeadm-upgrade-ha.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_debian12-cilium-svc-proxy.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "debian-12",
+        "value": "debian-12"
+      },
+      {
+        "file": "tests/files/packet_almalinux8-calico.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "almalinux-8",
+        "value": "almalinux-8"
+      },
+      {
+        "file": "tests/files/packet_openeuler24-calico.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "openeuler-2403",
+        "value": "openeuler-2403"
+      },
+      {
+        "file": "tests/files/packet_debian11-custom-cni.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "debian-11",
+        "value": "debian-11"
+      },
+      {
+        "file": "tests/files/packet_ubuntu20-flannel-ha-once.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_fedora39-crio.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "fedora-39",
+        "value": "fedora-39"
+      },
+      {
+        "file": "tests/files/packet_rockylinux9-cilium.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "rockylinux-9",
+        "value": "rockylinux-9"
+      },
+      {
+        "file": "tests/files/packet_rockylinux9-calico.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "rockylinux-9",
+        "value": "rockylinux-9"
+      },
+      {
+        "file": "tests/files/packet_debian11-macvlan.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "debian-11",
+        "value": "debian-11"
+      },
+      {
+        "file": "tests/files/packet_ubuntu22-all-in-one-docker.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2204",
+        "value": "ubuntu-2204"
+      },
+      {
+        "file": "tests/files/packet_ubuntu20-flannel-ha.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_ubuntu24-calico-etcd-datastore.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2404",
+        "value": "ubuntu-2404"
+      },
+      {
+        "file": "tests/files/packet_almalinux8-calico-remove-node.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "almalinux-8",
+        "value": "almalinux-8"
+      },
+      {
+        "file": "tests/files/packet_ubuntu20-calico-all-in-one.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_ubuntu20-calico-etcd-kubeadm.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_debian12-custom-cni-helm.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "debian-12",
+        "value": "debian-12"
+      },
+      {
+        "file": "tests/files/packet_amazon-linux-2-all-in-one.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "amazon-linux-2",
+        "value": "amazon-linux-2"
+      },
+      {
+        "file": "tests/files/packet_debian11-calico-collection.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "debian-11",
+        "value": "debian-11"
+      },
+      {
+        "file": "tests/files/vagrant_ubuntu20-kube-router-svc-proxy.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_almalinux8-calico-nodelocaldns-secondary.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "almalinux-8",
+        "value": "almalinux-8"
+      },
+      {
+        "file": "tests/files/packet_opensuse-docker-cilium.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "opensuse-leap-15",
+        "value": "opensuse-leap-15"
+      },
+      {
+        "file": "tests/files/packet_fedora40-docker-calico.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "fedora-40",
+        "value": "fedora-40"
+      },
+      {
+        "file": "tests/files/packet_ubuntu20-calico-all-in-one-hardening.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_fedora39-calico-swap-selinux.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "fedora-39",
+        "value": "fedora-39"
+      },
+      {
+        "file": "tests/files/packet_ubuntu22-calico-all-in-one.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2204",
+        "value": "ubuntu-2204"
+      },
+      {
+        "file": "tests/files/packet_ubuntu22-calico-all-in-one-upgrade.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2204",
+        "value": "ubuntu-2204"
+      },
+      {
+        "file": "tests/files/packet_debian12-cilium.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "debian-12",
+        "value": "debian-12"
+      },
+      {
+        "file": "tests/files/packet_debian12-calico.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "debian-12",
+        "value": "debian-12"
+      },
+      {
+        "file": "tests/files/packet_ubuntu20-calico-ha-wireguard.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_debian11-calico-upgrade.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "debian-11",
+        "value": "debian-11"
+      },
+      {
+        "file": "tests/files/packet_almalinux8-docker.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "almalinux-8",
+        "value": "almalinux-8"
+      },
+      {
+        "file": "tests/files/packet_ubuntu20-cilium-sep.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_ubuntu24-calico-all-in-one.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2404",
+        "value": "ubuntu-2404"
+      },
+      {
+        "file": "tests/files/packet_ubuntu24-all-in-one-docker.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2404",
+        "value": "ubuntu-2404"
+      },
+      {
+        "file": "tests/files/vagrant_ubuntu20-kube-router-sep.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_almalinux8-kube-ovn.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "almalinux-8",
+        "value": "almalinux-8"
+      },
+      {
+        "file": "tests/files/packet_fedora39-calico-selinux.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "fedora-39",
+        "value": "fedora-39"
+      },
+      {
+        "file": "tests/files/packet_almalinux8-crio.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "almalinux-8",
+        "value": "almalinux-8"
+      },
+      {
+        "file": "tests/files/packet_almalinux8-calico-ha-ebpf.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "almalinux-8",
+        "value": "almalinux-8"
+      },
+      {
+        "file": "tests/files/packet_ubuntu20-crio.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_ubuntu20-all-in-one-docker.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_ubuntu20-calico-ha-recover-noquorum.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_debian11-docker.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "debian-11",
+        "value": "debian-11"
+      },
+      {
+        "file": "tests/files/vagrant_fedora39-kube-router.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "fedora-39",
+        "value": "fedora-39"
+      },
+      {
+        "file": "tests/files/packet_debian12-docker.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "debian-12",
+        "value": "debian-12"
+      },
+      {
+        "file": "tests/files/packet_debian11-calico-upgrade-once.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "debian-11",
+        "value": "debian-11"
+      },
+      {
+        "file": "tests/files/packet_debian11-kubelet-csr-approver.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "debian-11",
+        "value": "debian-11"
+      },
+      {
+        "file": "tests/files/packet_ubuntu20-calico-ha-recover.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "ubuntu-2004",
+        "value": "ubuntu-2004"
+      },
+      {
+        "file": "tests/files/packet_rockylinux8-calico.yml",
+        "line": 3,
+        "name": "cloud_image",
+        "raw": "rockylinux-8",
+        "value": "rockylinux-8"
+      },
+      {
+        "file": "tests/testcases/030_check-network.yml",
+        "line": 5,
+        "name": "test_image_repo",
+        "raw": "registry.k8s.io/e2e-test-images/agnhost",
+        "value": "registry.k8s.io/e2e-test-images/agnhost"
+      },
+      {
+        "file": "tests/testcases/030_check-network.yml",
+        "line": 6,
+        "name": "test_image_tag",
+        "raw": "\"2.40\"",
+        "value": "2.40"
+      },
+      {
+        "file": "test-infra/image-builder/roles/kubevirt-images/defaults/main.yml",
+        "line": 2,
+        "name": "images_dir",
+        "raw": "/images/base",
+        "value": "/images/base"
+      },
+      {
+        "file": "inventory/sample/group_vars/k8s_cluster/k8s-cluster.yml",
+        "line": 233,
+        "name": "k8s_image_pull_policy",
+        "raw": "IfNotPresent",
+        "value": "IfNotPresent"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_provisioner/rbd_provisioner/templates/sc-rbd-provisioner.yml.j2",
+        "line": 18,
+        "name": "imageFormat",
+        "raw": "\"{{ rbd_provisioner_image_format }}\"",
+        "value": "{{ rbd_provisioner_image_format }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_provisioner/rbd_provisioner/templates/sc-rbd-provisioner.yml.j2",
+        "line": 19,
+        "name": "imageFeatures",
+        "raw": "{{ rbd_provisioner_image_features }}",
+        "value": "{{ rbd_provisioner_image_features }}"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_provisioner/rbd_provisioner/defaults/main.yml",
+        "line": 14,
+        "name": "rbd_provisioner_image_format",
+        "raw": "\"2\"",
+        "value": "2"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_provisioner/rbd_provisioner/defaults/main.yml",
+        "line": 15,
+        "name": "rbd_provisioner_image_features",
+        "raw": "layering",
+        "value": "layering"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_provisioner/local_path_provisioner/defaults/main.yml",
+        "line": 9,
+        "name": "local_path_provisioner_helper_image_repo",
+        "raw": "\"busybox\"",
+        "value": "busybox"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_provisioner/local_path_provisioner/defaults/main.yml",
+        "line": 10,
+        "name": "local_path_provisioner_helper_image_tag",
+        "raw": "\"latest\"",
+        "value": "latest"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_cloud_controller/hcloud/defaults/main.yml",
+        "line": 8,
+        "name": "controller_image_tag",
+        "raw": "\"latest\"",
+        "value": "latest"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_cloud_controller/vsphere/defaults/main.yml",
+        "line": 11,
+        "name": "external_vsphere_cloud_controller_image_tag",
+        "raw": "\"v1.31.0\"",
+        "value": "v1.31.0"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_cloud_controller/openstack/defaults/main.yml",
+        "line": 24,
+        "name": "external_openstack_cloud_controller_image_tag",
+        "raw": "\"v1.30.0\"",
+        "value": "v1.30.0"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_cloud_controller/oci/defaults/main.yml",
+        "line": 24,
+        "name": "external_oracle_cloud_controller_image_repo",
+        "raw": "ghcr.io/oracle/cloud-provider-oci",
+        "value": "ghcr.io/oracle/cloud-provider-oci"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_cloud_controller/oci/defaults/main.yml",
+        "line": 25,
+        "name": "external_oracle_cloud_controller_image_tag",
+        "raw": "\"v1.29.0\"",
+        "value": "v1.29.0"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_cloud_controller/huaweicloud/defaults/main.yml",
+        "line": 18,
+        "name": "external_huawei_cloud_controller_image_repo",
+        "raw": "\"swr.ap-southeast-1.myhuaweicloud.com\"",
+        "value": "swr.ap-southeast-1.myhuaweicloud.com"
+      },
+      {
+        "file": "roles/kubernetes-apps/external_cloud_controller/huaweicloud/defaults/main.yml",
+        "line": 19,
+        "name": "external_huawei_cloud_controller_image_tag",
+        "raw": "\"v0.26.8\"",
+        "value": "v0.26.8"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/defaults/main.yml",
+        "line": 2,
+        "name": "cinder_csi_attacher_image_tag",
+        "raw": "\"v4.4.2\"",
+        "value": "v4.4.2"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/defaults/main.yml",
+        "line": 3,
+        "name": "cinder_csi_provisioner_image_tag",
+        "raw": "\"v3.6.2\"",
+        "value": "v3.6.2"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/defaults/main.yml",
+        "line": 4,
+        "name": "cinder_csi_snapshotter_image_tag",
+        "raw": "\"v6.3.2\"",
+        "value": "v6.3.2"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/defaults/main.yml",
+        "line": 5,
+        "name": "cinder_csi_resizer_image_tag",
+        "raw": "\"v1.9.2\"",
+        "value": "v1.9.2"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/cinder/defaults/main.yml",
+        "line": 6,
+        "name": "cinder_csi_livenessprobe_image_tag",
+        "raw": "\"v2.11.0\"",
+        "value": "v2.11.0"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/defaults/main.yml",
+        "line": 7,
+        "name": "vsphere_syncer_image_tag",
+        "raw": "\"v3.3.1\"",
+        "value": "v3.3.1"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/defaults/main.yml",
+        "line": 8,
+        "name": "vsphere_csi_attacher_image_tag",
+        "raw": "\"v4.3.0\"",
+        "value": "v4.3.0"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/defaults/main.yml",
+        "line": 10,
+        "name": "vsphere_csi_liveness_probe_image_tag",
+        "raw": "\"v2.10.0\"",
+        "value": "v2.10.0"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/defaults/main.yml",
+        "line": 11,
+        "name": "vsphere_csi_provisioner_image_tag",
+        "raw": "\"v3.5.0\"",
+        "value": "v3.5.0"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/defaults/main.yml",
+        "line": 12,
+        "name": "vsphere_csi_snapshotter_image_tag",
+        "raw": "\"v6.2.2\"",
+        "value": "v6.2.2"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/defaults/main.yml",
+        "line": 13,
+        "name": "vsphere_csi_node_driver_registrar_image_tag",
+        "raw": "\"v2.8.0\"",
+        "value": "v2.8.0"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/vsphere/defaults/main.yml",
+        "line": 14,
+        "name": "vsphere_csi_driver_image_tag",
+        "raw": "\"v3.3.1\"",
+        "value": "v3.3.1"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/defaults/main.yml",
+        "line": 3,
+        "name": "upcloud_csi_provisioner_image_tag",
+        "raw": "\"v3.1.0\"",
+        "value": "v3.1.0"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/defaults/main.yml",
+        "line": 4,
+        "name": "upcloud_csi_attacher_image_tag",
+        "raw": "\"v3.4.0\"",
+        "value": "v3.4.0"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/defaults/main.yml",
+        "line": 5,
+        "name": "upcloud_csi_resizer_image_tag",
+        "raw": "\"v1.4.0\"",
+        "value": "v1.4.0"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/defaults/main.yml",
+        "line": 6,
+        "name": "upcloud_csi_plugin_image_tag",
+        "raw": "\"v1.3.0\"",
+        "value": "v1.3.0"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/defaults/main.yml",
+        "line": 7,
+        "name": "upcloud_csi_node_image_tag",
+        "raw": "\"v2.5.0\"",
+        "value": "v2.5.0"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/defaults/main.yml",
+        "line": 13,
+        "name": "upcloud_csi_snapshotter_image_tag",
+        "raw": "\"v4.2.1\"",
+        "value": "v4.2.1"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/defaults/main.yml",
+        "line": 14,
+        "name": "upcloud_csi_snapshot_controller_image_tag",
+        "raw": "\"v4.2.1\"",
+        "value": "v4.2.1"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/upcloud/defaults/main.yml",
+        "line": 15,
+        "name": "upcloud_csi_snapshot_validation_webhook_image_tag",
+        "raw": "\"v4.2.1\"",
+        "value": "v4.2.1"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/aws_ebs/defaults/main.yml",
+        "line": 6,
+        "name": "aws_ebs_csi_plugin_image_tag",
+        "raw": "latest",
+        "value": "latest"
+      },
+      {
+        "file": "roles/kubernetes-apps/csi_driver/azuredisk/defaults/main.yml",
+        "line": 4,
+        "name": "azure_csi_plugin_image_tag",
+        "raw": "latest",
+        "value": "latest"
+      },
+      {
+        "file": "roles/network_plugin/cilium/templates/cilium/config.yml.j2",
+        "line": 118,
+        "name": "sidecar-istio-proxy-image",
+        "raw": "\"cilium/istio_proxy\"",
+        "value": "cilium/istio_proxy"
+      },
+      {
+        "file": "roles/download/tasks/prep_kubeadm_images.yml",
+        "line": 38,
+        "name": "kubeadm_images_list",
+        "raw": "\"{{ kubeadm_images_raw.stdout_lines }}\"",
+        "value": "{{ kubeadm_images_raw.stdout_lines }}"
+      },
+      {
+        "file": "roles/download/tasks/set_container_facts.yml",
+        "line": 12,
+        "name": "image_reponame",
+        "raw": ">-",
+        "value": ">-"
+      },
+      {
+        "file": "roles/download/tasks/set_container_facts.yml",
+        "line": 17,
+        "name": "image_filename",
+        "raw": "\"{{ image_reponame | regex_replace('/|\\0|:', '_') }}.tar\"",
+        "value": "{{ image_reponame | regex_replace('/|\\0|:', '_') }}.tar"
+      },
+      {
+        "file": "roles/download/tasks/set_container_facts.yml",
+        "line": 21,
+        "name": "image_path_cached",
+        "raw": "\"{{ download_cache_dir }}/images/{{ image_filename }}\"",
+        "value": "{{ download_cache_dir }}/images/{{ image_filename }}"
+      },
+      {
+        "file": "roles/download/tasks/set_container_facts.yml",
+        "line": 22,
+        "name": "image_path_final",
+        "raw": "\"{{ local_release_dir }}/images/{{ image_filename }}\"",
+        "value": "{{ local_release_dir }}/images/{{ image_filename }}"
+      },
+      {
+        "file": "roles/download/tasks/set_container_facts.yml",
+        "line": 26,
+        "name": "image_save_command",
+        "raw": "\"{{ docker_bin_dir }}/docker save {{ image_reponame }} | gzip -{{ download_compress }} > {{ image_path_final }}\"",
+        "value": "{{ docker_bin_dir }}/docker save {{ image_reponame }} | gzip -{{ download_compress }} > {{ image_path_final }}"
+      },
+      {
+        "file": "roles/download/tasks/set_container_facts.yml",
+        "line": 27,
+        "name": "image_load_command",
+        "raw": "\"{{ docker_bin_dir }}/docker load < {{ image_path_final }}\"",
+        "value": "{{ docker_bin_dir }}/docker load < {{ image_path_final }}"
+      },
+      {
+        "file": "roles/download/tasks/set_container_facts.yml",
+        "line": 32,
+        "name": "image_save_command",
+        "raw": "\"{{ bin_dir }}/nerdctl -n k8s.io image save -o {{ image_path_final }} {{ image_reponame }}\"",
+        "value": "{{ bin_dir }}/nerdctl -n k8s.io image save -o {{ image_path_final }} {{ image_reponame }}"
+      },
+      {
+        "file": "roles/download/tasks/set_container_facts.yml",
+        "line": 33,
+        "name": "image_load_command",
+        "raw": "\"{{ bin_dir }}/nerdctl -n k8s.io image load < {{ image_path_final }}\"",
+        "value": "{{ bin_dir }}/nerdctl -n k8s.io image load < {{ image_path_final }}"
+      },
+      {
+        "file": "roles/download/tasks/set_container_facts.yml",
+        "line": 38,
+        "name": "image_save_command",
+        "raw": "\"{{ bin_dir }}/skopeo copy containers-storage:{{ image_reponame }} docker-archive:{{ image_path_final }} 2>/dev/null\"",
+        "value": "{{ bin_dir }}/skopeo copy containers-storage:{{ image_reponame }} docker-archive:{{ image_path_final }} 2>/dev/null"
+      },
+      {
+        "file": "roles/download/tasks/set_container_facts.yml",
+        "line": 39,
+        "name": "image_load_command",
+        "raw": "\"{{ bin_dir }}/skopeo copy docker-archive:{{ image_path_final }} containers-storage:{{ image_reponame }} 2>/dev/null\"",
+        "value": "{{ bin_dir }}/skopeo copy docker-archive:{{ image_path_final }} containers-storage:{{ image_reponame }} 2>/dev/null"
+      },
+      {
+        "file": "roles/download/tasks/set_container_facts.yml",
+        "line": 44,
+        "name": "image_save_command_on_localhost",
+        "raw": "\"{{ docker_bin_dir }}/docker save {{ image_reponame }} | gzip -{{ download_compress }} > {{ image_path_cached }}\"",
+        "value": "{{ docker_bin_dir }}/docker save {{ image_reponame }} | gzip -{{ download_compress }} > {{ image_path_cached }}"
+      },
+      {
+        "file": "roles/download/tasks/set_container_facts.yml",
+        "line": 49,
+        "name": "image_save_command_on_localhost",
+        "raw": "\"{{ containerd_bin_dir }}/ctr -n k8s.io image export --platform linux/{{ image_arch }} {{ image_path_cached }} {{ image_reponame }}\"",
+        "value": "{{ containerd_bin_dir }}/ctr -n k8s.io image export --platform linux/{{ image_arch }} {{ image_path_cached }} {{ image_reponame }}"
+      },
+      {
+        "file": "roles/download/tasks/set_container_facts.yml",
+        "line": 54,
+        "name": "image_save_command_on_localhost",
+        "raw": "\"{{ bin_dir }}/skopeo copy containers-storage:{{ image_reponame }} docker-archive:{{ image_path_final }} 2>/dev/null\"",
+        "value": "{{ bin_dir }}/skopeo copy containers-storage:{{ image_reponame }} docker-archive:{{ image_path_final }} 2>/dev/null"
+      },
+      {
+        "file": "roles/download/tasks/download_container.yml",
+        "line": 7,
+        "name": "image_is_cached",
+        "raw": "false",
+        "value": "false"
+      },
+      {
+        "file": "roles/download/tasks/download_container.yml",
+        "line": 8,
+        "name": "image_changed",
+        "raw": "false",
+        "value": "false"
+      },
+      {
+        "file": "roles/download/tasks/download_container.yml",
+        "line": 43,
+        "name": "image_is_cached",
+        "raw": "\"{{ cache_image.stat.exists }}\"",
+        "value": "{{ cache_image.stat.exists }}"
+      },
+      {
+        "file": "roles/download/templates/kubeadm-images.yaml.j2",
+        "line": 8,
+        "name": "imageRepository",
+        "raw": "{{ kube_image_repo }}",
+        "value": "{{ kube_image_repo }}"
+      },
+      {
+        "file": "roles/download/templates/kubeadm-images.yaml.j2",
+        "line": 13,
+        "name": "imageRepository",
+        "raw": "\"{{ etcd_image_repo | regex_replace(\"/etcd$\",\"\") }}\"",
+        "value": "{{ etcd_image_repo | regex_replace(\"/etcd$\",\"\") }}"
+      },
+      {
+        "file": "roles/download/templates/kubeadm-images.yaml.j2",
+        "line": 14,
+        "name": "imageTag",
+        "raw": "\"{{ etcd_image_tag }}\"",
+        "value": "{{ etcd_image_tag }}"
+      },
+      {
+        "file": "roles/download/templates/kubeadm-images.yaml.j2",
+        "line": 23,
+        "name": "imageRepository",
+        "raw": "{{ coredns_image_repo | regex_replace('/coredns(?!/coredns).*$', '') }}",
+        "value": "{{ coredns_image_repo | regex_replace('/coredns(?!/coredns).*$', '') }}"
+      },
+      {
+        "file": "roles/download/templates/kubeadm-images.yaml.j2",
+        "line": 24,
+        "name": "imageTag",
+        "raw": "{{ coredns_image_tag }}",
+        "value": "{{ coredns_image_tag }}"
+      },
+      {
+        "file": "roles/container-engine/containerd/templates/config.toml.j2",
+        "line": 27,
+        "name": "sandbox_image",
+        "raw": "\"{{ pod_infra_image_repo }}:{{ pod_infra_image_tag }}\"",
+        "value": "{{ pod_infra_image_repo }}:{{ pod_infra_image_tag }}"
+      },
+      {
+        "file": "roles/container-engine/containerd/templates/config.toml.j2",
+        "line": 35,
+        "name": "image_pull_progress_timeout",
+        "raw": "\"{{ containerd_image_pull_progress_timeout }}\"",
+        "value": "{{ containerd_image_pull_progress_timeout }}"
+      },
+      {
+        "file": "roles/container-engine/containerd/defaults/main.yml",
+        "line": 77,
+        "name": "containerd_image_pull_progress_timeout",
+        "raw": "5m",
+        "value": "5m"
+      },
+      {
+        "file": "roles/container-engine/cri-o/templates/crio.conf.j2",
+        "line": 335,
+        "name": "pause_image",
+        "raw": "\"{{ crio_pause_image }}\"",
+        "value": "{{ crio_pause_image }}"
+      },
+      {
+        "file": "roles/container-engine/cri-o/templates/crio.conf.j2",
+        "line": 340,
+        "name": "pause_image_auth_file",
+        "raw": "\"\"",
+        "value": ""
+      },
+      {
+        "file": "roles/container-engine/cri-o/templates/crio.conf.j2",
+        "line": 357,
+        "name": "image_volumes",
+        "raw": "\"mkdir\"",
+        "value": "mkdir"
+      },
+      {
+        "file": "roles/container-engine/cri-o/defaults/main.yml",
+        "line": 10,
+        "name": "crio_pause_image",
+        "raw": "\"{{ pod_infra_image_repo }}:{{ pod_infra_version }}\"",
+        "value": "{{ pod_infra_image_repo }}:{{ pod_infra_version }}"
+      },
+      {
+        "file": "roles/container-engine/crictl/templates/crictl.yaml.j2",
+        "line": 2,
+        "name": "image-endpoint",
+        "raw": "{{ cri_socket }}",
+        "value": "{{ cri_socket }}"
+      },
+      {
+        "file": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta4.yaml.j2",
+        "line": 53,
+        "name": "imageRepository",
+        "raw": "\"{{ etcd_image_repo | regex_replace(\"/etcd$\",\"\") }}\"",
+        "value": "{{ etcd_image_repo | regex_replace(\"/etcd$\",\"\") }}"
+      },
+      {
+        "file": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta4.yaml.j2",
+        "line": 54,
+        "name": "imageTag",
+        "raw": "\"{{ etcd_image_tag }}\"",
+        "value": "{{ etcd_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta4.yaml.j2",
+        "line": 105,
+        "name": "imageRepository",
+        "raw": "{{ coredns_image_repo | regex_replace('/coredns(?!/coredns).*$', '') }}",
+        "value": "{{ coredns_image_repo | regex_replace('/coredns(?!/coredns).*$', '') }}"
+      },
+      {
+        "file": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta4.yaml.j2",
+        "line": 106,
+        "name": "imageTag",
+        "raw": "{{ coredns_image_tag }}",
+        "value": "{{ coredns_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta4.yaml.j2",
+        "line": 126,
+        "name": "imageRepository",
+        "raw": "{{ kube_image_repo }}",
+        "value": "{{ kube_image_repo }}"
+      },
+      {
+        "file": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta3.yaml.j2",
+        "line": 51,
+        "name": "imageRepository",
+        "raw": "\"{{ etcd_image_repo | regex_replace(\"/etcd$\",\"\") }}\"",
+        "value": "{{ etcd_image_repo | regex_replace(\"/etcd$\",\"\") }}"
+      },
+      {
+        "file": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta3.yaml.j2",
+        "line": 52,
+        "name": "imageTag",
+        "raw": "\"{{ etcd_image_tag }}\"",
+        "value": "{{ etcd_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta3.yaml.j2",
+        "line": 93,
+        "name": "imageRepository",
+        "raw": "{{ coredns_image_repo | regex_replace('/coredns(?!/coredns).*$', '') }}",
+        "value": "{{ coredns_image_repo | regex_replace('/coredns(?!/coredns).*$', '') }}"
+      },
+      {
+        "file": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta3.yaml.j2",
+        "line": 94,
+        "name": "imageTag",
+        "raw": "{{ coredns_image_tag }}",
+        "value": "{{ coredns_image_tag }}"
+      },
+      {
+        "file": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta3.yaml.j2",
+        "line": 114,
+        "name": "imageRepository",
+        "raw": "{{ kube_image_repo }}",
+        "value": "{{ kube_image_repo }}"
+      },
+      {
+        "file": "roles/kubernetes/node/templates/kubelet-config.v1beta1.yaml.j2",
+        "line": 107,
+        "name": "imageGCHighThresholdPercent",
+        "raw": "{{ kubelet_image_gc_high_threshold }}",
+        "value": "{{ kubelet_image_gc_high_threshold }}"
+      },
+      {
+        "file": "roles/kubernetes/node/templates/kubelet-config.v1beta1.yaml.j2",
+        "line": 110,
+        "name": "imageGCLowThresholdPercent",
+        "raw": "{{ kubelet_image_gc_low_threshold }}",
+        "value": "{{ kubelet_image_gc_low_threshold }}"
+      },
+      {
+        "file": "roles/kubernetes/node/defaults/main.yml",
+        "line": 197,
+        "name": "kubelet_max_parallel_image_pulls",
+        "raw": "1",
+        "value": "1"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 57,
+        "name": "docker_image_pull_command",
+        "raw": "\"{{ docker_bin_dir }}/docker pull\"",
+        "value": "{{ docker_bin_dir }}/docker pull"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 58,
+        "name": "docker_image_info_command",
+        "raw": "\"{{ docker_bin_dir }}/docker images -q | xargs -i {{ '{{' }} docker_bin_dir }}/docker inspect -f {% raw %}'{{ '{{' }} if .RepoTags }}{{ '{{' }} join .RepoTags \\\",\\\" }}{{ '{{' }} end }}{{ '{{' }} if .RepoDigests }},{{ '{{' }} join .RepoDigests \\\",\\\" }}{{ '{{' }} end }}' {% endraw %} {} | tr '\\n' ','\"",
+        "value": "{{ docker_bin_dir }}/docker images -q | xargs -i {{ '{{' }} docker_bin_dir }}/docker inspect -f {% raw %}'{{ '{{' }} if .RepoTags }}{{ '{{' }} join .RepoTags \\\",\\\" }}{{ '{{' }} end }}{{ '{{' }} if .RepoDigests }},{{ '{{' }} join .RepoDigests \\\",\\\" }}{{ '{{' }} end }}' {% endraw %} {} | tr '\\n' ','"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 59,
+        "name": "nerdctl_image_info_command",
+        "raw": "\"{{ bin_dir }}/nerdctl -n k8s.io images --format '{% raw %}{{ .Repository }}:{{ .Tag }}{% endraw %}' 2>/dev/null | grep -v ^:$ | tr '\\n' ','\"",
+        "value": "{{ bin_dir }}/nerdctl -n k8s.io images --format '{% raw %}{{ .Repository }}:{{ .Tag }}{% endraw %}' 2>/dev/null | grep -v ^:$ | tr '\\n' ','"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 61,
+        "name": "nerdctl_image_pull_command",
+        "raw": "\"{{ bin_dir }}/ctr -n k8s.io images pull{% if containerd_registries_mirrors is defined %} --hosts-dir {{ containerd_cfg_dir }}/certs.d{%- endif -%}\"",
+        "value": "{{ bin_dir }}/ctr -n k8s.io images pull{% if containerd_registries_mirrors is defined %} --hosts-dir {{ containerd_cfg_dir }}/certs.d{%- endif -%}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 62,
+        "name": "crictl_image_info_command",
+        "raw": "\"{{ bin_dir }}/crictl images --verbose | awk -F ': ' '/RepoTags|RepoDigests/ {print $2}' | tr '\\n' ','\"",
+        "value": "{{ bin_dir }}/crictl images --verbose | awk -F ': ' '/RepoTags|RepoDigests/ {print $2}' | tr '\\n' ','"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 63,
+        "name": "crictl_image_pull_command",
+        "raw": "\"{{ bin_dir }}/crictl pull\"",
+        "value": "{{ bin_dir }}/crictl pull"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 65,
+        "name": "image_command_tool",
+        "raw": "\"{%- if container_manager == 'containerd' -%}nerdctl{%- elif container_manager == 'crio' -%}crictl{%- else -%}{{ container_manager }}{%- endif -%}\"",
+        "value": "{%- if container_manager == 'containerd' -%}nerdctl{%- elif container_manager == 'crio' -%}crictl{%- else -%}{{ container_manager }}{%- endif -%}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 66,
+        "name": "image_command_tool_on_localhost",
+        "raw": "\"{{ image_command_tool }}\"",
+        "value": "{{ image_command_tool }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 68,
+        "name": "image_pull_command",
+        "raw": "\"{{ lookup('vars', image_command_tool + '_image_pull_command') }}\"",
+        "value": "{{ lookup('vars', image_command_tool + '_image_pull_command') }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 69,
+        "name": "image_info_command",
+        "raw": "\"{{ lookup('vars', image_command_tool + '_image_info_command') }}\"",
+        "value": "{{ lookup('vars', image_command_tool + '_image_info_command') }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 70,
+        "name": "image_pull_command_on_localhost",
+        "raw": "\"{{ lookup('vars', image_command_tool_on_localhost + '_image_pull_command') }}\"",
+        "value": "{{ lookup('vars', image_command_tool_on_localhost + '_image_pull_command') }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 71,
+        "name": "image_info_command_on_localhost",
+        "raw": "\"{{ lookup('vars', image_command_tool_on_localhost + '_image_info_command') }}\"",
+        "value": "{{ lookup('vars', image_command_tool_on_localhost + '_image_info_command') }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 74,
+        "name": "image_arch",
+        "raw": "\"{{ host_architecture | default('amd64') }}\"",
+        "value": "{{ host_architecture | default('amd64') }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 89,
+        "name": "gcr_image_repo",
+        "raw": "\"gcr.io\"",
+        "value": "gcr.io"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 90,
+        "name": "kube_image_repo",
+        "raw": "\"registry.k8s.io\"",
+        "value": "registry.k8s.io"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 93,
+        "name": "docker_image_repo",
+        "raw": "\"docker.io\"",
+        "value": "docker.io"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 96,
+        "name": "quay_image_repo",
+        "raw": "\"quay.io\"",
+        "value": "quay.io"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 99,
+        "name": "github_image_repo",
+        "raw": "\"ghcr.io\"",
+        "value": "ghcr.io"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 229,
+        "name": "kube_proxy_image_repo",
+        "raw": "\"{{ kube_image_repo }}/kube-proxy\"",
+        "value": "{{ kube_image_repo }}/kube-proxy"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 230,
+        "name": "etcd_image_repo",
+        "raw": "\"{{ quay_image_repo }}/coreos/etcd\"",
+        "value": "{{ quay_image_repo }}/coreos/etcd"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 231,
+        "name": "etcd_image_tag",
+        "raw": "\"{{ etcd_version }}\"",
+        "value": "{{ etcd_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 232,
+        "name": "flannel_image_repo",
+        "raw": "\"{{ docker_image_repo }}/flannel/flannel\"",
+        "value": "{{ docker_image_repo }}/flannel/flannel"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 233,
+        "name": "flannel_image_tag",
+        "raw": "\"{{ flannel_version }}\"",
+        "value": "{{ flannel_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 234,
+        "name": "flannel_init_image_repo",
+        "raw": "\"{{ docker_image_repo }}/flannel/flannel-cni-plugin\"",
+        "value": "{{ docker_image_repo }}/flannel/flannel-cni-plugin"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 235,
+        "name": "flannel_init_image_tag",
+        "raw": "\"{{ flannel_cni_version }}\"",
+        "value": "{{ flannel_cni_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 236,
+        "name": "calico_node_image_repo",
+        "raw": "\"{{ quay_image_repo }}/calico/node\"",
+        "value": "{{ quay_image_repo }}/calico/node"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 237,
+        "name": "calico_node_image_tag",
+        "raw": "\"{{ calico_version }}\"",
+        "value": "{{ calico_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 238,
+        "name": "calico_cni_image_repo",
+        "raw": "\"{{ quay_image_repo }}/calico/cni\"",
+        "value": "{{ quay_image_repo }}/calico/cni"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 239,
+        "name": "calico_cni_image_tag",
+        "raw": "\"{{ calico_cni_version }}\"",
+        "value": "{{ calico_cni_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 240,
+        "name": "calico_policy_image_repo",
+        "raw": "\"{{ quay_image_repo }}/calico/kube-controllers\"",
+        "value": "{{ quay_image_repo }}/calico/kube-controllers"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 241,
+        "name": "calico_policy_image_tag",
+        "raw": "\"{{ calico_policy_version }}\"",
+        "value": "{{ calico_policy_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 242,
+        "name": "calico_typha_image_repo",
+        "raw": "\"{{ quay_image_repo }}/calico/typha\"",
+        "value": "{{ quay_image_repo }}/calico/typha"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 243,
+        "name": "calico_typha_image_tag",
+        "raw": "\"{{ calico_typha_version }}\"",
+        "value": "{{ calico_typha_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 244,
+        "name": "calico_apiserver_image_repo",
+        "raw": "\"{{ quay_image_repo }}/calico/apiserver\"",
+        "value": "{{ quay_image_repo }}/calico/apiserver"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 245,
+        "name": "calico_apiserver_image_tag",
+        "raw": "\"{{ calico_apiserver_version }}\"",
+        "value": "{{ calico_apiserver_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 246,
+        "name": "pod_infra_image_repo",
+        "raw": "\"{{ kube_image_repo }}/pause\"",
+        "value": "{{ kube_image_repo }}/pause"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 247,
+        "name": "pod_infra_image_tag",
+        "raw": "\"{{ pod_infra_version }}\"",
+        "value": "{{ pod_infra_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 249,
+        "name": "netcheck_agent_image_repo",
+        "raw": "\"{{ docker_image_repo }}/mirantis/k8s-netchecker-agent\"",
+        "value": "{{ docker_image_repo }}/mirantis/k8s-netchecker-agent"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 250,
+        "name": "netcheck_agent_image_tag",
+        "raw": "\"{{ netcheck_version }}\"",
+        "value": "{{ netcheck_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 251,
+        "name": "netcheck_server_image_repo",
+        "raw": "\"{{ docker_image_repo }}/mirantis/k8s-netchecker-server\"",
+        "value": "{{ docker_image_repo }}/mirantis/k8s-netchecker-server"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 252,
+        "name": "netcheck_server_image_tag",
+        "raw": "\"{{ netcheck_version }}\"",
+        "value": "{{ netcheck_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 253,
+        "name": "netcheck_etcd_image_tag",
+        "raw": "\"v3.4.17\"",
+        "value": "v3.4.17"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 254,
+        "name": "weave_kube_image_repo",
+        "raw": "\"{{ docker_image_repo }}/rajchaudhuri/weave-kube\"",
+        "value": "{{ docker_image_repo }}/rajchaudhuri/weave-kube"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 255,
+        "name": "weave_kube_image_tag",
+        "raw": "\"{{ weave_version }}\"",
+        "value": "{{ weave_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 256,
+        "name": "weave_npc_image_repo",
+        "raw": "\"{{ docker_image_repo }}/rajchaudhuri/weave-npc\"",
+        "value": "{{ docker_image_repo }}/rajchaudhuri/weave-npc"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 257,
+        "name": "weave_npc_image_tag",
+        "raw": "\"{{ weave_version }}\"",
+        "value": "{{ weave_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 258,
+        "name": "cilium_image_repo",
+        "raw": "\"{{ quay_image_repo }}/cilium/cilium\"",
+        "value": "{{ quay_image_repo }}/cilium/cilium"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 259,
+        "name": "cilium_image_tag",
+        "raw": "\"{{ cilium_version }}\"",
+        "value": "{{ cilium_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 260,
+        "name": "cilium_operator_image_repo",
+        "raw": "\"{{ quay_image_repo }}/cilium/operator\"",
+        "value": "{{ quay_image_repo }}/cilium/operator"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 261,
+        "name": "cilium_operator_image_tag",
+        "raw": "\"{{ cilium_version }}\"",
+        "value": "{{ cilium_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 262,
+        "name": "cilium_hubble_relay_image_repo",
+        "raw": "\"{{ quay_image_repo }}/cilium/hubble-relay\"",
+        "value": "{{ quay_image_repo }}/cilium/hubble-relay"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 263,
+        "name": "cilium_hubble_relay_image_tag",
+        "raw": "\"{{ cilium_version }}\"",
+        "value": "{{ cilium_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 264,
+        "name": "cilium_hubble_certgen_image_repo",
+        "raw": "\"{{ quay_image_repo }}/cilium/certgen\"",
+        "value": "{{ quay_image_repo }}/cilium/certgen"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 265,
+        "name": "cilium_hubble_certgen_image_tag",
+        "raw": "\"v0.1.8\"",
+        "value": "v0.1.8"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 266,
+        "name": "cilium_hubble_ui_image_repo",
+        "raw": "\"{{ quay_image_repo }}/cilium/hubble-ui\"",
+        "value": "{{ quay_image_repo }}/cilium/hubble-ui"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 267,
+        "name": "cilium_hubble_ui_image_tag",
+        "raw": "\"v0.11.0\"",
+        "value": "v0.11.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 268,
+        "name": "cilium_hubble_ui_backend_image_repo",
+        "raw": "\"{{ quay_image_repo }}/cilium/hubble-ui-backend\"",
+        "value": "{{ quay_image_repo }}/cilium/hubble-ui-backend"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 269,
+        "name": "cilium_hubble_ui_backend_image_tag",
+        "raw": "\"v0.11.0\"",
+        "value": "v0.11.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 270,
+        "name": "cilium_hubble_envoy_image_repo",
+        "raw": "\"{{ docker_image_repo }}/envoyproxy/envoy\"",
+        "value": "{{ docker_image_repo }}/envoyproxy/envoy"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 271,
+        "name": "cilium_hubble_envoy_image_tag",
+        "raw": "\"v1.22.5\"",
+        "value": "v1.22.5"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 272,
+        "name": "kube_ovn_container_image_repo",
+        "raw": "\"{{ docker_image_repo }}/kubeovn/kube-ovn\"",
+        "value": "{{ docker_image_repo }}/kubeovn/kube-ovn"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 273,
+        "name": "kube_ovn_container_image_tag",
+        "raw": "\"{{ kube_ovn_version }}\"",
+        "value": "{{ kube_ovn_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 274,
+        "name": "kube_ovn_vpc_container_image_repo",
+        "raw": "\"{{ docker_image_repo }}/kubeovn/vpc-nat-gateway\"",
+        "value": "{{ docker_image_repo }}/kubeovn/vpc-nat-gateway"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 275,
+        "name": "kube_ovn_vpc_container_image_tag",
+        "raw": "\"{{ kube_ovn_version }}\"",
+        "value": "{{ kube_ovn_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 276,
+        "name": "kube_ovn_dpdk_container_image_repo",
+        "raw": "\"{{ docker_image_repo }}/kubeovn/kube-ovn-dpdk\"",
+        "value": "{{ docker_image_repo }}/kubeovn/kube-ovn-dpdk"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 277,
+        "name": "kube_ovn_dpdk_container_image_tag",
+        "raw": "\"{{ kube_ovn_dpdk_version }}\"",
+        "value": "{{ kube_ovn_dpdk_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 278,
+        "name": "kube_router_image_repo",
+        "raw": "\"{{ docker_image_repo }}/cloudnativelabs/kube-router\"",
+        "value": "{{ docker_image_repo }}/cloudnativelabs/kube-router"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 279,
+        "name": "kube_router_image_tag",
+        "raw": "\"{{ kube_router_version }}\"",
+        "value": "{{ kube_router_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 280,
+        "name": "multus_image_repo",
+        "raw": "\"{{ github_image_repo }}/k8snetworkplumbingwg/multus-cni\"",
+        "value": "{{ github_image_repo }}/k8snetworkplumbingwg/multus-cni"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 281,
+        "name": "multus_image_tag",
+        "raw": "\"{{ multus_version }}\"",
+        "value": "{{ multus_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 282,
+        "name": "external_openstack_cloud_controller_image_repo",
+        "raw": "\"{{ kube_image_repo }}/provider-os/openstack-cloud-controller-manager\"",
+        "value": "{{ kube_image_repo }}/provider-os/openstack-cloud-controller-manager"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 283,
+        "name": "external_openstack_cloud_controller_image_tag",
+        "raw": "\"v1.31.1\"",
+        "value": "v1.31.1"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 285,
+        "name": "kube_vip_image_repo",
+        "raw": "\"{{ github_image_repo }}/kube-vip/kube-vip\"",
+        "value": "{{ github_image_repo }}/kube-vip/kube-vip"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 286,
+        "name": "kube_vip_image_tag",
+        "raw": "v0.8.0",
+        "value": "v0.8.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 287,
+        "name": "nginx_image_repo",
+        "raw": "\"{{ docker_image_repo }}/library/nginx\"",
+        "value": "{{ docker_image_repo }}/library/nginx"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 288,
+        "name": "nginx_image_tag",
+        "raw": "1.25.2-alpine",
+        "value": "1.25.2-alpine"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 289,
+        "name": "haproxy_image_repo",
+        "raw": "\"{{ docker_image_repo }}/library/haproxy\"",
+        "value": "{{ docker_image_repo }}/library/haproxy"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 290,
+        "name": "haproxy_image_tag",
+        "raw": "2.8.2-alpine",
+        "value": "2.8.2-alpine"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 296,
+        "name": "coredns_image_is_namespaced",
+        "raw": "\"{{ (coredns_version is version('v1.7.1', '>=')) }}\"",
+        "value": "{{ (coredns_version is version('v1.7.1', '>=')) }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 298,
+        "name": "coredns_image_repo",
+        "raw": "\"{{ kube_image_repo }}{{ '/coredns/coredns' if (coredns_image_is_namespaced | bool) else '/coredns' }}\"",
+        "value": "{{ kube_image_repo }}{{ '/coredns/coredns' if (coredns_image_is_namespaced | bool) else '/coredns' }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 299,
+        "name": "coredns_image_tag",
+        "raw": "\"{{ coredns_version if (coredns_image_is_namespaced | bool) else (coredns_version | regex_replace('^v', '')) }}\"",
+        "value": "{{ coredns_version if (coredns_image_is_namespaced | bool) else (coredns_version | regex_replace('^v', '')) }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 302,
+        "name": "nodelocaldns_image_repo",
+        "raw": "\"{{ kube_image_repo }}/dns/k8s-dns-node-cache\"",
+        "value": "{{ kube_image_repo }}/dns/k8s-dns-node-cache"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 303,
+        "name": "nodelocaldns_image_tag",
+        "raw": "\"{{ nodelocaldns_version }}\"",
+        "value": "{{ nodelocaldns_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 306,
+        "name": "dnsautoscaler_image_repo",
+        "raw": "\"{{ kube_image_repo }}/cpa/cluster-proportional-autoscaler\"",
+        "value": "{{ kube_image_repo }}/cpa/cluster-proportional-autoscaler"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 307,
+        "name": "dnsautoscaler_image_tag",
+        "raw": "\"{{ dnsautoscaler_version }}\"",
+        "value": "{{ dnsautoscaler_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 309,
+        "name": "scheduler_plugins_controller_image_repo",
+        "raw": "\"{{ kube_image_repo }}/scheduler-plugins/controller\"",
+        "value": "{{ kube_image_repo }}/scheduler-plugins/controller"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 310,
+        "name": "scheduler_plugins_controller_image_tag",
+        "raw": "\"{{ scheduler_plugins_version }}\"",
+        "value": "{{ scheduler_plugins_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 311,
+        "name": "scheduler_plugins_scheduler_image_repo",
+        "raw": "\"{{ kube_image_repo }}/scheduler-plugins/kube-scheduler\"",
+        "value": "{{ kube_image_repo }}/scheduler-plugins/kube-scheduler"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 312,
+        "name": "scheduler_plugins_scheduler_image_tag",
+        "raw": "\"{{ scheduler_plugins_version }}\"",
+        "value": "{{ scheduler_plugins_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 315,
+        "name": "registry_image_repo",
+        "raw": "\"{{ docker_image_repo }}/library/registry\"",
+        "value": "{{ docker_image_repo }}/library/registry"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 316,
+        "name": "registry_image_tag",
+        "raw": "\"{{ registry_version }}\"",
+        "value": "{{ registry_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 318,
+        "name": "metrics_server_image_repo",
+        "raw": "\"{{ kube_image_repo }}/metrics-server/metrics-server\"",
+        "value": "{{ kube_image_repo }}/metrics-server/metrics-server"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 319,
+        "name": "metrics_server_image_tag",
+        "raw": "\"{{ metrics_server_version }}\"",
+        "value": "{{ metrics_server_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 321,
+        "name": "local_volume_provisioner_image_repo",
+        "raw": "\"{{ kube_image_repo }}/sig-storage/local-volume-provisioner\"",
+        "value": "{{ kube_image_repo }}/sig-storage/local-volume-provisioner"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 322,
+        "name": "local_volume_provisioner_image_tag",
+        "raw": "\"{{ local_volume_provisioner_version }}\"",
+        "value": "{{ local_volume_provisioner_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 324,
+        "name": "cephfs_provisioner_image_repo",
+        "raw": "\"{{ quay_image_repo }}/external_storage/cephfs-provisioner\"",
+        "value": "{{ quay_image_repo }}/external_storage/cephfs-provisioner"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 325,
+        "name": "cephfs_provisioner_image_tag",
+        "raw": "\"{{ cephfs_provisioner_version }}\"",
+        "value": "{{ cephfs_provisioner_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 327,
+        "name": "rbd_provisioner_image_repo",
+        "raw": "\"{{ quay_image_repo }}/external_storage/rbd-provisioner\"",
+        "value": "{{ quay_image_repo }}/external_storage/rbd-provisioner"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 328,
+        "name": "rbd_provisioner_image_tag",
+        "raw": "\"{{ rbd_provisioner_version }}\"",
+        "value": "{{ rbd_provisioner_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 330,
+        "name": "local_path_provisioner_image_repo",
+        "raw": "\"{{ docker_image_repo }}/rancher/local-path-provisioner\"",
+        "value": "{{ docker_image_repo }}/rancher/local-path-provisioner"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 331,
+        "name": "local_path_provisioner_image_tag",
+        "raw": "\"{{ local_path_provisioner_version }}\"",
+        "value": "{{ local_path_provisioner_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 333,
+        "name": "ingress_nginx_controller_image_repo",
+        "raw": "\"{{ kube_image_repo }}/ingress-nginx/controller\"",
+        "value": "{{ kube_image_repo }}/ingress-nginx/controller"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 334,
+        "name": "ingress_nginx_opentelemetry_image_repo",
+        "raw": "\"{{ kube_image_repo }}/ingress-nginx/opentelemetry\"",
+        "value": "{{ kube_image_repo }}/ingress-nginx/opentelemetry"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 335,
+        "name": "ingress_nginx_controller_image_tag",
+        "raw": "\"{{ ingress_nginx_version }}\"",
+        "value": "{{ ingress_nginx_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 336,
+        "name": "ingress_nginx_opentelemetry_image_tag",
+        "raw": "\"v20230721-3e2062ee5\"",
+        "value": "v20230721-3e2062ee5"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 337,
+        "name": "ingress_nginx_kube_webhook_certgen_image_repo",
+        "raw": "\"{{ kube_image_repo }}/ingress-nginx/kube-webhook-certgen\"",
+        "value": "{{ kube_image_repo }}/ingress-nginx/kube-webhook-certgen"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 338,
+        "name": "ingress_nginx_kube_webhook_certgen_image_tag",
+        "raw": "\"v1.5.0\"",
+        "value": "v1.5.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 339,
+        "name": "alb_ingress_image_repo",
+        "raw": "\"{{ docker_image_repo }}/amazon/aws-alb-ingress-controller\"",
+        "value": "{{ docker_image_repo }}/amazon/aws-alb-ingress-controller"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 340,
+        "name": "alb_ingress_image_tag",
+        "raw": "\"v1.1.9\"",
+        "value": "v1.1.9"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 342,
+        "name": "cert_manager_controller_image_repo",
+        "raw": "\"{{ quay_image_repo }}/jetstack/cert-manager-controller\"",
+        "value": "{{ quay_image_repo }}/jetstack/cert-manager-controller"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 343,
+        "name": "cert_manager_controller_image_tag",
+        "raw": "\"{{ cert_manager_version }}\"",
+        "value": "{{ cert_manager_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 344,
+        "name": "cert_manager_cainjector_image_repo",
+        "raw": "\"{{ quay_image_repo }}/jetstack/cert-manager-cainjector\"",
+        "value": "{{ quay_image_repo }}/jetstack/cert-manager-cainjector"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 345,
+        "name": "cert_manager_cainjector_image_tag",
+        "raw": "\"{{ cert_manager_version }}\"",
+        "value": "{{ cert_manager_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 346,
+        "name": "cert_manager_webhook_image_repo",
+        "raw": "\"{{ quay_image_repo }}/jetstack/cert-manager-webhook\"",
+        "value": "{{ quay_image_repo }}/jetstack/cert-manager-webhook"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 347,
+        "name": "cert_manager_webhook_image_tag",
+        "raw": "\"{{ cert_manager_version }}\"",
+        "value": "{{ cert_manager_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 349,
+        "name": "csi_attacher_image_repo",
+        "raw": "\"{{ kube_image_repo }}/sig-storage/csi-attacher\"",
+        "value": "{{ kube_image_repo }}/sig-storage/csi-attacher"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 350,
+        "name": "csi_attacher_image_tag",
+        "raw": "\"v3.3.0\"",
+        "value": "v3.3.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 351,
+        "name": "csi_provisioner_image_repo",
+        "raw": "\"{{ kube_image_repo }}/sig-storage/csi-provisioner\"",
+        "value": "{{ kube_image_repo }}/sig-storage/csi-provisioner"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 352,
+        "name": "csi_provisioner_image_tag",
+        "raw": "\"v3.0.0\"",
+        "value": "v3.0.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 353,
+        "name": "csi_snapshotter_image_repo",
+        "raw": "\"{{ kube_image_repo }}/sig-storage/csi-snapshotter\"",
+        "value": "{{ kube_image_repo }}/sig-storage/csi-snapshotter"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 354,
+        "name": "csi_snapshotter_image_tag",
+        "raw": "\"v5.0.0\"",
+        "value": "v5.0.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 355,
+        "name": "csi_resizer_image_repo",
+        "raw": "\"{{ kube_image_repo }}/sig-storage/csi-resizer\"",
+        "value": "{{ kube_image_repo }}/sig-storage/csi-resizer"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 356,
+        "name": "csi_resizer_image_tag",
+        "raw": "\"v1.3.0\"",
+        "value": "v1.3.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 357,
+        "name": "csi_node_driver_registrar_image_repo",
+        "raw": "\"{{ kube_image_repo }}/sig-storage/csi-node-driver-registrar\"",
+        "value": "{{ kube_image_repo }}/sig-storage/csi-node-driver-registrar"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 358,
+        "name": "csi_node_driver_registrar_image_tag",
+        "raw": "\"v2.4.0\"",
+        "value": "v2.4.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 359,
+        "name": "csi_livenessprobe_image_repo",
+        "raw": "\"{{ kube_image_repo }}/sig-storage/livenessprobe\"",
+        "value": "{{ kube_image_repo }}/sig-storage/livenessprobe"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 360,
+        "name": "csi_livenessprobe_image_tag",
+        "raw": "\"v2.5.0\"",
+        "value": "v2.5.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 366,
+        "name": "snapshot_controller_image_repo",
+        "raw": "\"{{ kube_image_repo }}/sig-storage/snapshot-controller\"",
+        "value": "{{ kube_image_repo }}/sig-storage/snapshot-controller"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 367,
+        "name": "snapshot_controller_image_tag",
+        "raw": "\"{{ snapshot_controller_supported_versions[kube_major_version] }}\"",
+        "value": "{{ snapshot_controller_supported_versions[kube_major_version] }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 370,
+        "name": "cinder_csi_plugin_image_repo",
+        "raw": "\"{{ kube_image_repo }}/provider-os/cinder-csi-plugin\"",
+        "value": "{{ kube_image_repo }}/provider-os/cinder-csi-plugin"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 371,
+        "name": "cinder_csi_plugin_image_tag",
+        "raw": "\"{{ cinder_csi_plugin_version }}\"",
+        "value": "{{ cinder_csi_plugin_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 374,
+        "name": "aws_ebs_csi_plugin_image_repo",
+        "raw": "\"{{ docker_image_repo }}/amazon/aws-ebs-csi-driver\"",
+        "value": "{{ docker_image_repo }}/amazon/aws-ebs-csi-driver"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 375,
+        "name": "aws_ebs_csi_plugin_image_tag",
+        "raw": "\"{{ aws_ebs_csi_plugin_version }}\"",
+        "value": "{{ aws_ebs_csi_plugin_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 378,
+        "name": "gcp_pd_csi_plugin_image_repo",
+        "raw": "\"{{ kube_image_repo }}/cloud-provider-gcp/gcp-compute-persistent-disk-csi-driver\"",
+        "value": "{{ kube_image_repo }}/cloud-provider-gcp/gcp-compute-persistent-disk-csi-driver"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 379,
+        "name": "gcp_pd_csi_plugin_image_tag",
+        "raw": "\"{{ gcp_pd_csi_plugin_version }}\"",
+        "value": "{{ gcp_pd_csi_plugin_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 381,
+        "name": "azure_csi_image_repo",
+        "raw": "\"mcr.microsoft.com/oss/kubernetes-csi\"",
+        "value": "mcr.microsoft.com/oss/kubernetes-csi"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 382,
+        "name": "azure_csi_provisioner_image_tag",
+        "raw": "\"v2.2.2\"",
+        "value": "v2.2.2"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 383,
+        "name": "azure_csi_attacher_image_tag",
+        "raw": "\"v3.3.0\"",
+        "value": "v3.3.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 384,
+        "name": "azure_csi_resizer_image_tag",
+        "raw": "\"v1.3.0\"",
+        "value": "v1.3.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 385,
+        "name": "azure_csi_livenessprobe_image_tag",
+        "raw": "\"v2.5.0\"",
+        "value": "v2.5.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 386,
+        "name": "azure_csi_node_registrar_image_tag",
+        "raw": "\"v2.4.0\"",
+        "value": "v2.4.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 387,
+        "name": "azure_csi_snapshotter_image_tag",
+        "raw": "\"v3.0.3\"",
+        "value": "v3.0.3"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 389,
+        "name": "azure_csi_plugin_image_repo",
+        "raw": "\"mcr.microsoft.com/k8s/csi\"",
+        "value": "mcr.microsoft.com/k8s/csi"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 390,
+        "name": "azure_csi_plugin_image_tag",
+        "raw": "\"{{ azure_csi_plugin_version }}\"",
+        "value": "{{ azure_csi_plugin_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 392,
+        "name": "gcp_pd_csi_image_repo",
+        "raw": "\"gke.gcr.io\"",
+        "value": "gke.gcr.io"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 393,
+        "name": "gcp_pd_csi_driver_image_tag",
+        "raw": "\"v0.7.0-gke.0\"",
+        "value": "v0.7.0-gke.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 394,
+        "name": "gcp_pd_csi_provisioner_image_tag",
+        "raw": "\"v1.5.0-gke.0\"",
+        "value": "v1.5.0-gke.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 395,
+        "name": "gcp_pd_csi_attacher_image_tag",
+        "raw": "\"v2.1.1-gke.0\"",
+        "value": "v2.1.1-gke.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 396,
+        "name": "gcp_pd_csi_resizer_image_tag",
+        "raw": "\"v0.4.0-gke.0\"",
+        "value": "v0.4.0-gke.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 397,
+        "name": "gcp_pd_csi_registrar_image_tag",
+        "raw": "\"v1.2.0-gke.0\"",
+        "value": "v1.2.0-gke.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 399,
+        "name": "dashboard_image_repo",
+        "raw": "\"{{ docker_image_repo }}/kubernetesui/dashboard\"",
+        "value": "{{ docker_image_repo }}/kubernetesui/dashboard"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 400,
+        "name": "dashboard_image_tag",
+        "raw": "\"v2.7.0\"",
+        "value": "v2.7.0"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 404,
+        "name": "metallb_speaker_image_repo",
+        "raw": "\"{{ quay_image_repo }}/metallb/speaker\"",
+        "value": "{{ quay_image_repo }}/metallb/speaker"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 405,
+        "name": "metallb_controller_image_repo",
+        "raw": "\"{{ quay_image_repo }}/metallb/controller\"",
+        "value": "{{ quay_image_repo }}/metallb/controller"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 409,
+        "name": "node_feature_discovery_image_repo",
+        "raw": "\"{{ kube_image_repo }}/nfd/node-feature-discovery\"",
+        "value": "{{ kube_image_repo }}/nfd/node-feature-discovery"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/download.yml",
+        "line": 410,
+        "name": "node_feature_discovery_image_tag",
+        "raw": "\"{{ node_feature_discovery_version }}\"",
+        "value": "{{ node_feature_discovery_version }}"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/main.yml",
+        "line": 405,
+        "name": "k8s_image_pull_policy",
+        "raw": "IfNotPresent",
+        "value": "IfNotPresent"
+      },
+      {
+        "file": "roles/kubespray-defaults/defaults/main/main.yml",
+        "line": 478,
+        "name": "controller_image_tag",
+        "raw": "\"latest\"",
+        "value": "latest"
+      },
+      {
+        "file": "contrib/azurerm/roles/generate-templates/defaults/main.yml",
+        "line": 34,
+        "name": "imageReferenceJson",
+        "raw": "\"{{ imageReference | to_json }}\"",
+        "value": "{{ imageReference | to_json }}"
+      }
+    ]
+  },
+  "unique_image_count": 330,
+  "unique_image_strings": [
+    "$PIPELINE_IMAGE",
+    "/images/base",
+    "/opt/kata/share/kata-containers/kata-containers.img",
+    "1",
+    "1.25.2-alpine",
+    "2",
+    "2.40",
+    "2.8.2-alpine",
+    "5m",
+    "IfNotPresent",
+    "almalinux-8",
+    "amazon-linux-2",
+    "busybox",
+    "cilium/istio_proxy",
+    "debian-11",
+    "debian-12",
+    "docker.io",
+    "dougbtv/centos-network",
+    "false",
+    "fedora-39",
+    "fedora-40",
+    "gcr.io",
+    "ghcr.io",
+    "ghcr.io/oracle/cloud-provider-oci",
+    "ghcr.io/pre-commit-ci/runner-image@sha256:aaf2c7b38b22286f2d381c11673bec571c28f61dd086d11b43a1c9444a813cef",
+    "ghcr.io/upcloudltd/upcloud-csi:{{ upcloud_csi_plugin_image_tag }}",
+    "gke.gcr.io",
+    "k8s.gcr.io/sig-storage/csi-snapshotter:{{ upcloud_csi_snapshotter_image_tag }}",
+    "latest",
+    "layering",
+    "mcr.microsoft.com/k8s/csi",
+    "mcr.microsoft.com/oss/kubernetes-csi",
+    "mkdir",
+    "openeuler-2403",
+    "opensuse-leap-15",
+    "python",
+    "python:3",
+    "quay.io",
+    "quay.io/cilium/cilium-envoy:v1.29.9-1728346947-0d05e48bfbb8c4737ec40d5781d970a550ed2bbd@sha256:42614a44e508f70d03a04470df5f61e3cffd22462471a0be0544cf116f2c50ba",
+    "quay.io/cilium/cilium:v1.16.3@sha256:62d2a09bbef840a46099ac4c69421c90f84f28d018d479749049011329aa7f28",
+    "quay.io/cilium/operator-generic:v1.16.3@sha256:6e2925ef47a1c76e183c48f95d4ce0d34a1e5e848252f910476c3e11ce1ec94b",
+    "quay.io/kubespray/vm-kubespray-ci:v13",
+    "quay.io/kubespray/vm-{{ cloud_image }}",
+    "registry.k8s.io",
+    "registry.k8s.io/e2e-test-images/agnhost",
+    "registry.k8s.io/sig-storage/csi-attacher:{{ upcloud_csi_attacher_image_tag }}",
+    "registry.k8s.io/sig-storage/csi-node-driver-registrar:{{ upcloud_csi_node_image_tag }}",
+    "registry.k8s.io/sig-storage/csi-provisioner:{{ upcloud_csi_provisioner_image_tag }}",
+    "registry.k8s.io/sig-storage/csi-resizer:{{ upcloud_csi_resizer_image_tag }}",
+    "rockylinux-8",
+    "rockylinux-9",
+    "swr.ap-southeast-1.myhuaweicloud.com",
+    "ubuntu-20.04-server-latest",
+    "ubuntu-2004",
+    "ubuntu-2204",
+    "ubuntu-2404",
+    "v0.1.8",
+    "v0.11.0",
+    "v0.26.8",
+    "v0.4.0-gke.0",
+    "v0.7.0-gke.0",
+    "v0.8.0",
+    "v1.1.9",
+    "v1.2.0-gke.0",
+    "v1.22.5",
+    "v1.29.0",
+    "v1.3.0",
+    "v1.30.0",
+    "v1.31.0",
+    "v1.31.1",
+    "v1.4.0",
+    "v1.5.0",
+    "v1.5.0-gke.0",
+    "v1.9.2",
+    "v2.1.1-gke.0",
+    "v2.10.0",
+    "v2.11.0",
+    "v2.2.2",
+    "v2.4.0",
+    "v2.5.0",
+    "v2.7.0",
+    "v2.8.0",
+    "v20230721-3e2062ee5",
+    "v3.0.0",
+    "v3.0.3",
+    "v3.1.0",
+    "v3.3.0",
+    "v3.3.1",
+    "v3.4.0",
+    "v3.4.17",
+    "v3.5.0",
+    "v3.6.2",
+    "v4.2.1",
+    "v4.3.0",
+    "v4.4.2",
+    "v5.0.0",
+    "v6.2.2",
+    "v6.3.2",
+    "{% if kube_ovn_dpdk_enabled %}{{ kube_ovn_dpdk_container_image_repo }}:{{ kube_ovn_dpdk_container_image_tag }}{% else %}{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}{% endif %}",
+    "{%- if container_manager == 'containerd' -%}nerdctl{%- elif container_manager == 'crio' -%}crictl{%- else -%}{{ container_manager }}{%- endif -%}",
+    "{{ (coredns_version is version('v1.7.1', '>=')) }}",
+    "{{ alb_ingress_image_repo }}:{{ alb_ingress_image_tag }}",
+    "{{ aws_ebs_csi_plugin_image_repo }}:{{ aws_ebs_csi_plugin_image_tag }}",
+    "{{ aws_ebs_csi_plugin_version }}",
+    "{{ azure_csi_image_repo }}/csi-attacher:{{ azure_csi_attacher_image_tag }}",
+    "{{ azure_csi_image_repo }}/csi-node-driver-registrar:{{ azure_csi_node_registrar_image_tag }}",
+    "{{ azure_csi_image_repo }}/csi-provisioner:{{ azure_csi_provisioner_image_tag }}",
+    "{{ azure_csi_image_repo }}/csi-resizer:{{ azure_csi_resizer_image_tag }}",
+    "{{ azure_csi_image_repo }}/csi-snapshotter:{{ azure_csi_snapshotter_image_tag }}",
+    "{{ azure_csi_image_repo }}/livenessprobe:{{ azure_csi_livenessprobe_image_tag }}",
+    "{{ azure_csi_plugin_image_repo }}/azuredisk-csi:{{ azure_csi_plugin_image_tag }}",
+    "{{ azure_csi_plugin_version }}",
+    "{{ bin_dir }}/crictl images --verbose | awk -F ': ' '/RepoTags|RepoDigests/ {print $2}' | tr '\\n' ','",
+    "{{ bin_dir }}/crictl pull",
+    "{{ bin_dir }}/ctr -n k8s.io images pull{% if containerd_registries_mirrors is defined %} --hosts-dir {{ containerd_cfg_dir }}/certs.d{%- endif -%}",
+    "{{ bin_dir }}/nerdctl -n k8s.io image load < {{ image_path_final }}",
+    "{{ bin_dir }}/nerdctl -n k8s.io image save -o {{ image_path_final }} {{ image_reponame }}",
+    "{{ bin_dir }}/nerdctl -n k8s.io images --format '{% raw %}{{ .Repository }}:{{ .Tag }}{% endraw %}' 2>/dev/null | grep -v ^:$ | tr '\\n' ','",
+    "{{ bin_dir }}/skopeo copy containers-storage:{{ image_reponame }} docker-archive:{{ image_path_final }} 2>/dev/null",
+    "{{ bin_dir }}/skopeo copy docker-archive:{{ image_path_final }} containers-storage:{{ image_reponame }} 2>/dev/null",
+    "{{ cache_image.stat.exists }}",
+    "{{ calico_apiserver_image_repo }}:{{ calico_apiserver_image_tag }}",
+    "{{ calico_apiserver_version }}",
+    "{{ calico_cni_image_repo }}:{{ calico_cni_image_tag }}",
+    "{{ calico_cni_version }}",
+    "{{ calico_node_image_repo }}:{{ calico_node_image_tag }}",
+    "{{ calico_policy_image_repo }}:{{ calico_policy_image_tag }}",
+    "{{ calico_policy_version }}",
+    "{{ calico_typha_image_repo }}:{{ calico_typha_image_tag }}",
+    "{{ calico_typha_version }}",
+    "{{ calico_version }}",
+    "{{ cephfs_provisioner_image_repo }}:{{ cephfs_provisioner_image_tag }}",
+    "{{ cephfs_provisioner_version }}",
+    "{{ cert_manager_cainjector_image_repo }}:{{ cert_manager_cainjector_image_tag }}",
+    "{{ cert_manager_controller_image_repo }}:{{ cert_manager_controller_image_tag }}",
+    "{{ cert_manager_version }}",
+    "{{ cert_manager_webhook_image_repo }}:{{ cert_manager_webhook_image_tag }}",
+    "{{ cilium_hubble_certgen_image_repo }}:{{ cilium_hubble_certgen_image_tag }}",
+    "{{ cilium_hubble_relay_image_repo }}:{{ cilium_hubble_relay_image_tag }}",
+    "{{ cilium_hubble_ui_backend_image_repo }}:{{ cilium_hubble_ui_backend_image_tag }}",
+    "{{ cilium_hubble_ui_image_repo }}:{{ cilium_hubble_ui_image_tag }}",
+    "{{ cilium_image_repo }}:{{ cilium_image_tag }}",
+    "{{ cilium_operator_image_repo }}:{{ cilium_operator_image_tag }}",
+    "{{ cilium_version }}",
+    "{{ cinder_csi_plugin_image_repo }}:{{ cinder_csi_plugin_image_tag }}",
+    "{{ cinder_csi_plugin_version }}",
+    "{{ containerd_bin_dir }}/ctr -n k8s.io image export --platform linux/{{ image_arch }} {{ image_path_cached }} {{ image_reponame }}",
+    "{{ containerd_image_pull_progress_timeout }}",
+    "{{ coredns_image_repo | regex_replace('/coredns(?!/coredns).*$', '') }}",
+    "{{ coredns_image_repo }}:{{ coredns_image_tag }}",
+    "{{ coredns_image_tag }}",
+    "{{ coredns_version if (coredns_image_is_namespaced | bool) else (coredns_version | regex_replace('^v', '')) }}",
+    "{{ cri_socket }}",
+    "{{ crio_pause_image }}",
+    "{{ csi_attacher_image_repo }}:{{ cinder_csi_attacher_image_tag }}",
+    "{{ csi_attacher_image_repo }}:{{ csi_attacher_image_tag }}",
+    "{{ csi_livenessprobe_image_repo }}:{{ cinder_csi_livenessprobe_image_tag }}",
+    "{{ csi_livenessprobe_image_repo }}:{{ csi_livenessprobe_image_tag }}",
+    "{{ csi_node_driver_registrar_image_repo }}:{{ csi_node_driver_registrar_image_tag }}",
+    "{{ csi_provisioner_image_repo }}:{{ cinder_csi_provisioner_image_tag }}",
+    "{{ csi_provisioner_image_repo }}:{{ csi_provisioner_image_tag }}",
+    "{{ csi_resizer_image_repo }}:{{ cinder_csi_resizer_image_tag }}",
+    "{{ csi_resizer_image_repo }}:{{ csi_resizer_image_tag }}",
+    "{{ csi_snapshotter_image_repo }}:{{ cinder_csi_snapshotter_image_tag }}",
+    "{{ csi_snapshotter_image_repo }}:{{ csi_snapshotter_image_tag }}",
+    "{{ dashboard_image_repo }}:{{ dashboard_image_tag }}",
+    "{{ dashboard_metrics_scraper_repo }}:{{ dashboard_metrics_scraper_tag }}",
+    "{{ dnsautoscaler_image_repo }}:{{ dnsautoscaler_image_tag }}",
+    "{{ dnsautoscaler_version }}",
+    "{{ docker_bin_dir }}/docker images -q | xargs -i {{ '{{' }} docker_bin_dir }}/docker inspect -f {% raw %}'{{ '{{' }} if .RepoTags }}{{ '{{' }} join .RepoTags \\\",\\\" }}{{ '{{' }} end }}{{ '{{' }} if .RepoDigests }},{{ '{{' }} join .RepoDigests \\\",\\\" }}{{ '{{' }} end }}' {% endraw %} {} | tr '\\n' ','",
+    "{{ docker_bin_dir }}/docker load < {{ image_path_final }}",
+    "{{ docker_bin_dir }}/docker pull",
+    "{{ docker_bin_dir }}/docker save {{ image_reponame }} | gzip -{{ download_compress }} > {{ image_path_cached }}",
+    "{{ docker_bin_dir }}/docker save {{ image_reponame }} | gzip -{{ download_compress }} > {{ image_path_final }}",
+    "{{ docker_image_repo }}/amazon/aws-alb-ingress-controller",
+    "{{ docker_image_repo }}/amazon/aws-ebs-csi-driver",
+    "{{ docker_image_repo }}/cloudnativelabs/kube-router",
+    "{{ docker_image_repo }}/envoyproxy/envoy",
+    "{{ docker_image_repo }}/flannel/flannel",
+    "{{ docker_image_repo }}/flannel/flannel-cni-plugin",
+    "{{ docker_image_repo }}/hetznercloud/hcloud-cloud-controller-manager:{{ external_hcloud_cloud.controller_image_tag }}",
+    "{{ docker_image_repo }}/kubeovn/kube-ovn",
+    "{{ docker_image_repo }}/kubeovn/kube-ovn-dpdk",
+    "{{ docker_image_repo }}/kubeovn/vpc-nat-gateway",
+    "{{ docker_image_repo }}/kubernetesui/dashboard",
+    "{{ docker_image_repo }}/library/haproxy",
+    "{{ docker_image_repo }}/library/nginx",
+    "{{ docker_image_repo }}/library/registry",
+    "{{ docker_image_repo }}/mirantis/k8s-netchecker-agent",
+    "{{ docker_image_repo }}/mirantis/k8s-netchecker-server",
+    "{{ docker_image_repo }}/rajchaudhuri/weave-kube",
+    "{{ docker_image_repo }}/rajchaudhuri/weave-npc",
+    "{{ docker_image_repo }}/rancher/local-path-provisioner",
+    "{{ download_cache_dir }}/images/{{ image_filename }}",
+    "{{ etcd_image_repo | regex_replace(\"/etcd$\",\"\") }}",
+    "{{ etcd_image_repo }}:{{ netcheck_etcd_image_tag }}",
+    "{{ etcd_image_tag }}",
+    "{{ etcd_version }}",
+    "{{ external_huawei_cloud_controller_image_repo }}/k8s-cloudprovider/huawei-cloud-controller-manager:{{ external_huawei_cloud_controller_image_tag }}",
+    "{{ external_openstack_cloud_controller_image_repo }}:{{ external_openstack_cloud_controller_image_tag }}",
+    "{{ external_oracle_cloud_controller_image_repo }}:{{ external_oracle_cloud_controller_image_tag }}",
+    "{{ flannel_cni_version }}",
+    "{{ flannel_image_repo }}:{{ flannel_image_tag }}",
+    "{{ flannel_init_image_repo }}:{{ flannel_init_image_tag }}",
+    "{{ flannel_version }}",
+    "{{ gcp_pd_csi_plugin_image_repo }}:{{ gcp_pd_csi_plugin_image_tag }}",
+    "{{ gcp_pd_csi_plugin_version }}",
+    "{{ github_image_repo }}/k8snetworkplumbingwg/multus-cni",
+    "{{ github_image_repo }}/kube-vip/kube-vip",
+    "{{ haproxy_image_repo }}:{{ haproxy_image_tag }}",
+    "{{ host_architecture | default('amd64') }}",
+    "{{ imageReference | to_json }}",
+    "{{ image_command_tool }}",
+    "{{ image_reponame | regex_replace('/|\\0|:', '_') }}.tar",
+    "{{ ingress_nginx_controller_image_repo }}:{{ ingress_nginx_controller_image_tag }}",
+    "{{ ingress_nginx_kube_webhook_certgen_image_repo }}:{{ ingress_nginx_kube_webhook_certgen_image_tag }}",
+    "{{ ingress_nginx_opentelemetry_image_repo }}:{{ ingress_nginx_opentelemetry_image_tag }}",
+    "{{ ingress_nginx_version }}",
+    "{{ kube_image_repo }}",
+    "{{ kube_image_repo }}/cloud-provider-gcp/gcp-compute-persistent-disk-csi-driver",
+    "{{ kube_image_repo }}/cloud-pv-vsphere/cloud-provider-vsphere:{{ external_vsphere_cloud_controller_image_tag }}",
+    "{{ kube_image_repo }}/cpa/cluster-proportional-autoscaler",
+    "{{ kube_image_repo }}/csi-vsphere/driver:{{ vsphere_csi_controller }}",
+    "{{ kube_image_repo }}/csi-vsphere/driver:{{ vsphere_csi_driver_image_tag }}",
+    "{{ kube_image_repo }}/csi-vsphere/syncer:{{ vsphere_syncer_image_tag }}",
+    "{{ kube_image_repo }}/dns/k8s-dns-node-cache",
+    "{{ kube_image_repo }}/ingress-nginx/controller",
+    "{{ kube_image_repo }}/ingress-nginx/kube-webhook-certgen",
+    "{{ kube_image_repo }}/ingress-nginx/opentelemetry",
+    "{{ kube_image_repo }}/kube-proxy",
+    "{{ kube_image_repo }}/metrics-server/metrics-server",
+    "{{ kube_image_repo }}/nfd/node-feature-discovery",
+    "{{ kube_image_repo }}/pause",
+    "{{ kube_image_repo }}/provider-os/cinder-csi-plugin",
+    "{{ kube_image_repo }}/provider-os/openstack-cloud-controller-manager",
+    "{{ kube_image_repo }}/scheduler-plugins/controller",
+    "{{ kube_image_repo }}/scheduler-plugins/kube-scheduler",
+    "{{ kube_image_repo }}/sig-storage/csi-attacher",
+    "{{ kube_image_repo }}/sig-storage/csi-attacher:{{ vsphere_csi_attacher_image_tag }}",
+    "{{ kube_image_repo }}/sig-storage/csi-node-driver-registrar",
+    "{{ kube_image_repo }}/sig-storage/csi-node-driver-registrar:{{ vsphere_csi_node_driver_registrar_image_tag }}",
+    "{{ kube_image_repo }}/sig-storage/csi-provisioner",
+    "{{ kube_image_repo }}/sig-storage/csi-provisioner:{{ vsphere_csi_provisioner_image_tag }}",
+    "{{ kube_image_repo }}/sig-storage/csi-resizer",
+    "{{ kube_image_repo }}/sig-storage/csi-resizer:{{ vsphere_csi_resizer_tag }}",
+    "{{ kube_image_repo }}/sig-storage/csi-snapshotter",
+    "{{ kube_image_repo }}/sig-storage/csi-snapshotter:{{ vsphere_csi_snapshotter_image_tag }}",
+    "{{ kube_image_repo }}/sig-storage/livenessprobe",
+    "{{ kube_image_repo }}/sig-storage/livenessprobe:{{ vsphere_csi_liveness_probe_image_tag }}",
+    "{{ kube_image_repo }}/sig-storage/local-volume-provisioner",
+    "{{ kube_image_repo }}/sig-storage/snapshot-controller",
+    "{{ kube_image_repo }}{{ '/coredns/coredns' if (coredns_image_is_namespaced | bool) else '/coredns' }}",
+    "{{ kube_ovn_container_image_repo }}:{{ kube_ovn_container_image_tag }}",
+    "{{ kube_ovn_dpdk_version }}",
+    "{{ kube_ovn_version }}",
+    "{{ kube_ovn_vpc_container_image_repo }}:{{ kube_ovn_vpc_container_image_tag }}",
+    "{{ kube_router_image_repo }}:{{ kube_router_image_tag }}",
+    "{{ kube_router_version }}",
+    "{{ kube_vip_image_repo }}:{{ kube_vip_image_tag }}",
+    "{{ kubeadm_images_raw.stdout_lines }}",
+    "{{ kubelet_image_gc_high_threshold }}",
+    "{{ kubelet_image_gc_low_threshold }}",
+    "{{ local_path_provisioner_helper_image_repo }}:{{ local_path_provisioner_helper_image_tag }}",
+    "{{ local_path_provisioner_image_repo }}:{{ local_path_provisioner_image_tag }}",
+    "{{ local_path_provisioner_version }}",
+    "{{ local_release_dir }}/images/{{ image_filename }}",
+    "{{ local_volume_provisioner_image_repo }}:{{ local_volume_provisioner_image_tag }}",
+    "{{ local_volume_provisioner_version }}",
+    "{{ lookup('vars', image_command_tool + '_image_info_command') }}",
+    "{{ lookup('vars', image_command_tool + '_image_pull_command') }}",
+    "{{ lookup('vars', image_command_tool_on_localhost + '_image_info_command') }}",
+    "{{ lookup('vars', image_command_tool_on_localhost + '_image_pull_command') }}",
+    "{{ metallb_controller_image_repo }}:{{ metallb_version }}",
+    "{{ metallb_speaker_image_repo }}:{{ metallb_version }}",
+    "{{ metrics_server_image_repo }}:{{ metrics_server_image_tag }}",
+    "{{ metrics_server_version }}",
+    "{{ multus_image_repo }}:{{ multus_image_tag }}",
+    "{{ multus_version }}",
+    "{{ netcheck_agent_image_repo }}:{{ netcheck_agent_image_tag }}",
+    "{{ netcheck_server_image_repo }}:{{ netcheck_server_image_tag }}",
+    "{{ netcheck_version }}",
+    "{{ nginx_image_repo }}:{{ nginx_image_tag }}",
+    "{{ node_feature_discovery_image_repo }}:{{ node_feature_discovery_image_tag }}",
+    "{{ node_feature_discovery_version }}",
+    "{{ nodelocaldns_image_repo }}:{{ nodelocaldns_image_tag }}",
+    "{{ nodelocaldns_version }}",
+    "{{ nvidia_driver_install_container }}",
+    "{{ nvidia_gpu_device_plugin_container }}",
+    "{{ pod_infra_image_repo }}:{{ pod_infra_image_tag }}",
+    "{{ pod_infra_image_repo }}:{{ pod_infra_version }}",
+    "{{ pod_infra_version }}",
+    "{{ quay_image_repo }}/calico/apiserver",
+    "{{ quay_image_repo }}/calico/cni",
+    "{{ quay_image_repo }}/calico/kube-controllers",
+    "{{ quay_image_repo }}/calico/node",
+    "{{ quay_image_repo }}/calico/typha",
+    "{{ quay_image_repo }}/cilium/certgen",
+    "{{ quay_image_repo }}/cilium/cilium",
+    "{{ quay_image_repo }}/cilium/hubble-relay",
+    "{{ quay_image_repo }}/cilium/hubble-ui",
+    "{{ quay_image_repo }}/cilium/hubble-ui-backend",
+    "{{ quay_image_repo }}/cilium/operator",
+    "{{ quay_image_repo }}/coreos/etcd",
+    "{{ quay_image_repo }}/external_storage/cephfs-provisioner",
+    "{{ quay_image_repo }}/external_storage/rbd-provisioner",
+    "{{ quay_image_repo }}/jetstack/cert-manager-cainjector",
+    "{{ quay_image_repo }}/jetstack/cert-manager-controller",
+    "{{ quay_image_repo }}/jetstack/cert-manager-webhook",
+    "{{ quay_image_repo }}/kubespray/flannel",
+    "{{ quay_image_repo }}/kubespray/flannel-cni-plugin",
+    "{{ quay_image_repo }}/kubespray/k8s-netchecker-agent",
+    "{{ quay_image_repo }}/kubespray/k8s-netchecker-server",
+    "{{ quay_image_repo }}/kubespray/nginx",
+    "{{ quay_image_repo }}/metallb/controller",
+    "{{ quay_image_repo }}/metallb/speaker",
+    "{{ rbd_provisioner_image_features }}",
+    "{{ rbd_provisioner_image_format }}",
+    "{{ rbd_provisioner_image_repo }}:{{ rbd_provisioner_image_tag }}",
+    "{{ rbd_provisioner_version }}",
+    "{{ registry_image_repo }}:{{ registry_image_tag }}",
+    "{{ registry_version }}",
+    "{{ scheduler_plugins_controller_image_repo }}:{{ scheduler_plugins_controller_image_tag }}",
+    "{{ scheduler_plugins_scheduler_image_repo }}:{{ scheduler_plugins_scheduler_image_tag }}",
+    "{{ scheduler_plugins_version }}",
+    "{{ snapshot_controller_image_repo }}:{{ snapshot_controller_image_tag }}",
+    "{{ snapshot_controller_supported_versions[kube_major_version] }}",
+    "{{ test_image_repo }}:{{ test_image_tag }}",
+    "{{ weave_kube_image_repo }}:{{ weave_kube_image_tag }}",
+    "{{ weave_npc_image_repo }}:{{ weave_npc_image_tag }}",
+    "{{ weave_version }}"
+  ]
+}

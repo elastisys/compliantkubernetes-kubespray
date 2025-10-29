@@ -1,0 +1,26 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: Load Kubespray download defaults
+      run_once: true
+      include_vars:
+        file: "{{ download_defaults_file }}"
+
+    - name: Collect Kubespray image variables across hostvars
+      run_once: true
+      delegate_to: localhost
+      set_fact:
+        kubespray_image_vars: >-
+          {{
+            vars
+            | dict2items
+            | selectattr('key', 'search', 'image')
+            | items2dict
+          }}
+
+    - name: Emit image variables
+      run_once: true
+      delegate_to: localhost
+      debug:
+        var: kubespray_image_vars
