@@ -1,4 +1,4 @@
-# Upgrade v2.28.0-ck8s1 to v2.29.0-ck8s1
+# Upgrade v2.28 to v2.29
 
 ## Prerequisites
 
@@ -22,18 +22,18 @@
 
     ```bash
     git pull
-    git switch -d v2.29.0-ck8s1
+    git switch -d v2.29.x-ck8sx
     git submodule sync
     git submodule update --init --recursive
     ```
 
-1. Run `bin/ck8s-kubespray upgrade both v2.29.0-ck8s1 prepare` to update your config.
+1. Run `bin/ck8s-kubespray upgrade both v2.29 prepare` to update your config.
 
     > [!NOTE]
     > It is possible to update `wc` and `sc` config separately by replacing `both` when running the `upgrade` command, e.g. the following will only update config for the workload cluster:
     >
     > ```bash
-    > bin/ck8s-kubespray upgrade wc v2.29.0-ck8s1 prepare
+    > bin/ck8s-kubespray upgrade wc v2.29 prepare
     > ```
 
 1. Download the required files on the nodes
