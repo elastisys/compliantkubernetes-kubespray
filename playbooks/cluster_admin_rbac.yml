@@ -1,6 +1,6 @@
 - hosts: k8s_cluster
   roles:
-  - role: kubespray-defaults
+  - role: kubespray_defaults
     when:
     - create_oidc_kubeconfig
     - inventory_hostname == groups['kube_control_plane'][0]
