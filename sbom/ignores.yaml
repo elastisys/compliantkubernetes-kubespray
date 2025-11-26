@@ -1,0 +1,41 @@
+directories:
+  - "kubespray/scripts"
+  - "kubespray/test-infra"
+  - "kubespray/tests"
+  - "kubespray/venv"
+
+  - "kubespray/roles/adduser"
+  - "kubespray/roles/container-engine"
+  - "kubespray/roles/kubernetes/preinstall"
+  - "kubespray/roles/network_plugin/weave"
+  - "kubespray/roles/bastion-ssh-config"
+  - "kubespray/roles/kubernetes-apps/csi_driver/gcp_pd"
+  - "kubespray/roles/kubernetes-apps/csi_driver/vsphere"
+  - "kubespray/roles/kubernetes-apps/external_cloud_controller/hcloud"
+  - "kubespray/roles/kubernetes-apps/external_cloud_controller/huaweicloud"
+  - "kubespray/roles/kubernetes-apps/external_cloud_controller/oci"
+  - "kubespray/roles/kubernetes-apps/external_cloud_controller/vsphere"
+  - "kubespray/roles/kubernetes-apps/ingress_controller/alb_ingress_controller"
+  - "kubespray/roles/network_plugin/flannel"
+  - "kubespray/roles/network_plugin/kube-ovn"
+  - "kubespray/roles/network_plugin/kube-router"
+  - "kubespray/roles/network_plugin/macvlan/"
+  - "kubespray/roles/network_plugin/multus"
+  - "kubespray/roles/etcdctl_etcdutl"
+  - "kubespray/contrib/azurerm/roles/generate-inventory"
+  - "kubespray/roles/kubernetes-apps/metallb"
+
+files:
+  # Requires another template to be rendered and added as a value in a task.
+  # Should not render any BOM material though.
+  - "kubespray/roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-cloud-config.j2"
+  - "kubespray/roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-cloud-config-secret.yml.j2"
+  - "kubespray/roles/kubernetes-apps/external_cloud_controller/openstack/templates/external-openstack-cloud-config-secret.yml.j2"
+  - "kubespray/roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-cloud-config-secret.yml.j2"
+  # Requires two unset variables, `etcd_metrics_service_labels` and `etcd_metrics_port`.
+  # Should not render any BOM material though.
+  - "kubespray/roles/kubernetes-apps/ansible/templates/etcd_metrics-service.yml.j2"
+  # Requires etcd health check task to register `etcd_cluster_is_healthy` and `etcd_events_cluster_is_healthy` first.
+  # Should not render any BOM material though.
+  - "kubespray/roles/etcd/templates/etcd.env.j2"
+  - "kubespray/roles/etcd/templates/etcd-events.env.j2"
