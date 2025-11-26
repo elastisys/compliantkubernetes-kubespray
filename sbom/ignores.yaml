@@ -23,8 +23,6 @@ directories:
   - "kubespray/roles/network_plugin/multus"
   - "kubespray/roles/etcdctl_etcdutl"
   - "kubespray/contrib/azurerm/roles/generate-inventory"
-
-  # TODO: Might need to fix these
   - "kubespray/roles/kubernetes-apps/metallb"
 
 files:
