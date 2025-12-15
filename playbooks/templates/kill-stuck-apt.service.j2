@@ -1,0 +1,6 @@
+[Unit]
+Description=Kill stuck apt processes older than 1 day
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/kill_stuck_apt.sh
