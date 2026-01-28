@@ -7,10 +7,10 @@
 - [ ] Check the state of the environment, pods, nodes and backup jobs:
 
     ```bash
-    ./compliantkubernetes-apps/bin/ck8s test sc|wc
-    ./compliantkubernetes-apps/bin/ck8s ops kubectl sc|wc get pods -A -o custom-columns=NAMESPACE:metadata.namespace,POD:metadata.name,READY-false:status.containerStatuses[*].ready,REASON:status.containerStatuses[*].state.terminated.reason | grep false | grep -v Completed
-    ./compliantkubernetes-apps/bin/ck8s ops kubectl sc|wc get nodes
-    ./compliantkubernetes-apps/bin/ck8s ops kubectl sc|wc get jobs -A
+    ./welkin-apps/bin/ck8s test sc|wc
+    ./welkin-apps/bin/ck8s ops kubectl sc|wc get pods -A -o custom-columns=NAMESPACE:metadata.namespace,POD:metadata.name,READY-false:status.containerStatuses[*].ready,REASON:status.containerStatuses[*].state.terminated.reason | grep false | grep -v Completed
+    ./welkin-apps/bin/ck8s ops kubectl sc|wc get nodes
+    ./welkin-apps/bin/ck8s ops kubectl sc|wc get jobs -A
     velero get backup
     ```
 
@@ -59,9 +59,9 @@ These steps will cause disruptions in the environment.
 - [ ] Check the state of the environment, pods and nodes:
 
     ```bash
-    ./compliantkubernetes-apps/bin/ck8s test sc|wc
-    ./compliantkubernetes-apps/bin/ck8s ops kubectl sc|wc get pods -A -o custom-columns=NAMESPACE:metadata.namespace,POD:metadata.name,READY-false:status.containerStatuses[*].ready,REASON:status.containerStatuses[*].state.terminated.reason | grep false | grep -v Completed
-    ./compliantkubernetes-apps/bin/ck8s ops kubectl sc|wc get nodes
+    ./welkin-apps/bin/ck8s test sc|wc
+    ./welkin-apps/bin/ck8s ops kubectl sc|wc get pods -A -o custom-columns=NAMESPACE:metadata.namespace,POD:metadata.name,READY-false:status.containerStatuses[*].ready,REASON:status.containerStatuses[*].state.terminated.reason | grep false | grep -v Completed
+    ./welkin-apps/bin/ck8s ops kubectl sc|wc get nodes
     ```
 
 - [ ] Enable the notifications for the alerts;
