@@ -147,6 +147,12 @@ kubectl get nodes --no-headers -o custom-columns=":metadata.name" |
 ../../bin/ck8s-kubespray apply $TARGET_CLUSTER -b -e=ignore_assert_errors=true --tags="download,network"
 ```
 
+Rollout Cilium so it picks up its Kubespray configuration:
+
+```bash
+./85-rollout-cilium.sh
+```
+
 ### 5. Cleanup
 
 - Remove the per-node Cilium configuration:
