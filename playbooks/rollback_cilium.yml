@@ -1,7 +1,11 @@
 - hosts: all
   tasks:
     - name: Give priority to the calico CNI config instead of cilium
-      shell: |
-        test -f /etc/cni/net.d/05-cilium.conflist && mv /etc/cni/net.d/05-cilium.conflist /etc/cni/net.d/05-cilium.conflist.calico_bak || true
-        test -f /etc/cni/net.d/10-calico.conflist.cilium_bak && mv /etc/cni/net.d/10-calico.conflist.cilium_bak /etc/cni/net.d/10-calico.conflist || true
+      ansible.builtin.shell: |
+        test -f /etc/cni/net.d/10-calico.conflist.cilium_bak && {
+          mv /etc/cni/net.d/10-calico.conflist.cilium_bak /etc/cni/net.d/10-calico.conflist
+          find /etc/cni/net.d -type f -name "*cilium*" -delete
+        } || true
+      args:
+        executable: /bin/bash
       register: command_output
