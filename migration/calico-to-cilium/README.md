@@ -169,6 +169,9 @@ Rollout Cilium so it picks up its Kubespray configuration:
 
 ### 6. (Optional) Reconfigure Apps
 
+> [!NOTE]
+> Perform this step after _both_ clusters have been migrated.
+
 If Welkin Apps has been deployed in the environment, it will require a reconfiguration step:
 
 ```bash
