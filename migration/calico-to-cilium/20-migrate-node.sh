@@ -24,7 +24,7 @@ if [[ "${2:-}" == "--rollback" ]]; then
   EVICT_PODS_WITH_IP_PREFIX="${CILIUM_IP_PREFIX}"
 fi
 
-log_info "Starging migration for node $(yellow_text "${NODE}") with hash $(yellow_text "${NODE_HASH}")"
+log_info "Starting migration for node $(yellow_text "${NODE}") with hash $(yellow_text "${NODE_HASH}")"
 
 deferred_cleanup() {
   # Remove the 'skip-taint' label
