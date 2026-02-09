@@ -64,11 +64,12 @@ These steps can be performed without any disruption to the target cluster.
   export KUBECONFIG="${CK8S_CONFIG_PATH}/.state/kube_config_${TARGET_CLUSTER}.yaml"
   ```
 
-- This guide includes a complete Kubespray run for the target cluster. For OpenStack clusters, credentials must be sourced:
+- This guide includes a complete Kubespray run for the target cluster. For OpenStack _or_ Upcloud clusters, credentials must be sourced:
 
   ```bash
   test -f ${CK8S_CONFIG_PATH}/openrc.sh && source ${CK8S_CONFIG_PATH}/openrc.sh
   test -f ${CK8S_CONFIG_PATH}/secret/openstack-app-credentials-for-kubespray.sh && source <(sops -d ${CK8S_CONFIG_PATH}/secret/openstack-app-credentials-for-kubespray.sh)
+  test -f ${CK8S_CONFIG_PATH}/secret/upcloud-customer-credentials.sh && source <(sops -d ${CK8S_CONFIG_PATH}/secret/upcloud-customer-credentials.sh)
   ```
 
 - Ensure that the checked out tag or commit in your Kubespray repository matches the version in the cluster:
