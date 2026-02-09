@@ -16,7 +16,7 @@ hubble:
     - tcp
     - icmp
     - httpV2
-    servicejonitor:
+    serviceMonitor:
       enabled: true
 operator:
   prometheus:

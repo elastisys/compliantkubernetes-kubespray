@@ -64,11 +64,12 @@ These steps can be performed without any disruption to the target cluster.
   export KUBECONFIG="${CK8S_CONFIG_PATH}/.state/kube_config_${TARGET_CLUSTER}.yaml"
   ```
 
-- This guide includes a complete Kubespray run for the target cluster. For OpenStack clusters, credentials must be sourced:
+- This guide includes a complete Kubespray run for the target cluster. For OpenStack _or_ Upcloud clusters, credentials must be sourced:
 
   ```bash
   test -f ${CK8S_CONFIG_PATH}/openrc.sh && source ${CK8S_CONFIG_PATH}/openrc.sh
   test -f ${CK8S_CONFIG_PATH}/secret/openstack-app-credentials-for-kubespray.sh && source <(sops -d ${CK8S_CONFIG_PATH}/secret/openstack-app-credentials-for-kubespray.sh)
+  test -f ${CK8S_CONFIG_PATH}/secret/upcloud-customer-credentials.sh && source <(sops -d ${CK8S_CONFIG_PATH}/secret/upcloud-customer-credentials.sh)
   ```
 
 - Ensure that the checked out tag or commit in your Kubespray repository matches the version in the cluster:
@@ -146,6 +147,12 @@ kubectl get nodes --no-headers -o custom-columns=":metadata.name" |
 ../../bin/ck8s-kubespray apply $TARGET_CLUSTER -b -e=ignore_assert_errors=true --tags="download,network"
 ```
 
+Rollout Cilium so it picks up its Kubespray configuration:
+
+```bash
+./85-rollout-cilium.sh
+```
+
 ### 5. Cleanup
 
 - Remove the per-node Cilium configuration:
@@ -161,6 +168,9 @@ kubectl get nodes --no-headers -o custom-columns=":metadata.name" |
   ```
 
 ### 6. (Optional) Reconfigure Apps
+
+> [!NOTE]
+> Perform this step after _both_ clusters have been migrated.
 
 If Welkin Apps has been deployed in the environment, it will require a reconfiguration step:
 
