@@ -15,7 +15,7 @@ ck8s_cilium:
   # enableNodeSelectability: when true, allows Kubernetes nodes to be selected
   # by cidr block selectors in classic NetworkPolicies.
   #
-  # Without this, access to the Kubernets API Server pods might be restricted.
+  # Without this, access to the Kubernetes API Server pods might be restricted.
   #
   # See: https://github.com/cilium/cilium/issues/20550
   enableNodeSelectability: true
