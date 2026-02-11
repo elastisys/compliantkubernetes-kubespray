@@ -1,5 +1,12 @@
-.terraform
+.terraform/
 *.tfstate
+*.tfstate.*
 *.tfstate.backup
+.terraform.lock.hcl
+*.auto.tfvars
+cluster.tfvars
+.envrc
+inventory.ini
+*.tar.gz
 .*.swp
 .DS_Store
