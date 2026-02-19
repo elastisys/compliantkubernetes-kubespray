@@ -6,10 +6,6 @@
 
 The user-facing API changes more rarely, usually as a result of a Kubernetes version upgrade. For details, read the [user-facing release notes](https://elastisys.io/welkin/release-notes/kubespray/).
 
-## Prerequisites
-
-> **Note:** Parts of this project's documentation assume access to the private [welkin-apps](https://github.com/elastisys/welkin-apps) repository.
-
 ## Content
 
 - `bin`: wrapper scripts that helps you run kubespray

@@ -71,7 +71,7 @@ if [[ -t 0 ]] && [[ -t 1 ]] && [[ -z "${CI:-}" ]]; then
   args+=("-it")
 fi
 
-args+=("--hostname" "welkin-apps-tests")
+args+=("--hostname" "compliantkubernetes-apps-tests")
 args+=("--workdir" "${root}")
 args+=("--env" "LANG=C.UTF-8")
 

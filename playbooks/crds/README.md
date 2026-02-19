@@ -4,10 +4,8 @@ Currently used to define the ServiceMonitors CRD early.
 
 The CRD should be kept in sync with the one in the latest Apps release.
 
-Make sure `CK8S_GITHUB_TOKEN` is set in the environment. Use a classic GitHub personal access token with the `repo` scope (needed for private repository access).
-
 ```bash
-APPS_TAG="$(curl -sH "Authorization: token ${CK8S_GITHUB_TOKEN}" https://api.github.com/repos/elastisys/welkin-apps/releases | jq -r '.[].tag_name' | sort --version-sort --reverse | head --lines 1)"
+APPS_TAG="$(curl -s https://api.github.com/repos/elastisys/compliantkubernetes-apps/releases | jq -r '.[].tag_name' | sort --version-sort --reverse | head --lines 1)"
 
-curl -fsSLO -H "Authorization: token ${CK8S_GITHUB_TOKEN}" "https://raw.githubusercontent.com/elastisys/welkin-apps/refs/tags/${APPS_TAG}/helmfile.d/upstream/prometheus-community/kube-prometheus-stack/charts/crds/crds/crd-servicemonitors.yaml"
+curl -fsSLO "https://raw.githubusercontent.com/elastisys/compliantkubernetes-apps/refs/tags/${APPS_TAG}/helmfile.d/upstream/prometheus-community/kube-prometheus-stack/charts/crds/crds/crd-servicemonitors.yaml"
 ```

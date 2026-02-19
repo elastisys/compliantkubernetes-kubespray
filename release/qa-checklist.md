@@ -915,5 +915,5 @@ Elastisys Welkin® Kubespray
 
 ### Final steps
 
-- [ ] Ensure the minor version of [the kubectl requirement in Apps](https://github.com/elastisys/welkin-apps/blob/main/REQUIREMENTS) is equal or greater than the Kubernetes version of
+- [ ] Ensure the minor version of [the kubectl requirement in Apps](https://github.com/elastisys/compliantkubernetes-apps/blob/main/REQUIREMENTS) is equal or greater than the Kubernetes version of
 Kubespray.
