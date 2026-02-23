@@ -125,6 +125,16 @@ kubectl get nodes --no-headers -o custom-columns=":metadata.name" |
   xargs -rt -I{} --interactive ./20-migrate-node.sh {}
 ```
 
+> [!NOTE]
+> If the environment is running a PostgreSQL cluster the migration script might have trouble evicting the postgres pods due to its poddisruptionsbudget.
+> This will require manual intervention to fix by manually triggering a leader switchover.
+>
+> ```sh
+> kubectl exec -it <master-pod-name> -n postgres-system -- bash
+> $ patronictl switchover
+> $ # press enter for the default options and 'y' at the end
+> ```
+
 > [!TIP]
 > To skip confirmation prompts for each node, remove the `--interactive` flag from `xargs`.
 
@@ -167,7 +177,15 @@ Rollout Cilium so it picks up its Kubespray configuration:
   ./90-cleanup-calico.sh
   ```
 
-### 6. (Optional) Reconfigure Apps
+### 6. Restart Kube Controller Manager
+
+The kube-controller-manager pods might have a stale view of the cluster after the migration. This can cause alerts such as KubeDaemonSetMisScheduled, where the controller managers get confused about how many replicas of a DaemonSet should exist. Restarting the pods fixes this.
+
+```bash
+ansible -i "${CK8S_CONFIG_PATH}/${TARGET_CLUSTER}-config/inventory.ini" kube_control_plane --forks 1 -m shell -a 'sudo mv /etc/kubernetes/manifests/kube-controller-manager.yaml . && sleep 5 && sudo mv kube-controller-manager.yaml /etc/kubernetes/manifests/kube-controller-manager.yaml && sleep 10'
+```
+
+### 7. (Optional) Reconfigure Apps
 
 > [!NOTE]
 > Perform this step after _both_ clusters have been migrated.
@@ -187,3 +205,7 @@ ${CK8S_APPS_REPOSITORY_PATH}/bin/update-ips.bash both apply
 ${CK8S_APPS_REPOSITORY_PATH}/bin/ck8s apply sc --concurrency=$(nproc)
 ${CK8S_APPS_REPOSITORY_PATH}/bin/ck8s apply wc --concurrency=$(nproc)
 ```
+
+### 8. (Optional) Reconfigure AMS:es
+
+If the environment has any AMS installed, it will be required to update the Network Policies of them, as described the their respective repository.
