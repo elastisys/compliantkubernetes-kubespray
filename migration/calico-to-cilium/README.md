@@ -127,7 +127,13 @@ kubectl get nodes --no-headers -o custom-columns=":metadata.name" |
 
 > [!NOTE]
 > If the environment is running a PostgreSQL cluster the migration script might have trouble evicting the postgres pods due to its poddisruptionsbudget.
-> This will require manual intervention to fix by temporarily changing the pdb to `minAvailable: 0`.
+> This will require manual intervention to fix by manually triggering a leader switchover.
+>
+> ```sh
+> kubectl exec -it <master-pod-name> -n postgres-system -- bash
+> $ patronictl switchover
+> $ # press enter for the default options and 'y' at the end
+> ```
 
 > [!TIP]
 > To skip confirmation prompts for each node, remove the `--interactive` flag from `xargs`.
