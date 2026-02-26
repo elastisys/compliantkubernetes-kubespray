@@ -1,0 +1,37 @@
+all:
+  vars:
+    ansible_connection: local
+    main_access_ip: "127.0.0.1"
+    main_ip: "127.0.0.1"
+    main_ips:
+      - "127.0.0.1"
+    kubeadm_discovery_address: "127.0.0.1"
+    kubeadm_token: ""
+    apiserver_sans: "127.0.0.1"
+    calico_apiserver_cabundle: ""
+    nvidia_driver_download_url_default: ""
+    kube_webhook_authorization_url: ""
+    http_proxy: ""
+    https_proxy: ""
+    no_proxy: ""
+    haproxy_stat:
+      stat:
+        checksum: ""
+    nginx_stat:
+      stat:
+        checksum: ""
+    forwardTarget: "127.0.0.1"
+    upstreamForwardTarget: "127.0.0.1"
+    clusterIP: "127.0.0.1"
+    kube_webhook_token_auth_url: ""
+    kube_vip_admin_conf: admin.conf
+  children:
+    etcd:
+      hosts:
+        localhost:
+    kube_control_plane:
+      hosts:
+        localhost:
+    k8s_cluster:
+      hosts:
+        localhost:
