@@ -27,3 +27,5 @@ overrides_path: "sbom"
 #   - "your-image:latest"
 
 ignores_path: "sbom"
+
+ansible_inventory_path: "sbom"
