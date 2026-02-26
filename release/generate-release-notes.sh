@@ -8,6 +8,8 @@ if ! command -v releaser >/dev/null; then
   exit 1
 fi
 
+: "${CK8S_GITHUB_TOKEN:?Missing CK8S_GITHUB_TOKEN}"
+
 function usage() {
   echo "Usage: ${0} VERSION" >&2
   exit 1

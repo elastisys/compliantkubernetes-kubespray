@@ -91,8 +91,8 @@ Include screenshots if applicable to help explain these changes.
     - [ ] The change requires no migration steps
     - [ ] The change requires migration steps
 - Documentation checks:
-    - [ ] The [public documentation](https://github.com/elastisys/welkin) required no updates
-    - [ ] The [public documentation](https://github.com/elastisys/welkin) required an update - [link to change](set-me\)
+    - [ ] The [public documentation](https://github.com/elastisys/welkin-public-docs) required no updates
+    - [ ] The [public documentation](https://github.com/elastisys/welkin-public-docs) required an update - [link to change](set-me\)
 - Metrics checks:
     - [ ] The metrics are still exposed and present in Grafana after the change
     - [ ] The metrics names didn't change (Grafana dashboards and Prometheus alerts required no updates)

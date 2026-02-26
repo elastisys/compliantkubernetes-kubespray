@@ -39,9 +39,11 @@ MD033: # no-inline-html
     - sup
     - ul
 MD034: false # no-bare-urls
+MD044: false # proper-names
 MD046: false # code-block-style - does not support admonitions
 MD048: false # code-fence-style - does not support admonitions
 MD049: # emphasis-style
   style: underscore
 MD050: # strong-style
   style: asterisk
+MD059: false # descriptive-link-text - allow non-descriptive
