@@ -2,6 +2,7 @@ all:
   vars:
     ansible_connection: local
     main_access_ip: "127.0.0.1"
+    main_access_ips: ["127.0.0.1"]
     main_ip: "127.0.0.1"
     main_ips:
       - "127.0.0.1"
@@ -14,12 +15,10 @@ all:
     http_proxy: ""
     https_proxy: ""
     no_proxy: ""
-    haproxy_stat:
-      stat:
-        checksum: ""
-    nginx_stat:
-      stat:
-        checksum: ""
+    haproxy_conf:
+      checksum: ""
+    nginx_conf:
+      checksum: ""
     forwardTarget: "127.0.0.1"
     upstreamForwardTarget: "127.0.0.1"
     clusterIP: "127.0.0.1"
