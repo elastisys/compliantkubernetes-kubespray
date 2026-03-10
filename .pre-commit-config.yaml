@@ -6,7 +6,7 @@ repos:
         entry: "(Compliant[ ]Kubernetes|C[kK]8[sS][^_]|Complaint)"
         language: pygrep
         types: [text]
-        exclude: ^(bin/|.pre-commit-config.yaml$)
+        exclude: ^(.pre-commit-config.yaml$|bin/)
       - id: avoid-old-website-urls
         name: Avoid old URLs and use "https://elastisys.io/welkin" instead
         entry: "elastisys.io/compliantkubernetes"
@@ -20,7 +20,7 @@ repos:
         types: [text]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v6.0.0
     hooks:
       - id: check-executables-have-shebangs
       - id: check-merge-conflict
@@ -34,6 +34,16 @@ repos:
       - id: mixed-line-ending
       - id: no-commit-to-branch
       - id: trailing-whitespace
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1
+    hooks:
+      - id: codespell
+        name: check spelling
+        exclude: ^playbooks/crds/[^\.]+\.yaml$
+        args:
+          - -I
+          - .codespellignore
 
   - repo: local
     hooks:
@@ -62,21 +72,21 @@ repos:
           - docker.io/mvdan/shfmt:v3.10.0@sha256:d19cc37644449fe9a488f234d2c0cf0b770eaf6a5a40e30103e8099013ef8f9e
           - -w
 
-  - repo: https://github.com/codespell-project/codespell
-    rev: v2.3.0
-    hooks:
-      - id: codespell
-        name: check spelling
-        exclude: ^playbooks/crds/[^\.]+\.yaml$
-        args:
-          - -I
-          - .codespellignore
-
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.14.0
+    rev: v0.18.1
     hooks:
       - id: markdownlint-cli2
         name: lint markdown files
-        exclude: ^changelog/
+        exclude: ^(changelog/|kubespray/)
         args:
           - --fix
+
+  - repo: local
+    hooks:
+      - id: sbom-diff
+        name: check SBOM drift
+        files: ^(kubespray/|sbom/)
+        language: script
+        pass_filenames: false
+        require_serial: true
+        entry: sbom/diff.sh
