@@ -1,0 +1,5 @@
+etcd_image: {{ etcd_image_repo }}:{{ etcd_image_tag }}
+kube_apiserver_image: {{ kube_image_repo }}/kube-apiserver:v{{ kube_version }}
+kube_controller_manager_image: {{ kube_image_repo }}/kube-controller-manager:v{{ kube_version }}
+kube_proxy_image: {{ kube_image_repo }}/kube-proxy:v{{ kube_version }}
+kube_scheduler_image: {{ kube_image_repo }}/kube-scheduler:v{{ kube_version }}

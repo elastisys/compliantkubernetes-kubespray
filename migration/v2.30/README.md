@@ -54,6 +54,13 @@ These steps will cause disruptions in the environment.
     ./bin/ck8s-kubespray run-playbook wc upgrade_cluster.yml -b -e skip_downloads=true
     ```
 
+1. Pin the kube-proxy daemonset
+
+    ```bash
+    ./bin/ck8s-kubespray patch-kube-proxy-image sc
+    ./bin/ck8s-kubespray patch-kube-proxy-image wc
+    ```
+
 ## Postrequisite
 
 - [ ] Check the state of the environment, pods and nodes:

@@ -1,0 +1,18 @@
+---
+- hosts: all
+  gather_facts: true
+
+  vars:
+    variable_files: []
+    template_files: {}
+
+  tasks:
+    - ansible.builtin.include_vars:
+        file: "{{ item }}"
+      loop: "{{ variable_files }}"
+
+    - ansible.builtin.template:
+        src: "{{ item.value }}"
+        dest: "{{ item.key }}"
+      loop: "{{ template_files | dict2items }}"
+      delegate_to: localhost
