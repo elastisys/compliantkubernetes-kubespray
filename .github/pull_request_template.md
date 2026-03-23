@@ -49,7 +49,29 @@ _Optional_: Mark one or more of the following that are applicable:
 
 <!-- Add additional information with kind/security
 ### Security notice
-...
+
+> If the security risk outweigh the security benefit of disclosure as determined by the CSE answer TBA for all points.
+
+#### Description
+
+_Description of the vulnerability..._
+
+#### Severity
+
+_CVSS 4.0 score of the vulnerability as determined on Welkin itself._
+
+#### How to identify the vulnerability
+
+_Steps to identify..._
+
+#### How to mitigate the vulnerability
+
+_Steps to mitigate..._
+
+#### Upstream security notices
+
+_If any._
+
 -->
 
 ### What does this PR do / why do we need this PR?

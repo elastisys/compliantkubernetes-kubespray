@@ -62,6 +62,13 @@ Running the script above will:
 - Cherry pick commits in `${CK8S_GIT_CHERRY_PICK}`, if there are any.
 - Generate and commit the changelog.
 
+> [!important]
+> If the release includes security notices you must take the highest severity score and add the following line first in the notice:
+>
+> ```text
+> This release addresses vulnerabilities with a severity of <score>.
+> ```
+
 Generate a CycloneDX SBOM for the staged release:
 
 ```sh
@@ -119,6 +126,13 @@ release/generate-release-notes.sh X.Y.Z-ck8sP
 
 The public release notes are aimed towards application developers.
 Remove irrelevant entries and/or reword entries so that they are easy to understand for the application developers.
+
+> [!important]
+> If the release includes security notices you must take the highest severity score and add the following line first in the notice:
+>
+> ```text
+> This release addresses vulnerabilities with a severity of <score>.
+> ```
 
 ## Update the main branch
 

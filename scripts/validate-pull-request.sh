@@ -83,8 +83,8 @@ done
 declare -a kinds
 for line in "${input[@]}"; do
   # start of line, optional space, dash, variable space, checkbox, variable space, kind, slash
-  if [[ "${line}" =~ ^[[:space:]]*-[[:space:]]+\[x\][[:space:]]+kind/ ]]; then
-    kinds+=("${line#*([[:space:]])-+([[:space:]])\[x\]+([[:space:]])kind/}")
+  if [[ "${line}" =~ ^[[:space:]]*-[[:space:]]+\[[xX]\][[:space:]]+kind/ ]]; then
+    kinds+=("${line#*([[:space:]])-+([[:space:]])\[[xX]\]+([[:space:]])kind/}")
   fi
 done
 
@@ -176,7 +176,7 @@ if [[ "${kinds[*]}" =~ security ]]; then
       fi
     else
       # Exit section
-      if [[ "${line}" =~ ^# ]]; then
+      if [[ "${line}" =~ ^"### " ]]; then
         break
       # Keep if we have content
       elif [[ -n "${line}" ]]; then
@@ -194,13 +194,47 @@ if [[ "${kinds[*]}" =~ security ]]; then
   elif [[ -z "${security_notice[*]:-}" ]]; then
     output+=("pull request has kind/security but no \"Security notice\" message")
   fi
+
+  declare description identification mitigation severity
+  for line in "${security_notice[@]:-}"; do
+    if [[ "${line}" =~ ^"####" ]]; then
+      if [[ "${description:-}" == "enter" ]]; then description=""; fi
+      if [[ "${identification:-}" == "enter" ]]; then identification=""; fi
+      if [[ "${mitigation:-}" == "enter" ]]; then mitigation=""; fi
+      if [[ "${severity:-}" == "enter" ]]; then severity=""; fi
+    fi
+
+    if [[ "${line}" =~ ^"#### Description"$ ]]; then
+      description="enter"
+    elif [[ "${line}" =~ ^"#### How to identify the vulnerability"$ ]]; then
+      identification="enter"
+    elif [[ "${line}" =~ ^"#### How to mitigate the vulnerability"$ ]]; then
+      mitigation="enter"
+    elif [[ "${line}" =~ ^"#### Severity"$ ]]; then
+      severity="enter"
+    elif [[ -n "${line}" ]] && ! [[ "${line}" =~ ^"_" ]]; then
+      if [[ "${description:-}" == "enter" ]]; then description="found"; fi
+      if [[ "${identification:-}" == "enter" ]]; then identification="found"; fi
+      if [[ "${mitigation:-}" == "enter" ]]; then mitigation="found"; fi
+      if [[ "${severity:-}" == "enter" ]]; then severity="found"; fi
+    fi
+  done
+
+  [[ "${description:-}" == "found" ]] ||
+    output+=("pull request has kind/security but no \"Security notice\" description")
+  [[ "${identification:-}" == "found" ]] ||
+    output+=("pull request has kind/security but no \"Security notice\" identification")
+  [[ "${mitigation:-}" == "found" ]] ||
+    output+=("pull request has kind/security but no \"Security notice\" mitigation")
+  [[ "${severity:-}" == "found" ]] ||
+    output+=("pull request has kind/security but no \"Security notice\" severity")
 fi
 
 # Find kind/adr
 for line in "${input[@]}"; do
-  if [[ "${line}" =~ ^[[:space:]]*-[[:space:]]+\[x\][[:space:]]*+\[kind/adr\]\(\) ]]; then
+  if [[ "${line}" =~ ^[[:space:]]*-[[:space:]]+\[[xX]\][[:space:]]*+\[kind/adr\]\(\) ]]; then
     output+=("pull request has kind/adr but no link")
-  elif [[ "${line}" =~ ^[[:space:]]*-[[:space:]]+\[x\][[:space:]]*+\[kind/adr\] ]] && ! [[ "${line}" =~ ^[[:space:]]*-[[:space:]]+\[x\][[:space:]]*+\[kind/adr\]\(https://elastisys.io/welkin/adr/ ]]; then
+  elif [[ "${line}" =~ ^[[:space:]]*-[[:space:]]+\[[xX]\][[:space:]]*+\[kind/adr\] ]] && ! [[ "${line}" =~ ^[[:space:]]*-[[:space:]]+\[[xX]\][[:space:]]*+\[kind/adr\]\(https://elastisys.io/welkin/adr/ ]]; then
     output+=("pull request has kind/adr with invalid link")
   fi
 done

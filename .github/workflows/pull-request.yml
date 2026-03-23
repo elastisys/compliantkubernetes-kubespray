@@ -13,10 +13,17 @@ on:
 
 jobs:
   pull-request:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |-
+            scripts/validate-pull-request.sh
+
       - name: Fetch pull request
         run: jq -r ".pull_request.body" "${{ github.event_path }}" > /tmp/pull-request-body.md
+
       - name: Validate pull request
         run: ./scripts/validate-pull-request.sh /tmp/pull-request-body.md

@@ -13,12 +13,17 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout repository
+        uses: actions/checkout@v6
         with:
           submodules: true
-      - uses: actions/setup-python@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.13"
-      - uses: pre-commit/action@v3.0.1
+          python-version: "3.14"
+
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.1
         env:
           SKIP: no-commit-to-branch
