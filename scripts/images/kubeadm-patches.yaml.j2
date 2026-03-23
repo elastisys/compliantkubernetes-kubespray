@@ -1,0 +1,24 @@
+kubeadm_patches:
+  - target: kube-apiserver
+    type: strategic
+    patch:
+      spec:
+        containers:
+        - name: kube-apiserver
+          image: {{ kube_apiserver_image }}
+
+  - target: kube-controller-manager
+    type: strategic
+    patch:
+      spec:
+        containers:
+        - name: kube-controller-manager
+          image: {{ kube_controller_manager_image }}
+
+  - target: kube-scheduler
+    type: strategic
+    patch:
+      spec:
+        containers:
+        - name: kube-scheduler
+          image: {{ kube_scheduler_image }}

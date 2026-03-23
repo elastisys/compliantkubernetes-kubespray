@@ -45,6 +45,10 @@ ansible-playbook -i "${config[inventory_file]}" ../playbooks/kubeconfig.yml -b "
 log_info "Adding cluster-admin ClusterRoleBinding"
 ansible-playbook -i "${config[inventory_file]}" ../playbooks/cluster_admin_rbac.yml -b "${@}"
 
+log_info "Patch the kube-proxy Daemonset with the image in the config path"
+
+"${here}/patch-kube-proxy-image.bash"
+
 log_info "Master cis benchmark patching"
 ansible-playbook -i "${config[inventory_file]}" ../playbooks/master_cis_benchmark_patch.yml -b "${@}"
 log_info "Worker cis benchmark patching"

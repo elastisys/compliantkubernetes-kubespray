@@ -90,3 +90,17 @@ repos:
         pass_filenames: false
         require_serial: true
         entry: sbom/diff.sh
+
+  - repo: local
+    hooks:
+      - id: pin-image-digests
+        name: check if image digest pinning is needed
+        files: ^(kubespray|scripts/images/)
+        types: []
+        types_or: [file, directory]
+        language: script
+        pass_filenames: false
+        require_serial: true
+        entry: scripts/images/pin-digests.bash
+        args:
+          - check
