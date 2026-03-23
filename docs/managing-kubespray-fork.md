@@ -134,12 +134,27 @@ cd kubespray
 git switch "release-<X.Y.Z>-ck8s"
 cd ..
 git add kubespray
-git commit -m "Upgrade kubespray fork ..."
-git push
-# open pull request towards main branch of compliantkubernetes-kubespray
 ```
 
-### Step 7 (Only do this when creating a release for compliantkubernetes-kubespray)
+### Step 7
+
+Pin all the container images and push the changes to the staging branch:
+
+```sh
+./scripts/images/pin-digests.bash
+git add -p
+```
+
+### Step 8
+
+Commit, push and open pull request towards main branch of compliantkubernetes-kubespray.
+
+```sh
+git commit -m "Upgrade kubespray fork ..."
+git push
+```
+
+### Step 9 (Only do this when creating a release for compliantkubernetes-kubespray)
 
 Tag the latest commit in the fork release branch. `patch-number` starts at 1 and increments by one for every new `compliantkubernetes-kubespray` release.
 
