@@ -272,46 +272,6 @@ audit_policy_custom_rules: |-
         resources: ["constraintpodstatuses"]
       - group: constraints.gatekeeper.sh
 
-  ## Ingress-nginx ##
-
-  # Don't log requests to the leader configmap
-  - level: None
-    users:
-      - system:serviceaccount:ingress-nginx:ingress-nginx
-    namespaces: ["ingress-nginx"]
-    resources:
-      - group: "" # core
-        resources: ["configmaps"]
-
-  # Don't log get nodes requests
-  - level: None
-    verbs: ["get"]
-    users:
-      - system:serviceaccount:ingress-nginx:ingress-nginx
-    resources:
-      - group: "" # core
-        resources: ["nodes"]
-
-  # Don't log list controller pods requests
-  - level: None
-    verbs: ["list"]
-    namespaces: ["ingress-nginx"]
-    users:
-      - system:serviceaccount:ingress-nginx:ingress-nginx
-    resources:
-      - group: "" # core
-        resources: ["pods"]
-
-  - level: None
-    verbs: ["watch"]
-    users:
-      - system:serviceaccount:ingress-nginx:ingress-nginx
-    resources:
-      - group: "networking.k8s.io"
-        resources: ["ingresses", "ingressclasses"]
-      - group: "" # core
-        resources: ["endpoints", "secrets", "configmaps", "services"]
-
   ## Nodes ##
 
   # Don't log node status patch request
