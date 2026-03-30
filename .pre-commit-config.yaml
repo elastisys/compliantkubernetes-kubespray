@@ -85,7 +85,9 @@ repos:
     hooks:
       - id: sbom-diff
         name: check SBOM drift
-        files: ^(kubespray/|sbom/)
+        files: ^(kubespray|sbom/)
+        types: []
+        types_or: [file, directory]
         language: script
         pass_filenames: false
         require_serial: true
