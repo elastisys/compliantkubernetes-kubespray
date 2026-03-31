@@ -72,7 +72,7 @@ Running the script above will:
 Generate a CycloneDX SBOM for the staged release:
 
 ```sh
-./sbom/generate.sh X.Y.Z --require-evaluation
+./sbom/generate.sh X.Y.Z
 ```
 
 Running the script above will:
