@@ -13,5 +13,5 @@ here="$(dirname "$(readlink -f "$0")")"
 # shellcheck source=bin/common.bash
 source "${here}/common.bash"
 
-kube_proxy_image="$(yq "${config_path}/ck8s-kube-proxy-image")"
+kube_proxy_image="$(cat "${config_path}/ck8s-kube-proxy-image")"
 ops_kubectl "${prefix}" -n kube-system set image daemonset/kube-proxy kube-proxy="${kube_proxy_image}"
