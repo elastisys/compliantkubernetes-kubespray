@@ -22,3 +22,11 @@ kubeadm_patches:
         containers:
         - name: kube-scheduler
           image: registry.k8s.io/kube-scheduler:v1.34.3@sha256:f9a9bc7948fd804ef02255fe82ac2e85d2a66534bae2fe1348c14849260a1fe2
+
+  - target: etcd
+    type: strategic
+    patch:
+      spec:
+        containers:
+        - name: etcd
+          image: quay.io/coreos/etcd:v3.5.26@sha256:d8ecd10e097a1f34724290d851b8c8d3be1a5e68fefbf0e3ac7b395f80c64f86

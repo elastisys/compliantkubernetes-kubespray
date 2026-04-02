@@ -3,7 +3,6 @@ calico_cni_image
 calico_policy_image
 calico_node_image
 calico_typha_image
-etcd_image
 coredns_image
 dnsautoscaler_image
 external_openstack_cloud_controller_image

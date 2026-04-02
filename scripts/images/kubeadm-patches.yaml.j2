@@ -22,3 +22,11 @@ kubeadm_patches:
         containers:
         - name: kube-scheduler
           image: {{ kube_scheduler_image }}
+
+  - target: etcd
+    type: strategic
+    patch:
+      spec:
+        containers:
+        - name: etcd
+          image: {{ etcd_image }}

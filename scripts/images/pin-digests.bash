@@ -176,6 +176,8 @@ _config_image_tags() {
 }
 
 _config_kubeadm_patches() {
+  local etcd_image
+  etcd_image="$(key="etcd_image" yq --exit-status '.[strenv(key)]' "${images_path_kubeadm}")"
   local kube_apiserver_image
   kube_apiserver_image="$(key="kube_apiserver_image" yq --exit-status '.[strenv(key)]' "${images_path_kubeadm}")"
   local kube_controller_manager_image
@@ -183,6 +185,8 @@ _config_kubeadm_patches() {
   local kube_scheduler_image
   kube_scheduler_image="$(key="kube_scheduler_image" yq --exit-status '.[strenv(key)]' "${images_path_kubeadm}")"
 
+  local etcd_digest
+  etcd_digest="$(_digest_get "${etcd_image}")"
   local kube_apiserver_digest
   kube_apiserver_digest="$(_digest_get "${kube_apiserver_image}")"
   local kube_controller_manager_digest
@@ -191,6 +195,7 @@ _config_kubeadm_patches() {
   kube_scheduler_digest="$(_digest_get "${kube_scheduler_image}")"
 
   _render_template "${kubeadm_patches_template_path}" "${config_kubeadm_patches_path}" \
+    -e "etcd_image=${etcd_image}@${etcd_digest}" \
     -e "kube_apiserver_image=${kube_apiserver_image}@${kube_apiserver_digest}" \
     -e "kube_controller_manager_image=${kube_controller_manager_image}@${kube_controller_manager_digest}" \
     -e "kube_scheduler_image=${kube_scheduler_image}@${kube_scheduler_digest}"
