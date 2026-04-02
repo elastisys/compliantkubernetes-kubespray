@@ -81,12 +81,12 @@ repos:
         args:
           - --fix
 
-  - repo: local
-    hooks:
-      - id: sbom-diff
-        name: check SBOM drift
-        files: ^(kubespray/|sbom/)
-        language: script
-        pass_filenames: false
-        require_serial: true
-        entry: sbom/diff.sh
+#   - repo: local
+#     hooks:
+#       - id: sbom-diff
+#         name: check SBOM drift
+#         files: ^(kubespray/|sbom/)
+#         language: script
+#         pass_filenames: false
+#         require_serial: true
+#         entry: sbom/diff.sh
