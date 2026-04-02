@@ -2,3 +2,5 @@ ck8sKubesprayVersion: run-init-to-set
 control_plane_label: node-role.kubernetes.io/control-plane
 group_label_primary: elastisys.io/node-type
 group_label_secondary: elastisys.io/ams-cluster-name
+kubeadm_ignore_preflight_errors:
+  - "CreateJob"

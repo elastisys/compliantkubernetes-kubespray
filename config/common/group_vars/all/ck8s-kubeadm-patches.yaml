@@ -1,0 +1,32 @@
+kubeadm_patches:
+  - target: kube-apiserver
+    type: strategic
+    patch:
+      spec:
+        containers:
+        - name: kube-apiserver
+          image: registry.k8s.io/kube-apiserver:v1.34.3@sha256:5af1030676ceca025742ef5e73a504d11b59be0e5551cdb8c9cf0d3c1231b460
+
+  - target: kube-controller-manager
+    type: strategic
+    patch:
+      spec:
+        containers:
+        - name: kube-controller-manager
+          image: registry.k8s.io/kube-controller-manager:v1.34.3@sha256:716a210d31ee5e27053ea0e1a3a3deb4910791a85ba4b1120410b5a4cbcf1954
+
+  - target: kube-scheduler
+    type: strategic
+    patch:
+      spec:
+        containers:
+        - name: kube-scheduler
+          image: registry.k8s.io/kube-scheduler:v1.34.3@sha256:f9a9bc7948fd804ef02255fe82ac2e85d2a66534bae2fe1348c14849260a1fe2
+
+  - target: etcd
+    type: strategic
+    patch:
+      spec:
+        containers:
+        - name: etcd
+          image: quay.io/coreos/etcd:v3.5.26@sha256:d8ecd10e097a1f34724290d851b8c8d3be1a5e68fefbf0e3ac7b395f80c64f86
