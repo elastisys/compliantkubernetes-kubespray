@@ -1,4 +1,0 @@
-kube_apiserver_image: registry.k8s.io/kube-apiserver:v1.34.3
-kube_controller_manager_image: registry.k8s.io/kube-controller-manager:v1.34.3
-kube_proxy_image: registry.k8s.io/kube-proxy:v1.34.3
-kube_scheduler_image: registry.k8s.io/kube-scheduler:v1.34.3
