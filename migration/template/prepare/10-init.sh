@@ -6,6 +6,7 @@ ROOT="$(readlink -f "${HERE}/../../../")"
 # shellcheck source=scripts/migration/lib.sh
 source "${ROOT}/scripts/migration/lib.sh"
 
+# When applicable, apply SC/MC changes before WC to catch errors early
 if [[ "${CK8S_CLUSTER}" =~ ^(sc|both)$ ]]; then
   yq_add sc all/ck8s-kubespray-general .ck8sKubesprayVersion "\"$(git_version)\""
 fi

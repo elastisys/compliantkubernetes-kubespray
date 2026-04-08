@@ -23,6 +23,7 @@ source "${ROOT}/scripts/migration/lib.sh"
 # Note: 00-template.sh will be skipped by the upgrade command
 log_info "no operation: this is a template"
 
+# When applicable, apply SC/MC changes before WC to catch errors early
 if [[ "${CK8S_CLUSTER}" =~ ^(sc|both)$ ]]; then
   log_info "operation on service cluster"
 fi
