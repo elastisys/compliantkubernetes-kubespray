@@ -55,7 +55,7 @@ CONFIG="${REPO_ROOT}/sbom/sbom.config.yaml"
 
 # Use container wrapper for consistent docker/podman behavior
 WRAPPER="${REPO_ROOT}/scripts/run-from-container.sh"
-IMAGE="ghcr.io/elastisys/sbom-generator:0.4"
+IMAGE="ghcr.io/elastisys/sbom-generator:0.5.0"
 
 if [[ ! -x "${WRAPPER}" ]]; then
   echo "Missing or non-executable ${WRAPPER}." >&2

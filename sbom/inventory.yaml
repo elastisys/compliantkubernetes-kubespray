@@ -24,6 +24,7 @@ all:
     clusterIP: "127.0.0.1"
     kube_webhook_token_auth_url: ""
     kube_vip_admin_conf: admin.conf
+    etcd_deployment_type: kubeadm
   children:
     etcd:
       hosts:
