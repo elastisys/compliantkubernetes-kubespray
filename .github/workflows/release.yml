@@ -47,6 +47,16 @@ jobs:
           git push --atomic origin "${{ github.ref_name}}" "${TAG_NAME}"
           echo "TAG_NAME=${TAG_NAME}" >> "${GITHUB_OUTPUT}"
 
+      - name: Create Signed Archive
+        id: create_archive
+        run: |
+          ARCHIVE_NAME="${GITHUB_REPOSITORY##*/}-${{ steps.create_tag.outputs.TAG_NAME }}"
+          git archive --format=zip --output="${ARCHIVE_NAME}.zip" HEAD
+          git archive --format=tar HEAD | gzip --best > "${ARCHIVE_NAME}.tar.gz"
+          gpg --batch --yes --output "${ARCHIVE_NAME}.zip.asc" --armor --detach-sign "${ARCHIVE_NAME}.zip"
+          gpg --batch --yes --output "${ARCHIVE_NAME}.tar.gz.asc" --armor --detach-sign "${ARCHIVE_NAME}.tar.gz"
+          echo "ARCHIVE_NAME=${ARCHIVE_NAME}" >> "${GITHUB_OUTPUT}"
+
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
@@ -55,3 +65,7 @@ jobs:
             See [CHANGELOG](https://github.com/elastisys/compliantkubernetes-kubespray/blob/${{ github.ref_name }}/changelog/${{ steps.get_series.outputs.SERIES }}.md) for details.
           files: |
             public.signing.key
+            ${{ steps.create_archive.outputs.ARCHIVE_NAME }}.zip
+            ${{ steps.create_archive.outputs.ARCHIVE_NAME }}.zip.asc
+            ${{ steps.create_archive.outputs.ARCHIVE_NAME }}.tar.gz
+            ${{ steps.create_archive.outputs.ARCHIVE_NAME }}.tar.gz.asc
