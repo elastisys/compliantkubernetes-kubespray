@@ -23,6 +23,8 @@ WC_CONFIG_FILES=(
   "wc-config/group_vars/k8s_cluster/ck8s-k8s-cluster.yaml"
 )
 
+WELKIN_VERSION_FILE="${ROOT}/version.json"
+
 # --- logging functions ---
 
 log_info_no_newline() {
@@ -54,10 +56,20 @@ log_fatal() {
   exit 1
 }
 
-# --- git version
+# --- repo version
 
-git_version() {
-  git -C "${ROOT}" describe --exact-match --tags 2>/dev/null || git -C "${ROOT}" rev-parse HEAD
+get_repo_version() {
+  if [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == "true" ]]; then
+    git -C "${ROOT}" describe --exact-match --tags 2>/dev/null || git -C "${ROOT}" rev-parse HEAD
+  else
+    local release_tag
+    release_tag=$(jq -r '.version' "${WELKIN_VERSION_FILE}")
+    if [[ -z "${release_tag}" ]]; then
+      jq -r '.commit' "${WELKIN_VERSION_FILE}"
+    else
+      echo "${release_tag}"
+    fi
+  fi
 }
 
 # --- config functions ---
@@ -202,7 +214,7 @@ check_version() {
   fi
 
   local repo_version
-  repo_version="$(git_version)"
+  repo_version="$(get_repo_version)"
   if [[ "${repo_version%.*}" == "${CK8S_TARGET_VERSION}" ]]; then
     log_info "valid repository version \"${repo_version}\""
   elif [[ "${repo_version}" == "${VERSION["${1}-config"]}" ]]; then
