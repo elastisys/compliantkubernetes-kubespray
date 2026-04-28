@@ -1,0 +1,5 @@
+{
+  "commit": "$Format:%H$",
+  "version": "$Format:%(describe:tags)$",
+  "date": "$Format:%ci$"
+}
