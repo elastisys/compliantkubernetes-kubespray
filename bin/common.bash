@@ -149,7 +149,7 @@ check_tools() {
 
 # Retrieve repo version from git or version file
 get_repo_version() {
-  if [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == "true" ]]; then
+  if [[ $(git -C "${root_path}" rev-parse --is-inside-work-tree 2>/dev/null) == "true" ]]; then
     git -C "${root_path}" describe --exact-match --tags 2>/dev/null || git -C "${root_path}" rev-parse HEAD
   else
     local release_tag

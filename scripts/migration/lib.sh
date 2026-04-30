@@ -59,7 +59,7 @@ log_fatal() {
 # --- repo version
 
 get_repo_version() {
-  if [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == "true" ]]; then
+  if [[ $(git -C "${ROOT}" rev-parse --is-inside-work-tree 2>/dev/null) == "true" ]]; then
     git -C "${ROOT}" describe --exact-match --tags 2>/dev/null || git -C "${ROOT}" rev-parse HEAD
   else
     local release_tag
