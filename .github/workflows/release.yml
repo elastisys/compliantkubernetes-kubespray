@@ -18,6 +18,7 @@ jobs:
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.PRIVATE_SIGNING_AUTH_KEY }}
+          submodules: recursive
 
       - name: Import GPG key
         env:
@@ -51,8 +52,40 @@ jobs:
         id: create_archive
         run: |
           ARCHIVE_NAME="${GITHUB_REPOSITORY##*/}-${{ steps.create_tag.outputs.TAG_NAME }}"
-          git archive --format=zip --output="${ARCHIVE_NAME}.zip" HEAD
-          git archive --format=tar HEAD | gzip --best > "${ARCHIVE_NAME}.tar.gz"
+          TEMP_DIR=$(mktemp -d)
+          # export variables to be able to access them within `git submodule foreach`
+          export ARCHIVE_NAME
+          export TEMP_DIR
+
+          # zip archive
+          # -----------
+          # since zip does not support concatenating multiple zips, we use git archive and pipe it to tar to extract
+          # the main repo and its submodules to a temporary directory, while respecting .gitattributes and keeping
+          # the same folder structure
+          git archive --format=tar HEAD | tar -x -C "${TEMP_DIR}"
+          git submodule foreach --recursive '
+              # `displaypath` is a `submodule foreach` command for the relative path from the CWD to the root directory
+              mkdir -p "${TEMP_DIR}/${displaypath}"
+              git archive --format=tar HEAD | tar -x -C "${TEMP_DIR}/${displaypath}"
+          '
+          pushd "${TEMP_DIR}"
+          # zip main repo and any submodules into one
+          zip -r "${GITHUB_WORKSPACE}/${ARCHIVE_NAME}.zip" .
+          popd
+          rm -rf "${TEMP_DIR}"
+
+          # tar archive
+          # -----------
+          # create tar of the main repo which will not include any submodules
+          git archive --format=tar --output="${GITHUB_WORKSPACE}/${ARCHIVE_NAME}.tar" HEAD
+          git submodule foreach --recursive '
+              # create tar of submodule with prefix of the submodule name to preserve folder structure
+              git archive --format=tar --prefix="${displaypath}/" --output="${displaypath}.tar" HEAD
+              # merge submodule tar with the main repo tar
+              tar --concatenate --file="${GITHUB_WORKSPACE}/${ARCHIVE_NAME}.tar" "${displaypath}.tar"
+              rm "${displaypath}.tar"
+          '
+          gzip --best --verbose "${GITHUB_WORKSPACE}/${ARCHIVE_NAME}.tar"
           gpg --batch --yes --output "${ARCHIVE_NAME}.zip.asc" --armor --detach-sign "${ARCHIVE_NAME}.zip"
           gpg --batch --yes --output "${ARCHIVE_NAME}.tar.gz.asc" --armor --detach-sign "${ARCHIVE_NAME}.tar.gz"
           echo "ARCHIVE_NAME=${ARCHIVE_NAME}" >> "${GITHUB_OUTPUT}"
