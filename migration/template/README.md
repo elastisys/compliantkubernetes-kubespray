@@ -20,6 +20,8 @@
 
 1. Pull the latest changes, switch to the correct branch and update Kubespray submodule:
 
+    > If you are upgrading from a zip you can skip this step
+
     ```bash
     git pull
     git switch -d ${full_version}

@@ -2,7 +2,7 @@ blank_issues_enabled: false
 contact_links:
   - name: Create Release
     about: Please create the release issue in the internal Issue Tracker repository. - Only accessible by maintainers.
-    url: https://github.com/elastisys/ck8s-issue-tracker/issues/new?template=release-kubespray.md
+    url: https://github.com/elastisys/ck8s-issue-tracker/issues/new?template=release.yml
   - name: Create Patch
     about: Please create the patch issue in the internal Issue Tracker repository. - Only accessible by maintainers.
-    url: https://github.com/elastisys/ck8s-issue-tracker/issues/new?template=patch-kubespray.md
+    url: https://github.com/elastisys/ck8s-issue-tracker/issues/new?template=patch.yml

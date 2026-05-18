@@ -35,6 +35,8 @@ kubespray_path="${root_path}/kubespray"
 config_path="${CK8S_CONFIG_PATH}/${prefix}-config"
 sops_config="${CK8S_CONFIG_PATH}/.sops.yaml"
 
+welkin_version_file="${root_path}/version.json"
+
 # Set the path to search for dynamic inventories
 export TERRAFORM_STATE_ROOT="${config_path}"
 
@@ -145,11 +147,19 @@ check_tools() {
   fi
 }
 
-# Retrieve version from git
+# Retrieve repo version from git or version file
 get_repo_version() {
-  pushd "${root_path}" >/dev/null || exit 1
-  git describe --exact-match --tags 2>/dev/null || git rev-parse HEAD
-  popd >/dev/null || exit 1
+  if [[ $(git -C "${root_path}" rev-parse --is-inside-work-tree 2>/dev/null) == "true" ]]; then
+    git -C "${root_path}" describe --exact-match --tags 2>/dev/null || git -C "${root_path}" rev-parse HEAD
+  else
+    local release_tag
+    release_tag=$(jq -r '.version' "${welkin_version_file}")
+    if [[ -z "${release_tag}" ]]; then
+      jq -r '.commit' "${welkin_version_file}"
+    else
+      echo "${release_tag}"
+    fi
+  fi
 }
 
 validate_sops_config() {

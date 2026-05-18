@@ -1,0 +1,4 @@
+version.json export-subst
+
+.github/ export-ignore
+release/ export-ignore
