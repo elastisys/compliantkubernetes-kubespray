@@ -1,1 +1,1 @@
-registry.k8s.io/kube-proxy:v1.34.3@sha256:7298ab89a103523d02ff4f49bedf9359710af61df92efdc07bac873064f03ed6
+registry.k8s.io/kube-proxy:v1.35.4@sha256:c5daa23c72474e5e4062c320177d3b485fd42e7010f052bc80d657c4c00a0672
