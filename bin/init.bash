@@ -61,6 +61,8 @@ cp -r "${config_defaults_path}/common/group_vars" "${config_path}/"
 
 cp -r --dereference "${config_defaults_path}/${flavor}/group_vars" "${config_path}/"
 
+cp "${config_defaults_path}/ck8s-proxy-image" "${config_path}/"
+
 # Set ck8sKubesprayVersion to be the current repo version
 CK8S_KUBESPRAY_VERSION=$(get_repo_version)
 export CK8S_KUBESPRAY_VERSION
