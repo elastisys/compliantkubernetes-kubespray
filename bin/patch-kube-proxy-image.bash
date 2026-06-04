@@ -14,4 +14,11 @@ here="$(dirname "$(readlink -f "$0")")"
 source "${here}/common.bash"
 
 kube_proxy_image="$(cat "${config_path}/ck8s-kube-proxy-image")"
-ops_kubectl "${prefix}" -n kube-system set image daemonset/kube-proxy kube-proxy="${kube_proxy_image}"
+
+log_info "Pinning kube-proxy image: ${kube_proxy_image}"
+
+pushd "${here}/../playbooks"
+
+ansible-playbook -i "${config[inventory_file]}" patch_kubeproxy_image.yml -b --extra-vars "kube_proxy_image=${kube_proxy_image}" "$@"
+
+popd
