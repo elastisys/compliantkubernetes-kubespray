@@ -1,0 +1,8 @@
+- name: Install pre-requisite system packages
+  hosts: all
+  become: true
+  tasks:
+    - name: Ensure rsyslog are installed
+      ansible.builtin.package:
+        name: rsyslog
+        state: present
