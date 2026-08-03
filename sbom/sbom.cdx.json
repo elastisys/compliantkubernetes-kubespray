@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:8bb8ccdd-46bf-4576-8730-7dd95d6419f2",
+  "serialNumber": "urn:uuid:d0071c6a-fecb-4209-b4b5-a6bbd4671ea6",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-07-14T12:02:03Z",
+    "timestamp": "2026-08-03T08:47:46Z",
     "lifecycles": [
       {
         "phase": "build"
@@ -327,13 +327,13 @@
       }
     },
     {
-      "bom-ref": "pkg:github/elastisys/kubespray@6f29fb6993bf2faf227f53075a0b909d1133fa75",
+      "bom-ref": "pkg:github/elastisys/kubespray@d33c08f0a81c5d8742ddf0663afbd75a39f0e4c5",
       "type": "application",
       "supplier": {
         "name": "Kubespray"
       },
       "name": "Kubespray",
-      "version": "6f29fb6993bf2faf227f53075a0b909d1133fa75",
+      "version": "d33c08f0a81c5d8742ddf0663afbd75a39f0e4c5",
       "licenses": [
         {
           "license": {
@@ -341,7 +341,7 @@
           }
         }
       ],
-      "purl": "pkg:github/elastisys/kubespray@6f29fb6993bf2faf227f53075a0b909d1133fa75"
+      "purl": "pkg:github/elastisys/kubespray@d33c08f0a81c5d8742ddf0663afbd75a39f0e4c5"
     },
     {
       "bom-ref": "pkg:oci/amazon/aws-ebs-csi-driver@v0.5.0?repository_url=docker.io",
@@ -356,7 +356,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-nodeservice.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2"
           }
         ]
       }
@@ -374,7 +374,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-nodeservice.yml.j2"
           }
         ]
       }
@@ -428,6 +428,24 @@
       "evidence": {
         "occurrences": [
           {
+            "location": "roles/network_plugin/calico/templates/calico-node.yml.j2"
+          }
+        ]
+      }
+    },
+    {
+      "bom-ref": "pkg:oci/calico/cni@v3.31.5?repository_url=quay.io",
+      "type": "container",
+      "supplier": {
+        "name": "calico"
+      },
+      "name": "quay.io/calico/cni",
+      "version": "v3.31.5",
+      "cpe": "cpe:2.3:a:calico:cni:3.31.5:*:*:*:*:*:*:*",
+      "purl": "pkg:oci/calico/cni@v3.31.5?repository_url=quay.io",
+      "evidence": {
+        "occurrences": [
+          {
             "location": "roles/kubespray_defaults/defaults/main/download.yml"
           }
         ]
@@ -447,42 +465,6 @@
         "occurrences": [
           {
             "location": "roles/network_plugin/calico/templates/calico-node.yml.j2"
-          }
-        ]
-      }
-    },
-    {
-      "bom-ref": "pkg:oci/calico/cni@v3.31.5?repository_url=quay.io",
-      "type": "container",
-      "supplier": {
-        "name": "calico"
-      },
-      "name": "quay.io/calico/cni",
-      "version": "v3.31.5",
-      "cpe": "cpe:2.3:a:calico:cni:3.31.5:*:*:*:*:*:*:*",
-      "purl": "pkg:oci/calico/cni@v3.31.5?repository_url=quay.io",
-      "evidence": {
-        "occurrences": [
-          {
-            "location": "roles/network_plugin/calico/templates/calico-node.yml.j2"
-          }
-        ]
-      }
-    },
-    {
-      "bom-ref": "pkg:oci/calico/kube-controllers@v3.31.5?repository_url=quay.io",
-      "type": "container",
-      "supplier": {
-        "name": "calico"
-      },
-      "name": "quay.io/calico/kube-controllers",
-      "version": "v3.31.5",
-      "cpe": "cpe:2.3:a:calico:kube-controllers:3.31.5:*:*:*:*:*:*:*",
-      "purl": "pkg:oci/calico/kube-controllers@v3.31.5?repository_url=quay.io",
-      "evidence": {
-        "occurrences": [
-          {
-            "location": "roles/kubespray_defaults/defaults/main/download.yml"
           }
         ]
       }
@@ -506,19 +488,19 @@
       }
     },
     {
-      "bom-ref": "pkg:oci/calico/node@v3.31.5?repository_url=quay.io",
+      "bom-ref": "pkg:oci/calico/kube-controllers@v3.31.5?repository_url=quay.io",
       "type": "container",
       "supplier": {
         "name": "calico"
       },
-      "name": "quay.io/calico/node",
+      "name": "quay.io/calico/kube-controllers",
       "version": "v3.31.5",
-      "cpe": "cpe:2.3:a:calico:node:3.31.5:*:*:*:*:*:*:*",
-      "purl": "pkg:oci/calico/node@v3.31.5?repository_url=quay.io",
+      "cpe": "cpe:2.3:a:calico:kube-controllers:3.31.5:*:*:*:*:*:*:*",
+      "purl": "pkg:oci/calico/kube-controllers@v3.31.5?repository_url=quay.io",
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/network_plugin/calico/templates/calico-node.yml.j2"
+            "location": "roles/kubespray_defaults/defaults/main/download.yml"
           }
         ]
       }
@@ -537,6 +519,24 @@
         "occurrences": [
           {
             "location": "roles/kubespray_defaults/defaults/main/download.yml"
+          }
+        ]
+      }
+    },
+    {
+      "bom-ref": "pkg:oci/calico/node@v3.31.5?repository_url=quay.io",
+      "type": "container",
+      "supplier": {
+        "name": "calico"
+      },
+      "name": "quay.io/calico/node",
+      "version": "v3.31.5",
+      "cpe": "cpe:2.3:a:calico:node:3.31.5:*:*:*:*:*:*:*",
+      "purl": "pkg:oci/calico/node@v3.31.5?repository_url=quay.io",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "roles/network_plugin/calico/templates/calico-node.yml.j2"
           }
         ]
       }
@@ -716,7 +716,25 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubespray_defaults/defaults/main/download.yml"
+            "location": "roles/kubernetes-apps/ansible/templates/coredns-deployment.yml.j2"
+          }
+        ]
+      }
+    },
+    {
+      "bom-ref": "pkg:oci/coredns/coredns@v1.12.4?repository_url=registry.k8s.io",
+      "type": "container",
+      "supplier": {
+        "name": "coredns"
+      },
+      "name": "registry.k8s.io/coredns/coredns",
+      "version": "v1.12.4",
+      "cpe": "cpe:2.3:a:kubernetes:coredns:1.12.4:*:*:*:*:*:*:*",
+      "purl": "pkg:oci/coredns/coredns@v1.12.4?repository_url=registry.k8s.io",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "roles/download/templates/kubeadm-images.yaml.j2"
           }
         ]
       }
@@ -752,25 +770,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/ansible/templates/coredns-deployment.yml.j2"
-          }
-        ]
-      }
-    },
-    {
-      "bom-ref": "pkg:oci/coredns/coredns@v1.12.4?repository_url=registry.k8s.io",
-      "type": "container",
-      "supplier": {
-        "name": "coredns"
-      },
-      "name": "registry.k8s.io/coredns/coredns",
-      "version": "v1.12.4",
-      "cpe": "cpe:2.3:a:kubernetes:coredns:1.12.4:*:*:*:*:*:*:*",
-      "purl": "pkg:oci/coredns/coredns@v1.12.4?repository_url=registry.k8s.io",
-      "evidence": {
-        "occurrences": [
-          {
-            "location": "roles/download/templates/kubeadm-images.yaml.j2"
+            "location": "roles/kubespray_defaults/defaults/main/download.yml"
           }
         ]
       }
@@ -1094,7 +1094,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta4.yaml.j2"
+            "location": "roles/download/templates/kubeadm-images.yaml.j2"
           }
         ]
       }
@@ -1112,7 +1112,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/download/templates/kubeadm-images.yaml.j2"
+            "location": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta4.yaml.j2"
           }
         ]
       }
@@ -1274,6 +1274,24 @@
       "evidence": {
         "occurrences": [
           {
+            "location": "roles/kubernetes-apps/node_feature_discovery/templates/nfd-worker.yaml.j2"
+          }
+        ]
+      }
+    },
+    {
+      "bom-ref": "pkg:oci/nfd/node-feature-discovery@v0.16.4?repository_url=registry.k8s.io",
+      "type": "container",
+      "supplier": {
+        "name": "nfd"
+      },
+      "name": "registry.k8s.io/nfd/node-feature-discovery",
+      "version": "v0.16.4",
+      "cpe": "cpe:2.3:a:kubernetes:node-feature-discovery:0.16.4:*:*:*:*:*:*:*",
+      "purl": "pkg:oci/nfd/node-feature-discovery@v0.16.4?repository_url=registry.k8s.io",
+      "evidence": {
+        "occurrences": [
+          {
             "location": "roles/kubernetes-apps/node_feature_discovery/templates/nfd-master.yaml.j2"
           }
         ]
@@ -1293,24 +1311,6 @@
         "occurrences": [
           {
             "location": "roles/kubernetes-apps/node_feature_discovery/templates/nfd-gc.yaml.j2"
-          }
-        ]
-      }
-    },
-    {
-      "bom-ref": "pkg:oci/nfd/node-feature-discovery@v0.16.4?repository_url=registry.k8s.io",
-      "type": "container",
-      "supplier": {
-        "name": "nfd"
-      },
-      "name": "registry.k8s.io/nfd/node-feature-discovery",
-      "version": "v0.16.4",
-      "cpe": "cpe:2.3:a:kubernetes:node-feature-discovery:0.16.4:*:*:*:*:*:*:*",
-      "purl": "pkg:oci/nfd/node-feature-discovery@v0.16.4?repository_url=registry.k8s.io",
-      "evidence": {
-        "occurrences": [
-          {
-            "location": "roles/kubernetes-apps/node_feature_discovery/templates/nfd-worker.yaml.j2"
           }
         ]
       }
@@ -1436,7 +1436,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-azuredisk-node.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-azuredisk-controller.yml.j2"
           }
         ]
       }
@@ -1454,7 +1454,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-azuredisk-controller.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/azuredisk/templates/azure-csi-azuredisk-node.yml.j2"
           }
         ]
       }
@@ -1508,7 +1508,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-nodeplugin.yml.j2"
           }
         ]
       }
@@ -1526,7 +1526,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-nodeplugin.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2"
           }
         ]
       }
@@ -1634,7 +1634,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2"
           }
         ]
       }
@@ -1652,25 +1652,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2"
-          }
-        ]
-      }
-    },
-    {
-      "bom-ref": "pkg:oci/sig-storage/csi-node-driver-registrar@v2.4.0?repository_url=registry.k8s.io",
-      "type": "container",
-      "supplier": {
-        "name": "sig-storage"
-      },
-      "name": "registry.k8s.io/sig-storage/csi-node-driver-registrar",
-      "version": "v2.4.0",
-      "cpe": "cpe:2.3:a:kubernetes:csi-node-driver-registrar:2.4.0:*:*:*:*:*:*:*",
-      "purl": "pkg:oci/sig-storage/csi-node-driver-registrar@v2.4.0?repository_url=registry.k8s.io",
-      "evidence": {
-        "occurrences": [
-          {
-            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-nodeservice.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2"
           }
         ]
       }
@@ -1689,6 +1671,24 @@
         "occurrences": [
           {
             "location": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-nodeplugin.yml.j2"
+          }
+        ]
+      }
+    },
+    {
+      "bom-ref": "pkg:oci/sig-storage/csi-node-driver-registrar@v2.4.0?repository_url=registry.k8s.io",
+      "type": "container",
+      "supplier": {
+        "name": "sig-storage"
+      },
+      "name": "registry.k8s.io/sig-storage/csi-node-driver-registrar",
+      "version": "v2.4.0",
+      "cpe": "cpe:2.3:a:kubernetes:csi-node-driver-registrar:2.4.0:*:*:*:*:*:*:*",
+      "purl": "pkg:oci/sig-storage/csi-node-driver-registrar@v2.4.0?repository_url=registry.k8s.io",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-nodeservice.yml.j2"
           }
         ]
       }
@@ -1742,7 +1742,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2"
           }
         ]
       }
@@ -1760,7 +1760,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2"
           }
         ]
       }
@@ -1850,7 +1850,25 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-nodeplugin.yml.j2"
+          }
+        ]
+      }
+    },
+    {
+      "bom-ref": "pkg:oci/sig-storage/livenessprobe@v2.11.0?repository_url=registry.k8s.io",
+      "type": "container",
+      "supplier": {
+        "name": "sig-storage"
+      },
+      "name": "registry.k8s.io/sig-storage/livenessprobe",
+      "version": "v2.11.0",
+      "cpe": "cpe:2.3:a:kubernetes:livenessprobe:2.11.0:*:*:*:*:*:*:*",
+      "purl": "pkg:oci/sig-storage/livenessprobe@v2.11.0?repository_url=registry.k8s.io",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2"
           }
         ]
       }
@@ -1886,25 +1904,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-nodeplugin.yml.j2"
-          }
-        ]
-      }
-    },
-    {
-      "bom-ref": "pkg:oci/sig-storage/livenessprobe@v2.11.0?repository_url=registry.k8s.io",
-      "type": "container",
-      "supplier": {
-        "name": "sig-storage"
-      },
-      "name": "registry.k8s.io/sig-storage/livenessprobe",
-      "version": "v2.11.0",
-      "cpe": "cpe:2.3:a:kubernetes:livenessprobe:2.11.0:*:*:*:*:*:*:*",
-      "purl": "pkg:oci/sig-storage/livenessprobe@v2.11.0?repository_url=registry.k8s.io",
-      "evidence": {
-        "occurrences": [
-          {
-            "location": "roles/kubernetes-apps/csi_driver/cinder/templates/cinder-csi-controllerplugin.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2"
           }
         ]
       }
