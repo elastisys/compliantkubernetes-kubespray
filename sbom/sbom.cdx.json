@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:d0071c6a-fecb-4209-b4b5-a6bbd4671ea6",
+  "serialNumber": "urn:uuid:0190c477-f7c3-4fd1-a1ed-ae94333b3380",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-08-03T08:47:46Z",
+    "timestamp": "2026-08-03T12:50:33Z",
     "lifecycles": [
       {
         "phase": "build"
@@ -327,13 +327,13 @@
       }
     },
     {
-      "bom-ref": "pkg:github/elastisys/kubespray@d33c08f0a81c5d8742ddf0663afbd75a39f0e4c5",
+      "bom-ref": "pkg:github/elastisys/kubespray@5a3992600705f1f9ee5633a7e24e508548ace164",
       "type": "application",
       "supplier": {
         "name": "Kubespray"
       },
       "name": "Kubespray",
-      "version": "d33c08f0a81c5d8742ddf0663afbd75a39f0e4c5",
+      "version": "5a3992600705f1f9ee5633a7e24e508548ace164",
       "licenses": [
         {
           "license": {
@@ -341,7 +341,7 @@
           }
         }
       ],
-      "purl": "pkg:github/elastisys/kubespray@d33c08f0a81c5d8742ddf0663afbd75a39f0e4c5"
+      "purl": "pkg:github/elastisys/kubespray@5a3992600705f1f9ee5633a7e24e508548ace164"
     },
     {
       "bom-ref": "pkg:oci/amazon/aws-ebs-csi-driver@v0.5.0?repository_url=docker.io",
@@ -356,7 +356,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-nodeservice.yml.j2"
           }
         ]
       }
@@ -374,7 +374,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-nodeservice.yml.j2"
+            "location": "roles/kubernetes-apps/csi_driver/aws_ebs/templates/aws-ebs-csi-controllerservice.yml.j2"
           }
         ]
       }
@@ -446,7 +446,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubespray_defaults/defaults/main/download.yml"
+            "location": "roles/network_plugin/calico/templates/calico-node.yml.j2"
           }
         ]
       }
@@ -464,7 +464,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/network_plugin/calico/templates/calico-node.yml.j2"
+            "location": "roles/kubespray_defaults/defaults/main/download.yml"
           }
         ]
       }
@@ -734,7 +734,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/download/templates/kubeadm-images.yaml.j2"
+            "location": "roles/kubespray_defaults/defaults/main/download.yml"
           }
         ]
       }
@@ -770,7 +770,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubespray_defaults/defaults/main/download.yml"
+            "location": "roles/download/templates/kubeadm-images.yaml.j2"
           }
         ]
       }
@@ -806,7 +806,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/download/templates/kubeadm-images.yaml.j2"
+            "location": "roles/kubespray_defaults/defaults/main/download.yml"
           }
         ]
       }
@@ -824,7 +824,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubespray_defaults/defaults/main/download.yml"
+            "location": "roles/download/templates/kubeadm-images.yaml.j2"
           }
         ]
       }
@@ -878,7 +878,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubespray_defaults/defaults/main/download.yml"
+            "location": "roles/kubernetes-apps/ansible/templates/nodelocaldns-daemonset.yml.j2"
           }
         ]
       }
@@ -914,7 +914,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes-apps/ansible/templates/nodelocaldns-daemonset.yml.j2"
+            "location": "roles/kubespray_defaults/defaults/main/download.yml"
           }
         ]
       }
@@ -1022,7 +1022,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta4.yaml.j2"
+            "location": "roles/download/templates/kubeadm-images.yaml.j2"
           }
         ]
       }
@@ -1040,7 +1040,7 @@
       "evidence": {
         "occurrences": [
           {
-            "location": "roles/download/templates/kubeadm-images.yaml.j2"
+            "location": "roles/kubernetes/control-plane/templates/kubeadm-config.v1beta4.yaml.j2"
           }
         ]
       }
