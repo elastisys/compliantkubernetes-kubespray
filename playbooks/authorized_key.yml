@@ -7,7 +7,7 @@
     ssh_known_hosts: "{{ groups['all'] }}"
   tasks:
   - name: For each host, scan for its ssh public key
-    shell: "ssh-keyscan -t rsa {{ hostvars[item].ansible_host }} 2>/dev/null"
+    shell: "ssh-keyscan {{ hostvars[item].ansible_host }} 2>/dev/null"
     with_items: "{{ ssh_known_hosts }}"
     register: ssh_known_host_results
     retries: 10
