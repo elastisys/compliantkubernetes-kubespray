@@ -63,6 +63,20 @@ These steps will cause disruptions in the environment.
     ./bin/ck8s-kubespray patch-kube-proxy-image wc
     ```
 
+1. <details>
+   <summary>Renew token (Upcloud only)</summary>
+
+    Check if the CSI-driver is using username and password or a token:
+
+    ```bash
+    kubectl get secret -n kube-system upcloud -o json | jq -r '.data | to_entries[] | "\(.key): \(.value | @base64d)"'
+    ```
+
+    If it's using a token, renew it following the [steps to renew token](https://github.com/elastisys/mse-internal-docs/tree/eliash/upcloud-tokens/docs/infra-providers/upcloud/API-tokens#renew-token-for-accounts-used-by-environments).
+    <!-- TODO replace with link to main when merged -->
+
+   </details>
+
 ## Postrequisite
 
 - [ ] Check the state of the environment, pods and nodes:
