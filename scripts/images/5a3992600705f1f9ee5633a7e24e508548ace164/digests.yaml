@@ -26,3 +26,4 @@ registry.k8s.io/kube-apiserver:v1.35.4: sha256:06b4bb208634a107ab9e6c50cdb9df178
 registry.k8s.io/kube-controller-manager:v1.35.4: sha256:7b036c805d57f203e9efaf43672cff6019b9083a9c0eb107ea8500eace29d8fd
 registry.k8s.io/kube-proxy:v1.35.4: sha256:c5daa23c72474e5e4062c320177d3b485fd42e7010f052bc80d657c4c00a0672
 registry.k8s.io/kube-scheduler:v1.35.4: sha256:9054fecb4fa04cc63aec47b0913c8deb3487d414190cd15211f864cfe0d0b4d6
+k8s.gcr.io/sig-storage/csi-snapshotter:v6.3.2: sha256:4c5a1b57e685b2631909b958487f65af7746361346fcd82a8635bea3ef14509d
