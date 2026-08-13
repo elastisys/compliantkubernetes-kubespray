@@ -1,0 +1,5 @@
+etcd_image: quay.io/coreos/etcd:v3.6.10
+kube_apiserver_image: registry.k8s.io/kube-apiserver:v1.35.4
+kube_controller_manager_image: registry.k8s.io/kube-controller-manager:v1.35.4
+kube_proxy_image: registry.k8s.io/kube-proxy:v1.35.4
+kube_scheduler_image: registry.k8s.io/kube-scheduler:v1.35.4
