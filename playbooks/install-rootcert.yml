@@ -1,0 +1,23 @@
+---
+- name: Install custom root CA certificate
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Copy root CA certificate to trust store
+      ansible.builtin.copy:
+        src: "{{ artifacts_dir }}/ca.crt"
+        dest: /usr/local/share/ca-certificates/custom-rootcert.crt
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Update ca-certificates
+      ansible.builtin.command:
+        cmd: update-ca-certificates
+
+    - name: Restart containerd
+      throttle: 1
+      ansible.builtin.systemd_service:
+        state: restarted
+        name: containerd
