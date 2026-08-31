@@ -1,0 +1,14 @@
+- hosts: all
+  tasks:
+  - name: Disable module
+    ansible.builtin.copy:
+      dest: "/etc/modprobe.d/disable-{{ item }}.conf"
+      content: |
+        install {{ item }} /bin/true
+    loop: "{{ disabled_kernel_modules }}"
+
+  - name: Remove module if currently loaded
+    community.general.modprobe:
+      name: "{{ item }}"
+      state: absent
+    loop: "{{ disabled_kernel_modules }}"
