@@ -48,6 +48,11 @@ all:
 
       annotateK8sNode: true
 
+      {% if ck8s_cilium.egressGateway is defined %}
+      egressGateway:
+        enabled: {{ ck8s_cilium.egressGateway.enabled | default(false) }}
+      {% endif %}
+
       {% else %}
       {}
       {% endif %}
