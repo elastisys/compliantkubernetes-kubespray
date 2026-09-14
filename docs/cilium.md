@@ -21,6 +21,10 @@ cilium_hubble_tls_generate: true
 
 # See https://github.com/kubernetes-sigs/kubespray/issues/12276
 kube_owner: root
+
+# Requirement for Egress Gateway
+cilium_kube_proxy_replacement: true
+cilium_enable_bpf_masquerade: true
 ```
 
 ## Configuring Cilium
