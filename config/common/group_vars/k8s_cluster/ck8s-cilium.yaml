@@ -54,3 +54,6 @@ ck8s_cilium:
 
   envoy:
     enabled: false
+
+  egressGateway:
+    enabled: true
