@@ -64,6 +64,16 @@ These steps can be performed without any disruption to the target cluster.
   export KUBECONFIG="${CK8S_CONFIG_PATH}/.state/kube_config_${TARGET_CLUSTER}.yaml"
   ```
 
+- Before any migration action, check every Application Developer `NetworkPolicy` while Calico is still active. This is a blocking preflight; resolve every finding before continuing. It assesses NetworkPolicies only in namespaces labelled `elastisys.io/owner=application-developer`, and reads the current DNS Service IP, Pod CIDR, and Service CIDR from the target cluster.
+
+  ```console
+  ./00-check-network-policies.sh
+  ```
+
+  For Safespring, the preflight automatically enables DirectRouting and discovers every LoadBalancer Service IP, namespace, and complete pod selector. This covers both ingress-nginx and Traefik without additional NetworkPolicy environment variables. The target Cilium Pod CIDR is fixed by this migration. Run this preflight during migration planning and send every finding to the affected customer application owner for remediation.
+
+  Exit `0` means no screened patterns were found; `1` means findings require review; `2` means the assessment failed. The script checks selector/IP peer presence within each rule, using exact CIDRs and expected `matchLabels`. It does not evaluate `matchExpressions`, CIDR exceptions, or combined access across rules/policies, and does not prove application connectivity. Review world-CIDR intent rather than removing legitimate external access merely to silence a finding.
+
 - This guide includes a complete Kubespray run for the target cluster. For OpenStack _or_ Upcloud clusters, credentials must be sourced:
 
   ```bash
