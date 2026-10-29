@@ -1,3 +1,4 @@
+kube_version: 1.35.10
 kubeadm_patches:
   - target: kube-apiserver
     type: strategic
@@ -5,7 +6,7 @@ kubeadm_patches:
       spec:
         containers:
         - name: kube-apiserver
-          image: registry.k8s.io/kube-apiserver:v1.35.4@sha256:06b4bb208634a107ab9e6c50cdb9df178d05166a700c0cc448d59522091074b5
+          image: registry.k8s.io/kube-apiserver:v1.35.10@sha256:4118da42e405208fd5df1e86796f353816de7c77f8530f64011361b8f9c77e07
 
   - target: kube-controller-manager
     type: strategic
@@ -13,7 +14,7 @@ kubeadm_patches:
       spec:
         containers:
         - name: kube-controller-manager
-          image: registry.k8s.io/kube-controller-manager:v1.35.4@sha256:7b036c805d57f203e9efaf43672cff6019b9083a9c0eb107ea8500eace29d8fd
+          image: registry.k8s.io/kube-controller-manager:v1.35.10@sha256:c18a4c9eafeb00c6febee8d714dce39a852a72d20fadbe0a13ad163e776bef85
 
   - target: kube-scheduler
     type: strategic
@@ -21,7 +22,7 @@ kubeadm_patches:
       spec:
         containers:
         - name: kube-scheduler
-          image: registry.k8s.io/kube-scheduler:v1.35.4@sha256:9054fecb4fa04cc63aec47b0913c8deb3487d414190cd15211f864cfe0d0b4d6
+          image: registry.k8s.io/kube-scheduler:v1.35.10@sha256:c2a47ed697e1ff8f2e01e1ed32f9cf9c5cf55aa1d66ed59dc0d38e7f941695c8
 
   - target: etcd
     type: strategic
@@ -29,4 +30,4 @@ kubeadm_patches:
       spec:
         containers:
         - name: etcd
-          image: quay.io/coreos/etcd:v3.6.10@sha256:6742378fabf521b47edd637914d508061528924d5915af0fd5d6379cfef89b7a
+          image: quay.io/coreos/etcd:v3.6.16@sha256:a9c7cc12156f4b26ca41f0b57ba5b76c45037ff6c1e47ea3d68cb7908d48a965
