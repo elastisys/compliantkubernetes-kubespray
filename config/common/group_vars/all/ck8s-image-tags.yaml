@@ -20,9 +20,9 @@ upcloud_csi_resizer_image_tag: v1.4.0@sha256:6dba65bd8c9a769f5a98d35126bc38f078b
 upcloud_csi_snapshotter_image_tag: v4.2.1@sha256:80301cc337baa21e8ebd102c2aac382cdad4ae1e3177e9f14638d6447e90100e
 snapshot_controller_image_tag: v7.0.2@sha256:cdf6c4dbe8b2920e635be57447a27e69254afc6c5af0a1b4455af00c860682b2
 pod_infra_image_tag: 3.10.1@sha256:278fb9dbcca9518083ad1e11276933a2e96f23de604a3a08cc3c80002767d24c
-csi_livenessprobe_image_tag: v2.11.0sha256:777b1161b2c012a86152893c7ac533e9cda10ce6717d413d2ea0e77b37bccd01
+csi_livenessprobe_image_tag: v2.11.0@sha256:777b1161b2c012a86152893c7ac533e9cda10ce6717d413d2ea0e77b37bccd01
 csi_node_driver_registrar_image_tag: v2.4.0@sha256:bb260f072d07b551766e3314b01aa75ed8f23cc25a37e7706a043e0b5ef666e2
-elastisys_image_repo: '{{ github_image_repo }}/elastisys'
+elastisys_image_repo: 'ghcr.io/elastisys'
 csi_attacher_image_repo: '{{ elastisys_image_repo }}/sig-storage/csi-attacher'
 csi_livenessprobe_image_repo: '{{ elastisys_image_repo }}/sig-storage/livenessprobe'
 csi_node_driver_registrar_image_repo: '{{ elastisys_image_repo }}/sig-storage/csi-node-driver-registrar'
