@@ -1,9 +1,9 @@
-docker.io/library/nginx:1.28.2-alpine: sha256:5b4900b042ccfa8b0a73df622c3a60f2322faeb2be800cbee5aa7b44d241649e
+docker.io/library/nginx:1.31.8-alpine: sha256:785835ea65db4bba6f021acc0f3be91b0fef76a53fe41f8588c6698d2aed0606
 quay.io/calico/cni:v3.31.5: sha256:6cf324cd595c661293872fa1144be38bfc94dcd4154c1f8e3cc0f548b715917e
 quay.io/calico/kube-controllers:v3.31.5: sha256:d285c3a7eea5226d3d862189565ef82fdb7961909f55c40a247e00be335fbc3c
 quay.io/calico/node:v3.31.5: sha256:63683e5285e73977594cc57ff09c59fbee9e357be68d3c52d627830eec181db4
 quay.io/calico/typha:v3.31.5: sha256:6695e8f842b3e9235cfaba8f9876f7435dcb6796ec7002488f673f21334af0cb
-registry.k8s.io/coredns/coredns:v1.12.4: sha256:986f04c2e15e147d00bdd51e8c51bcef3644b13ff806be7d2ff1b261d6dfbae1
+registry.k8s.io/coredns/coredns:v1.15.0: sha256:0a9d8c8ddf34347eb59aad9a8784f0710de88d6d112726d11d271f9bc6daca26
 registry.k8s.io/cpa/cluster-proportional-autoscaler:v1.8.8: sha256:69bf675e356770c651864305f2ce17ec25623ac0ff77a040f9396e72daba2d5f
 registry.k8s.io/provider-os/openstack-cloud-controller-manager:v1.35.0: sha256:f12e022d54753ac4023e212f3ac803ccebd84b3a9dc28e0cc961df9d9308645f
 registry.k8s.io/provider-os/cinder-csi-plugin:v1.30.0: sha256:5a993797393619cadbee2a320d7f647ff20887f506bef4c849b0d90e7de7c160
@@ -21,8 +21,8 @@ k8s.gcr.io/sig-storage/csi-snapshotter:v4.2.1: sha256:818f35653f2e214db81d655063
 registry.k8s.io/sig-storage/snapshot-controller:v7.0.2: sha256:a03550d7b25d0d24c6c313a27fcade0065f0cee159805ed0b0083700dcb52b76
 registry.k8s.io/pause:3.10.1: sha256:278fb9dbcca9518083ad1e11276933a2e96f23de604a3a08cc3c80002767d24c
 registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.4.0: sha256:fc39de92284cc45240417f48549ee1c98da7baef7d0290bc29b232756dfce7c0
-quay.io/coreos/etcd:v3.6.10: sha256:6742378fabf521b47edd637914d508061528924d5915af0fd5d6379cfef89b7a
-registry.k8s.io/kube-apiserver:v1.35.4: sha256:06b4bb208634a107ab9e6c50cdb9df178d05166a700c0cc448d59522091074b5
-registry.k8s.io/kube-controller-manager:v1.35.4: sha256:7b036c805d57f203e9efaf43672cff6019b9083a9c0eb107ea8500eace29d8fd
-registry.k8s.io/kube-proxy:v1.35.4: sha256:c5daa23c72474e5e4062c320177d3b485fd42e7010f052bc80d657c4c00a0672
-registry.k8s.io/kube-scheduler:v1.35.4: sha256:9054fecb4fa04cc63aec47b0913c8deb3487d414190cd15211f864cfe0d0b4d6
+quay.io/coreos/etcd:v3.6.16: sha256:6742378fabf521b47edd637914d508061528924d5915af0fd5d6379cfef89b7a
+registry.k8s.io/kube-apiserver:v1.35.10: sha256:4118da42e405208fd5df1e86796f353816de7c77f8530f64011361b8f9c77e07
+registry.k8s.io/kube-controller-manager:v1.35.10: sha256:c18a4c9eafeb00c6febee8d714dce39a852a72d20fadbe0a13ad163e776bef85
+registry.k8s.io/kube-proxy:v1.35.10: sha256:0d9ec673ca1138e23f96c7767c98f52021248c313cb422823d837e48f1af39b6
+registry.k8s.io/kube-scheduler:v1.35.10: sha256:c2a47ed697e1ff8f2e01e1ed32f9cf9c5cf55aa1d66ed59dc0d38e7f941695c8
