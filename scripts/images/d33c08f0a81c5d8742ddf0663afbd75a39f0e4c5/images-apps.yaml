@@ -1,7 +1,7 @@
 nginx_image: "docker.io/library/nginx:1.31.8-alpine"
 calico_cni_image: "quay.io/calico/cni:v3.31.5"
 calico_policy_image: "quay.io/calico/kube-controllers:v3.31.5"
-calico_node_image: "quay.io/calico/node:v3.31.5"
+calico_node_image: "ghcr.io/elastisys/calico-node:v3.31.5-wlkn1"
 calico_typha_image: "quay.io/calico/typha:v3.31.5"
 coredns_image: "registry.k8s.io/coredns/coredns:v1.15.0"
 dnsautoscaler_image: "registry.k8s.io/cpa/cluster-proportional-autoscaler:v1.8.8"
