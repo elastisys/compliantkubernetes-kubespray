@@ -1,4 +1,7 @@
-This `Dockerfile` takes one source image and replaces the trust bundle with one from trust-manager. The `fix.sh` script transforms the name of the image, replacing `registry.k8s.io` with `ghcr.io/elastisys` and pushes the fixed images there.
+# Trust bundle override
+
+This `Dockerfile` takes one source image and replaces the trust bundle with one from trust-manager.
+The `fix.sh` script transforms the name of the image, replacing `registry.k8s.io` with `ghcr.io/elastisys` and pushes the fixed images there.
 
 This was used to fix the following images:
 
