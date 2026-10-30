@@ -5,6 +5,7 @@ The `fix.sh` script transforms the name of the image, replacing `registry.k8s.io
 
 This was used to fix the following images:
 
+- `registry.k8s.io/provider-os/cinder-csi-plugin:v1.30.0`
 - `registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.5.0`
 - `registry.k8s.io/sig-storage/csi-attacher:v4.4.2`
 - `registry.k8s.io/sig-storage/csi-provisioner:v3.6.2`

@@ -6,7 +6,7 @@ calico_typha_image_tag: v3.31.5@sha256:6695e8f842b3e9235cfaba8f9876f7435dcb6796e
 coredns_image_tag: v1.15.0@sha256:0a9d8c8ddf34347eb59aad9a8784f0710de88d6d112726d11d271f9bc6daca26
 dnsautoscaler_image_tag: v1.8.8@sha256:69bf675e356770c651864305f2ce17ec25623ac0ff77a040f9396e72daba2d5f
 external_openstack_cloud_controller_image_tag: v1.35.0@sha256:f12e022d54753ac4023e212f3ac803ccebd84b3a9dc28e0cc961df9d9308645f
-cinder_csi_plugin_image_tag: v1.30.0@sha256:5a993797393619cadbee2a320d7f647ff20887f506bef4c849b0d90e7de7c160
+cinder_csi_plugin_image_tag: v1.30.0@sha256:68d90cf2e411de8cf5b2c0972a1c48f64cb00f798156d53dfa07ae83bc1df5e5
 cinder_csi_attacher_image_tag: v4.4.2@sha256:099c6822620d2388bbe0c4f948eecb118648a239ac130d78b5cb74773a99e48c
 cinder_csi_provisioner_image_tag: v3.6.2@sha256:9641e4e85711d62987aa6376358c9e5c1fed6e6433c73690ecc99f57417a0b99
 cinder_csi_resizer_image_tag: v1.9.2@sha256:3a48786b9e27e1ec2fd75885bc8fc74b2971d6835a8e1d6c26c455a9f53f0e44
@@ -23,6 +23,7 @@ pod_infra_image_tag: 3.10.1@sha256:278fb9dbcca9518083ad1e11276933a2e96f23de604a3
 csi_livenessprobe_image_tag: v2.11.0@sha256:777b1161b2c012a86152893c7ac533e9cda10ce6717d413d2ea0e77b37bccd01
 csi_node_driver_registrar_image_tag: v2.4.0@sha256:bb260f072d07b551766e3314b01aa75ed8f23cc25a37e7706a043e0b5ef666e2
 elastisys_image_repo: 'ghcr.io/elastisys'
+cinder_csi_plugin_image_repo: '{{ elastisys_image_repo }}/provider-os/cinder-csi-plugin'
 csi_attacher_image_repo: '{{ elastisys_image_repo }}/sig-storage/csi-attacher'
 csi_livenessprobe_image_repo: '{{ elastisys_image_repo }}/sig-storage/livenessprobe'
 csi_node_driver_registrar_image_repo: '{{ elastisys_image_repo }}/sig-storage/csi-node-driver-registrar'
