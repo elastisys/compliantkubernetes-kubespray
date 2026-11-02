@@ -85,9 +85,7 @@ discover_ingress_targets() {
           or (.metadata.namespace | type) != "string"
           or (.spec.selector | type) != "object"
           or (.spec.selector | length) == 0
-          or (.spec.selector | to_entries |
-            map((.key | type) == "string" and (.value | type) == "string") |
-            index(false) != null)
+          or (.spec.selector | any(.[]; type != "string"))
           or (.status | type) != "object"
           or (.status.loadBalancer | type) != "object"
           or (.status.loadBalancer.ingress | type) != "array"
@@ -153,7 +151,7 @@ validate_inputs() {
   if ! jq -en -e "${jq_args[@]}" '
     def ipv4:
       if test("\\A(0|[1-9][0-9]{0,2})(\\.(0|[1-9][0-9]{0,2})){3}\\z") then
-        split(".") | map(tonumber <= 255) | index(false) == null
+        split(".") | all(.[]; tonumber <= 255)
       else
         false
       end;
@@ -186,7 +184,7 @@ validate_inputs() {
         if ($parts | length) != 2 then
           false
         else
-          ($parts[0] | length <= 253 and (split(".") | map(dns_label) | index(false) == null))
+          ($parts[0] | length <= 253 and (split(".") | all(.[]; dns_label)))
           and ($parts[1] | label_part)
         end
       else
@@ -199,9 +197,7 @@ validate_inputs() {
       and (.cidr | cidr)
       and (.selector | type) == "object"
       and (.selector | length) > 0
-      and (.selector | to_entries |
-        map((.key | label_key) and (.value | label_value)) |
-        index(false) == null);
+      and (.selector | to_entries | all(.[]; (.key | label_key) and (.value | label_value)));
 
     ($dns_ip | ipv4)
     and ($current_pod_cidr | cidr)
@@ -210,7 +206,7 @@ validate_inputs() {
     and (if $direct_routing == "true" then
       ($ingress_targets | type) == "array"
       and ($ingress_targets | length) > 0
-      and ($ingress_targets | map(ingress_target) | index(false) == null)
+      and ($ingress_targets | all(.[]; ingress_target))
     else
       true
     end)
@@ -298,13 +294,7 @@ normalize_rules() {
         false
       elif has("matchLabels") then
         .matchLabels |
-        if type != "object" then
-          false
-        else
-          to_entries |
-          map((.key | type) == "string" and (.value | type) == "string") |
-          index(false) == null
-        end
+        type == "object" and all(.[]; type == "string")
       else
         true
       end;
@@ -320,6 +310,18 @@ normalize_rules() {
         true
       end;
 
+    def policy_directions:
+      if has("policyTypes") then
+        .policyTypes |
+        if type != "array" or length == 0 or any(.[]; . != "Ingress" and . != "Egress") then
+          error("policyTypes must contain Ingress and/or Egress")
+        else
+          .[] | ascii_downcase
+        end
+      else
+        "ingress", (if has("egress") then "egress" else empty end)
+      end;
+
     .items[] |
     if type != "object"
       or (.metadata | type) != "object"
@@ -331,20 +333,7 @@ normalize_rules() {
       .
     end |
     . as $policy |
-    (if $policy.spec | has("policyTypes") then
-      if ($policy.spec.policyTypes | type) != "array"
-        or ($policy.spec.policyTypes | length) == 0
-        or ($policy.spec.policyTypes |
-          map(. == "Ingress" or . == "Egress") |
-          index(false) != null)
-      then
-        error("policyTypes must contain Ingress and/or Egress")
-      else
-        $policy.spec.policyTypes[] | ascii_downcase
-      end
-    else
-      "ingress", (if $policy.spec | has("egress") then "egress" else empty end)
-    end) as $direction |
+    ($policy.spec | policy_directions) as $direction |
     (if $policy.spec | has($direction) then
       $policy.spec[$direction]
     else
@@ -353,26 +342,26 @@ normalize_rules() {
     if ($rules | type) != "array" then
       error("NetworkPolicy rules must be a list")
     else
-      $rules | to_entries[]
+      $rules[]
     end |
-    if (.value | type) != "object" then
+    if type != "object" then
       error("NetworkPolicy rule must be an object")
     else
       .
     end |
     . as $rule |
     (if $direction == "egress" then "to" else "from" end) as $peer_key |
-    (if $rule.value | has($peer_key) then $rule.value[$peer_key] else [] end) as $peers |
+    (if $rule | has($peer_key) then $rule[$peer_key] else [] end) as $peers |
     if ($peers | type) != "array" then
       error("NetworkPolicy peers must be a list")
-    elif ($peers | map(valid_peer) | index(false) != null) then
+    elif ($peers | any(.[]; valid_peer | not)) then
       error("NetworkPolicy peers must contain valid selectors and IPBlocks")
     else
       {
         namespace: ($policy.metadata.namespace // "default"),
         policy: $policy.metadata.name,
         direction: $direction,
-        rule: $rule.value,
+        rule: $rule,
         peers: $peers
       }
     end
