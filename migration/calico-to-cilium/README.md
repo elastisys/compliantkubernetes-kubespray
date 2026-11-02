@@ -70,7 +70,7 @@ These steps can be performed without any disruption to the target cluster.
   ./00-check-network-policies.sh
   ```
 
-  For Safespring, the preflight automatically enables DirectRouting and discovers every LoadBalancer Service IP, namespace, and complete pod selector. This covers both ingress-nginx and Traefik without additional NetworkPolicy environment variables. The target Cilium Pod CIDR is fixed by this migration. Run this preflight during migration planning and send every finding to the affected customer application owner for remediation.
+  The preflight accepts only `upcloud`, `openstack`, and `none` as cloud-provider values; all other values fail assessment with exit `2`. The target Cilium Pod CIDR is fixed by this migration. Run this preflight during migration planning and send every finding to the affected customer application owner for remediation.
 
   An unset `TARGET_CLUSTER` causes Bash to exit with status `1` and a `Missing required variable` error before assessment. Otherwise, exit `0` means no screened patterns were found; `1` means findings require review; `2` means the assessment failed. The script checks selector/IP peer presence within each rule, using exact CIDRs and expected `matchLabels`. It does not evaluate `matchExpressions`, CIDR exceptions, or combined access across rules/policies, and does not prove application connectivity. Review world-CIDR intent rather than removing legitimate external access merely to silence a finding.
 

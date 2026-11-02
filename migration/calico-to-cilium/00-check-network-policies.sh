@@ -31,13 +31,7 @@ discover_cloud_provider() {
     assessment_error "unable to read the configured cloud provider"
   fi
   case "${cloud_provider_json}" in
-  '"aws"') cloud_provider=aws ;;
-  '"azure"') cloud_provider=azure ;;
-  '"elastx"') cloud_provider=elastx ;;
-  '"none"') cloud_provider=none ;;
-  '"openstack"') cloud_provider=openstack ;;
-  '"safespring"') cloud_provider=safespring ;;
-  '"upcloud"') cloud_provider=upcloud ;;
+  '"none"' | '"openstack"' | '"upcloud"') ;;
   *) assessment_error "unsupported configured cloud provider" ;;
   esac
 }
@@ -67,57 +61,6 @@ discover_network_inputs() {
   fi
 }
 
-discover_ingress_targets() {
-  # Safespring routes ingress through LoadBalancer Services; preserve every selector label.
-  if ! ingress_targets="$(cluster_kubectl get service --all-namespaces --field-selector=spec.type=LoadBalancer -o json | jq -ce '
-    if type != "object" or (.items | type) != "array" then
-      error("Service list requires an items array")
-    else
-      .
-    end |
-    .items as $services |
-    if ($services | length) == 0 then
-      error("no LoadBalancer Services found")
-    else
-      [
-        $services[] |
-        if (.metadata | type) != "object"
-          or (.metadata.namespace | type) != "string"
-          or (.spec.selector | type) != "object"
-          or (.spec.selector | length) == 0
-          or (.spec.selector | any(.[]; type != "string"))
-          or (.status | type) != "object"
-          or (.status.loadBalancer | type) != "object"
-          or (.status.loadBalancer.ingress | type) != "array"
-          or (.status.loadBalancer.ingress | length) == 0
-        then
-          error("LoadBalancer Service lacks a usable namespace, selector, or status")
-        else
-          .
-        end |
-        . as $service |
-        $service.status.loadBalancer.ingress[] |
-        if type != "object" or (.ip | type) != "string" then
-          error("LoadBalancer Service lacks an IP address")
-        else
-          {
-            namespace: $service.metadata.namespace,
-            cidr: (.ip + "/32"),
-            selector: $service.spec.selector
-          }
-        end
-      ] as $targets |
-      if ($targets | length) == 0 then
-        error("no LoadBalancer Service IPs found")
-      else
-        $targets
-      end
-    end
-  ')"; then
-    assessment_error "unable to discover Safespring ingress Services"
-  fi
-}
-
 configure_inputs() {
   : "${TARGET_CLUSTER?Missing required variable}"
   discover_cloud_provider
@@ -126,13 +69,6 @@ configure_inputs() {
   require_value NETWORK_POLICY_CURRENT_POD_CIDR "${current_pod_cidr}"
   require_value NETWORK_POLICY_SERVICE_CIDR "${service_cidr}"
 
-  direct_routing=false
-  ingress_targets='[]'
-  if [[ "${cloud_provider}" == "safespring" ]]; then
-    direct_routing=true
-    discover_ingress_targets
-  fi
-
   readonly target_pod_cidr="10.235.64.0/18"
   # Keep jq data separate from jq programs: every value is passed as data.
   jq_args=(
@@ -140,8 +76,6 @@ configure_inputs() {
     --arg current_pod_cidr "${current_pod_cidr}"
     --arg target_pod_cidr "${target_pod_cidr}"
     --arg service_cidr "${service_cidr}"
-    --arg direct_routing "${direct_routing}"
-    --argjson ingress_targets "${ingress_targets}"
   )
   readonly -a jq_args
 }
@@ -172,46 +106,12 @@ validate_inputs() {
         false
       end;
 
-    def dns_label:
-      length <= 63 and test("\\A[a-z0-9]([-a-z0-9]*[a-z0-9])?\\z");
-    def label_part:
-      length <= 63 and test("\\A[A-Za-z0-9]([A-Za-z0-9_.-]*[A-Za-z0-9])?\\z");
-    def label_value:
-      length == 0 or label_part;
-    def label_key:
-      if contains("/") then
-        split("/") as $parts |
-        if ($parts | length) != 2 then
-          false
-        else
-          ($parts[0] | length <= 253 and (split(".") | all(.[]; dns_label)))
-          and ($parts[1] | label_part)
-        end
-      else
-        label_part
-      end;
-
-    def ingress_target:
-      type == "object"
-      and (.namespace | dns_label)
-      and (.cidr | cidr)
-      and (.selector | type) == "object"
-      and (.selector | length) > 0
-      and (.selector | to_entries | all(.[]; (.key | label_key) and (.value | label_value)));
-
     ($dns_ip | ipv4)
     and ($current_pod_cidr | cidr)
     and ($target_pod_cidr | cidr)
     and ($service_cidr | cidr)
-    and (if $direct_routing == "true" then
-      ($ingress_targets | type) == "array"
-      and ($ingress_targets | length) > 0
-      and ($ingress_targets | all(.[]; ingress_target))
-    else
-      true
-    end)
   ' >/dev/null; then
-    assessment_error "NetworkPolicy IP, CIDR, namespace, and label inputs must be valid"
+    assessment_error "NetworkPolicy IP and CIDR inputs must be valid"
   fi
 }
 
@@ -424,28 +324,6 @@ check_dns_pair() {
   '
 }
 
-check_direct_routing_pair() {
-  [[ "${direct_routing}" == "true" ]] || return 0
-  # shellcheck disable=SC2016 # Variables belong to jq, not the shell.
-  append_findings '
-    select(.direction == "ingress") |
-    $ingress_targets[] as $target |
-    ($target.selector | to_entries) as $selector_entries |
-    any(.peers[]; .ipBlock.cidr? == $target.cidr) as $has_load_balancer_cidr |
-    any(.peers[];
-      .namespaceSelector.matchLabels?["kubernetes.io/metadata.name"] == $target.namespace
-      and ((.podSelector.matchLabels? // {}) as $labels |
-        all($selector_entries[]; $labels[.key] == .value))
-    ) as $has_ingress_selector |
-    select($has_load_balancer_cidr != $has_ingress_selector) |
-    {
-      rule_id: "DIRECT_ROUTING_PAIR",
-      namespace, policy, direction, rule,
-      message: "Review DirectRouting pairing: include LoadBalancer CIDR and ingress selector peers for \($target.namespace) in the same rule"
-    }
-  '
-}
-
 print_result() {
   if ! jq -s '
     {
@@ -466,5 +344,4 @@ normalize_rules
 check_world_cidrs
 check_internal_cidrs
 check_dns_pair
-check_direct_routing_pair
 print_result
