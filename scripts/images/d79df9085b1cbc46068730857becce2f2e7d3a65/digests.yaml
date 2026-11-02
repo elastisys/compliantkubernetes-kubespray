@@ -2,6 +2,7 @@ docker.io/library/nginx:1.31.8-alpine: sha256:fed7e14be83cbd2661a75cdc5b872d936c
 quay.io/calico/cni:v3.31.7: sha256:22d9307335b89f759de5a9a76dc6c0dfb0ca83cc4ca6eeae6d3960ce8d4a2b69
 quay.io/calico/kube-controllers:v3.31.7: sha256:948db31bfcdcfae9fa3cc3f1b466cc157223406980edd35b5a7bdd2892a16081
 quay.io/calico/node:v3.31.7: sha256:dc2697811e14ff3a26bf1129daa8e9b48fc8bc5ae9fa92cd9e2aefe138873bad
+ghcr.io/elastisys/calico/node:v3.31.7-wlkn1: sha256:7a4fa342d7a4fcf6476cd6238fc501a88d40d073a8a91100150d1c68bd71e7c1
 quay.io/calico/typha:v3.31.7: sha256:9884df9f3cf58fed1ab47fff89f74844557d2ca7f5bf3bd8aba09066ffe23990
 registry.k8s.io/coredns/coredns:v1.15.0: sha256:0a9d8c8ddf34347eb59aad9a8784f0710de88d6d112726d11d271f9bc6daca26
 registry.k8s.io/cpa/cluster-proportional-autoscaler:v1.10.3: sha256:a4d0ab78d5e2ec356c981f361a5ff7012b21ad353b4a980e1ca30c11dda6564b
