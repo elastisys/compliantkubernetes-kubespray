@@ -121,7 +121,7 @@ discover_ingress_targets() {
 }
 
 configure_inputs() {
-  require_value TARGET_CLUSTER "${TARGET_CLUSTER:-}"
+  : "${TARGET_CLUSTER?Missing required variable}"
   discover_cloud_provider
   discover_network_inputs
   require_value NETWORK_POLICY_DNS_IP "${dns_ip}"
