@@ -18,7 +18,6 @@ ghcr.io/upcloudltd/upcloud-csi:v1.5.1: sha256:6a47b1b3bc5eb90c91d5de9b1eac2eb221
 ghcr.io/elastisys/sig-storage/csi-attacher:v3.4.0: sha256:af463d3fe4a46972f48e5ce6c00854cf6f24c2f1adbe7ea4ac3c427a8125a3ef
 ghcr.io/elastisys/sig-storage/csi-provisioner:v3.1.0: sha256:bf024057c7a97a7e0a6f60a064766b0bec735799423b240defb370528aab5302
 ghcr.io/elastisys/sig-storage/csi-resizer:v1.4.0: sha256:6dba65bd8c9a769f5a98d35126bc38f078bc2c3af4deca98a78ef5c93d7e31ee
-ghcr.io/elastisys/sig-storage/csi-snapshotter:v4.2.1: sha256:80301cc337baa21e8ebd102c2aac382cdad4ae1e3177e9f14638d6447e90100e
 ghcr.io/elastisys/sig-storage/snapshot-controller:v7.0.2: sha256:cdf6c4dbe8b2920e635be57447a27e69254afc6c5af0a1b4455af00c860682b2
 registry.k8s.io/pause:3.10.1: sha256:278fb9dbcca9518083ad1e11276933a2e96f23de604a3a08cc3c80002767d24c
 ghcr.io/elastisys/sig-storage/csi-node-driver-registrar:v2.4.0: sha256:bb260f072d07b551766e3314b01aa75ed8f23cc25a37e7706a043e0b5ef666e2
