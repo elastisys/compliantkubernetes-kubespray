@@ -1,9 +1,9 @@
-docker.io/library/nginx:1.30.1-alpine: sha256:c819f83c54b0361f5557601bf5eb4943d09360e7a7fdf426afc466570f45874d
+docker.io/library/nginx:1.31.8-alpine: sha256:fed7e14be83cbd2661a75cdc5b872d936cf155d46c327084d30b8df19ae88d72
 quay.io/calico/cni:v3.31.7: sha256:22d9307335b89f759de5a9a76dc6c0dfb0ca83cc4ca6eeae6d3960ce8d4a2b69
 quay.io/calico/kube-controllers:v3.31.7: sha256:948db31bfcdcfae9fa3cc3f1b466cc157223406980edd35b5a7bdd2892a16081
 quay.io/calico/node:v3.31.7: sha256:dc2697811e14ff3a26bf1129daa8e9b48fc8bc5ae9fa92cd9e2aefe138873bad
 quay.io/calico/typha:v3.31.7: sha256:9884df9f3cf58fed1ab47fff89f74844557d2ca7f5bf3bd8aba09066ffe23990
-registry.k8s.io/coredns/coredns:v1.14.2: sha256:e7e6440cfd1e919280958f5b5a6ab2b184d385bba774c12ad2a9e1e4183f90d9
+registry.k8s.io/coredns/coredns:v1.15.0: sha256:0a9d8c8ddf34347eb59aad9a8784f0710de88d6d112726d11d271f9bc6daca26
 registry.k8s.io/cpa/cluster-proportional-autoscaler:v1.10.3: sha256:a4d0ab78d5e2ec356c981f361a5ff7012b21ad353b4a980e1ca30c11dda6564b
 registry.k8s.io/provider-os/openstack-cloud-controller-manager:v1.35.0: sha256:f12e022d54753ac4023e212f3ac803ccebd84b3a9dc28e0cc961df9d9308645f
 registry.k8s.io/provider-os/cinder-csi-plugin:v1.30.0: sha256:5a993797393619cadbee2a320d7f647ff20887f506bef4c849b0d90e7de7c160
@@ -21,7 +21,7 @@ k8s.gcr.io/sig-storage/csi-snapshotter:v6.3.2: sha256:4c5a1b57e685b2631909b95848
 registry.k8s.io/sig-storage/snapshot-controller:v7.0.2: sha256:a03550d7b25d0d24c6c313a27fcade0065f0cee159805ed0b0083700dcb52b76
 registry.k8s.io/pause:3.10.2: sha256:f548e0e8e3dc1896ca956272154dde3314e8cc4fde0a57577ee9fa1c63f5baf4
 registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.4.0: sha256:fc39de92284cc45240417f48549ee1c98da7baef7d0290bc29b232756dfce7c0
-quay.io/coreos/etcd:v3.6.14: sha256:dfd3941bf6ced5fdb700f9b2d98b22b7bca7ceee13aec16224f93ff30d9a59c4
+quay.io/coreos/etcd:v3.6.16: sha256:a9c7cc12156f4b26ca41f0b57ba5b76c45037ff6c1e47ea3d68cb7908d48a965
 registry.k8s.io/kube-apiserver:v1.36.6: sha256:c627b6c01a056b30feab4f277aecc0d690afab061f935615c0d67b32e39d7823
 registry.k8s.io/kube-controller-manager:v1.36.6: sha256:8548e3b0aa48070c69535a13b5728e337d99176451ddd5656a8d5203dedb937b
 registry.k8s.io/kube-proxy:v1.36.6: sha256:70871b645aecbca013bfb8254ce29f49143822054b743b78485db1f5f0d5de2c

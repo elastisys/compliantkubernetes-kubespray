@@ -29,4 +29,4 @@ kubeadm_patches:
       spec:
         containers:
         - name: etcd
-          image: quay.io/coreos/etcd:v3.6.14@sha256:dfd3941bf6ced5fdb700f9b2d98b22b7bca7ceee13aec16224f93ff30d9a59c4
+          image: quay.io/coreos/etcd:v3.6.16@sha256:a9c7cc12156f4b26ca41f0b57ba5b76c45037ff6c1e47ea3d68cb7908d48a965
