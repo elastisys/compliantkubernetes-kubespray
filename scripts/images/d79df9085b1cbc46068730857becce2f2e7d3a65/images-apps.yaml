@@ -1,4 +1,4 @@
-nginx_image: "docker.io/library/nginx:1.31.8-alpine"
+nginx_image: "docker.io/library/nginx:1.31.9-alpine"
 calico_cni_image: "quay.io/calico/cni:v3.31.7"
 calico_policy_image: "quay.io/calico/kube-controllers:v3.31.7"
 calico_node_image: "ghcr.io/elastisys/calico/node:v3.31.7-wlkn1"
