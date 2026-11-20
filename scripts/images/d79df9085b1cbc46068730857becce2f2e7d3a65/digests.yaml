@@ -1,4 +1,4 @@
-docker.io/library/nginx:1.31.8-alpine: sha256:fed7e14be83cbd2661a75cdc5b872d936cf155d46c327084d30b8df19ae88d72
+docker.io/library/nginx:1.31.9-alpine: sha256:fb4658584bd9a916ffb6f6e365f97c25cfdb2923801f551ea08356e695f14ff7
 quay.io/calico/cni:v3.31.7: sha256:22d9307335b89f759de5a9a76dc6c0dfb0ca83cc4ca6eeae6d3960ce8d4a2b69
 quay.io/calico/kube-controllers:v3.31.7: sha256:948db31bfcdcfae9fa3cc3f1b466cc157223406980edd35b5a7bdd2892a16081
 quay.io/calico/node:v3.31.7: sha256:dc2697811e14ff3a26bf1129daa8e9b48fc8bc5ae9fa92cd9e2aefe138873bad
