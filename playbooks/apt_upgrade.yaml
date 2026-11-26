@@ -1,0 +1,9 @@
+- name: Update system packages and kernel
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update apt cache and upgrade packages
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: dist
