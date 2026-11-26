@@ -1,0 +1,22 @@
+- name: Reboot nodes before they are part of the cluster
+  hosts: all
+  become: true
+  serial: 1
+
+  tasks:
+    - name: Check if reboot required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+
+    - name: Prompt for rebooting
+      ansible.builtin.pause:
+        prompt: "Type 'yes' to reboot {{ inventory_hostname }} now. Any other input will skip"
+      register: reboot_confirm
+      when: reboot_required_file.stat.exists
+
+    - name: Reboot if confirmed
+      ansible.builtin.reboot:
+      when:
+        - reboot_required_file.stat.exists
+        - reboot_confirm.user_input | default('') | lower == 'yes'
