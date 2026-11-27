@@ -35,6 +35,7 @@ files:
   # Requires two unset variables, `etcd_metrics_service_labels` and `etcd_metrics_port`.
   # Should not render any BOM material though.
   - "kubespray/roles/kubernetes-apps/ansible/templates/etcd_metrics-service.yml.j2"
+  - "kubespray/roles/kubernetes-apps/ansible/templates/etcd_metrics-endpointslices.yml.j2"
   # Requires etcd health check task to register `etcd_cluster_is_healthy` and `etcd_events_cluster_is_healthy` first.
   # Should not render any BOM material though.
   - "kubespray/roles/etcd/templates/etcd.env.j2"

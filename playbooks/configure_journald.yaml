@@ -1,0 +1,16 @@
+- name: Configure persistent systemd-journald storage
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Ensure journald drop-in directory exists
+      ansible.builtin.file:
+        path: /etc/systemd/journald.conf.d
+        state: directory
+
+    - name: Configure Storage=persistent in drop-in file
+      ansible.builtin.copy:
+        dest: /etc/systemd/journald.conf.d/persistent.conf
+        content: |
+          [Journal]
+          Storage=persistent
